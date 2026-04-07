@@ -207,6 +207,18 @@
     .founder-grid { grid-template-columns: 1fr !important; gap: 36px !important; }
   }
 
+
+  /* MOBILE NAV */
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: rgba(245,245,247,0.8); border-radius: 2px; transition: all 0.3s; }
+  @media (max-width: 768px) {
+    .hamburger { display: flex; }
+    .mobile-menu { display: none; position: fixed; top: 52px; left: 0; right: 0; background: rgba(0,0,0,0.97); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 16px 0; z-index: 999; flex-direction: column; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { padding: 14px 24px; font-size: 16px; color: rgba(245,245,247,0.8); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .mobile-menu a:last-child { border-bottom: none; }
+  }
+
   /* SCROLL REVEAL */
   .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.75s ease, transform 0.75s ease; }
   .reveal.visible { opacity: 1; transform: none; }
@@ -243,6 +255,11 @@
     if(!c){document.getElementById('cookieBanner').style.display='flex';}
     else if(c==='accepted'){loadTracking();}
   });
+
+  function toggleMenu(){var m=document.getElementById('mobileMenu');m.classList.toggle('open');}
+  function closeMenu(){document.getElementById('mobileMenu').classList.remove('open');}
+  document.addEventListener('click',function(e){var m=document.getElementById('mobileMenu');if(m&&m.classList.contains('open')&&!m.contains(e.target)&&!e.target.closest('.hamburger')){m.classList.remove('open');}});
+
 </script>
 
 <!-- NAV -->
@@ -257,7 +274,17 @@
     <li><a href="https://hotel.leolan.net">Hotels →</a></li>
   </ul>
   <a href="#kontakt" class="nav-cta">Kostenlos anfragen ›</a>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menü"><span></span><span></span><span></span></button>
 </nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#probleme" onclick="closeMenu()">Probleme</a>
+  <a href="#leistungen" onclick="closeMenu()">Leistungen</a>
+  <a href="#preise" onclick="closeMenu()">Preise</a>
+  <a href="#faq" onclick="closeMenu()">FAQ</a>
+  <a href="/ueber-uns.html" onclick="closeMenu()">Über uns</a>
+  <a href="https://hotel.leolan.net" onclick="closeMenu()">Hotels →</a>
+  <a href="#kontakt" onclick="closeMenu()" style="color:#2997ff; font-weight:600;">Kostenlos anfragen ›</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
