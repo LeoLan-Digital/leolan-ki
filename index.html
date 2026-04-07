@@ -3,143 +3,140 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KI-Automatisierung für Restaurants | LeoLan Digital</title>
+<title>KI-Automatisierung fuer Restaurants | LeoLan Digital</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #fff; }
-  a { color: inherit; }
-
-  .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px 20px; background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%); }
-  .badge { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); padding: 8px 20px; border-radius: 50px; font-size: 13px; margin-bottom: 30px; display: inline-block; }
-  h1 { font-size: clamp(32px, 6vw, 64px); font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
-  h1 span { background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-  .subtitle { font-size: clamp(16px, 2.5vw, 20px); color: rgba(255,255,255,0.7); max-width: 600px; margin-bottom: 40px; line-height: 1.6; }
-  .cta { display: inline-block; background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; text-decoration: none; padding: 18px 44px; border-radius: 50px; font-size: 18px; font-weight: 700; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
-  .cta:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(102,126,234,0.5); text-decoration: none; }
-  .cta-sub { margin-top: 14px; font-size: 13px; color: rgba(255,255,255,0.4); }
-
-  .section { padding: 80px 20px; max-width: 1000px; margin: 0 auto; }
-  .section-title { font-size: 32px; font-weight: 700; margin-bottom: 10px; text-align: center; }
-  .section-sub { color: rgba(255,255,255,0.5); text-align: center; margin-bottom: 50px; }
-  .divider { width: 100%; height: 1px; background: rgba(255,255,255,0.06); }
-
-  .problems { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
-  .problem-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 24px; }
-  .problem-card .emoji { font-size: 28px; margin-bottom: 12px; }
-  .problem-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
-  .problem-card p { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.5; }
-
-  .services { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
-  .service { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 32px; transition: border-color 0.2s, transform 0.2s; }
-  .service:hover { border-color: rgba(102,126,234,0.5); transform: translateY(-4px); }
-  .service .icon { font-size: 36px; margin-bottom: 16px; }
-  .service h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
-  .service p { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.6; }
-
-  .packages { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
-  .package { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 36px; text-align: center; display: flex; flex-direction: column; }
-  .package.featured { background: linear-gradient(135deg, rgba(102,126,234,0.15), rgba(118,75,162,0.15)); border-color: rgba(102,126,234,0.4); }
-  .package .tag { font-size: 11px; background: rgba(102,126,234,0.3); padding: 4px 12px; border-radius: 50px; display: inline-block; margin-bottom: 16px; }
-  .package h3 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
-  .package .price { font-size: 36px; font-weight: 800; margin: 16px 0; }
-  .package .price span { font-size: 16px; font-weight: 400; color: rgba(255,255,255,0.5); }
-  .package ul { list-style: none; text-align: left; margin-bottom: 24px; flex: 1; }
-  .package ul li { padding: 8px 0; font-size: 14px; color: rgba(255,255,255,0.7); border-bottom: 1px solid rgba(255,255,255,0.06); }
-  .package ul li::before { content: '✓  '; color: #667eea; font-weight: 700; }
-  .package a { display: block; background: rgba(255,255,255,0.1); color: #fff; text-decoration: none; padding: 14px; border-radius: 12px; font-weight: 600; transition: background 0.2s, transform 0.2s; }
-  .package.featured a { background: linear-gradient(135deg, #667eea, #764ba2); }
-  .package a:hover { opacity: 0.9; transform: translateY(-2px); }
-
-  .about { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-  @media (max-width: 700px) { .about { grid-template-columns: 1fr; } }
-  .about-text h2 { font-size: 32px; font-weight: 700; margin-bottom: 16px; }
-  .about-text p { color: rgba(255,255,255,0.6); line-height: 1.8; margin-bottom: 12px; }
-  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
-  .tag-item { background: rgba(255,255,255,0.08); padding: 6px 14px; border-radius: 50px; font-size: 13px; }
-  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .stat { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 24px; text-align: center; }
-  .stat .num { font-size: 36px; font-weight: 800; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-  .stat p { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 4px; }
-
-  .contact-section { background: linear-gradient(135deg, rgba(102,126,234,0.1), rgba(118,75,162,0.1)); border: 1px solid rgba(102,126,234,0.2); border-radius: 24px; padding: 60px 40px; text-align: center; margin: 40px 0; }
-  .contact-section h2 { font-size: 36px; font-weight: 800; margin-bottom: 12px; }
-  .contact-section p { color: rgba(255,255,255,0.6); margin-bottom: 32px; font-size: 18px; }
-  .contact-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-  .btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; text-decoration: none; padding: 16px 36px; border-radius: 50px; font-weight: 700; font-size: 16px; transition: transform 0.2s, box-shadow 0.2s; display: inline-block; }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(102,126,234,0.4); }
-  .btn-secondary { background: rgba(255,255,255,0.08); color: #fff; text-decoration: none; padding: 16px 36px; border-radius: 50px; font-weight: 600; font-size: 16px; border: 1px solid rgba(255,255,255,0.15); transition: background 0.2s; display: inline-block; }
-  .btn-secondary:hover { background: rgba(255,255,255,0.15); }
-
-  footer { text-align: center; padding: 40px 20px; color: rgba(255,255,255,0.3); font-size: 13px; border-top: 1px solid rgba(255,255,255,0.06); }
-  footer a { color: rgba(255,255,255,0.5); text-decoration: none; }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0a;color:#fff}
+  a{color:inherit;text-decoration:none}
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:40px 20px;background:linear-gradient(135deg,#0a0a0a 0%,#1a1a2e 50%,#16213e 100%)}
+  .badge{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:8px 20px;border-radius:50px;font-size:13px;margin-bottom:30px;display:inline-block}
+  h1{font-size:clamp(32px,6vw,64px);font-weight:800;line-height:1.1;margin-bottom:20px}
+  h1 span{background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .subtitle{font-size:clamp(16px,2.5vw,20px);color:rgba(255,255,255,.7);max-width:600px;margin-bottom:40px;line-height:1.6}
+  .cta{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:18px 44px;border-radius:50px;font-size:18px;font-weight:700;transition:transform .2s,box-shadow .2s}
+  .cta:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(102,126,234,.5)}
+  .cta-sub{margin-top:14px;font-size:13px;color:rgba(255,255,255,.4)}
+  .section{padding:80px 20px;max-width:1000px;margin:0 auto}
+  .section-title{font-size:32px;font-weight:700;margin-bottom:10px;text-align:center}
+  .section-sub{color:rgba(255,255,255,.5);text-align:center;margin-bottom:50px}
+  .divider{width:100%;height:1px;background:rgba(255,255,255,.06)}
+  .problems{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+  .problem-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:24px}
+  .problem-card .emoji{font-size:28px;margin-bottom:12px}
+  .problem-card h3{font-size:16px;font-weight:600;margin-bottom:8px}
+  .problem-card p{font-size:14px;color:rgba(255,255,255,.5);line-height:1.5}
+  .services{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+  .service{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:32px;transition:border-color .2s,transform .2s}
+  .service:hover{border-color:rgba(102,126,234,.5);transform:translateY(-4px)}
+  .service .icon{font-size:36px;margin-bottom:16px}
+  .service h3{font-size:18px;font-weight:700;margin-bottom:10px}
+  .service p{font-size:14px;color:rgba(255,255,255,.6);line-height:1.6}
+  .packages{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+  .package{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:36px;text-align:center;display:flex;flex-direction:column}
+  .package.featured{background:linear-gradient(135deg,rgba(102,126,234,.15),rgba(118,75,162,.15));border-color:rgba(102,126,234,.4)}
+  .pkg-tag{font-size:11px;background:rgba(102,126,234,.3);padding:4px 12px;border-radius:50px;display:inline-block;margin-bottom:16px}
+  .package h3{font-size:22px;font-weight:700;margin-bottom:8px}
+  .package .price{font-size:36px;font-weight:800;margin:16px 0}
+  .package .price span{font-size:16px;font-weight:400;color:rgba(255,255,255,.5)}
+  .package ul{list-style:none;text-align:left;margin-bottom:24px;flex:1}
+  .package ul li{padding:8px 0;font-size:14px;color:rgba(255,255,255,.7);border-bottom:1px solid rgba(255,255,255,.06)}
+  .package ul li::before{content:'+ ';color:#667eea;font-weight:700}
+  .pkg-btn{display:block;background:rgba(255,255,255,.1);color:#fff;padding:14px;border-radius:12px;font-weight:600;transition:background .2s,transform .2s;cursor:pointer;border:none;width:100%;font-size:15px}
+  .package.featured .pkg-btn{background:linear-gradient(135deg,#667eea,#764ba2)}
+  .pkg-btn:hover{opacity:.9;transform:translateY(-2px)}
+  .about{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  @media(max-width:700px){.about{grid-template-columns:1fr}}
+  .about-text h2{font-size:32px;font-weight:700;margin-bottom:16px}
+  .about-text p{color:rgba(255,255,255,.6);line-height:1.8;margin-bottom:12px}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+  .tag-item{background:rgba(255,255,255,.08);padding:6px 14px;border-radius:50px;font-size:13px}
+  .about-stats{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .stat{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:24px;text-align:center}
+  .stat .num{font-size:36px;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .stat p{font-size:13px;color:rgba(255,255,255,.5);margin-top:4px}
+  .contact-form-section{background:linear-gradient(135deg,rgba(102,126,234,.1),rgba(118,75,162,.1));border:1px solid rgba(102,126,234,.2);border-radius:24px;padding:60px 40px;text-align:center;margin:40px 0}
+  .contact-form-section h2{font-size:36px;font-weight:800;margin-bottom:12px}
+  .contact-form-section p{color:rgba(255,255,255,.6);margin-bottom:32px;font-size:18px}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;max-width:600px;margin-left:auto;margin-right:auto}
+  @media(max-width:600px){.form-grid{grid-template-columns:1fr}}
+  .form-group{text-align:left}
+  .form-group label{display:block;font-size:13px;color:rgba(255,255,255,.6);margin-bottom:6px}
+  .form-group input,.form-group select,.form-group textarea{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:12px 16px;color:#fff;font-size:14px;outline:none;transition:border-color .2s;font-family:inherit}
+  .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:rgba(102,126,234,.6)}
+  .form-group select option{background:#1a1a2e;color:#fff}
+  .form-full{grid-column:1/-1}
+  .form-submit{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;padding:16px 48px;border-radius:50px;font-size:17px;font-weight:700;cursor:pointer;transition:transform .2s,box-shadow .2s;margin-top:8px}
+  .form-submit:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(102,126,234,.4)}
+  .social-links{display:flex;gap:16px;justify-content:center;margin-top:24px;flex-wrap:wrap}
+  .social-btn{background:rgba(255,255,255,.08);color:#fff;padding:12px 28px;border-radius:50px;font-weight:600;border:1px solid rgba(255,255,255,.15);transition:background .2s}
+  .social-btn:hover{background:rgba(255,255,255,.15)}
+  footer{text-align:center;padding:40px 20px;color:rgba(255,255,255,.3);font-size:13px;border-top:1px solid rgba(255,255,255,.06)}
+  footer a{color:rgba(255,255,255,.5)}
+  .success-msg{background:rgba(39,174,96,.2);border:1px solid rgba(39,174,96,.4);border-radius:10px;padding:16px;margin-top:16px;color:#2ecc71;display:none}
 </style>
 </head>
 <body>
 
-<!-- HERO -->
 <div class="hero">
-  <div class="badge">🤖 KI-Automatisierung für Gastronomie</div>
-  <h1>Mehr Zeit für das,<br>was wirklich <span>zählt</span></h1>
-  <p class="subtitle">Ich automatisiere den digitalen Alltag deines Restaurants — Social Media, Bewertungen, Reservierungen und Kundenkommunikation. Ohne IT-Kenntnisse.</p>
-  <a href="https://calendly.com/leolan-digital" target="_blank" class="cta">🗓️ Kostenloses Erstgespräch buchen</a>
-  <p class="cta-sub">30 Minuten · Keine Verpflichtung · Konkrete Ergebnisse</p>
+  <div class="badge">KI-Automatisierung fuer Gastronomie</div>
+  <h1>Mehr Zeit fuer das,<br>was wirklich <span>zaehlt</span></h1>
+  <p class="subtitle">Ich automatisiere den digitalen Alltag deines Restaurants - Social Media, Bewertungen, Reservierungen und Kundenkommunikation. Ohne IT-Kenntnisse.</p>
+  <a href="https://calendly.com/leolan-digital" target="_blank" class="cta">Kostenloses Erstgespraech buchen</a>
+  <p class="cta-sub">30 Minuten &middot; Keine Verpflichtung &middot; Konkrete Ergebnisse</p>
 </div>
 
 <div class="divider"></div>
 
-<!-- PROBLEME -->
 <div class="section">
   <h2 class="section-title">Kommt dir das bekannt vor?</h2>
-  <p class="section-sub">Das sind die häufigsten Probleme in der Gastronomie heute.</p>
+  <p class="section-sub">Das sind die haeufigsten Probleme in der Gastronomie heute.</p>
   <div class="problems">
-    <div class="problem-card"><div class="emoji">📱</div><h3>Keine Zeit für Social Media</h3><p>Instagram und Google bleiben liegen, weil der Betrieb alles fordert.</p></div>
-    <div class="problem-card"><div class="emoji">⭐</div><h3>Bewertungen unbeantwortet</h3><p>Neue Google-Bewertungen bleiben ohne Reaktion — positiv wie negativ.</p></div>
-    <div class="problem-card"><div class="emoji">📞</div><h3>Reservierungen per Telefon</h3><p>Anrufe gehen verloren, Tische bleiben leer, der Überblick fehlt.</p></div>
-    <div class="problem-card"><div class="emoji">💬</div><h3>Kundenkommunikation frisst Zeit</h3><p>WhatsApp, Anfragen, Menüinfos — alles manuell, jeden Tag wieder.</p></div>
+    <div class="problem-card"><div class="emoji">&#128241;</div><h3>Keine Zeit fuer Social Media</h3><p>Instagram und Google bleiben liegen, weil der Betrieb alles fordert.</p></div>
+    <div class="problem-card"><div class="emoji">&#11088;</div><h3>Bewertungen unbeantwortet</h3><p>Neue Google-Bewertungen bleiben ohne Reaktion &mdash; positiv wie negativ.</p></div>
+    <div class="problem-card"><div class="emoji">&#128222;</div><h3>Reservierungen per Telefon</h3><p>Anrufe gehen verloren, Tische bleiben leer, der Ueberblick fehlt.</p></div>
+    <div class="problem-card"><div class="emoji">&#128172;</div><h3>Kundenkommunikation frisst Zeit</h3><p>WhatsApp, Anfragen, Menuinfos &mdash; alles manuell, jeden Tag wieder.</p></div>
   </div>
 </div>
 
 <div class="divider"></div>
 
-<!-- LEISTUNGEN -->
 <div class="section">
-  <h2 class="section-title">Was ich für dich automatisiere</h2>
-  <p class="section-sub">Konkrete Lösungen. Keine leeren Versprechen.</p>
+  <h2 class="section-title">Was ich fuer dich automatisiere</h2>
+  <p class="section-sub">Konkrete Loesungen. Keine leeren Versprechen.</p>
   <div class="services">
-    <div class="service"><div class="icon">📸</div><h3>Social Media Automatisierung</h3><p>Tägliche Instagram-Posts, Stories und Inhalte — vollautomatisch, ohne dass du etwas tun musst.</p></div>
-    <div class="service"><div class="icon">⭐</div><h3>Google Bewertungsmanagement</h3><p>Automatische, personalisierte Antworten auf neue Bewertungen — professionell und zeitnah.</p></div>
-    <div class="service"><div class="icon">📅</div><h3>Online-Reservierungssystem</h3><p>Keine Telefonanrufe mehr. Gäste buchen online, du siehst alles auf einen Blick.</p></div>
-    <div class="service"><div class="icon">💬</div><h3>WhatsApp Automatisierung</h3><p>Menüinfos, Anfragen und Stammkundenkommunikation — halbautomatisiert und trotzdem persönlich.</p></div>
-    <div class="service"><div class="icon">📊</div><h3>Monatliches Reporting</h3><p>Übersicht was läuft, was nicht. Datenbasiert, verständlich, umsetzbar.</p></div>
-    <div class="service"><div class="icon">🎯</div><h3>Neue Gäste gewinnen</h3><p>Bessere lokale Sichtbarkeit durch optimiertes Google-Profil und gezielte digitale Reichweite.</p></div>
+    <div class="service"><div class="icon">&#128248;</div><h3>Social Media Automatisierung</h3><p>Taegliche Instagram-Posts, Stories und Inhalte &mdash; vollautomatisch, ohne dass du etwas tun musst.</p></div>
+    <div class="service"><div class="icon">&#11088;</div><h3>Google Bewertungsmanagement</h3><p>Automatische, personalisierte Antworten auf neue Bewertungen &mdash; professionell und zeitnah.</p></div>
+    <div class="service"><div class="icon">&#128197;</div><h3>Online-Reservierungssystem</h3><p>Keine Telefonanrufe mehr. Gaeste buchen online, du siehst alles auf einen Blick.</p></div>
+    <div class="service"><div class="icon">&#128172;</div><h3>WhatsApp Automatisierung</h3><p>Menuinfos, Anfragen und Stammkundenkommunikation &mdash; halbautomatisiert und trotzdem persoenlich.</p></div>
+    <div class="service"><div class="icon">&#128202;</div><h3>Monatliches Reporting</h3><p>Uebersicht was laeuft, was nicht. Datenbasiert, verstaendlich, umsetzbar.</p></div>
+    <div class="service"><div class="icon">&#127919;</div><h3>Neue Gaeste gewinnen</h3><p>Bessere lokale Sichtbarkeit durch optimiertes Google-Profil und gezielte digitale Reichweite.</p></div>
   </div>
 </div>
 
 <div class="divider"></div>
 
-<!-- PAKETE -->
 <div class="section">
-  <h2 class="section-title">Pakete & Preise</h2>
+  <h2 class="section-title">Pakete &amp; Preise</h2>
   <p class="section-sub">Transparent. Fair. Kein Kleingedrucktes.</p>
   <div class="packages">
     <div class="package">
-      <div class="tag">Einstieg</div>
+      <div class="pkg-tag">Einstieg</div>
       <h3>Starter</h3>
-      <p style="color:rgba(255,255,255,0.5);font-size:14px;margin-bottom:8px;">Für den schnellen Start</p>
-      <div class="price">500 – 800 €<span> einmalig</span></div>
+      <p style="color:rgba(255,255,255,.5);font-size:14px;margin-bottom:8px">Fuer den schnellen Start</p>
+      <div class="price">650 &euro;<span> einmalig</span></div>
       <ul>
         <li>Google-Profil optimiert</li>
         <li>Bewertungsantworten automatisiert</li>
         <li>Instagram-Posts eingerichtet</li>
         <li>Einmalige Einrichtung</li>
       </ul>
-      <a href="https://calendly.com/leolan-digital" target="_blank">Jetzt Termin buchen →</a>
+      <button class="pkg-btn" onclick="window.open('https://www.paypal.com/paypalme/LeoLanDE/650','_blank')">Jetzt kaufen &mdash; 650 &euro;</button>
     </div>
     <div class="package featured">
-      <div class="tag">⭐ Beliebt</div>
+      <div class="pkg-tag">Beliebt</div>
       <h3>Standard</h3>
-      <p style="color:rgba(255,255,255,0.5);font-size:14px;margin-bottom:8px;">Komplettlösung</p>
-      <div class="price">1.500 – 2.500 €<span> einmalig</span></div>
+      <p style="color:rgba(255,255,255,.5);font-size:14px;margin-bottom:8px">Komplettloesung</p>
+      <div class="price">1.990 &euro;<span> einmalig</span></div>
       <ul>
         <li>Alles aus Starter</li>
         <li>Online-Reservierungssystem</li>
@@ -147,71 +144,127 @@
         <li>Monatliches Reporting</li>
         <li>30 Tage Support</li>
       </ul>
-      <a href="https://calendly.com/leolan-digital" target="_blank">Jetzt Termin buchen →</a>
+      <button class="pkg-btn" onclick="window.open('https://www.paypal.com/paypalme/LeoLanDE/1990','_blank')">Jetzt kaufen &mdash; 1.990 &euro;</button>
     </div>
     <div class="package">
-      <div class="tag">Laufend</div>
+      <div class="pkg-tag">Laufend</div>
       <h3>Premium</h3>
-      <p style="color:rgba(255,255,255,0.5);font-size:14px;margin-bottom:8px;">Vollbetreuung</p>
-      <div class="price">ab 300 €<span>/Monat</span></div>
+      <p style="color:rgba(255,255,255,.5);font-size:14px;margin-bottom:8px">Vollbetreuung</p>
+      <div class="price">350 &euro;<span>/Monat</span></div>
       <ul>
         <li>Alles aus Standard</li>
         <li>Laufende Optimierung</li>
         <li>Monatliche Anpassungen</li>
-        <li>Persönlicher Ansprechpartner</li>
-        <li>Prioritäts-Support</li>
+        <li>Persoenlicher Ansprechpartner</li>
+        <li>Prioritaets-Support</li>
       </ul>
-      <a href="https://calendly.com/leolan-digital" target="_blank">Jetzt Termin buchen →</a>
+      <button class="pkg-btn" onclick="window.open('https://www.paypal.com/paypalme/LeoLanDE/350','_blank')">Jetzt kaufen &mdash; 350 &euro;/Monat</button>
     </div>
   </div>
 </div>
 
 <div class="divider"></div>
 
-<!-- ÜBER MICH -->
 <div class="section">
   <div class="about">
     <div class="about-text">
-      <h2>Gastronom & KI-Experte</h2>
-      <p>Ich bin Kamaleddin Nazari — ich weiß wie Restaurants von innen ticken, weil ich selbst jahrelang in der Branche gearbeitet habe.</p>
-      <p>Als Bordrestaurantleiter bei der DB Fernverkehr AG habe ich Teams geführt, Umsatz verantwortet und Abläufe optimiert. Heute kombiniere ich diese Erfahrung mit KI und Automatisierung.</p>
-      <p>Ich erkläre alles verständlich — keine IT-Kenntnisse nötig. Persönliche Betreuung statt anonymes Unternehmen.</p>
+      <h2>Gastronom &amp; KI-Experte</h2>
+      <p>Ich bin Kamaleddin Nazari &mdash; ich weiss wie Restaurants von innen ticken, weil ich selbst jahrelang in der Branche gearbeitet habe.</p>
+      <p>Als Bordrestaurantleiter bei der DB Fernverkehr AG habe ich Teams gefuehrt, Umsatz verantwortet und Ablaeufe optimiert. Heute kombiniere ich diese Erfahrung mit KI und Automatisierung.</p>
+      <p>Ich erklaere alles verstaendlich &mdash; keine IT-Kenntnisse noetig. Persoenliche Betreuung statt anonymes Unternehmen.</p>
       <div class="tags">
-        <span class="tag-item">5 Jahre Gastronomie-Führung</span>
-        <span class="tag-item">KI & Automatisierung</span>
+        <span class="tag-item">5 Jahre Gastronomie</span>
+        <span class="tag-item">KI &amp; Automatisierung</span>
         <span class="tag-item">4 Sprachen</span>
-        <span class="tag-item">n8n & API</span>
+        <span class="tag-item">n8n &amp; API</span>
       </div>
     </div>
     <div class="about-stats">
       <div class="stat"><div class="num">5+</div><p>Jahre Gastronomie</p></div>
       <div class="stat"><div class="num">4</div><p>Sprachen</p></div>
       <div class="stat"><div class="num">24h</div><p>Reaktionszeit</p></div>
-      <div class="stat"><div class="num">100%</div><p>Persönlich</p></div>
+      <div class="stat"><div class="num">100%</div><p>Persoenlich</p></div>
     </div>
   </div>
 </div>
 
 <div class="divider"></div>
 
-<!-- KONTAKT -->
 <div class="section">
-  <div class="contact-section">
-    <h2>Bereit loszulegen?</h2>
-    <p>30 Minuten kostenlose Analyse — ich zeige dir konkret was bei deinem Betrieb möglich ist.</p>
-    <div class="contact-buttons">
-      <a href="https://calendly.com/leolan-digital" target="_blank" class="btn-primary">🗓️ Termin buchen</a>
-      <a href="https://www.instagram.com/leo_lan.de/" target="_blank" class="btn-secondary">📱 Instagram</a>
-      <a href="mailto:business@leolan.net" class="btn-secondary">✉️ E-Mail</a>
+  <div class="contact-form-section">
+    <h2>Kostenlose Analyse anfragen</h2>
+    <p>30 Minuten &mdash; ich zeige dir konkret was bei deinem Betrieb moeglich ist.</p>
+    <form action="https://formspree.io/f/xgopdnll" method="POST" id="contactForm">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Dein Name *</label>
+          <input type="text" name="name" required placeholder="Max Mustermann">
+        </div>
+        <div class="form-group">
+          <label>E-Mail *</label>
+          <input type="email" name="email" required placeholder="max@restaurant.de">
+        </div>
+        <div class="form-group">
+          <label>Restaurant / Betrieb</label>
+          <input type="text" name="restaurant" placeholder="Mein Restaurant GmbH">
+        </div>
+        <div class="form-group">
+          <label>Interesse an</label>
+          <select name="paket">
+            <option value="">Paket waehlen...</option>
+            <option value="starter">Starter (650 EUR)</option>
+            <option value="standard">Standard (1.990 EUR)</option>
+            <option value="premium">Premium (350 EUR/Monat)</option>
+            <option value="info">Erstmal nur Infos</option>
+          </select>
+        </div>
+        <div class="form-group form-full">
+          <label>Nachricht</label>
+          <textarea name="message" rows="4" placeholder="Was beschaeftigt dich? Welche Prozesse kosten dich am meisten Zeit?"></textarea>
+        </div>
+      </div>
+      <button type="submit" class="form-submit">Anfrage absenden</button>
+      <div class="success-msg" id="successMsg">Danke! Ich melde mich innerhalb von 24 Stunden.</div>
+    </form>
+    <div class="social-links">
+      <a href="https://calendly.com/leolan-digital" target="_blank" class="social-btn">Direkt Termin buchen</a>
+      <a href="https://www.instagram.com/leo_lan.de/" target="_blank" class="social-btn">Instagram DM</a>
     </div>
   </div>
 </div>
 
 <footer>
-  © 2026 LeoLan Digital · Kamaleddin Nazari ·
-  <a href="mailto:business@leolan.net">business@leolan.net</a> ·
+  &copy; 2026 LeoLan Digital &middot; Kamaleddin Nazari &middot;
+  <a href="mailto:business@leolan.net">business@leolan.net</a> &middot;
   <a href="https://www.instagram.com/leo_lan.de/" target="_blank">@leo_lan.de</a>
 </footer>
+
+<script>
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var form = this;
+  var btn = form.querySelector('.form-submit');
+  btn.textContent = 'Wird gesendet...';
+  btn.disabled = true;
+  fetch(form.action, {
+    method: 'POST',
+    body: new FormData(form),
+    headers: { 'Accept': 'application/json' }
+  }).then(function(r) {
+    if (r.ok) {
+      document.getElementById('successMsg').style.display = 'block';
+      form.reset();
+      btn.textContent = 'Gesendet!';
+    } else {
+      btn.textContent = 'Fehler - bitte nochmal versuchen';
+      btn.disabled = false;
+    }
+  }).catch(function() {
+    btn.textContent = 'Fehler - bitte nochmal versuchen';
+    btn.disabled = false;
+  });
+});
+</script>
 
 </body>
 </html>
