@@ -715,6 +715,72 @@
 </head>
 <body>
 
+<!-- COOKIE BANNER -->
+<div id="cookieBanner" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:9999; background:#1c1c1e; border-top:1px solid rgba(255,255,255,0.1); padding:20px 24px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px;">
+  <p style="font-size:13px; color:rgba(245,245,247,0.7); max-width:700px; line-height:1.5; margin:0;">Wir verwenden Cookies und ähnliche Technologien (Google Analytics, Meta Pixel), um unsere Website zu verbessern und dir relevante Werbung zu zeigen. Mit Klick auf "Akzeptieren" stimmst du dem zu. <a href="/datenschutz.html" style="color:#2997ff;">Mehr erfahren</a></p>
+  <div style="display:flex; gap:10px; flex-shrink:0;">
+    <button onclick="rejectCookies()" style="padding:10px 20px; border-radius:980px; border:1px solid rgba(255,255,255,0.2); background:transparent; color:rgba(245,245,247,0.7); font-size:13px; cursor:pointer; font-family:inherit;">Ablehnen</button>
+    <button onclick="acceptCookies()" style="padding:10px 20px; border-radius:980px; border:none; background:#0071e3; color:#fff; font-size:13px; font-weight:500; cursor:pointer; font-family:inherit;">Akzeptieren</button>
+  </div>
+</div>
+
+<script>
+  // Cookie consent
+  function setCookie(name, val, days) {
+    var d = new Date(); d.setTime(d.getTime() + days*24*60*60*1000);
+    document.cookie = name + '=' + val + ';expires=' + d.toUTCString() + ';path=/';
+  }
+  function getCookie(name) {
+    var v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+    return v ? v[2] : null;
+  }
+
+  function loadTracking() {
+    // Google Analytics GA4
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-25WZQPJ5F3';
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', 'G-25WZQPJ5F3');
+
+    // Meta Pixel
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window,document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '584799746334676');
+    fbq('track', 'PageView');
+  }
+
+  function acceptCookies() {
+    setCookie('cookie_consent', 'accepted', 365);
+    document.getElementById('cookieBanner').style.display = 'none';
+    loadTracking();
+  }
+
+  function rejectCookies() {
+    setCookie('cookie_consent', 'rejected', 365);
+    document.getElementById('cookieBanner').style.display = 'none';
+  }
+
+  // Check on load
+  window.addEventListener('DOMContentLoaded', function() {
+    var consent = getCookie('cookie_consent');
+    if (!consent) {
+      document.getElementById('cookieBanner').style.display = 'flex';
+    } else if (consent === 'accepted') {
+      loadTracking();
+    }
+  });
+</script>
+
 <!-- NAV -->
 <nav>
   <a href="#" class="nav-logo"><img src="logo.svg" alt="LeoLan Digital"></a>
