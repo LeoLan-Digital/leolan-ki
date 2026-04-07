@@ -5,173 +5,600 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KI-Automatisierung für Restaurants | LeoLan Digital</title>
 <style>
+  :root {
+    --black: #000000;
+    --gray-1: #1c1c1e;
+    --gray-2: #2c2c2e;
+    --gray-3: #3a3a3c;
+    --text-primary: #f5f5f7;
+    --text-secondary: rgba(245,245,247,0.6);
+    --text-tertiary: rgba(245,245,247,0.4);
+    --accent: #0071e3;
+    --accent-light: #2997ff;
+    --font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Arial, sans-serif;
+  }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #0a0a0f; color: #fff; overflow-x: hidden; }
-  a { color: inherit; text-decoration: none; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font);
+    background: var(--black);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
 
   /* NAV */
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; background: rgba(10,10,15,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.06); }
-  .nav-logo { font-size: 20px; font-weight: 800; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-  .nav-links { display: flex; gap: 32px; font-size: 14px; color: rgba(255,255,255,0.6); }
-  .nav-links a:hover { color: #fff; }
-  .nav-cta { background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; padding: 10px 24px; border-radius: 50px; font-size: 14px; font-weight: 600; transition: opacity 0.2s; }
-  .nav-cta:hover { opacity: 0.85; }
-  @media (max-width: 768px) { .nav-links { display: none; } nav { padding: 16px 20px; } }
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 22px;
+    background: rgba(0,0,0,0.72);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
 
-  /* HERO */
-  .hero { min-height: 100vh; display: flex; align-items: center; padding: 120px 40px 80px; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(102,126,234,0.15), transparent), linear-gradient(180deg, #0a0a0f 0%, #0f0f1a 100%); }
-  .hero-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-  @media (max-width: 900px) { .hero-inner { grid-template-columns: 1fr; } .hero { padding: 100px 20px 60px; } }
-  .hero-text .badge { background: rgba(102,126,234,0.15); border: 1px solid rgba(102,126,234,0.3); padding: 8px 18px; border-radius: 50px; font-size: 13px; color: #a0b4ff; display: inline-block; margin-bottom: 24px; }
-  .hero-text h1 { font-size: clamp(36px, 5vw, 58px); font-weight: 900; line-height: 1.05; margin-bottom: 20px; letter-spacing: -1px; }
-  .hero-text h1 span { background: linear-gradient(135deg, #667eea, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-  .hero-text p { font-size: 18px; color: rgba(255,255,255,0.65); line-height: 1.7; margin-bottom: 36px; max-width: 480px; }
-  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
-  .btn-hero { display: inline-block; background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; padding: 16px 36px; border-radius: 50px; font-size: 16px; font-weight: 700; transition: transform 0.2s, box-shadow 0.2s; }
-  .btn-hero:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(102,126,234,0.45); }
-  .btn-outline { display: inline-block; border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 16px 36px; border-radius: 50px; font-size: 16px; font-weight: 600; transition: background 0.2s; }
-  .btn-outline:hover { background: rgba(255,255,255,0.08); }
-  .hero-stats { display: flex; gap: 32px; margin-top: 40px; flex-wrap: wrap; }
-  .hero-stat .num { font-size: 28px; font-weight: 800; background: linear-gradient(135deg, #667eea, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-  .hero-stat p { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+  .nav-logo {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.2px;
+  }
 
-  /* HERO IMAGE */
-  .hero-visual { position: relative; }
-  .hero-card-main { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.5); }
-  .hero-card-main img { width: 100%; height: 320px; object-fit: cover; display: block; }
-  .hero-card-overlay { padding: 20px; background: rgba(15,15,25,0.95); }
-  .hero-card-overlay h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
-  .hero-card-overlay p { font-size: 12px; color: rgba(255,255,255,0.5); }
-  .hero-badge-float { position: absolute; top: -16px; right: -16px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 16px; padding: 14px 20px; box-shadow: 0 8px 32px rgba(102,126,234,0.4); }
-  .hero-badge-float .big { font-size: 24px; font-weight: 900; }
-  .hero-badge-float .small { font-size: 11px; color: rgba(255,255,255,0.8); }
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text-primary); }
+
+  .nav-cta {
+    font-size: 13px;
+    color: var(--accent-light);
+    text-decoration: none;
+    font-weight: 500;
+    transition: opacity 0.2s;
+  }
+
+  .nav-cta:hover { opacity: 0.8; }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+  }
 
   /* SECTIONS */
-  .section { padding: 100px 40px; max-width: 1100px; margin: 0 auto; }
-  @media (max-width: 768px) { .section { padding: 60px 20px; } }
-  .section-label { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #667eea; margin-bottom: 12px; }
-  .section-title { font-size: clamp(28px, 4vw, 44px); font-weight: 800; line-height: 1.15; margin-bottom: 16px; }
-  .section-sub { font-size: 18px; color: rgba(255,255,255,0.55); max-width: 600px; line-height: 1.6; }
-  .section-header { margin-bottom: 56px; }
-  .divider { height: 1px; background: rgba(255,255,255,0.06); margin: 0 40px; }
+  section {
+    position: relative;
+    overflow: hidden;
+  }
 
-  /* PROBLEM SECTION */
-  .problems-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
-  .problem-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 28px; transition: border-color 0.2s, transform 0.2s; }
-  .problem-card:hover { border-color: rgba(255,80,80,0.3); transform: translateY(-4px); }
-  .problem-icon { font-size: 32px; margin-bottom: 16px; }
-  .problem-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 10px; }
-  .problem-card p { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 24px 80px;
+    background: radial-gradient(ellipse 100% 60% at 50% 0%, rgba(0,113,227,0.12), transparent 70%);
+  }
 
-  /* SERVICES */
-  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
-  .service-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; padding: 36px; transition: all 0.3s; position: relative; overflow: hidden; }
-  .service-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(102,126,234,0.05), transparent); opacity: 0; transition: opacity 0.3s; }
-  .service-card:hover { border-color: rgba(102,126,234,0.4); transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
-  .service-card:hover::before { opacity: 1; }
-  .service-icon { font-size: 40px; margin-bottom: 20px; }
-  .service-card h3 { font-size: 19px; font-weight: 700; margin-bottom: 12px; }
-  .service-card p { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.7; margin-bottom: 16px; }
-  .service-features { list-style: none; }
-  .service-features li { font-size: 13px; color: rgba(255,255,255,0.5); padding: 4px 0; }
-  .service-features li::before { content: '→ '; color: #667eea; }
+  .hero-eyebrow {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    margin-bottom: 20px;
+  }
 
-  /* HOW IT WORKS */
-  .how-bg { background: rgba(255,255,255,0.015); border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); }
-  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px; counter-reset: steps; }
-  .step { padding: 36px 28px; position: relative; counter-increment: steps; }
-  .step::after { content: ''; position: absolute; top: 50px; right: -4px; width: 8px; height: 8px; background: #667eea; border-radius: 50%; }
-  .step:last-child::after { display: none; }
-  .step-num { font-size: 48px; font-weight: 900; color: rgba(102,126,234,0.2); line-height: 1; margin-bottom: 16px; }
-  .step h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
-  .step p { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+  .hero h1 {
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 700;
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+    max-width: 900px;
+    margin-bottom: 24px;
+  }
 
-  /* PACKAGES */
-  .packages-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
-  .package { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; padding: 40px 36px; display: flex; flex-direction: column; position: relative; transition: transform 0.2s; }
-  .package:hover { transform: translateY(-4px); }
-  .package.featured { background: linear-gradient(135deg, rgba(102,126,234,0.12), rgba(118,75,162,0.12)); border-color: rgba(102,126,234,0.35); }
-  .featured-badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #667eea, #764ba2); padding: 6px 20px; border-radius: 50px; font-size: 12px; font-weight: 700; white-space: nowrap; }
-  .package h3 { font-size: 24px; font-weight: 800; margin-bottom: 8px; }
-  .package .tagline { font-size: 14px; color: rgba(255,255,255,0.45); margin-bottom: 24px; }
-  .package .price { font-size: 48px; font-weight: 900; line-height: 1; margin-bottom: 6px; }
-  .package .price-sub { font-size: 14px; color: rgba(255,255,255,0.45); margin-bottom: 28px; }
-  .package .price span { font-size: 20px; font-weight: 400; }
-  .pkg-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 20px 0; }
-  .package ul { list-style: none; flex: 1; margin-bottom: 28px; }
-  .package ul li { padding: 9px 0; font-size: 14px; color: rgba(255,255,255,0.75); display: flex; align-items: center; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-  .check { color: #22c55e; font-weight: 700; flex-shrink: 0; }
-  .pkg-btn { display: block; text-align: center; padding: 16px; border-radius: 14px; font-weight: 700; font-size: 15px; transition: all 0.2s; border: none; cursor: pointer; width: 100%; }
-  .pkg-btn-outline { background: rgba(255,255,255,0.07); color: #fff; border: 1px solid rgba(255,255,255,0.15); }
-  .pkg-btn-outline:hover { background: rgba(255,255,255,0.12); }
-  .pkg-btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; }
-  .pkg-btn-primary:hover { box-shadow: 0 8px 24px rgba(102,126,234,0.4); transform: translateY(-1px); }
+  .hero h1 .gradient {
+    background: linear-gradient(180deg, #f5f5f7 60%, rgba(245,245,247,0.3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 
-  /* ABOUT */
-  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-  @media (max-width: 800px) { .about-grid { grid-template-columns: 1fr; gap: 40px; } }
-  .about-image-block { position: relative; }
-  .about-img { width: 100%; border-radius: 24px; object-fit: cover; height: 480px; display: block; }
-  .about-img-card { position: absolute; bottom: -20px; right: -20px; background: rgba(15,15,25,0.95); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 16px 20px; backdrop-filter: blur(20px); }
-  .about-img-card .card-num { font-size: 24px; font-weight: 900; background: linear-gradient(135deg, #667eea, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-  .about-img-card .card-label { font-size: 12px; color: rgba(255,255,255,0.5); }
-  .about-content h2 { font-size: clamp(28px, 3.5vw, 40px); font-weight: 800; line-height: 1.2; margin-bottom: 24px; }
-  .about-content p { font-size: 16px; color: rgba(255,255,255,0.6); line-height: 1.8; margin-bottom: 20px; }
-  .about-content p strong { color: #fff; }
-  .timeline { margin: 32px 0; }
-  .timeline-item { display: flex; gap: 16px; margin-bottom: 20px; }
-  .timeline-dot { width: 10px; height: 10px; border-radius: 50%; background: #667eea; margin-top: 7px; flex-shrink: 0; }
-  .timeline-line { width: 2px; height: 100%; background: rgba(102,126,234,0.2); }
-  .timeline-item h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
-  .timeline-item p { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.5; }
-  .about-skills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
-  .skill { background: rgba(102,126,234,0.12); border: 1px solid rgba(102,126,234,0.25); padding: 8px 16px; border-radius: 50px; font-size: 13px; color: #a0b4ff; }
-  .about-stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 32px; }
-  .about-stat { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 20px; text-align: center; }
-  .about-stat .big-num { font-size: 32px; font-weight: 900; background: linear-gradient(135deg, #667eea, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-  .about-stat .label { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 4px; }
+  .hero-sub {
+    font-size: clamp(19px, 2.5vw, 24px);
+    color: var(--text-secondary);
+    max-width: 560px;
+    line-height: 1.55;
+    margin-bottom: 44px;
+    font-weight: 400;
+  }
 
-  /* TESTIMONIAL PLACEHOLDER */
-  .trust-section { background: rgba(255,255,255,0.015); border-top: 1px solid rgba(255,255,255,0.06); }
-  .trust-inner { max-width: 1100px; margin: 0 auto; padding: 60px 40px; }
-  @media (max-width: 768px) { .trust-inner { padding: 40px 20px; } }
-  .trust-title { text-align: center; font-size: 14px; color: rgba(255,255,255,0.35); margin-bottom: 40px; letter-spacing: 1px; text-transform: uppercase; }
-  .trust-logos { display: flex; justify-content: center; gap: 48px; flex-wrap: wrap; align-items: center; }
-  .trust-logo { font-size: 15px; font-weight: 700; color: rgba(255,255,255,0.2); letter-spacing: 1px; }
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 80px;
+  }
 
-  /* CONTACT FORM */
-  .contact-section { background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(102,126,234,0.12), transparent); }
-  .contact-inner { max-width: 1100px; margin: 0 auto; padding: 100px 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-  @media (max-width: 800px) { .contact-inner { grid-template-columns: 1fr; padding: 60px 20px; gap: 48px; } }
-  .contact-left h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 800; margin-bottom: 16px; line-height: 1.2; }
-  .contact-left p { font-size: 17px; color: rgba(255,255,255,0.55); line-height: 1.7; margin-bottom: 32px; }
-  .contact-info { display: flex; flex-direction: column; gap: 16px; }
-  .contact-item { display: flex; align-items: center; gap: 14px; }
-  .contact-item-icon { width: 44px; height: 44px; border-radius: 12px; background: rgba(102,126,234,0.15); border: 1px solid rgba(102,126,234,0.25); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
-  .contact-item-text h4 { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
-  .contact-item-text p { font-size: 13px; color: rgba(255,255,255,0.45); }
-  .form-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 36px; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
-  .form-group { margin-bottom: 16px; }
-  .form-group label { display: block; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.6); margin-bottom: 8px; }
-  .form-group input, .form-group select, .form-group textarea { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 13px 16px; color: #fff; font-size: 14px; outline: none; transition: border-color 0.2s, background 0.2s; font-family: inherit; }
-  .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.25); }
-  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: rgba(102,126,234,0.5); background: rgba(102,126,234,0.05); }
-  .form-group select option { background: #1a1a2e; }
-  .form-span { grid-column: 1 / -1; }
-  .form-submit { width: 100%; background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; border: none; padding: 16px; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 8px; }
-  .form-submit:hover { box-shadow: 0 8px 32px rgba(102,126,234,0.4); transform: translateY(-1px); }
-  .success-msg { background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.3); border-radius: 12px; padding: 16px; color: #4ade80; text-align: center; margin-top: 16px; display: none; font-size: 14px; }
+  .btn-primary {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    padding: 14px 30px;
+    border-radius: 980px;
+    font-size: 17px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    letter-spacing: -0.01em;
+  }
+
+  .btn-primary:hover { background: #0077ed; transform: scale(1.02); }
+
+  .btn-secondary {
+    display: inline-block;
+    color: var(--accent-light);
+    padding: 14px 30px;
+    border-radius: 980px;
+    font-size: 17px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .btn-secondary:hover { opacity: 0.8; }
+
+  /* HERO IMAGE */
+  .hero-img-wrap {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 40px 120px rgba(0,0,0,0.8);
+  }
+
+  .hero-img-wrap img {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.85);
+  }
+
+  @media (max-width: 768px) {
+    .hero-img-wrap img { height: 260px; }
+  }
+
+  /* STAT STRIP */
+  .stats {
+    padding: 60px 24px;
+    background: var(--gray-1);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .stats-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    text-align: center;
+  }
+
+  @media (max-width: 600px) {
+    .stats-inner { grid-template-columns: 1fr; }
+  }
+
+  .stat-num {
+    font-size: clamp(40px, 6vw, 64px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+  }
+
+  .stat-num span { color: var(--accent-light); }
+
+  .stat-label {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+    font-weight: 400;
+  }
+
+  /* FEATURE SECTIONS */
+  .feature {
+    padding: 120px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .feature-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .feature-inner.reverse { direction: rtl; }
+  .feature-inner.reverse > * { direction: ltr; }
+
+  @media (max-width: 860px) {
+    .feature-inner, .feature-inner.reverse {
+      grid-template-columns: 1fr;
+      direction: ltr;
+      gap: 48px;
+    }
+  }
+
+  .feature-tag {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    margin-bottom: 16px;
+  }
+
+  .feature h2 {
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    margin-bottom: 20px;
+    color: var(--text-primary);
+  }
+
+  .feature p {
+    font-size: 18px;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+    font-weight: 400;
+  }
+
+  .feature-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .feature-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .feature-list li::before {
+    content: '✓';
+    color: var(--accent-light);
+    font-weight: 700;
+    font-size: 14px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  .feature-img {
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+  }
+
+  .feature-img img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.8);
+    transition: transform 0.6s ease, filter 0.4s;
+  }
+
+  .feature-img:hover img { transform: scale(1.03); filter: brightness(0.9); }
+
+  /* PRODUCT GRID */
+  .grid-section {
+    padding: 120px 24px;
+    background: var(--gray-1);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .section-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 64px;
+  }
+
+  .section-header .tag {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    margin-bottom: 16px;
+  }
+
+  .section-header h2 {
+    font-size: clamp(32px, 4.5vw, 52px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    margin-bottom: 16px;
+  }
+
+  .section-header p {
+    font-size: 18px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .card-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  @media (max-width: 860px) {
+    .card-grid { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    background: var(--black);
+    padding: 48px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: background 0.2s;
+  }
+
+  .card:hover { background: #111; }
+
+  .card-icon {
+    font-size: 36px;
+    margin-bottom: 8px;
+  }
+
+  .card h3 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    color: var(--text-primary);
+  }
+
+  .card p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+
+  /* PRICING */
+  .pricing {
+    padding: 120px 24px;
+  }
+
+  .pricing-grid {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  @media (max-width: 720px) {
+    .pricing-grid { grid-template-columns: 1fr; }
+  }
+
+  .price-card {
+    background: var(--gray-1);
+    padding: 44px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .price-card.featured {
+    background: var(--accent);
+  }
+
+  .price-tier {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+
+  .price-card.featured .price-tier { color: rgba(255,255,255,0.7); }
+
+  .price-amount {
+    font-size: 44px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    margin: 8px 0 4px;
+  }
+
+  .price-period {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+  }
+
+  .price-card.featured .price-period { color: rgba(255,255,255,0.6); }
+
+  .price-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+  }
+
+  .price-features li {
+    font-size: 14px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.4;
+  }
+
+  .price-card.featured .price-features li { color: rgba(255,255,255,0.85); }
+
+  .price-features li::before {
+    content: '—';
+    color: var(--text-tertiary);
+    flex-shrink: 0;
+    font-size: 13px;
+    margin-top: 1px;
+  }
+
+  .price-card.featured .price-features li::before { color: rgba(255,255,255,0.4); }
+
+  .price-btn {
+    display: block;
+    text-align: center;
+    margin-top: 24px;
+    padding: 12px 24px;
+    border-radius: 980px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .price-btn-outline {
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--accent-light);
+  }
+
+  .price-btn-outline:hover { background: rgba(255,255,255,0.05); }
+
+  .price-btn-white {
+    background: #fff;
+    color: var(--accent);
+  }
+
+  .price-btn-white:hover { opacity: 0.9; }
+
+  /* TESTIMONIAL */
+  .testimonial {
+    padding: 120px 24px;
+    background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(0,113,227,0.1), transparent);
+    text-align: center;
+  }
+
+  .testimonial blockquote {
+    font-size: clamp(24px, 3.5vw, 42px);
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    max-width: 800px;
+    margin: 0 auto 40px;
+    color: var(--text-primary);
+  }
+
+  .testimonial cite {
+    font-style: normal;
+    font-size: 15px;
+    color: var(--text-secondary);
+  }
+
+  .testimonial cite strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  /* CTA */
+  .cta-section {
+    padding: 160px 24px;
+    text-align: center;
+    background: var(--gray-1);
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .cta-section h2 {
+    font-size: clamp(40px, 6vw, 72px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    max-width: 700px;
+    margin: 0 auto 24px;
+  }
+
+  .cta-section p {
+    font-size: 19px;
+    color: var(--text-secondary);
+    max-width: 480px;
+    margin: 0 auto 44px;
+    line-height: 1.55;
+  }
 
   /* FOOTER */
-  footer { border-top: 1px solid rgba(255,255,255,0.06); padding: 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: gap: 16px; }
-  @media (max-width: 600px) { footer { flex-direction: column; gap: 16px; padding: 32px 20px; text-align: center; } }
-  .footer-logo { font-size: 18px; font-weight: 800; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-  .footer-links { display: flex; gap: 24px; }
-  .footer-links a { font-size: 13px; color: rgba(255,255,255,0.4); transition: color 0.2s; }
-  .footer-links a:hover { color: #fff; }
-  .footer-copy { font-size: 12px; color: rgba(255,255,255,0.25); }
+  footer {
+    padding: 40px 24px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    text-align: center;
+  }
+
+  footer p {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    line-height: 1.8;
+  }
+
+  footer a { color: var(--text-tertiary); text-decoration: none; }
+  footer a:hover { color: var(--text-secondary); }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
 </style>
 </head>
 <body>
@@ -179,437 +606,244 @@
 <!-- NAV -->
 <nav>
   <div class="nav-logo">LeoLan Digital</div>
-  <div class="nav-links">
-    <a href="#leistungen">Leistungen</a>
-    <a href="#pakete">Preise</a>
-    <a href="#ueber-uns">Über uns</a>
-    <a href="#kontakt">Kontakt</a>
-  </div>
-  <a href="https://calendly.com/leolan-digital" target="_blank" class="nav-cta">Termin buchen</a>
+  <ul class="nav-links">
+    <li><a href="#features">Leistungen</a></li>
+    <li><a href="#pricing">Preise</a></li>
+    <li><a href="#kontakt">Kontakt</a></li>
+  </ul>
+  <a href="#kontakt" class="nav-cta">Jetzt anfragen ›</a>
 </nav>
 
 <!-- HERO -->
-<div class="hero">
-  <div class="hero-inner">
-    <div class="hero-text">
-      <div class="badge">🤖 KI-Automatisierung für Gastronomie</div>
-      <h1>Dein Restaurant.<br>Digital. <span>Automatisiert.</span></h1>
-      <p>Ich übernehme deinen digitalen Alltag — Social Media, Bewertungen, Reservierungen und Kundenkommunikation. Vollautomatisch, ohne IT-Kenntnisse.</p>
-      <div class="hero-btns">
-        <a href="https://calendly.com/leolan-digital" target="_blank" class="btn-hero">Kostenloses Erstgespräch →</a>
-        <a href="#leistungen" class="btn-outline">Mehr erfahren</a>
-      </div>
-      <div class="hero-stats">
-        <div class="hero-stat"><div class="num">5+</div><p>Jahre Gastronomie-Erfahrung</p></div>
-        <div class="hero-stat"><div class="num">24h</div><p>Reaktionszeit</p></div>
-        <div class="hero-stat"><div class="num">100%</div><p>Persönliche Betreuung</p></div>
-      </div>
+<section class="hero">
+  <p class="hero-eyebrow reveal">KI-Automatisierung für Gastronomie</p>
+  <h1 class="reveal reveal-delay-1">
+    <span class="gradient">Dein Restaurant.<br>Auf Autopilot.</span>
+  </h1>
+  <p class="hero-sub reveal reveal-delay-2">
+    Mehr Umsatz, weniger Aufwand. Wir automatisieren Bestellungen, Kommunikation und Marketing — damit du dich auf dein Essen konzentrieren kannst.
+  </p>
+  <div class="hero-btns reveal reveal-delay-3">
+    <a href="#kontakt" class="btn-primary">Kostenlos beraten lassen</a>
+    <a href="#features" class="btn-secondary">Mehr erfahren ›</a>
+  </div>
+  <div class="hero-img-wrap reveal reveal-delay-4">
+    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1400&q=80&auto=format&fit=crop" alt="Restaurant Automatisierung">
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stats-inner">
+    <div class="reveal">
+      <div class="stat-num">40<span>%</span></div>
+      <div class="stat-label">weniger Zeitaufwand für Verwaltung</div>
     </div>
-    <div class="hero-visual">
-      <div class="hero-card-main">
-        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80" alt="Restaurant">
-        <div class="hero-card-overlay">
-          <h4>Thiemanns Regionales & Feines · Hamburg</h4>
-          <p>Beispiel: Vollautomatisiertes Social Media & Bewertungsmanagement</p>
-        </div>
-      </div>
-      <div class="hero-badge-float">
-        <div class="big">+40%</div>
-        <div class="small">mehr Reichweite</div>
-      </div>
+    <div class="reveal reveal-delay-1">
+      <div class="stat-num">3<span>×</span></div>
+      <div class="stat-label">mehr Online-Reichweite durch KI-Content</div>
+    </div>
+    <div class="reveal reveal-delay-2">
+      <div class="stat-num">24<span>/7</span></div>
+      <div class="stat-label">automatische Gästekommunikation</div>
     </div>
   </div>
-</div>
+</section>
 
-<div class="divider"></div>
-
-<!-- PROBLEME -->
-<div class="section" id="leistungen">
-  <div class="section-header">
-    <div class="section-label">Das Problem</div>
-    <h2 class="section-title">Kommt dir das bekannt vor?</h2>
-    <p class="section-sub">Gastronomen verlieren täglich wertvolle Zeit mit digitalen Aufgaben, die sich automatisieren lassen.</p>
-  </div>
-  <div class="problems-grid">
-    <div class="problem-card">
-      <div class="problem-icon">📱</div>
-      <h3>Keine Zeit für Social Media</h3>
-      <p>Instagram und Google bleiben liegen, weil der Betrieb alles fordert. Neue Gäste finden dich nicht.</p>
-    </div>
-    <div class="problem-card">
-      <div class="problem-icon">⭐</div>
-      <h3>Bewertungen ohne Antwort</h3>
-      <p>Neue Google-Bewertungen bleiben unbeantwortet — das schadet deinem Ruf und deiner Sichtbarkeit.</p>
-    </div>
-    <div class="problem-card">
-      <div class="problem-icon">📞</div>
-      <h3>Reservierungen per Telefon</h3>
-      <p>Anrufe gehen verloren, Tische bleiben leer. Keine Übersicht, kein digitales System.</p>
-    </div>
-    <div class="problem-card">
-      <div class="problem-icon">💬</div>
-      <h3>Kundenkommunikation</h3>
-      <p>WhatsApp, Anfragen, Menüinfos — alles manuell, jeden Tag wieder. Das kostet Stunden.</p>
-    </div>
-  </div>
-</div>
-
-<div class="divider"></div>
-
-<!-- LEISTUNGEN -->
-<div class="section">
-  <div class="section-header">
-    <div class="section-label">Die Lösung</div>
-    <h2 class="section-title">Was ich für dich automatisiere</h2>
-    <p class="section-sub">Konkrete Systeme die täglich für dich arbeiten — während du dich auf deine Gäste konzentrierst.</p>
-  </div>
-  <div class="services-grid">
-    <div class="service-card">
-      <div class="service-icon">📸</div>
-      <h3>Social Media Automatisierung</h3>
-      <p>Tägliche Instagram-Posts, Stories und Inhalte — vollautomatisch generiert und veröffentlicht.</p>
-      <ul class="service-features">
-        <li>Automatische Post-Erstellung täglich</li>
-        <li>KI-generierte Bildunterschriften & Hashtags</li>
-        <li>Geplante Veröffentlichung zur besten Zeit</li>
-        <li>Reichweiten-Analyse monatlich</li>
+<!-- FEATURE 1 -->
+<section class="feature" id="features">
+  <div class="feature-inner">
+    <div class="reveal">
+      <div class="feature-tag">Online-Bestellungen</div>
+      <h2>Bestellungen, die sich selbst verwalten.</h2>
+      <p>Dein digitales Bestellsystem nimmt Reservierungen, To-Go-Bestellungen und Catering-Anfragen automatisch entgegen — rund um die Uhr, ohne dass du eingreifen musst.</p>
+      <ul class="feature-list">
+        <li>Digitale Speisekarte per QR-Code</li>
+        <li>Automatische Bestellbestätigungen</li>
+        <li>Integrierte Online-Zahlung</li>
+        <li>Echtzeit-Bestellübersicht im Dashboard</li>
       </ul>
     </div>
-    <div class="service-card">
-      <div class="service-icon">⭐</div>
-      <h3>Google Bewertungsmanagement</h3>
-      <p>Automatische, personalisierte Antworten auf neue Google-Bewertungen — in Minuten statt Stunden.</p>
-      <ul class="service-features">
-        <li>Echtzeit-Benachrichtigung bei neuer Bewertung</li>
-        <li>KI-generierte, persönliche Antwort</li>
-        <li>Anpassbar an deinen Ton und Stil</li>
-        <li>Positive Bewertungen aktiv fördern</li>
-      </ul>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">📅</div>
-      <h3>Online-Reservierungssystem</h3>
-      <p>Gäste buchen rund um die Uhr online. Kein Telefon mehr, kein verlorener Tisch.</p>
-      <ul class="service-features">
-        <li>Buchungssystem einrichten & integrieren</li>
-        <li>Automatische Bestätigung per E-Mail/SMS</li>
-        <li>Erinnerung & No-Show-Reduzierung</li>
-        <li>Integration in deine Website</li>
-      </ul>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">💬</div>
-      <h3>WhatsApp Automatisierung</h3>
-      <p>Anfragen, Menüinfos und Stammkundenkommunikation — halbautomatisiert, aber persönlich.</p>
-      <ul class="service-features">
-        <li>Automatische Antworten auf häufige Fragen</li>
-        <li>Tagesmenü automatisch versenden</li>
-        <li>Stammkunden-Newsletter</li>
-        <li>Catering-Anfragen strukturiert erfassen</li>
-      </ul>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">📊</div>
-      <h3>Monatliches Reporting</h3>
-      <p>Klarer Überblick was funktioniert — datenbasiert, verständlich, umsetzbar.</p>
-      <ul class="service-features">
-        <li>Reichweite & Engagement-Auswertung</li>
-        <li>Bewertungs-Entwicklung im Überblick</li>
-        <li>Reservierungs-Statistiken</li>
-        <li>Konkrete Empfehlungen für den Folgemonat</li>
-      </ul>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">🎯</div>
-      <h3>Neue Gäste gewinnen</h3>
-      <p>Bessere lokale Sichtbarkeit — damit dich potenzielle Gäste in der Umgebung finden.</p>
-      <ul class="service-features">
-        <li>Google My Business vollständig optimieren</li>
-        <li>Lokale SEO-Maßnahmen</li>
-        <li>Gezielte Content-Strategie</li>
-        <li>Firmenkunden & Catering aktiv akquirieren</li>
-      </ul>
+    <div class="feature-img reveal reveal-delay-1">
+      <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=900&q=80&auto=format&fit=crop" alt="Restaurant Bestellung">
     </div>
   </div>
-</div>
+</section>
 
-<!-- SO LÄUFT ES -->
-<div class="how-bg">
-  <div style="max-width:1100px;margin:0 auto;padding:80px 40px">
-    <div class="section-header" style="margin-bottom:0">
-      <div class="section-label">Der Prozess</div>
-      <h2 class="section-title">So funktioniert die Zusammenarbeit</h2>
-    </div>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">01</div>
-        <h3>Kostenloses Erstgespräch</h3>
-        <p>Wir besprechen 30 Minuten lang deinen Betrieb, deine Ziele und welche Prozesse am meisten Zeit kosten.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <h3>Analyse & Konzept</h3>
-        <p>Ich analysiere deinen digitalen Auftritt und erstelle ein konkretes Konzept — welche Tools, welcher Aufwand, welches Ergebnis.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <h3>Setup & Einrichtung</h3>
-        <p>Ich richte alles ein, teste es und stelle sicher, dass es stabil läuft. Du musst nichts selbst konfigurieren.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">04</div>
-        <h3>Läuft automatisch</h3>
-        <p>Das System arbeitet täglich für dich. Du bekommst monatliche Berichte und ich bin bei Fragen immer erreichbar.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- PAKETE -->
-<div class="section" id="pakete">
-  <div class="section-header">
-    <div class="section-label">Preise</div>
-    <h2 class="section-title">Pakete & Preise</h2>
-    <p class="section-sub">Transparent kalkuliert. Kein Kleingedrucktes. Kein laufendes Abo wenn du es nicht willst.</p>
-  </div>
-  <div class="packages-grid">
-    <div class="package">
-      <h3>Starter</h3>
-      <p class="tagline">Für den ersten Schritt in die Automatisierung</p>
-      <div class="price">650 <span>€</span></div>
-      <p class="price-sub">einmalige Einrichtung</p>
-      <div class="pkg-divider"></div>
-      <ul>
-        <li><span class="check">✓</span> Google My Business vollständig optimiert</li>
-        <li><span class="check">✓</span> Automatische Bewertungsantworten eingerichtet</li>
-        <li><span class="check">✓</span> Instagram-Automatisierung aufgesetzt</li>
-        <li><span class="check">✓</span> 14 Tage Support nach Einrichtung</li>
-        <li><span class="check">✓</span> Übergabe & Erklärung aller Systeme</li>
+<!-- FEATURE 2 -->
+<section class="feature">
+  <div class="feature-inner reverse">
+    <div class="reveal">
+      <div class="feature-tag">KI-Marketing</div>
+      <h2>Social Media auf Autopilot.</h2>
+      <p>Unsere KI erstellt automatisch ansprechende Posts für Instagram und Google — basierend auf deiner Karte, Events und Tagesangeboten. Keine Agentur nötig.</p>
+      <ul class="feature-list">
+        <li>Tägliche KI-generierte Instagram-Posts</li>
+        <li>Google Business automatisch aktuell</li>
+        <li>Automatische Reaktion auf Bewertungen</li>
+        <li>Lokales SEO, das wirklich funktioniert</li>
       </ul>
-      <button class="pkg-btn pkg-btn-outline" onclick="window.open('https://www.paypal.com/paypalme/LeoLanDE/650','_blank')">Jetzt kaufen — 650 €</button>
     </div>
-    <div class="package featured">
-      <div class="featured-badge">⭐ Am beliebtesten</div>
-      <h3>Standard</h3>
-      <p class="tagline">Die komplette digitale Infrastruktur</p>
-      <div class="price">1.990 <span>€</span></div>
-      <p class="price-sub">einmalige Einrichtung</p>
-      <div class="pkg-divider"></div>
-      <ul>
-        <li><span class="check">✓</span> Alles aus Starter</li>
-        <li><span class="check">✓</span> Online-Reservierungssystem</li>
-        <li><span class="check">✓</span> WhatsApp-Automatisierung</li>
-        <li><span class="check">✓</span> Monatliches Reporting (3 Monate)</li>
-        <li><span class="check">✓</span> 30 Tage Priority-Support</li>
-        <li><span class="check">✓</span> Individuelles Onboarding</li>
+    <div class="feature-img reveal reveal-delay-1">
+      <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=900&q=80&auto=format&fit=crop" alt="Restaurant Marketing">
+    </div>
+  </div>
+</section>
+
+<!-- FEATURE 3 -->
+<section class="feature">
+  <div class="feature-inner">
+    <div class="reveal">
+      <div class="feature-tag">Gästekommunikation</div>
+      <h2>Kein Anruf mehr der unbeantwortet bleibt.</h2>
+      <p>Ein KI-Assistent beantwortet Fragen zu Öffnungszeiten, Speisekarte und Reservierungen — direkt über WhatsApp, Instagram oder deine Website.</p>
+      <ul class="feature-list">
+        <li>WhatsApp-Bot für Reservierungen</li>
+        <li>Automatische FAQ-Antworten</li>
+        <li>Erinnerungen vor dem Termin</li>
+        <li>Nachfass-Nachrichten bei No-Shows</li>
       </ul>
-      <button class="pkg-btn pkg-btn-primary" onclick="window.open('https://www.paypal.com/paypalme/LeoLanDE/1990','_blank')">Jetzt kaufen — 1.990 €</button>
     </div>
-    <div class="package">
-      <h3>Premium</h3>
-      <p class="tagline">Laufende Betreuung & ständige Optimierung</p>
-      <div class="price">350 <span>€</span></div>
-      <p class="price-sub">pro Monat, jederzeit kündbar</p>
-      <div class="pkg-divider"></div>
-      <ul>
-        <li><span class="check">✓</span> Alles aus Standard (Einrichtung inklusive)</li>
-        <li><span class="check">✓</span> Monatliche Content-Planung</li>
-        <li><span class="check">✓</span> Laufende Optimierung aller Systeme</li>
-        <li><span class="check">✓</span> Persönlicher Ansprechpartner</li>
-        <li><span class="check">✓</span> Neues Feature jeden Monat</li>
+    <div class="feature-img reveal reveal-delay-1">
+      <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&q=80&auto=format&fit=crop" alt="Restaurant Kommunikation">
+    </div>
+  </div>
+</section>
+
+<!-- CARDS -->
+<section class="grid-section">
+  <div class="section-header reveal">
+    <div class="tag">Was wir bieten</div>
+    <h2>Alles aus einer Hand.</h2>
+    <p>Keine 5 verschiedenen Tools. Kein technisches Vorwissen nötig. Wir richten alles ein — du profitierst sofort.</p>
+  </div>
+  <div class="card-grid">
+    <div class="card reveal">
+      <div class="card-icon">🍽️</div>
+      <h3>Digitale Speisekarte</h3>
+      <p>QR-Code am Tisch. Gäste sehen dein Menü sofort — immer aktuell, mehrsprachig, ohne Druck.</p>
+    </div>
+    <div class="card reveal reveal-delay-1">
+      <div class="card-icon">🤖</div>
+      <h3>KI-Assistent</h3>
+      <p>Beantwortet Fragen, nimmt Reservierungen an und kommuniziert mit Gästen — automatisch, 24/7.</p>
+    </div>
+    <div class="card reveal reveal-delay-2">
+      <div class="card-icon">📱</div>
+      <h3>Social Media KI</h3>
+      <p>Täglich frische Posts für Instagram und Facebook — erstellt von KI, angepasst an dein Restaurant.</p>
+    </div>
+    <div class="card reveal">
+      <div class="card-icon">📊</div>
+      <h3>Dashboard</h3>
+      <p>Alle Bestellungen, Reservierungen und Kennzahlen auf einem Blick — von überall erreichbar.</p>
+    </div>
+    <div class="card reveal reveal-delay-1">
+      <div class="card-icon">⭐</div>
+      <h3>Bewertungsmanagement</h3>
+      <p>Automatische Antworten auf Google-Rezensionen. Mehr Sterne, weniger Aufwand.</p>
+    </div>
+    <div class="card reveal reveal-delay-2">
+      <div class="card-icon">🔔</div>
+      <h3>Benachrichtigungen</h3>
+      <p>Neue Bestellung? Neue Reservierung? Du wirst sofort auf dem Handy benachrichtigt.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testimonial">
+  <blockquote class="reveal">
+    "Seit wir LeoLan Digital einsetzen, läuft unser Online-Auftritt von alleine. Wir haben 40% mehr Tischreservierungen und müssen nichts mehr manuell posten."
+  </blockquote>
+  <cite class="reveal reveal-delay-1"><strong>Axel Thiemann</strong> — Thiemanns Regionales & Feines, Hamburg</cite>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="section-header reveal">
+    <div class="tag">Preise</div>
+    <h2>Einfach. Transparent.</h2>
+    <p>Keine versteckten Kosten. Kein langer Vertrag. Monatlich kündbar.</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="price-card reveal">
+      <div class="price-tier">Starter</div>
+      <div class="price-amount">199 €</div>
+      <div class="price-period">pro Monat, zzgl. MwSt.</div>
+      <ul class="price-features">
+        <li>Digitale Speisekarte (QR)</li>
+        <li>Online-Bestellsystem</li>
+        <li>WhatsApp-Assistent</li>
+        <li>E-Mail-Support</li>
       </ul>
-      <button class="pkg-btn pkg-btn-outline" onclick="window.open('https://www.paypal.com/paypalme/LeoLanDE/350','_blank')">Jetzt starten — 350 €/Monat</button>
+      <a href="#kontakt" class="price-btn price-btn-outline">Anfragen</a>
+    </div>
+    <div class="price-card featured reveal reveal-delay-1">
+      <div class="price-tier">Pro</div>
+      <div class="price-amount">349 €</div>
+      <div class="price-period">pro Monat, zzgl. MwSt.</div>
+      <ul class="price-features">
+        <li>Alles aus Starter</li>
+        <li>KI Social Media (täglich)</li>
+        <li>Google Business Automatisierung</li>
+        <li>Bewertungsmanagement</li>
+        <li>Telefonischer Support</li>
+      </ul>
+      <a href="#kontakt" class="price-btn price-btn-white">Anfragen</a>
+    </div>
+    <div class="price-card reveal reveal-delay-2">
+      <div class="price-tier">Enterprise</div>
+      <div class="price-amount">Individuell</div>
+      <div class="price-period">auf Anfrage</div>
+      <ul class="price-features">
+        <li>Alles aus Pro</li>
+        <li>Individuelle Automatisierungen</li>
+        <li>Mehrere Standorte</li>
+        <li>Dedicated Account Manager</li>
+        <li>SLA & Priority Support</li>
+      </ul>
+      <a href="#kontakt" class="price-btn price-btn-outline">Anfragen</a>
     </div>
   </div>
-</div>
+</section>
 
-<div class="divider"></div>
-
-<!-- ÜBER UNS -->
-<div class="section" id="ueber-uns">
-  <div class="about-grid">
-    <div class="about-image-block">
-      <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80" alt="Kamaleddin Nazari" class="about-img">
-      <div class="about-img-card">
-        <div class="card-num">5+ Jahre</div>
-        <div class="card-label">Gastronomie-Erfahrung</div>
-      </div>
-    </div>
-    <div class="about-content">
-      <div class="section-label">Über mich</div>
-      <h2>Gastronom & KI-Experte aus einer Person</h2>
-      <p>Ich bin <strong>Kamaleddin Nazari</strong> — ich weiß wie Restaurants wirklich funktionieren, weil ich selbst jahrelang drin war. Nicht als Berater von außen, sondern mittendrin.</p>
-      <p>Nach meiner Ausbildung als <strong>Fachkraft im Gastgewerbe</strong> bei Marché Mövenpick am Hamburger Flughafen war ich rund fünf Jahre als <strong>Bordrestaurantleiter bei der DB Fernverkehr AG</strong> tätig — mit voller Umsatz- und Teamverantwortung.</p>
-      <p>Heute kombiniere ich diese Erfahrung mit modernen <strong>KI-Tools und Automatisierungssystemen</strong>. Ich weiß was Gastronomen wirklich brauchen — und was realistisch umsetzbar ist.</p>
-
-      <div class="timeline">
-        <div class="timeline-item">
-          <div>
-            <div style="width:10px;height:10px;border-radius:50%;background:#667eea;margin-top:5px;margin-right:16px;flex-shrink:0;display:inline-block"></div>
-          </div>
-          <div>
-            <h4>Ausbildung Fachkraft im Gastgewerbe</h4>
-            <p>Marché Mövenpick · Hamburg Flughafen · 2 Jahre Praxis in Service, Organisation und Qualität</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div>
-            <div style="width:10px;height:10px;border-radius:50%;background:#764ba2;margin-top:5px;margin-right:16px;flex-shrink:0;display:inline-block"></div>
-          </div>
-          <div>
-            <h4>Bordrestaurantleiter & IKV</h4>
-            <p>DB Fernverkehr AG · ca. 5 Jahre · Teamführung, Umsatzverantwortung, Qualitätssicherung</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div>
-            <div style="width:10px;height:10px;border-radius:50%;background:#22c55e;margin-top:5px;margin-right:16px;flex-shrink:0;display:inline-block"></div>
-          </div>
-          <div>
-            <h4>KI & Automatisierung · LeoLan Digital</h4>
-            <p>Heute · Spezialisiert auf Gastronomie · n8n, KI-Tools, Prozessautomatisierung</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="about-skills">
-        <span class="skill">5+ Jahre Gastronomie</span>
-        <span class="skill">KI & Automatisierung</span>
-        <span class="skill">Deutsch · Türkisch · Persisch · Turkmenisch</span>
-        <span class="skill">n8n & API</span>
-        <span class="skill">Social Media</span>
-        <span class="skill">Google My Business</span>
-      </div>
-
-      <div class="about-stats-row">
-        <div class="about-stat"><div class="big-num">4</div><div class="label">Sprachen</div></div>
-        <div class="about-stat"><div class="big-num">24h</div><div class="label">Reaktionszeit</div></div>
-        <div class="about-stat"><div class="big-num">100%</div><div class="label">Persönlich</div></div>
-      </div>
-    </div>
+<!-- CTA -->
+<section class="cta-section" id="kontakt">
+  <h2 class="reveal">Bereit für<br>dein smartes Restaurant?</h2>
+  <p class="reveal reveal-delay-1">Kostenloses Erstgespräch — 30 Minuten, kein Verkaufsdruck. Wir schauen gemeinsam, was für dein Restaurant sinnvoll ist.</p>
+  <div class="reveal reveal-delay-2">
+    <a href="mailto:business@leolan.net" class="btn-primary" style="font-size:18px; padding: 18px 44px;">Jetzt Termin vereinbaren</a>
   </div>
-</div>
-
-<div class="trust-section">
-  <div class="trust-inner">
-    <div class="trust-title">Bekannte Tools & Systeme die ich einsetze</div>
-    <div class="trust-logos">
-      <div class="trust-logo">Instagram API</div>
-      <div class="trust-logo">Google Business</div>
-      <div class="trust-logo">WhatsApp Business</div>
-      <div class="trust-logo">n8n</div>
-      <div class="trust-logo">OpenAI</div>
-      <div class="trust-logo">Calendly</div>
-    </div>
-  </div>
-</div>
-
-<!-- KONTAKT -->
-<div class="contact-section" id="kontakt">
-  <div class="contact-inner">
-    <div class="contact-left">
-      <div class="section-label">Kontakt</div>
-      <h2>Bereit für dein automatisiertes Restaurant?</h2>
-      <p>Schreib mir direkt oder buch ein kostenloses 30-Minuten-Gespräch. Ich zeige dir konkret was bei deinem Betrieb möglich ist — ohne Verpflichtung.</p>
-      <div class="contact-info">
-        <div class="contact-item">
-          <div class="contact-item-icon">📧</div>
-          <div class="contact-item-text">
-            <h4>E-Mail</h4>
-            <p>business@leolan.net</p>
-          </div>
-        </div>
-        <div class="contact-item">
-          <div class="contact-item-icon">📱</div>
-          <div class="contact-item-text">
-            <h4>Instagram</h4>
-            <p><a href="https://www.instagram.com/leo_lan.de/" target="_blank" style="color:rgba(255,255,255,0.45)">@leo_lan.de</a></p>
-          </div>
-        </div>
-        <div class="contact-item">
-          <div class="contact-item-icon">🗓️</div>
-          <div class="contact-item-text">
-            <h4>Direktbuchung</h4>
-            <p><a href="https://calendly.com/leolan-digital" target="_blank" style="color:rgba(255,255,255,0.45)">calendly.com/leolan-digital</a></p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="form-card">
-      <h3 style="font-size:20px;font-weight:700;margin-bottom:24px">Kostenlose Analyse anfragen</h3>
-      <form action="https://formspree.io/f/xgopdnll" method="POST" id="contactForm">
-        <div class="form-row">
-          <div class="form-group">
-            <label>Dein Name *</label>
-            <input type="text" name="name" required placeholder="Max Mustermann">
-          </div>
-          <div class="form-group">
-            <label>E-Mail *</label>
-            <input type="email" name="email" required placeholder="max@restaurant.de">
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Restaurant / Betrieb</label>
-          <input type="text" name="restaurant" placeholder="Mein Restaurant Hamburg">
-        </div>
-        <div class="form-group">
-          <label>Welches Paket interessiert dich?</label>
-          <select name="paket">
-            <option value="">Bitte wählen...</option>
-            <option value="starter">Starter — 650 € einmalig</option>
-            <option value="standard">Standard — 1.990 € einmalig</option>
-            <option value="premium">Premium — 350 €/Monat</option>
-            <option value="erstgespraech">Erst mal nur Erstgespräch</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Nachricht</label>
-          <textarea name="message" rows="4" placeholder="Was beschäftigt dich am meisten? Welche Prozesse kosten dich täglich die meiste Zeit?"></textarea>
-        </div>
-        <button type="submit" class="form-submit">Anfrage absenden →</button>
-        <div class="success-msg" id="successMsg">✓ Danke! Ich melde mich innerhalb von 24 Stunden bei dir.</div>
-      </form>
-    </div>
-  </div>
-</div>
+</section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">LeoLan Digital</div>
-  <div class="footer-links">
-    <a href="#leistungen">Leistungen</a>
-    <a href="#pakete">Preise</a>
-    <a href="#ueber-uns">Über uns</a>
-    <a href="mailto:business@leolan.net">E-Mail</a>
-    <a href="https://www.instagram.com/leo_lan.de/" target="_blank">Instagram</a>
-  </div>
-  <div class="footer-copy">© 2026 LeoLan Digital · Kamaleddin Nazari</div>
+  <p>
+    © 2026 LeoLan Digital · <a href="mailto:business@leolan.net">business@leolan.net</a><br>
+    <a href="#">Impressum</a> · <a href="#">Datenschutz</a>
+  </p>
 </footer>
 
 <script>
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  var btn = this.querySelector('.form-submit');
-  btn.textContent = 'Wird gesendet...';
-  btn.disabled = true;
-  fetch(this.action, {
-    method: 'POST',
-    body: new FormData(this),
-    headers: {'Accept': 'application/json'}
-  }).then(function(r) {
-    if (r.ok) {
-      document.getElementById('successMsg').style.display = 'block';
-      document.getElementById('contactForm').reset();
-      btn.textContent = 'Gesendet ✓';
-    } else {
-      btn.textContent = 'Fehler — bitte erneut versuchen';
-      btn.disabled = false;
-    }
-  }).catch(function() {
-    btn.textContent = 'Fehler — bitte erneut versuchen';
-    btn.disabled = false;
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  revealEls.forEach(el => io.observe(el));
+
+  // Trigger visible for hero elements immediately
+  document.querySelectorAll('.hero .reveal').forEach(el => {
+    setTimeout(() => el.classList.add('visible'), 100);
   });
-});
 </script>
+
 </body>
 </html>
