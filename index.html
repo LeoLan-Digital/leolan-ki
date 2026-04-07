@@ -46,11 +46,19 @@
     border-bottom: 1px solid rgba(255,255,255,0.08);
   }
 
+  .nav-logo img {
+    height: 28px;
+    width: auto;
+    display: block;
+    filter: brightness(0) invert(1);
+  }
+
   .nav-logo {
     font-size: 15px;
     font-weight: 600;
     color: var(--text-primary);
     letter-spacing: -0.2px;
+    text-decoration: none;
   }
 
   .nav-links {
@@ -649,6 +657,43 @@
     line-height: 1.8;
   }
 
+  .footer-logo {
+    margin-bottom: 20px;
+  }
+
+  .footer-logo img {
+    height: 32px;
+    width: auto;
+    filter: brightness(0) invert(1);
+    opacity: 0.5;
+  }
+
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  .social-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.12);
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+    font-size: 16px;
+  }
+
+  .social-links a:hover {
+    border-color: rgba(255,255,255,0.3);
+    color: var(--text-primary);
+  }
+
   footer a { color: var(--text-tertiary); text-decoration: none; }
   footer a:hover { color: var(--text-secondary); }
 
@@ -674,7 +719,7 @@
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">LeoLan Digital</div>
+  <a href="#" class="nav-logo"><img src="logo.png" alt="LeoLan Digital"></a>
   <ul class="nav-links">
     <li><a href="#features">Leistungen</a></li>
     <li><a href="#pricing">Preise</a></li>
@@ -897,6 +942,14 @@
 
 <!-- FOOTER -->
 <footer>
+  <div class="footer-logo">
+    <img src="logo.png" alt="LeoLan Digital">
+  </div>
+  <div class="social-links">
+    <a href="https://instagram.com/leo_lan.de" target="_blank" title="Instagram">&#x1F4F7;</a>
+    <a href="https://wa.me/4915678483700" target="_blank" title="WhatsApp">&#x1F4AC;</a>
+    <a href="mailto:business@leolan.net" title="E-Mail">&#x2709;&#xFE0F;</a>
+  </div>
   <p>
     © 2026 LeoLan Digital · <a href="mailto:business@leolan.net">business@leolan.net</a><br>
     <a href="#">Impressum</a> · <a href="#">Datenschutz</a>
