@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LeoLan Digital Dashboard</title>
+  <style>
+    :root {
+      --bg: #0f1729;
+      --bg-soft: #16213a;
+      --card: rgba(26, 39, 68, 0.84);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --primary: #1a2744;
+      --accent: #f5a623;
+      --text: #ffffff;
+      --muted: rgba(255,255,255,0.72);
+      --danger: #ff5c5c;
+      --success: #2dd881;
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(245, 166, 35, 0.18), transparent 25%),
+        radial-gradient(circle at top left, rgba(67, 97, 157, 0.25), transparent 28%),
+        linear-gradient(160deg, #09101f 0%, #101a2f 45%, #0d1527 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+      mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+    }
+
+    .lock-screen {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(7, 12, 24, 0.86);
+      backdrop-filter: blur(18px);
+      z-index: 1000;
+    }
+
+    .lock-card {
+      width: min(460px, 100%);
+      padding: 32px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(26, 39, 68, 0.95), rgba(14, 24, 44, 0.95));
+      border: 1px solid rgba(245, 166, 35, 0.22);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .lock-badge {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 18px;
+      border-radius: 20px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(245,166,35,0.2), rgba(245,166,35,0.08));
+      border: 1px solid rgba(245,166,35,0.35);
+      font-size: 34px;
+    }
+
+    .lock-card h1 {
+      margin: 0 0 10px;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+    }
+
+    .lock-card p {
+      margin: 0 0 24px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .password-row {
+      display: flex;
+      gap: 12px;
+      flex-direction: column;
+    }
+
+    .password-row input {
+      width: 100%;
+      padding: 16px 18px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      font-size: 1rem;
+      outline: none;
+      transition: 0.2s ease;
+    }
+
+    .password-row input:focus {
+      border-color: rgba(245, 166, 35, 0.9);
+      box-shadow: 0 0 0 4px rgba(245, 166, 35, 0.12);
+    }
+
+    .password-row button {
+      width: 100%;
+      padding: 16px 18px;
+      border: none;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #f5a623 0%, #ffbe4d 100%);
+      color: #1a2744;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 12px 24px rgba(245, 166, 35, 0.2);
+    }
+
+    .password-row button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 28px rgba(245, 166, 35, 0.28);
+    }
+
+    .error-message {
+      min-height: 22px;
+      margin-top: 14px;
+      font-size: 0.95rem;
+      color: var(--danger);
+      font-weight: 600;
+    }
+
+    .app {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(14px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .app.unlocked {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 28px;
+      padding: 24px;
+      border-radius: 26px;
+      background: linear-gradient(135deg, rgba(26, 39, 68, 0.92), rgba(18, 30, 54, 0.92));
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 18px;
+      backdrop-filter: blur(12px);
+      z-index: 10;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .brand-mark {
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(245,166,35,0.22), rgba(245,166,35,0.08));
+      border: 1px solid rgba(245,166,35,0.32);
+      font-size: 28px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+
+    .brand h2 {
+      margin: 0;
+      font-size: clamp(1.4rem, 2vw, 2rem);
+    }
+
+    .brand p,
+    .meta {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .meta strong {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--muted);
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    .pulse {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--success);
+      box-shadow: 0 0 0 0 rgba(45,216,129,0.6);
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(45,216,129,0.55); }
+      70% { box-shadow: 0 0 0 12px rgba(45,216,129,0); }
+      100% { box-shadow: 0 0 0 0 rgba(45,216,129,0); }
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      grid-column: span 4;
+      position: relative;
+      overflow: hidden;
+      padding: 22px;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(26,39,68,0.84), rgba(17,26,45,0.92));
+      border: 1px solid var(--card-border);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: auto -40px -40px auto;
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, rgba(245,166,35,0.16), transparent 70%);
+      pointer-events: none;
+    }
+
+    .card.wide { grid-column: span 6; }
+    .card.full { grid-column: span 12; }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .card-title {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .card-subtitle {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .chip {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(245,166,35,0.12);
+      border: 1px solid rgba(245,166,35,0.18);
+      color: #ffd487;
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .stats {
+      display: grid;
+      gap: 12px;
+    }
+
+    .stat-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.045);
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .label {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .value {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text);
+      text-align: right;
+    }
+
+    .value.loading {
+      color: #ffd487;
+      opacity: 0.95;
+    }
+
+    .value.good { color: #8df0bb; }
+    .value.bad { color: #ff9797; }
+
+    .automation-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .automation-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.045);
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .automation-item small {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+    .badge-success {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(45,216,129,0.14);
+      color: #99f2c3;
+      border: 1px solid rgba(45,216,129,0.22);
+      font-weight: 800;
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+
+    footer {
+      margin-top: 26px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 1100px) {
+      .card, .card.wide { grid-column: span 6; }
+    }
+
+    @media (max-width: 760px) {
+      .topbar {
+        position: static;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .card, .card.wide, .card.full { grid-column: span 12; }
+      .brand { align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="lock-screen" id="lockScreen">
+    <div class="lock-card">
+      <div class="lock-badge">🔐</div>
+      <h1>LeoLan Dashboard</h1>
+      <p>Geschützter Bereich für interne Kennzahlen. Bitte Passwort eingeben, um das Dashboard zu öffnen.</p>
+      <form id="loginForm" class="password-row">
+        <input id="passwordInput" type="password" placeholder="Passwort eingeben" autocomplete="current-password" />
+        <button type="submit">Dashboard entsperren</button>
+      </form>
+      <div id="errorMessage" class="error-message"></div>
+    </div>
+  </div>
+
+  <main class="app" id="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">📊</div>
+        <div>
+          <h2>LeoLan Digital Dashboard</h2>
+          <p class="meta">Letzte Aktualisierung: <strong id="lastUpdated">Lade...</strong></p>
+        </div>
+      </div>
+      <div class="status-pill">
+        <span class="pulse"></span>
+        <span id="apiStatus">API wird geladen…</span>
+      </div>
+    </header>
+
+    <section class="grid">
+      <article class="card">
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">📸 Instagram @leolan_digital</h3>
+            <p class="card-subtitle">Performance & Aktivität</p>
+          </div>
+          <span class="chip">Social</span>
+        </div>
+        <div class="stats">
+          <div class="stat-row"><span class="label">Follower</span><span class="value loading" data-key="instagram.followers">Lade...</span></div>
+          <div class="stat-row"><span class="label">Posts heute</span><span class="value loading" data-key="instagram.postsToday">Lade...</span></div>
+          <div class="stat-row"><span class="label">Likes heute</span><span class="value loading" data-key="instagram.likesToday">Lade...</span></div>
+          <div class="stat-row"><span class="label">Story aktiv</span><span class="value loading" data-key="instagram.storyActive">Lade...</span></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">📘 Facebook Leo-Lan</h3>
+            <p class="card-subtitle">Page-Werte auf einen Blick</p>
+          </div>
+          <span class="chip">Meta</span>
+        </div>
+        <div class="stats">
+          <div class="stat-row"><span class="label">Page Likes</span><span class="value loading" data-key="facebook.pageLikes">Lade...</span></div>
+          <div class="stat-row"><span class="label">Posts heute</span><span class="value loading" data-key="facebook.postsToday">Lade...</span></div>
+          <div class="stat-row"><span class="label">Reichweite</span><span class="value loading" data-key="facebook.reach">Lade...</span></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">💬 WhatsApp Bot</h3>
+            <p class="card-subtitle">Nutzung & Gutscheine</p>
+          </div>
+          <span class="chip">Bot</span>
+        </div>
+        <div class="stats">
+          <div class="stat-row"><span class="label">Gespräche heute</span><span class="value loading" data-key="whatsapp.conversationsToday">Lade...</span></div>
+          <div class="stat-row"><span class="label">Aktive Nutzer</span><span class="value loading" data-key="whatsapp.activeUsers">Lade...</span></div>
+          <div class="stat-row"><span class="label">Stempel vergeben</span><span class="value loading" data-key="whatsapp.stampsIssued">Lade...</span></div>
+          <div class="stat-row"><span class="label">Aktive Gutscheine</span><span class="value loading" data-key="whatsapp.activeCoupons">Lade...</span></div>
+        </div>
+      </article>
+
+      <article class="card wide">
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">⭐ Google Reviews</h3>
+            <p class="card-subtitle">Bewertungsübersicht</p>
+          </div>
+          <span class="chip">Reputation</span>
+        </div>
+        <div class="stats">
+          <div class="stat-row"><span class="label">Durchschnitt</span><span class="value loading" data-key="reviews.average">Lade...</span></div>
+          <div class="stat-row"><span class="label">Neue Reviews</span><span class="value loading" data-key="reviews.newReviews">Lade...</span></div>
+          <div class="stat-row"><span class="label">Unbeantwortete</span><span class="value loading" data-key="reviews.unanswered">Lade...</span></div>
+        </div>
+      </article>
+
+      <article class="card wide">
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">📧 E-Mails</h3>
+            <p class="card-subtitle">Ungelesene Nachrichten pro Postfach</p>
+          </div>
+          <span class="chip">Inbox</span>
+        </div>
+        <div class="stats">
+          <div class="stat-row"><span class="label">business@leolan.net</span><span class="value loading" data-key="emails.business">Lade...</span></div>
+          <div class="stat-row"><span class="label">k.nazari@leolan.net</span><span class="value loading" data-key="emails.knazari">Lade...</span></div>
+          <div class="stat-row"><span class="label">knazari2604@gmail.com</span><span class="value loading" data-key="emails.gmail">Lade...</span></div>
+        </div>
+      </article>
+
+      <article class="card full">
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">🤖 Automatisierungen Status</h3>
+            <p class="card-subtitle">System- und Posting-Automationen</p>
+          </div>
+          <span class="chip">Live Ops</span>
+        </div>
+        <div class="automation-list">
+          <div class="automation-item">
+            <div><strong>Instagram Feed Post</strong><small>täglich 10:00</small></div>
+            <span class="badge-success" data-key="automation.instagramFeed">✅ Aktiv</span>
+          </div>
+          <div class="automation-item">
+            <div><strong>Instagram Story</strong><small>täglich 18:00</small></div>
+            <span class="badge-success" data-key="automation.instagramStory">✅ Aktiv</span>
+          </div>
+          <div class="automation-item">
+            <div><strong>Facebook Post</strong><small>täglich 11:00</small></div>
+            <span class="badge-success" data-key="automation.facebookPost">✅ Aktiv</span>
+          </div>
+          <div class="automation-item">
+            <div><strong>Bewertungsmanagement</strong><small>alle 6h</small></div>
+            <span class="badge-success" data-key="automation.reviewManagement">✅ Aktiv</span>
+          </div>
+          <div class="automation-item">
+            <div><strong>WhatsApp Bot</strong><small>24/7 aktiv</small></div>
+            <span class="badge-success" data-key="automation.whatsappBot">✅ Aktiv</span>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <footer>
+      Powered by LeoLan Digital · <a href="https://ki.leolan.net" target="_blank" rel="noopener noreferrer">ki.leolan.net</a>
+    </footer>
+  </main>
+
+  <script>
+    const PASSWORD = 'LeoLan2026!';
+    const API_URL = 'https://n8n.leolan.net/webhook/dashboard-data';
+
+    const fallbackData = {
+      instagram: {
+        followers: 'Lade...',
+        postsToday: 'Lade...',
+        likesToday: 'Lade...',
+        storyActive: 'Lade...'
+      },
+      facebook: {
+        pageLikes: 'Lade...',
+        postsToday: 'Lade...',
+        reach: 'Lade...'
+      },
+      whatsapp: {
+        conversationsToday: 'Lade...',
+        activeUsers: 'Lade...',
+        stampsIssued: 'Lade...',
+        activeCoupons: 'Lade...'
+      },
+      reviews: {
+        average: 'Lade...',
+        newReviews: 'Lade...',
+        unanswered: 'Lade...'
+      },
+      emails: {
+        business: 'Lade...',
+        knazari: 'Lade...',
+        gmail: 'Lade...'
+      },
+      automation: {
+        instagramFeed: '✅ Aktiv',
+        instagramStory: '✅ Aktiv',
+        facebookPost: '✅ Aktiv',
+        reviewManagement: '✅ Aktiv',
+        whatsappBot: '✅ Aktiv'
+      }
+    };
+
+    const app = document.getElementById('app');
+    const lockScreen = document.getElementById('lockScreen');
+    const loginForm = document.getElementById('loginForm');
+    const passwordInput = document.getElementById('passwordInput');
+    const errorMessage = document.getElementById('errorMessage');
+    const lastUpdated = document.getElementById('lastUpdated');
+    const apiStatus = document.getElementById('apiStatus');
+
+    function formatDateTime(dateLike) {
+      const date = dateLike ? new Date(dateLike) : new Date();
+      if (Number.isNaN(date.getTime())) return 'Unbekannt';
+      return new Intl.DateTimeFormat('de-DE', {
+        dateStyle: 'medium',
+        timeStyle: 'short'
+      }).format(date);
+    }
+
+    function getValueByPath(obj, path) {
+      return path.split('.').reduce((acc, key) => (acc && acc[key] !== undefined ? acc[key] : undefined), obj);
+    }
+
+    function normalizeBoolean(value) {
+      if (typeof value === 'boolean') return value ? 'Ja' : 'Nein';
+      if (typeof value === 'string') {
+        const normalized = value.trim().toLowerCase();
+        if (['true', 'ja', 'yes', 'aktiv', 'active', '1'].includes(normalized)) return 'Ja';
+        if (['false', 'nein', 'no', 'inaktiv', 'inactive', '0'].includes(normalized)) return 'Nein';
+      }
+      return value;
+    }
+
+    function formatValue(key, value) {
+      if (value === undefined || value === null || value === '') return '—';
+
+      const normalizedValue = key.toLowerCase().includes('storyactive') ? normalizeBoolean(value) : value;
+
+      if (typeof normalizedValue === 'number') {
+        if (key === 'reviews.average') return normalizedValue.toFixed(1).replace('.', ',') + '/5';
+        if (key.startsWith('emails.')) return normalizedValue + ' ungelesen';
+        return new Intl.NumberFormat('de-DE').format(normalizedValue);
+      }
+
+      if (key === 'reviews.average' && !String(normalizedValue).includes('/5')) {
+        return String(normalizedValue).replace('.', ',') + '/5';
+      }
+
+      if (key.startsWith('emails.') && !String(normalizedValue).includes('ungelesen')) {
+        return normalizedValue + ' ungelesen';
+      }
+
+      return normalizedValue;
+    }
+
+    function applyData(data) {
+      document.querySelectorAll('[data-key]').forEach((element) => {
+        const key = element.dataset.key;
+        const rawValue = getValueByPath(data, key);
+        if (rawValue === undefined) return;
+        element.textContent = formatValue(key, rawValue);
+        element.classList.remove('loading');
+      });
+    }
+
+    function mergeKnownShapes(payload) {
+      return {
+        instagram: {
+          followers: payload?.instagram?.followers ?? payload?.instagramFollowers ?? fallbackData.instagram.followers,
+          postsToday: payload?.instagram?.postsToday ?? payload?.instagramPostsToday ?? fallbackData.instagram.postsToday,
+          likesToday: payload?.instagram?.likesToday ?? payload?.instagramLikesToday ?? fallbackData.instagram.likesToday,
+          storyActive: payload?.instagram?.storyActive ?? payload?.instagramStoryActive ?? fallbackData.instagram.storyActive
+        },
+        facebook: {
+          pageLikes: payload?.facebook?.pageLikes ?? payload?.facebookLikes ?? fallbackData.facebook.pageLikes,
+          postsToday: payload?.facebook?.postsToday ?? payload?.facebookPostsToday ?? fallbackData.facebook.postsToday,
+          reach: payload?.facebook?.reach ?? payload?.facebookReach ?? fallbackData.facebook.reach
+        },
+        whatsapp: {
+          conversationsToday: payload?.whatsapp?.conversationsToday ?? payload?.whatsappConversationsToday ?? fallbackData.whatsapp.conversationsToday,
+          activeUsers: payload?.whatsapp?.activeUsers ?? payload?.whatsappActiveUsers ?? fallbackData.whatsapp.activeUsers,
+          stampsIssued: payload?.whatsapp?.stampsIssued ?? payload?.whatsappStampsIssued ?? fallbackData.whatsapp.stampsIssued,
+          activeCoupons: payload?.whatsapp?.activeCoupons ?? payload?.whatsappActiveCoupons ?? fallbackData.whatsapp.activeCoupons
+        },
+        reviews: {
+          average: payload?.reviews?.average ?? payload?.googleReviews?.average ?? payload?.reviewsAverage ?? fallbackData.reviews.average,
+          newReviews: payload?.reviews?.newReviews ?? payload?.googleReviews?.newReviews ?? payload?.newReviews ?? fallbackData.reviews.newReviews,
+          unanswered: payload?.reviews?.unanswered ?? payload?.googleReviews?.unanswered ?? payload?.unansweredReviews ?? fallbackData.reviews.unanswered
+        },
+        emails: {
+          business: payload?.emails?.business ?? payload?.emailBusiness ?? fallbackData.emails.business,
+          knazari: payload?.emails?.knazari ?? payload?.emails?.kNazari ?? payload?.emailKNazari ?? fallbackData.emails.knazari,
+          gmail: payload?.emails?.gmail ?? payload?.emailGmail ?? fallbackData.emails.gmail
+        },
+        automation: {
+          instagramFeed: payload?.automation?.instagramFeed ?? fallbackData.automation.instagramFeed,
+          instagramStory: payload?.automation?.instagramStory ?? fallbackData.automation.instagramStory,
+          facebookPost: payload?.automation?.facebookPost ?? fallbackData.automation.facebookPost,
+          reviewManagement: payload?.automation?.reviewManagement ?? fallbackData.automation.reviewManagement,
+          whatsappBot: payload?.automation?.whatsappBot ?? fallbackData.automation.whatsappBot
+        },
+        updatedAt: payload?.updatedAt ?? payload?.lastUpdated ?? new Date().toISOString()
+      };
+    }
+
+    async function loadDashboardData() {
+      applyData(fallbackData);
+      lastUpdated.textContent = formatDateTime();
+
+      try {
+        const response = await fetch(API_URL, {
+          method: 'GET',
+          headers: { 'Accept': 'application/json' },
+          cache: 'no-store'
+        });
+
+        if (!response.ok) {
+          throw new Error('HTTP ' + response.status);
+        }
+
+        const payload = await response.json();
+        const data = mergeKnownShapes(payload);
+        applyData(data);
+        lastUpdated.textContent = formatDateTime(data.updatedAt);
+        apiStatus.textContent = 'Live-Daten aktiv';
+      } catch (error) {
+        console.error('Dashboard API konnte nicht geladen werden:', error);
+        apiStatus.textContent = 'API aktuell nicht erreichbar';
+      }
+    }
+
+    loginForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (passwordInput.value === PASSWORD) {
+        errorMessage.textContent = '';
+        lockScreen.classList.add('hidden');
+        app.classList.add('unlocked');
+        loadDashboardData();
+      } else {
+        errorMessage.textContent = 'Zugang verweigert';
+        passwordInput.value = '';
+        passwordInput.focus();
+      }
+    });
+
+    passwordInput.focus();
+  </script>
+</body>
+</html>
