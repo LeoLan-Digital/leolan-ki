@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ki.leolan.net/sitemap.xml
