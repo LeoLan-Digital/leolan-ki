@@ -428,6 +428,14 @@
       </div>
     </header>
 
+    <!-- TABS NAVIGATION -->
+    <nav style="display:flex;gap:8px;margin-bottom:20px">
+      <button onclick="showTab('overview')" id="tab-overview" style="background:var(--accent);color:#1a2744;border:none;border-radius:999px;padding:8px 20px;font-weight:700;font-size:13px;cursor:pointer">📊 Übersicht</button>
+      <button onclick="showTab('users')" id="tab-users" style="background:rgba(255,255,255,0.08);color:var(--muted);border:none;border-radius:999px;padding:8px 20px;font-weight:600;font-size:13px;cursor:pointer">👥 Benutzer</button>
+      <button onclick="showTab('settings')" id="tab-settings" style="background:rgba(255,255,255,0.08);color:var(--muted);border:none;border-radius:999px;padding:8px 20px;font-weight:600;font-size:13px;cursor:pointer">⚙️ Einstellungen</button>
+    </nav>
+
+    <div id="pane-overview">
     <section class="grid">
       <article class="card">
         <div class="card-header">
@@ -539,6 +547,10 @@
       </article>
     </section>
 
+    </div><!-- /pane-overview -->
+
+    <!-- PANE BENUTZER -->
+    <div id="pane-users" style="display:none">
     <!-- BENUTZERVERWALTUNG -->
     <section class="grid" style="margin-top:24px">
       <article style="grid-column:1/-1">
@@ -564,6 +576,22 @@
         </div>
       </article>
     </section>
+    </div><!-- /pane-users -->
+
+    <!-- PANE EINSTELLUNGEN -->
+    <div id="pane-settings" style="display:none">
+    <section class="grid">
+      <article class="card" style="grid-column:1/-1">
+        <div class="card-header"><div><h3 class="card-title">⚙️ Einstellungen</h3><p class="card-subtitle">System-Konfiguration</p></div></div>
+        <div style="display:grid;gap:14px;margin-top:12px">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:rgba(255,255,255,0.04);border-radius:12px"><div><strong>Dashboard Passwort</strong><br><small style="color:var(--muted)">Aktuell: LeoLan2026!</small></div><span style="color:var(--muted);font-size:12px">In Kürze änderbar</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:rgba(255,255,255,0.04);border-radius:12px"><div><strong>WhatsApp Bot</strong><br><small style="color:var(--muted)">+49 15678 483700</small></div><span class="chip">Aktiv</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:rgba(255,255,255,0.04);border-radius:12px"><div><strong>E-Mail</strong><br><small style="color:var(--muted)">business@leolan.net</small></div><span class="chip">Verbunden</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:rgba(255,255,255,0.04);border-radius:12px"><div><strong>Stripe</strong><br><small style="color:var(--muted)">Test-Modus aktiv</small></div><span style="background:rgba(245,166,35,0.2);color:var(--accent);padding:4px 12px;border-radius:999px;font-size:12px">Test</span></div>
+        </div>
+      </article>
+    </section>
+    </div><!-- /pane-settings -->
 
     <!-- EINLADE-MODAL -->
     <div id="inviteModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:100;display:none;align-items:center;justify-content:center;padding:20px">
@@ -777,6 +805,19 @@
     });
 
     passwordInput.focus();
+
+    // ── TABS ──────────────────────────────────────────────────────────────────
+    function showTab(tab) {
+      ['overview','users','settings'].forEach(t => {
+        document.getElementById('pane-'+t).style.display = t===tab ? 'block' : 'none';
+        const btn = document.getElementById('tab-'+t);
+        btn.style.background = t===tab ? 'var(--accent)' : 'rgba(255,255,255,0.08)';
+        btn.style.color = t===tab ? '#1a2744' : 'var(--muted)';
+        btn.style.fontWeight = t===tab ? '700' : '600';
+      });
+      if (tab==='users') loadUsers();
+    }
+    showTab('overview');
 
     // ── BENUTZERVERWALTUNG ──────────────────────────────────────────────────
     const ADMIN_URL = 'https://n8n.leolan.net/webhook/dashboard-admin-control';
