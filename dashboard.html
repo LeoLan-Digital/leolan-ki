@@ -539,6 +539,54 @@
       </article>
     </section>
 
+    <!-- BENUTZERVERWALTUNG -->
+    <section class="grid" style="margin-top:24px">
+      <article style="grid-column:1/-1">
+        <header style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+          <h2 style="margin:0">👥 Benutzerverwaltung</h2>
+          <button onclick="openInviteModal()" style="background:var(--accent);color:#1a2744;border:none;border-radius:12px;padding:10px 20px;font-weight:700;cursor:pointer;font-size:14px">+ Nutzer einladen</button>
+        </header>
+        <div id="userTable" style="margin-top:16px;overflow-x:auto">
+          <table style="width:100%;border-collapse:collapse;font-size:14px">
+            <thead>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.1)">
+                <th style="text-align:left;padding:10px 8px;color:var(--muted);font-weight:600">Name</th>
+                <th style="text-align:left;padding:10px 8px;color:var(--muted);font-weight:600">E-Mail</th>
+                <th style="text-align:left;padding:10px 8px;color:var(--muted);font-weight:600">Rolle</th>
+                <th style="text-align:left;padding:10px 8px;color:var(--muted);font-weight:600">Status</th>
+                <th style="text-align:right;padding:10px 8px;color:var(--muted);font-weight:600">Aktionen</th>
+              </tr>
+            </thead>
+            <tbody id="userTableBody">
+              <tr><td colspan="5" style="padding:20px;text-align:center;color:var(--muted)">Lade Nutzer...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+    </section>
+
+    <!-- EINLADE-MODAL -->
+    <div id="inviteModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:100;display:none;align-items:center;justify-content:center;padding:20px">
+      <div style="background:#1a2744;border-radius:20px;padding:32px;max-width:440px;width:100%;box-shadow:0 20px 50px rgba(0,0,0,0.5)">
+        <h3 style="margin:0 0 20px;color:#fff">Nutzer einladen</h3>
+        <label style="color:var(--muted);font-size:13px;display:block;margin-bottom:5px">Name</label>
+        <input id="inviteName" type="text" placeholder="Max Mustermann" style="width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:10px 12px;color:#fff;font-size:14px;margin-bottom:14px;outline:none">
+        <label style="color:var(--muted);font-size:13px;display:block;margin-bottom:5px">E-Mail *</label>
+        <input id="inviteEmail" type="email" placeholder="name@firma.de" style="width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:10px 12px;color:#fff;font-size:14px;margin-bottom:14px;outline:none">
+        <label style="color:var(--muted);font-size:13px;display:block;margin-bottom:5px">Rolle</label>
+        <select id="inviteRole" style="width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:10px 12px;color:#fff;font-size:14px;margin-bottom:20px;outline:none">
+          <option value="viewer">Viewer (nur lesen)</option>
+          <option value="editor">Editor (bearbeiten)</option>
+          <option value="admin">Admin (voller Zugriff)</option>
+        </select>
+        <div style="display:flex;gap:10px">
+          <button onclick="closeInviteModal()" style="flex:1;background:rgba(255,255,255,0.08);color:#fff;border:none;border-radius:10px;padding:11px;cursor:pointer">Abbrechen</button>
+          <button onclick="sendInvite()" style="flex:2;background:var(--accent);color:#1a2744;border:none;border-radius:10px;padding:11px;font-weight:700;cursor:pointer">Einladung senden</button>
+        </div>
+        <div id="inviteMsg" style="margin-top:12px;font-size:13px;text-align:center"></div>
+      </div>
+    </div>
+
     <footer>
       Powered by LeoLan Digital · <a href="https://ki.leolan.net" target="_blank" rel="noopener noreferrer">ki.leolan.net</a>
     </footer>
@@ -729,6 +777,82 @@
     });
 
     passwordInput.focus();
+
+    // ── BENUTZERVERWALTUNG ──────────────────────────────────────────────────
+    const ADMIN_URL = 'https://n8n.leolan.net/webhook/dashboard-admin-control';
+    const ADD_USER_URL = 'https://n8n.leolan.net/webhook/dashboard-add-user';
+
+    function statusBadge(status) {
+      const map = { active: ['#2dd881','Aktiv'], pending: ['#f5a623','Ausstehend'], inactive: ['#ff5c5c','Inaktiv'] };
+      const [color, label] = map[status] || ['#aaa', status];
+      return `<span style="background:${color}22;color:${color};padding:3px 10px;border-radius:999px;font-size:12px;font-weight:600">${label}</span>`;
+    }
+
+    async function loadUsers() {
+      try {
+        const r = await fetch(ADMIN_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'list' }) });
+        const d = await r.json();
+        const users = d.users || [];
+        const tbody = document.getElementById('userTableBody');
+        if (!users.length) { tbody.innerHTML = '<tr><td colspan="5" style="padding:20px;text-align:center;color:var(--muted)">Noch keine Nutzer</td></tr>'; return; }
+        tbody.innerHTML = users.map(u => `
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.06)">
+            <td style="padding:12px 8px">${u.name || '—'}</td>
+            <td style="padding:12px 8px;color:var(--muted)">${u.email}</td>
+            <td style="padding:12px 8px;color:var(--muted)">${u.role}</td>
+            <td style="padding:12px 8px">${statusBadge(u.status)}</td>
+            <td style="padding:12px 8px;text-align:right">
+              ${u.status === 'active' ?
+                `<button onclick="toggleUser('${u.email}','deactivate')" style="background:rgba(255,92,92,0.15);color:#ff5c5c;border:none;border-radius:8px;padding:6px 12px;font-size:12px;cursor:pointer;margin-right:6px">Deaktivieren</button>` :
+                `<button onclick="toggleUser('${u.email}','activate')" style="background:rgba(45,216,129,0.15);color:#2dd881;border:none;border-radius:8px;padding:6px 12px;font-size:12px;cursor:pointer;margin-right:6px">Aktivieren</button>`
+              }
+              <button onclick="deleteUser('${u.email}')" style="background:rgba(255,92,92,0.08);color:#ff5c5c;border:1px solid rgba(255,92,92,0.2);border-radius:8px;padding:6px 12px;font-size:12px;cursor:pointer">🗑</button>
+            </td>
+          </tr>`).join('');
+      } catch(e) { console.error(e); }
+    }
+
+    async function toggleUser(email, action) {
+      await fetch(ADMIN_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action, email }) });
+      loadUsers();
+    }
+
+    async function deleteUser(email) {
+      if (!confirm(`Nutzer ${email} wirklich löschen?`)) return;
+      await fetch(ADMIN_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'delete', email }) });
+      loadUsers();
+    }
+
+    function openInviteModal() {
+      document.getElementById('inviteModal').style.display = 'flex';
+    }
+
+    function closeInviteModal() {
+      document.getElementById('inviteModal').style.display = 'none';
+      document.getElementById('inviteMsg').textContent = '';
+    }
+
+    async function sendInvite() {
+      const email = document.getElementById('inviteEmail').value.trim();
+      const name = document.getElementById('inviteName').value.trim();
+      const role = document.getElementById('inviteRole').value;
+      const msg = document.getElementById('inviteMsg');
+      if (!email) { msg.style.color = '#ff5c5c'; msg.textContent = 'E-Mail ist Pflichtfeld.'; return; }
+      msg.style.color = 'var(--muted)'; msg.textContent = 'Einladung wird gesendet...';
+      try {
+        const r = await fetch(ADD_USER_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, name, role, requestedBy: 'admin' }) });
+        const d = await r.json();
+        if (d.success) {
+          msg.style.color = '#2dd881'; msg.textContent = '\u2705 Einladung gesendet!';
+          setTimeout(() => { closeInviteModal(); loadUsers(); }, 1500);
+        } else { msg.style.color = '#ff5c5c'; msg.textContent = 'Fehler: ' + (d.error || 'Unbekannt'); }
+      } catch(e) { msg.style.color = '#ff5c5c'; msg.textContent = 'Netzwerkfehler.'; }
+    }
+
+    // Load users after login
+    const origLogin = loginForm.onsubmit;
+    loginForm.addEventListener('submit', () => { setTimeout(loadUsers, 500); });
+
   </script>
 </body>
 </html>
