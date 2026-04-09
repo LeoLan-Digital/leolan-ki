@@ -404,10 +404,13 @@
     <div class="lock-card">
       <div class="lock-badge">🔐</div>
       <h1>LeoLan Dashboard</h1>
-      <p>Geschützter Bereich für interne Kennzahlen. Bitte Passwort eingeben, um das Dashboard zu öffnen.</p>
-      <form id="loginForm" class="password-row">
-        <input id="passwordInput" type="password" placeholder="Passwort eingeben" autocomplete="current-password" />
-        <button type="submit">Dashboard entsperren</button>
+      <p>Bitte melden Sie sich an.</p>
+      <form id="loginForm">
+        <input id="emailInput" type="email" placeholder="E-Mail" autocomplete="email" style="width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:12px;padding:12px 14px;color:#fff;font-size:15px;margin-bottom:10px;outline:none;font-family:inherit" required />
+        <div class="password-row" style="margin-top:0">
+          <input id="passwordInput" type="password" placeholder="Passwort" autocomplete="current-password" />
+          <button type="submit">Anmelden</button>
+        </div>
       </form>
       <div id="errorMessage" class="error-message"></div>
     </div>
@@ -621,6 +624,7 @@
   </main>
 
   <script>
+    const ADMIN_EMAIL = 'business@leolan.net';
     const PASSWORD = 'LeoLan2026!';
     const API_URL = 'https://n8n.leolan.net/webhook/dashboard-data';
 
@@ -792,13 +796,15 @@
 
     loginForm.addEventListener('submit', (event) => {
       event.preventDefault();
-      if (passwordInput.value === PASSWORD) {
+      const email = document.getElementById('emailInput').value.trim().toLowerCase();
+      if (email === ADMIN_EMAIL && passwordInput.value === PASSWORD) {
         errorMessage.textContent = '';
         lockScreen.classList.add('hidden');
         app.classList.add('unlocked');
         loadDashboardData();
+        setTimeout(loadUsers, 500);
       } else {
-        errorMessage.textContent = 'Zugang verweigert';
+        errorMessage.textContent = 'E-Mail oder Passwort falsch';
         passwordInput.value = '';
         passwordInput.focus();
       }
