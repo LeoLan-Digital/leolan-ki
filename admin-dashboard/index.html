@@ -196,7 +196,8 @@
       <h1>Admin Dashboard</h1>
       <p>Kunden, Ideen, Bot-Feedback und Synchronisation zentral steuern. Passwort bleibt lokal im Browser gespeichert.</p>
       <form class="login-form" id="loginForm">
-        <input class="input" id="passwordInput" type="password" placeholder="Admin-Passwort" autocomplete="current-password" />
+        <input class="input" id="emailInput" type="email" placeholder="E-Mail-Adresse" autocomplete="email" style="margin-bottom:10px;" />
+        <input class="input" id="passwordInput" type="password" placeholder="Passwort" autocomplete="current-password" />
         <button class="button" type="submit">Einloggen</button>
       </form>
       <div class="error" id="loginError"></div>
@@ -494,6 +495,7 @@
     function getStoredSecret() { return localStorage.getItem(STORAGE_KEY) || ''; }
     function setStoredSecret(secret) { localStorage.setItem(STORAGE_KEY, secret); }
     function clearStoredSecret() { localStorage.removeItem(STORAGE_KEY); }
+    const ADMIN_EMAIL = 'business@leolan.net';
     function isAuthorized(secret) { return secret === ADMIN_SECRET; }
     function escapeHtml(value) {
       return String(value ?? '')
@@ -929,9 +931,10 @@
     tabs.forEach(button => button.addEventListener('click', () => setActiveTab(button.dataset.tab)));
     loginForm.addEventListener('submit', async event => {
       event.preventDefault();
+      const email = document.getElementById('emailInput')?.value?.trim() || '';
       const password = passwordInput.value.trim();
-      if (!isAuthorized(password)) {
-        loginError.textContent = 'Passwort falsch.';
+      if (email !== ADMIN_EMAIL || !isAuthorized(password)) {
+        loginError.textContent = 'E-Mail oder Passwort falsch.';
         return;
       }
       loginError.textContent = '';
