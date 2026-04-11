@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seite nicht gefunden – LeoLan Digital</title>
+  <meta http-equiv="refresh" content="3;url=/">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f8f9fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 48px 40px;
+      max-width: 420px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+    .logo {
+      font-size: 22px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 32px;
+      letter-spacing: -0.5px;
+    }
+    .logo span { color: #4f46e5; }
+    h1 {
+      font-size: 18px;
+      color: #111;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 15px;
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+    a.btn {
+      display: inline-block;
+      background: #4f46e5;
+      color: white;
+      text-decoration: none;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    a.btn:hover { background: #4338ca; }
+    .hint {
+      margin-top: 20px;
+      font-size: 13px;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">Leo<span>Lan</span> Digital</div>
+    <h1>Diese Seite existiert nicht</h1>
+    <p>Du wirst in wenigen Sekunden automatisch zur Startseite weitergeleitet.</p>
+    <a class="btn" href="/">Jetzt zur Startseite</a>
+    <div class="hint">Weiterleitung in 3 Sekunden…</div>
+  </div>
+  <script>setTimeout(() => window.location.href = '/', 3000);</script>
+</body>
+</html>
