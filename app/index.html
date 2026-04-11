@@ -149,15 +149,15 @@
     <!-- DASHBOARD -->
     <div class="screen active" id="screenDashboard">
       <div class="card">
-        <h3>Heute</h3>
+        <h3 id="t-today">Heute</h3>
         <div class="stat-row">
-          <div class="stat"><div class="val" id="statReservations">—</div><div class="lbl">Reservierungen</div></div>
-          <div class="stat"><div class="val" id="statMessages">—</div><div class="lbl">Nachrichten</div></div>
-          <div class="stat"><div class="val" id="statGuests">—</div><div class="lbl">Gäste</div></div>
+          <div class="stat"><div class="val" id="statReservations">—</div><div class="lbl" id="t-stat-res">Reservierungen</div></div>
+          <div class="stat"><div class="val" id="statMessages">—</div><div class="lbl" id="t-stat-msg">Nachrichten</div></div>
+          <div class="stat"><div class="val" id="statGuests">—</div><div class="lbl" id="t-stat-guests">Gäste</div></div>
         </div>
       </div>
       <div class="card">
-        <h3>Nächste Reservierungen</h3>
+        <h3 id="t-next-res">Nächste Reservierungen</h3>
         <div id="nextReservations"><div class="loading">Laden...</div></div>
       </div>
     </div>
@@ -165,7 +165,7 @@
     <!-- NACHRICHTEN -->
     <div class="screen" id="screenMessages">
       <div class="card">
-        <h3>WhatsApp-Nachrichten</h3>
+        <h3 id="t-whatsapp-title">WhatsApp-Nachrichten</h3>
         <div id="messageList"><div class="loading">Laden...</div></div>
       </div>
     </div>
@@ -173,7 +173,7 @@
     <!-- RESERVIERUNGEN -->
     <div class="screen" id="screenReservations">
       <div class="card">
-        <h3>Alle Reservierungen</h3>
+        <h3 id="t-all-res">Alle Reservierungen</h3>
         <div id="reservationList"><div class="loading">Laden...</div></div>
       </div>
     </div>
@@ -508,6 +508,14 @@ function applyTranslations() {
   setText('t-restaurant-lbl', lang.restaurantLbl);
   setText('t-code-lbl', lang.codeLbl);
   setText('t-logout-btn', lang.logoutBtn);
+  // Dashboard & Messages
+  setText('t-today', lang.today);
+  setText('t-stat-res', lang.reservations);
+  setText('t-stat-msg', lang.messages);
+  setText('t-stat-guests', lang.guests);
+  setText('t-next-res', lang.nextRes);
+  setText('t-whatsapp-title', lang.whatsappMsgs);
+  setText('t-all-res', lang.allRes);
   // Settings content
   setText('t-settings-res-title', lang.settingsRes);
   setText('t-res-toggle-label', lang.resToggleLabel);
@@ -631,7 +639,8 @@ async function loadDashboard() {
     document.getElementById('statMessages').textContent = '—';
     document.getElementById('statGuests').textContent = '—';
   }
-  document.getElementById('nextReservations').innerHTML = '<div style="color:var(--muted);font-size:13px;text-align:center;padding:20px;">Keine Reservierungen heute</div>';
+  const dl = T[state.lang] || T.de;
+  document.getElementById('nextReservations').innerHTML = `<div style="color:var(--muted);font-size:13px;text-align:center;padding:20px;">${dl.noBookings}</div>`;
 }
 
 async function loadMessages() {
@@ -640,7 +649,8 @@ async function loadMessages() {
     const r = await fetch(`${API}/b2b-chat/history?adminKey=${encodeURIComponent(ADMIN_KEY)}`);
     const d = await r.json();
     const chats = d.chats || [];
-    if (!chats.length) { list.innerHTML = '<div class="empty">Noch keine Nachrichten</div>'; return; }
+    const ml = T[state.lang] || T.de;
+    if (!chats.length) { list.innerHTML = `<div class="empty">${ml.noMessages}</div>`; return; }
     const unread = chats.filter(c => c.unread).length;
     document.getElementById('unreadBadge').style.display = unread ? 'inline' : 'none';
     document.getElementById('unreadBadge').textContent = unread;
@@ -659,7 +669,8 @@ async function loadMessages() {
         </div>
       </div>`).join('');
   } catch {
-    list.innerHTML = '<div class="empty">Nachrichten nicht verfügbar</div>';
+    const ml2 = T[state.lang] || T.de;
+    list.innerHTML = `<div class="empty">${ml2.noMessages}</div>`;
   }
 }
 
@@ -671,15 +682,16 @@ async function loadReservations() {
     { id: 2, name: 'Familie Schmidt', guests: 6, date: 'Heute, 20:30 Uhr', status: 'confirmed', wish: '', extras: [] },
     { id: 3, name: 'Anna Berger', guests: 2, date: 'Morgen, 18:00 Uhr', status: 'new', wish: 'Geburtstagstisch – bitte kleine Überraschung vorbereiten! 🎂', extras: ['Blumen'] },
   ];
-  if (!demo.length) { list.innerHTML = '<div class="empty">Keine Buchungen vorhanden</div>'; return; }
+  const rl = T[state.lang] || T.de;
+  if (!demo.length) { list.innerHTML = `<div class="empty">${rl.noBookings}</div>`; return; }
   list.innerHTML = demo.map(r => `
     <div class="res-item" onclick="openResDetail(${r.id})" style="cursor:pointer;">
       <div class="res-header">
         <div class="res-name">${r.name}</div>
-        <span class="res-status ${r.status === 'new' ? 'status-new' : 'status-confirmed'}">${r.status === 'new' ? 'Neu' : 'Bestätigt'}</span>
+        <span class="res-status ${r.status === 'new' ? 'status-new' : 'status-confirmed'}">${r.status === 'new' ? rl.statusNew : rl.statusConfirmed}</span>
       </div>
       <div class="res-details">
-        <span>👥 ${r.guests} Personen</span>
+        <span>👥 ${r.guests} ${rl.persons}</span>
         <span>🕐 ${r.date}</span>
       </div>
       ${r.wish ? `<div class="res-wish"><span class="res-wish-icon">💬</span><span class="res-wish-text">${r.wish}</span></div>` : ''}
@@ -722,7 +734,8 @@ function saveExtras() {
   EXTRAS_LIST.forEach(ex => { saved[ex.id] = document.getElementById('extra_' + ex.id)?.checked || false; });
   localStorage.setItem('ll_extras_' + state.code, JSON.stringify(saved));
   const el = document.getElementById('extrasStatus');
-  el.style.color = 'var(--green)'; el.textContent = 'Gespeichert ✓';
+  const sl = T[state.lang] || T.de;
+  el.style.color = 'var(--green)'; el.textContent = sl.saved;
   setTimeout(() => el.textContent = '', 2000);
 }
 
@@ -730,33 +743,34 @@ const resDetailMap = {};
 function openResDetail(id) {
   const r = (state.reservations || []).find(x => x.id === id);
   if (!r) return;
+  const ol = T[state.lang] || T.de;
   const content = document.getElementById('resDetailContent');
   content.innerHTML = `
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
       <div style="font-size:20px;font-weight:900;">${r.name}</div>
-      <span class="res-status ${r.status === 'new' ? 'status-new' : 'status-confirmed'}" style="font-size:13px;">${r.status === 'new' ? 'Neu' : 'Bestätigt'}</span>
+      <span class="res-status ${r.status === 'new' ? 'status-new' : 'status-confirmed'}" style="font-size:13px;">${r.status === 'new' ? ol.statusNew : ol.statusConfirmed}</span>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px;">
       <div style="background:rgba(255,255,255,.05);border-radius:12px;padding:14px;">
-        <div style="font-size:12px;color:var(--muted);">Datum &amp; Zeit</div>
+        <div style="font-size:12px;color:var(--muted);">${ol.dateTime}</div>
         <div style="font-weight:700;margin-top:4px;">🕐 ${r.date}</div>
       </div>
       <div style="background:rgba(255,255,255,.05);border-radius:12px;padding:14px;">
-        <div style="font-size:12px;color:var(--muted);">Personen</div>
-        <div style="font-weight:700;margin-top:4px;">👥 ${r.guests} Personen</div>
+        <div style="font-size:12px;color:var(--muted);">${ol.persons}</div>
+        <div style="font-weight:700;margin-top:4px;">👥 ${r.guests} ${ol.persons}</div>
       </div>
       ${r.wish ? `<div style="background:rgba(245,166,35,.08);border:1px solid rgba(245,166,35,.3);border-radius:12px;padding:14px;">
-        <div style="font-size:12px;color:var(--orange);font-weight:700;margin-bottom:6px;">💬 Besonderer Wunsch</div>
+        <div style="font-size:12px;color:var(--orange);font-weight:700;margin-bottom:6px;">${ol.specialWish}</div>
         <div style="font-size:14px;line-height:1.6;">${r.wish}</div>
-      </div>` : '<div style="background:rgba(255,255,255,.05);border-radius:12px;padding:14px;"><div style="font-size:12px;color:var(--muted);">Besondere Wünsche</div><div style="color:var(--muted);margin-top:4px;font-size:13px;">Keine Angabe</div></div>'}
+      </div>` : `<div style="background:rgba(255,255,255,.05);border-radius:12px;padding:14px;"><div style="font-size:12px;color:var(--muted);">${ol.specialWish}</div><div style="color:var(--muted);margin-top:4px;font-size:13px;">${ol.noWish}</div></div>`}
       ${r.extras.length ? `<div style="background:rgba(45,216,129,.08);border:1px solid rgba(45,216,129,.25);border-radius:12px;padding:14px;">
-        <div style="font-size:12px;color:var(--green);font-weight:700;margin-bottom:8px;">✓ Gebuchte Extras</div>
+        <div style="font-size:12px;color:var(--green);font-weight:700;margin-bottom:8px;">${ol.bookedExtras}</div>
         <div style="display:flex;flex-wrap:wrap;gap:6px;">${r.extras.map(e => `<span class="res-extra-tag">${e}</span>`).join('')}</div>
       </div>` : ''}
     </div>
     <div style="display:flex;gap:10px;margin-top:16px;">
-      <button class="save-btn" style="background:var(--green);" onclick="confirmRes(${r.id})">✓ Bestätigen</button>
-      <button class="save-btn" style="background:rgba(231,76,60,.8);" onclick="declineRes(${r.id})">✗ Absagen</button>
+      <button class="save-btn" style="background:var(--green);" onclick="confirmRes(${r.id})">${ol.confirmBtn}</button>
+      <button class="save-btn" style="background:rgba(231,76,60,.8);" onclick="declineRes(${r.id})">${ol.declineBtn}</button>
     </div>`;
   document.getElementById('screenResDetail').style.display = 'block';
   document.getElementById('app').querySelector('.content').style.overflow = 'hidden';
@@ -772,7 +786,8 @@ function confirmRes(id) {
   if (r) { r.status = 'confirmed'; closeResDetail(); loadReservations(); }
 }
 function declineRes(id) {
-  if (confirm('Reservierung wirklich absagen?')) {
+  const cl = T[state.lang] || T.de;
+  if (confirm(cl.confirmDecline)) {
     state.reservations = (state.reservations || []).filter(x => x.id !== id);
     closeResDetail(); loadReservations();
   }
@@ -794,8 +809,9 @@ function saveReservationSettings() {
   const seats = parseInt(document.getElementById('inputSeats').value) || 50;
   localStorage.setItem('ll_reserv_' + state.code, JSON.stringify({ enabled, seats }));
   const el = document.getElementById('reservStatus');
+  const rl2 = T[state.lang] || T.de;
   el.style.color = 'var(--green)';
-  el.textContent = 'Gespeichert ✓';
+  el.textContent = rl2.saved;
   setTimeout(() => el.textContent = '', 2000);
 }
 
@@ -853,7 +869,7 @@ async function uploadMenu() {
     status.style.color = 'var(--red)'; status.textContent = 'Verbindungsfehler. Bitte erneut versuchen.';
     btn.disabled = false;
   }
-  btn.textContent = 'Speisekarte speichern';
+  btn.textContent = (T[state.lang] || T.de).menuSaveBtn;
 }
 
 async function uploadPhotos() {
@@ -885,7 +901,7 @@ async function uploadPhotos() {
     status.style.color = 'var(--red)'; status.textContent = 'Verbindungsfehler. Bitte erneut versuchen.';
     btn.disabled = false;
   }
-  btn.textContent = 'Fotos speichern';
+  btn.textContent = (T[state.lang] || T.de).photosSaveBtn;
 }
 
 // Auto-refresh alle 60 Sekunden
