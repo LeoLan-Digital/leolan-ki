@@ -69,6 +69,11 @@
     .status-new { background: rgba(245,166,35,.2); color: var(--orange); }
     .status-confirmed { background: rgba(45,216,129,.2); color: var(--green); }
     .res-details { font-size: 13px; color: var(--muted); display: flex; gap: 12px; flex-wrap: wrap; }
+    .res-wish { margin-top: 10px; background: rgba(245,166,35,.08); border: 1px solid rgba(245,166,35,.25); border-radius: 10px; padding: 10px 12px; font-size: 13px; display: flex; gap: 8px; align-items: flex-start; }
+    .res-wish-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .res-wish-text { color: rgba(255,255,255,.85); line-height: 1.5; }
+    .res-extras { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .res-extra-tag { background: rgba(45,216,129,.15); border: 1px solid rgba(45,216,129,.3); color: var(--green); border-radius: 999px; padding: 3px 10px; font-size: 11px; font-weight: 700; }
     
     /* REPLY */
     .reply-bar { display: flex; gap: 10px; padding: 12px 16px; background: var(--navy); border-top: 1px solid var(--border); position: fixed; bottom: 0; left: 0; right: 0; }
@@ -166,6 +171,19 @@
       </div>
     </div>
 
+    <!-- RESERVIERUNG DETAIL (Overlay) -->
+    <div id="screenResDetail" style="display:none;position:fixed;inset:0;background:var(--navy2);z-index:50;overflow-y:auto;padding-bottom:80px;">
+      <div style="background:var(--navy);padding:16px 20px 12px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10;">
+        <button onclick="closeResDetail()" style="background:none;border:none;color:var(--muted);cursor:pointer;padding:4px;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15,18 9,12 15,6"/></svg>
+        </button>
+        <h2 style="font-size:18px;font-weight:800;">Reservierung</h2>
+      </div>
+      <div style="padding:16px;">
+        <div class="card" id="resDetailContent"></div>
+      </div>
+    </div>
+
     <!-- EINSTELLUNGEN -->
     <div class="screen" id="screenSettings">
 
@@ -215,6 +233,14 @@
         <div class="upload-preview" id="photosPreview"></div>
         <button class="save-btn" id="photosUploadBtn" onclick="uploadPhotos()" disabled>Fotos speichern</button>
         <div class="upload-status" id="photosStatus"></div>
+      </div>
+
+      <!-- Extras / Upsells -->
+      <div class="card settings-section">
+        <h3>🌸 Extras &amp; Upsells</h3>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:12px;">Der KI-Bot fragt Gäste nur nach Extras, die du hier aktiviert hast.</div>
+        <div style="display:flex;flex-direction:column;gap:8px;" id="extrasList"></div>
+        <div class="upload-status" id="extrasStatus"></div>
       </div>
 
       <!-- Account -->
@@ -302,6 +328,7 @@ function showApp() {
   document.getElementById('settingsName').textContent = state.name;
   document.getElementById('settingsCode').textContent = state.code;
   loadReservationSettings();
+  loadExtras();
   loadAll();
 }
 
@@ -369,7 +396,113 @@ async function loadMessages() {
 
 async function loadReservations() {
   const list = document.getElementById('reservationList');
-  list.innerHTML = '<div class="empty">Keine Buchungen vorhanden</div>';
+  // Demo-Daten bis echter API-Endpunkt kommt
+  const demo = [
+    { id: 1, name: 'Max Mustermann', guests: 4, date: 'Heute, 19:00 Uhr', status: 'new', wish: 'Bitte einen ruhigen Tisch, meine Frau hat Gehörprobleme. Wenn möglich Fensterplatz.', extras: ['Blumen', 'Kerzen'] },
+    { id: 2, name: 'Familie Schmidt', guests: 6, date: 'Heute, 20:30 Uhr', status: 'confirmed', wish: '', extras: [] },
+    { id: 3, name: 'Anna Berger', guests: 2, date: 'Morgen, 18:00 Uhr', status: 'new', wish: 'Geburtstagstisch – bitte kleine Überraschung vorbereiten! 🎂', extras: ['Blumen'] },
+  ];
+  if (!demo.length) { list.innerHTML = '<div class="empty">Keine Buchungen vorhanden</div>'; return; }
+  list.innerHTML = demo.map(r => `
+    <div class="res-item" onclick="openResDetail(${r.id})" style="cursor:pointer;">
+      <div class="res-header">
+        <div class="res-name">${r.name}</div>
+        <span class="res-status ${r.status === 'new' ? 'status-new' : 'status-confirmed'}">${r.status === 'new' ? 'Neu' : 'Bestätigt'}</span>
+      </div>
+      <div class="res-details">
+        <span>👥 ${r.guests} Personen</span>
+        <span>🕐 ${r.date}</span>
+      </div>
+      ${r.wish ? `<div class="res-wish"><span class="res-wish-icon">💬</span><span class="res-wish-text">${r.wish}</span></div>` : ''}
+      ${r.extras.length ? `<div class="res-extras">${r.extras.map(e => `<span class="res-extra-tag">✓ ${e}</span>`).join('')}</div>` : ''}
+    </div>`).join('');
+  state.reservations = demo;
+}
+
+const EXTRAS_LIST = [
+  { id: 'flowers',   emoji: '🌸', label: 'Frische Blumen',     sub: 'Bot fragt ob Blumen am Tisch gewünscht' },
+  { id: 'candles',   emoji: '🕯️', label: 'Kerzen am Tisch',    sub: 'Bot fragt nach Kerzen-Dekoration' },
+  { id: 'cake',      emoji: '🎂', label: 'Geburtstagstorte',   sub: 'Bot fragt bei Geburtstags-Anlass' },
+  { id: 'wine',      emoji: '🍷', label: 'Wein vorbestellen',  sub: 'Bot bietet Weinvorbestellung an' },
+  { id: 'highchair', emoji: '🪑', label: 'Kinderstuhl',        sub: 'Bot fragt nach Kinderstuhl bei Familien' },
+  { id: 'window',    emoji: '🪟', label: 'Fensterplatz',       sub: 'Bot fragt nach Sitzplatzwunsch' },
+];
+
+function loadExtras() {
+  const saved = JSON.parse(localStorage.getItem('ll_extras_' + state.code) || '{}');
+  const container = document.getElementById('extrasList');
+  container.innerHTML = EXTRAS_LIST.map(ex => `
+    <div class="toggle-row">
+      <div>
+        <div class="toggle-label">${ex.emoji} ${ex.label}</div>
+        <div class="toggle-sub">${ex.sub}</div>
+      </div>
+      <label class="toggle">
+        <input type="checkbox" id="extra_${ex.id}" ${saved[ex.id] ? 'checked' : ''} onchange="saveExtras()">
+        <span class="toggle-slider"></span>
+      </label>
+    </div>`).join('');
+}
+
+function saveExtras() {
+  const saved = {};
+  EXTRAS_LIST.forEach(ex => { saved[ex.id] = document.getElementById('extra_' + ex.id)?.checked || false; });
+  localStorage.setItem('ll_extras_' + state.code, JSON.stringify(saved));
+  const el = document.getElementById('extrasStatus');
+  el.style.color = 'var(--green)'; el.textContent = 'Gespeichert ✓';
+  setTimeout(() => el.textContent = '', 2000);
+}
+
+const resDetailMap = {};
+function openResDetail(id) {
+  const r = (state.reservations || []).find(x => x.id === id);
+  if (!r) return;
+  const content = document.getElementById('resDetailContent');
+  content.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+      <div style="font-size:20px;font-weight:900;">${r.name}</div>
+      <span class="res-status ${r.status === 'new' ? 'status-new' : 'status-confirmed'}" style="font-size:13px;">${r.status === 'new' ? 'Neu' : 'Bestätigt'}</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:rgba(255,255,255,.05);border-radius:12px;padding:14px;">
+        <div style="font-size:12px;color:var(--muted);">Datum &amp; Zeit</div>
+        <div style="font-weight:700;margin-top:4px;">🕐 ${r.date}</div>
+      </div>
+      <div style="background:rgba(255,255,255,.05);border-radius:12px;padding:14px;">
+        <div style="font-size:12px;color:var(--muted);">Personen</div>
+        <div style="font-weight:700;margin-top:4px;">👥 ${r.guests} Personen</div>
+      </div>
+      ${r.wish ? `<div style="background:rgba(245,166,35,.08);border:1px solid rgba(245,166,35,.3);border-radius:12px;padding:14px;">
+        <div style="font-size:12px;color:var(--orange);font-weight:700;margin-bottom:6px;">💬 Besonderer Wunsch</div>
+        <div style="font-size:14px;line-height:1.6;">${r.wish}</div>
+      </div>` : '<div style="background:rgba(255,255,255,.05);border-radius:12px;padding:14px;"><div style="font-size:12px;color:var(--muted);">Besondere Wünsche</div><div style="color:var(--muted);margin-top:4px;font-size:13px;">Keine Angabe</div></div>'}
+      ${r.extras.length ? `<div style="background:rgba(45,216,129,.08);border:1px solid rgba(45,216,129,.25);border-radius:12px;padding:14px;">
+        <div style="font-size:12px;color:var(--green);font-weight:700;margin-bottom:8px;">✓ Gebuchte Extras</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">${r.extras.map(e => `<span class="res-extra-tag">${e}</span>`).join('')}</div>
+      </div>` : ''}
+    </div>
+    <div style="display:flex;gap:10px;margin-top:16px;">
+      <button class="save-btn" style="background:var(--green);" onclick="confirmRes(${r.id})">✓ Bestätigen</button>
+      <button class="save-btn" style="background:rgba(231,76,60,.8);" onclick="declineRes(${r.id})">✗ Absagen</button>
+    </div>`;
+  document.getElementById('screenResDetail').style.display = 'block';
+  document.getElementById('app').querySelector('.content').style.overflow = 'hidden';
+}
+
+function closeResDetail() {
+  document.getElementById('screenResDetail').style.display = 'none';
+  document.getElementById('app').querySelector('.content').style.overflow = '';
+}
+
+function confirmRes(id) {
+  const r = (state.reservations || []).find(x => x.id === id);
+  if (r) { r.status = 'confirmed'; closeResDetail(); loadReservations(); }
+}
+function declineRes(id) {
+  if (confirm('Reservierung wirklich absagen?')) {
+    state.reservations = (state.reservations || []).filter(x => x.id !== id);
+    closeResDetail(); loadReservations();
+  }
 }
 
 // ─── EINSTELLUNGEN ───────────────────────────────────────
