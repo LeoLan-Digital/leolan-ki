@@ -124,7 +124,7 @@ async function handleFoodPhotos(files){if(!files||!files.length){foodPhotoDataCa
       updateStep();
     }
     function initSuccessStateIfNeeded(){const params=new URLSearchParams(window.location.search);if(params.get('success')==='true'){localStorage.removeItem(STORAGE_KEY);showSuccessState()}}
-    renderModules();restoreForm();bindEvents();updateSelectionUI();initSuccessStateIfNeeded();updateStep();
+    renderModules();restoreForm();bindEvents();updateSelectionUI();initSuccessStateIfNeeded();initPaket();updateStep();
   </script>
 </body>
 </html>
