@@ -116,6 +116,46 @@
     .hours-grid { display: grid; grid-template-columns: 120px 1fr 1fr; gap: 10px; }
     .day-pill { align-self: center; font-weight: 700; color: var(--text); }
     .card-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+    .section-kicker {
+      display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px;
+      background: rgba(245,166,35,0.11); border: 1px solid rgba(245,166,35,0.18); color: #ffd48a;
+      font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 14px;
+    }
+    .plan-overview { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 14px; }
+    .plan-stat {
+      padding: 18px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.06);
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+    }
+    .plan-stat.highlight {
+      background: linear-gradient(135deg, rgba(245,166,35,0.18), rgba(245,166,35,0.05));
+      border-color: rgba(245,166,35,0.2);
+    }
+    .plan-stat .eyebrow { color: var(--muted); font-size: .83rem; margin-bottom: 8px; }
+    .plan-stat .value { font-size: 1.75rem; font-weight: 900; color: var(--text); }
+    .plan-stat .detail { margin-top: 8px; color: var(--muted); font-size: .92rem; line-height: 1.55; }
+    .addons-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; margin-top: 18px; }
+    .addon-card {
+      position: relative; padding: 20px; border-radius: 22px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.07);
+      background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.02));
+    }
+    .addon-card.featured { border-color: rgba(245,166,35,0.24); box-shadow: inset 0 0 0 1px rgba(245,166,35,0.08); }
+    .addon-card-header { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom: 14px; }
+    .addon-icon {
+      width: 52px; height: 52px; border-radius: 16px; display:grid; place-items:center; font-size: 1.4rem;
+      background: rgba(245,166,35,0.12); border: 1px solid rgba(245,166,35,0.18);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+    .addon-tag {
+      display:inline-flex; align-items:center; gap:6px; padding: 6px 10px; border-radius: 999px;
+      background: rgba(255,255,255,0.05); color: var(--muted); font-size:.76rem; font-weight:700;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .addon-title { font-size: 1.08rem; font-weight: 800; margin-bottom: 6px; }
+    .addon-price { font-size: 1.55rem; font-weight: 900; color: var(--accent-2); margin-bottom: 10px; }
+    .addon-card p { color: var(--muted); line-height: 1.6; min-height: 48px; margin-bottom: 16px; }
+    .addon-meta { font-size: .84rem; color: rgba(255,255,255,0.56); margin-bottom: 14px; }
+    .addon-card .button { margin-top: auto; }
 
     .chat-widget { position: fixed; right: 18px; bottom: 18px; z-index: 30; }
     .chat-toggle {
@@ -144,6 +184,8 @@
 
     @media (max-width: 980px) {
       .span-4, .span-6, .span-8 { grid-column: span 12; }
+      .plan-overview { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .addons-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
     }
     @media (max-width: 760px) {
       .shell { width: min(100% - 18px, 1180px); }
@@ -152,6 +194,7 @@
       .hours-grid { grid-template-columns: 1fr; }
       .card-actions .button, .card-actions .ghost { width: 100%; }
       .chat-panel { width: min(100vw - 18px, 390px); }
+      .plan-overview, .addons-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -207,23 +250,32 @@
         </article>
 
         <article class="card span-12" id="upgradeSection">
-          <h2>Plan & Upgrades</h2>
-          <p class="sub">Aktueller Tarif, Verbrauch und direkte Upgrade-Optionen via Stripe Checkout.</p>
-          <div class="grid" style="gap:14px">
-            <div class="card span-4" style="padding:18px;background:rgba(255,255,255,0.03)">
-              <div class="label">Aktueller Plan</div>
-              <div class="metric" id="planMetric">—</div>
+          <div class="section-kicker">⚡ Direkt im Portal buchbar</div>
+          <h2>Plan, Upgrades & Restaurant Add-Ons</h2>
+          <p class="sub">Ihr aktueller Tarif, Verbrauch und alle buchbaren Add-Ons auf einen Blick. Mit einem Klick öffnet sich Stripe Checkout.</p>
+          <div class="plan-overview">
+            <div class="plan-stat highlight">
+              <div class="eyebrow">Aktueller Plan</div>
+              <div class="value" id="planMetric">—</div>
+              <div class="detail" id="planDetail">Ihr Basis-Tarif im Portal.</div>
             </div>
-            <div class="card span-4" style="padding:18px;background:rgba(255,255,255,0.03)">
-              <div class="label">Verbrauch diese Woche</div>
-              <div class="metric" id="weekUsageMetric">—</div>
+            <div class="plan-stat">
+              <div class="eyebrow">Verbrauch diese Woche</div>
+              <div class="value" id="weekUsageMetric">—</div>
+              <div class="detail">Nachrichten in den letzten 7 Tagen.</div>
             </div>
-            <div class="card span-4" style="padding:18px;background:rgba(255,255,255,0.03)">
-              <div class="label">Verbrauch diesen Monat</div>
-              <div class="metric" id="monthUsageMetric">—</div>
+            <div class="plan-stat">
+              <div class="eyebrow">Verbrauch diesen Monat</div>
+              <div class="value" id="monthUsageMetric">—</div>
+              <div class="detail">Aktueller Stand vs. Kontingent.</div>
+            </div>
+            <div class="plan-stat">
+              <div class="eyebrow">Aktive Add-Ons</div>
+              <div class="value" id="activeAddonsMetric">0</div>
+              <div class="detail" id="activeAddonsDetail">Noch keine Zusatzmodule gebucht.</div>
             </div>
           </div>
-          <div class="grid" id="upgradeCards" style="margin-top:16px"></div>
+          <div class="addons-grid" id="upgradeCards"></div>
           <div class="status" id="upgradeStatus"></div>
         </article>
 
@@ -295,10 +347,10 @@
   <script>
     const AUTH_URL = 'https://n8n.leolan.net/webhook/portal-auth';
     const UPLOAD_URL = 'https://n8n.leolan.net/webhook/portal-upload';
-    const CHAT_URL = 'https://n8n.leolan.net/webhook/portal-chat';
-    const CHAT_HISTORY_URL = 'https://n8n.leolan.net/webhook/portal-chat-history';
-    const UPGRADE_URL = 'https://n8n.leolan.net/webhook/portal-upgrade';
-    const UPGRADE_STATUS_URL = 'https://n8n.leolan.net/webhook/portal-upgrade-status';
+    const CHAT_URL = 'https://n8n.leolan.net/webhook/b2b-chat';
+    const CHAT_HISTORY_URL = 'https://n8n.leolan.net/webhook/b2b-chat/history';
+    const ADDON_URL = 'https://n8n.leolan.net/webhook/portal-addon';
+    const ADDON_STATUS_URL = 'https://n8n.leolan.net/webhook/portal-addon-status';
     const AUTH_KEY = 'leolan-portal-auth-v1';
     const CHAT_CACHE_PREFIX = 'leolan-portal-chat-';
     const HOURS_DAYS = ['Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag','Sonntag'];
@@ -320,6 +372,9 @@
     const monthUsageMetric = document.getElementById('monthUsageMetric');
     const upgradeCards = document.getElementById('upgradeCards');
     const upgradeStatus = document.getElementById('upgradeStatus');
+    const planDetail = document.getElementById('planDetail');
+    const activeAddonsMetric = document.getElementById('activeAddonsMetric');
+    const activeAddonsDetail = document.getElementById('activeAddonsDetail');
 
     const menuFile = document.getElementById('menuFile');
     const photosFile = document.getElementById('photosFile');
@@ -341,6 +396,20 @@
     const chatMessage = document.getElementById('chatMessage');
     const chatSend = document.getElementById('chatSend');
     const chatStatus = document.getElementById('chatStatus');
+
+    const ADDON_CATALOG = [
+      { key: 'starter_to_pro', icon: '🚀', badge: 'Pro-Upgrade', title: 'Starter → Pro', price: '149€/Mo', description: 'Mehr Leistung für Starter-Kunden, mehr Reserven und Pro-Funktionen.', featured: true },
+      { key: 'messages_s', icon: '💬', badge: 'Nachrichten', title: 'Nachrichten S', price: '499€/Mo', description: '1.000 Nachrichten pro Monat.', featured: true },
+      { key: 'messages_m', icon: '📨', badge: 'Nachrichten', title: 'Nachrichten M', price: '599€/Mo', description: '2.000 Nachrichten pro Monat.' },
+      { key: 'messages_l', icon: '📈', badge: 'Nachrichten', title: 'Nachrichten L', price: '699€/Mo', description: 'Bis zu 20.000 Nachrichten pro Monat.' },
+      { key: 'instagram_autoposts', icon: '📸', badge: 'Social Media', title: 'Instagram Auto-Posts', price: '89€/Mo', description: 'Täglich KI-Posts für Ihr Instagram-Profil.' },
+      { key: 'facebook_autoposts', icon: '👍', badge: 'Social Media', title: 'Facebook Auto-Posts', price: '59€/Mo', description: 'Täglich KI-Posts für Ihre Facebook-Seite.' },
+      { key: 'review_management', icon: '⭐', badge: 'Reputation', title: 'Bewertungsmanagement', price: '89€/Mo', description: 'KI antwortet automatisch auf Reviews.' },
+      { key: 'google_business', icon: '📍', badge: 'Sichtbarkeit', title: 'Google Business', price: '79€/Mo', description: 'Profil automatisch aktuell halten.' },
+      { key: 'dashboard', icon: '📊', badge: 'Insights', title: 'Dashboard', price: '39€/Mo', description: 'Statistiken und Leistungsübersicht.' },
+      { key: 'email_monitor', icon: '📧', badge: 'Monitoring', title: 'E-Mail Monitor', price: '59€/Mo', description: 'Wichtige E-Mails automatisch erkennen.' },
+      { key: 'reels_ai_videos', icon: '🎬', badge: 'Content', title: 'Reels KI-Videos', price: '149€/Mo', description: 'Automatische Reels für mehr Reichweite.' },
+    ];
 
     let auth = null;
     let sessionUploads = 0;
@@ -548,26 +617,38 @@
     async function loadUpgradeStatus() {
       if (!auth) return;
       try {
-        const url = `${UPGRADE_STATUS_URL}?code=${encodeURIComponent(auth.code)}`;
+        const url = `${ADDON_STATUS_URL}?code=${encodeURIComponent(auth.code)}`;
         const data = await apiJson(url, { method: 'GET' });
-        planMetric.textContent = String(data.plan || 'starter').toUpperCase();
+        const currentPlan = String(data.plan || 'starter');
+        const activeAddons = Array.isArray(data.activeAddons) ? data.activeAddons : [];
+        planMetric.textContent = currentPlan === 'pro' ? 'PRO' : 'STARTER';
+        planDetail.textContent = currentPlan === 'pro'
+          ? 'Pro-Tarif aktiv. Weitere Add-Ons können jederzeit dazugebucht werden.'
+          : 'Starter-Tarif aktiv. Pro-Upgrade und Add-Ons stehen bereit.';
         weekUsageMetric.textContent = `${data.weekUsage || 0}`;
         monthUsageMetric.textContent = `${data.monthUsage || 0} / ${data.msgLimit || 0}`;
-        const currentPlan = String(data.plan || 'starter');
-        const cards = [
-          currentPlan === 'starter' ? { key: 'pro', title: 'Upgrade auf Pro', price: '349€/Monat', text: 'Für Starter-Kunden: mehr Leistung und höheres Basis-Kontingent.' } : null,
-          { key: 'msg_s', title: 'Nachrichten-Upgrade S', price: '+499€/Monat', text: '1.000 Nachrichten pro Monat.' },
-          { key: 'msg_m', title: 'Nachrichten-Upgrade M', price: '+599€/Monat', text: '2.000 Nachrichten pro Monat.' },
-          { key: 'msg_l', title: 'Nachrichten-Upgrade L', price: '+699€/Monat', text: 'Bis zu 20.000 Nachrichten pro Monat.' },
-        ].filter(Boolean);
-        upgradeCards.innerHTML = cards.map(card => `
-          <article class="card span-6" style="padding:18px;background:rgba(255,255,255,0.03)">
-            <h3 style="margin-bottom:8px">${escapeHtml(card.title)}</h3>
-            <div style="font-size:1.4rem;font-weight:900;color:var(--accent-2);margin-bottom:8px">${escapeHtml(card.price)}</div>
-            <p class="sub" style="margin-bottom:14px">${escapeHtml(card.text)}</p>
-            <button class="button" type="button" data-upgrade="${escapeHtml(card.key)}">Jetzt upgraden</button>
-          </article>
-        `).join('');
+        activeAddonsMetric.textContent = String(activeAddons.length);
+        activeAddonsDetail.textContent = activeAddons.length
+          ? activeAddons.map(key => ADDON_CATALOG.find(item => item.key === key)?.title || key).join(' · ')
+          : 'Noch keine Zusatzmodule gebucht.';
+
+        const cards = ADDON_CATALOG.filter(card => !(currentPlan === 'pro' && card.key === 'starter_to_pro'));
+        upgradeCards.innerHTML = cards.map(card => {
+          const active = activeAddons.includes(card.key);
+          return `
+            <article class="addon-card ${card.featured ? 'featured' : ''}">
+              <div class="addon-card-header">
+                <div class="addon-icon">${card.icon}</div>
+                <div class="addon-tag">${active ? 'Bereits aktiv' : escapeHtml(card.badge)}</div>
+              </div>
+              <div class="addon-title">${escapeHtml(card.title)}</div>
+              <div class="addon-price">${escapeHtml(card.price)}</div>
+              <p>${escapeHtml(card.description)}</p>
+              <div class="addon-meta">${active ? 'Dieses Modul ist bereits im Kundenkonto hinterlegt.' : 'Monatlich kündbar über Stripe bzw. Vertragslogik.'}</div>
+              <button class="button" type="button" data-upgrade="${escapeHtml(card.key)}" ${active ? 'disabled' : ''}>${active ? 'Bereits gebucht' : 'Jetzt buchen'}</button>
+            </article>
+          `;
+        }).join('');
         upgradeCards.querySelectorAll('[data-upgrade]').forEach(button => {
           button.addEventListener('click', () => startUpgrade(button.dataset.upgrade, button));
         });
@@ -581,10 +662,10 @@
       button.disabled = true;
       try {
         setStatus(upgradeStatus, 'Stripe Checkout wird vorbereitet…');
-        const data = await apiJson(UPGRADE_URL, {
+        const data = await apiJson(ADDON_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ code: auth.code, upgradeType })
+          body: JSON.stringify({ code: auth.code, addonType: upgradeType })
         });
         if (!data.checkoutUrl) throw new Error('Keine Checkout-URL erhalten.');
         window.location.href = data.checkoutUrl;
@@ -693,7 +774,7 @@
     async function syncChatHistory() {
       if (!auth) return;
       try {
-        const url = `${CHAT_HISTORY_URL}?code=${encodeURIComponent(auth.code)}`;
+        const url = `${CHAT_HISTORY_URL}?customerCode=${encodeURIComponent(auth.code)}`;
         const data = await apiJson(url, { method: 'GET' });
         if (Array.isArray(data.messages)) {
           const normalized = data.messages.map(item => ({
@@ -727,10 +808,11 @@
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            code: auth.code,
-            type: 'customer_to_admin',
+            action: 'send',
+            customerCode: auth.code,
             message,
             customerEmail: email,
+            customerName: auth.restaurantName || auth.name,
             restaurantName: auth.restaurantName,
             slug: auth.slug
           })

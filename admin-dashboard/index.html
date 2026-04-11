@@ -119,18 +119,21 @@
     .toolbar-actions { display: flex; gap: 10px; flex-wrap: wrap; }
     .search-wrap { flex: 1; min-width: 220px; }
     .list { display: grid; gap: 12px; }
-    .customer-row, .idea-row, .sync-row, .feedback-row {
+    .customer-row, .idea-row, .sync-row, .feedback-row, .chat-customer-row {
       display: grid; gap: 12px; align-items: center; padding: 16px; border-radius: 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
     }
-    .customer-row { grid-template-columns: minmax(0, 1.5fr) auto auto auto; }
+    .customer-row { grid-template-columns: minmax(0, 1.5fr) auto auto; }
     .idea-row { grid-template-columns: minmax(0, 1.7fr) auto auto; }
     .sync-row { grid-template-columns: minmax(0, 1.3fr) auto auto auto; }
     .feedback-row { grid-template-columns: minmax(0, 1fr) auto; }
-    .customer-name, .idea-title, .sync-title, .feedback-title { font-weight: 700; line-height: 1.45; word-break: break-word; }
-    .customer-meta, .idea-meta, .sync-meta, .feedback-meta { color: var(--muted); font-size: 0.92rem; margin-top: 4px; line-height: 1.5; }
-    .status-badge, .type-badge {
+    .customer-name, .idea-title, .sync-title, .feedback-title, .chat-customer-name { font-weight: 700; line-height: 1.45; word-break: break-word; }
+    .customer-meta, .idea-meta, .sync-meta, .feedback-meta, .chat-customer-meta { color: var(--muted); font-size: 0.92rem; margin-top: 4px; line-height: 1.5; }
+    .status-badge, .type-badge, .unread-badge {
       display: inline-flex; align-items: center; justify-content: center; padding: 10px 14px; border-radius: 999px; font-size: 0.9rem; font-weight: 800; min-width: 98px;
     }
+    .unread-badge { min-width: 74px; background: rgba(255,184,77,0.16); border: 1px solid rgba(255,184,77,0.24); color: #ffe0a8; }
+    .unread-badge.zero { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08); color: var(--muted); }
+    .chat-customer-row { grid-template-columns: minmax(0, 1.4fr) auto auto; }
     .status-active, .type-feedback { color: #9af1c5; background: rgba(47,210,126,0.14); border: 1px solid rgba(47,210,126,0.2); }
     .status-inactive, .status-new, .type-complaint { color: #ffabb2; background: rgba(255,95,109,0.12); border: 1px solid rgba(255,95,109,0.18); }
     .status-approved, .type-idea { color: #ffe0a8; background: rgba(255,184,77,0.14); border: 1px solid rgba(255,184,77,0.22); }
@@ -182,7 +185,7 @@
       .hero-actions { justify-content: stretch; }
       .live-pill, .ghost-button, .button { width: 100%; justify-content: center; }
       .span-3, .span-4, .span-6, .span-8, .span-12 { grid-column: span 12; }
-      .customer-row, .idea-row, .sync-row, .feedback-row { grid-template-columns: 1fr; align-items: stretch; }
+      .customer-row, .idea-row, .sync-row, .feedback-row, .chat-customer-row { grid-template-columns: 1fr; align-items: stretch; }
       .status-badge, .toggle-button, .chat-button, .action-button { width: 100%; }
       .two-col { grid-template-columns: 1fr; }
       .actions { justify-content: stretch; }
@@ -225,6 +228,7 @@
         <button class="tab-button active" data-tab="customers" type="button">👥 Kunden</button>
         <button class="tab-button" data-tab="ideas" type="button">💡 Ideen & Feedback</button>
         <button class="tab-button" data-tab="bot-feedback" type="button">📊 Bot-Feedback</button>
+        <button class="tab-button" data-tab="customer-chat" type="button">💬 Kunden-Chat</button>
         <button class="tab-button" data-tab="sync" type="button">🔄 Synchronisation</button>
         <button class="tab-button" data-tab="settings" type="button">⚙️ Einstellungen</button>
       </nav>
@@ -366,6 +370,45 @@
         </section>
       </section>
 
+      <section class="tab-panel" id="panel-customer-chat">
+        <section class="grid">
+          <article class="panel span-3">
+            <div class="eyebrow">Chat-Kunden</div>
+            <div class="metric-number" id="chatCustomerCount">—</div>
+            <div class="metric-sub">Kunden mit Chatverlauf</div>
+          </article>
+          <article class="panel span-3">
+            <div class="eyebrow">Ungelesen</div>
+            <div class="metric-number warning" id="chatUnreadCount">—</div>
+            <div class="metric-sub">Offene Kunden-Nachrichten</div>
+          </article>
+          <article class="panel span-3">
+            <div class="eyebrow">Letzte Nachricht</div>
+            <div class="metric-number success" id="chatLastTime">—</div>
+            <div class="metric-sub">Neueste Aktivität im Kundenchat</div>
+          </article>
+          <article class="panel span-3">
+            <div class="eyebrow">Antwortkanal</div>
+            <div class="metric-number" style="font-size:1.2rem" id="chatReplyChannel">Brevo</div>
+            <div class="metric-sub">E-Mail + Verlauf in n8n</div>
+          </article>
+
+          <article class="panel span-12">
+            <div class="toolbar">
+              <div>
+                <h2>💬 B2B Kunden-Chat</h2>
+                <p style="color:var(--muted);margin-top:8px">Alle Restaurant- und Hotel-Kunden, die Leo geschrieben haben.</p>
+              </div>
+              <div class="toolbar-actions">
+                <button class="action-button primary" id="refreshChatCustomersButton" type="button">Chats neu laden</button>
+              </div>
+            </div>
+            <div class="status-line" id="chatCustomersStatus"></div>
+            <div class="list" id="chatCustomerList"></div>
+          </article>
+        </section>
+      </section>
+
       <section class="tab-panel" id="panel-sync">
         <section class="grid">
           <article class="panel span-8">
@@ -393,8 +436,8 @@
               <div><strong>Kunden:</strong> <code>https://n8n.leolan.net/webhook/admin-dashboard</code></div>
               <div style="margin-top:10px"><strong>Toggle:</strong> <code>https://n8n.leolan.net/webhook/admin-toggle</code></div>
               <div style="margin-top:10px"><strong>Ideen:</strong> <code>https://n8n.leolan.net/webhook/admin-ideas</code></div>
-              <div style="margin-top:10px"><strong>Chat POST:</strong> <code>https://n8n.leolan.net/webhook/portal-chat</code></div>
-              <div style="margin-top:10px"><strong>Chat GET:</strong> <code>https://n8n.leolan.net/webhook/portal-chat-history</code></div>
+              <div style="margin-top:10px"><strong>Chat POST:</strong> <code>https://n8n.leolan.net/webhook/b2b-chat</code></div>
+              <div style="margin-top:10px"><strong>Chat Verlauf:</strong> <code>https://n8n.leolan.net/webhook/b2b-chat/history</code></div>
             </div>
           </article>
 
@@ -465,8 +508,8 @@
     const DASHBOARD_API = 'https://n8n.leolan.net/webhook/admin-dashboard';
     const TOGGLE_API = 'https://n8n.leolan.net/webhook/admin-toggle';
     const IDEAS_API = 'https://n8n.leolan.net/webhook/admin-ideas';
-    const CHAT_API = 'https://n8n.leolan.net/webhook/portal-chat';
-    const CHAT_HISTORY_API = 'https://n8n.leolan.net/webhook/portal-chat-history';
+    const CHAT_API = 'https://n8n.leolan.net/webhook/b2b-chat';
+    const CHAT_HISTORY_API = 'https://n8n.leolan.net/webhook/b2b-chat/history';
 
     const loginScreen = document.getElementById('loginScreen');
     const app = document.getElementById('app');
@@ -509,6 +552,14 @@
     const syncLog = document.getElementById('syncLog');
     const syncAllButton = document.getElementById('syncAllButton');
 
+    const chatCustomerCount = document.getElementById('chatCustomerCount');
+    const chatUnreadCount = document.getElementById('chatUnreadCount');
+    const chatLastTime = document.getElementById('chatLastTime');
+    const chatReplyChannel = document.getElementById('chatReplyChannel');
+    const chatCustomerList = document.getElementById('chatCustomerList');
+    const chatCustomersStatus = document.getElementById('chatCustomersStatus');
+    const refreshChatCustomersButton = document.getElementById('refreshChatCustomersButton');
+
     const chatOverlay = document.getElementById('chatOverlay');
     const chatTitle = document.getElementById('chatTitle');
     const chatSubtitle = document.getElementById('chatSubtitle');
@@ -521,6 +572,7 @@
     let workflows = [];
     let ideas = [];
     let syncData = { syncLog: [], activeBots: 0, lastSyncAt: null };
+    let chatCustomers = [];
     let currentChat = null;
 
     function getStoredSecret() { return localStorage.getItem(STORAGE_KEY) || ''; }
@@ -617,13 +669,11 @@
               <div class="customer-meta">${escapeHtml(item.name)} · ID ${escapeHtml(item.id)} · Plan ${escapeHtml(item.plan || 'starter')} · ${item.monthUsage || 0}/${item.msgLimit || 500} Nachrichten</div>
             </div>
             <div class="status-badge ${active ? 'status-active' : 'status-inactive'}">${active ? 'Aktiv' : 'Inaktiv'}</div>
-            <button class="chat-button" type="button" data-chat="${escapeHtml(slug)}" data-name="${escapeHtml(item.restaurantName || extractRestaurantName(item.name))}">Chat</button>
             <button class="toggle-button ${active ? 'deactivate' : 'activate'}" type="button" data-id="${escapeHtml(item.id)}" data-action="${active ? 'deactivate' : 'activate'}">${active ? 'Deaktivieren' : 'Aktivieren'}</button>
           </article>
         `;
       }).join('');
       customerList.querySelectorAll('.toggle-button').forEach(button => button.addEventListener('click', () => toggleWorkflow(button.dataset.id, button.dataset.action, button)));
-      customerList.querySelectorAll('.chat-button').forEach(button => button.addEventListener('click', () => openChat(button.dataset.chat, button.dataset.name)));
     }
 
     function renderIdeas(data) {
@@ -806,8 +856,53 @@
       }
     }
 
+    function renderChatCustomerOverview(items) {
+      const totalUnread = items.reduce((sum, item) => sum + (Number(item.unreadCount) || 0), 0);
+      chatCustomerCount.textContent = items.length;
+      chatUnreadCount.textContent = totalUnread;
+      chatReplyChannel.textContent = 'Brevo';
+      chatLastTime.textContent = items[0]?.lastTimestamp ? formatTime(items[0].lastTimestamp) : '—';
+
+      if (!items.length) {
+        chatCustomerList.innerHTML = '<div class="empty-state">Noch keine B2B-Kunden-Nachrichten vorhanden.</div>';
+        return;
+      }
+
+      chatCustomerList.innerHTML = items.map(item => `
+        <article class="chat-customer-row">
+          <div>
+            <div class="chat-customer-name">${escapeHtml(item.customerName || item.restaurantName || item.customerCode)}</div>
+            <div class="chat-customer-meta">Code ${escapeHtml(item.customerCode)}${item.customerEmail ? ` · ${escapeHtml(item.customerEmail)}` : ''} · Letzte Nachricht ${formatDateTime(item.lastTimestamp)}</div>
+            <div class="chat-customer-meta" style="margin-top:8px">${escapeHtml(item.lastMessage || '—')}</div>
+          </div>
+          <div class="unread-badge ${Number(item.unreadCount) ? '' : 'zero'}">${Number(item.unreadCount) ? `${escapeHtml(item.unreadCount)} neu` : 'gelesen'}</div>
+          <button class="chat-button" type="button" data-customer-code="${escapeHtml(item.customerCode)}" data-customer-name="${escapeHtml(item.customerName || item.restaurantName || item.customerCode)}" data-customer-email="${escapeHtml(item.customerEmail || '')}">Öffnen</button>
+        </article>
+      `).join('');
+
+      chatCustomerList.querySelectorAll('.chat-button').forEach(button => button.addEventListener('click', () => openChat(button.dataset.customerCode, button.dataset.customerName, button.dataset.customerEmail)));
+    }
+
+    async function loadChatCustomers() {
+      chatCustomersStatus.textContent = 'Kunden-Chats werden geladen…';
+      refreshChatCustomersButton.disabled = true;
+      try {
+        const url = `${CHAT_HISTORY_API}?adminKey=${encodeURIComponent(getStoredSecret())}`;
+        const data = await apiJson(url, { method: 'GET' });
+        chatCustomers = Array.isArray(data.customers) ? data.customers : [];
+        renderChatCustomerOverview(chatCustomers);
+        chatCustomersStatus.textContent = chatCustomers.length ? `${chatCustomers.length} Chat-Kunden geladen.` : 'Noch keine Chat-Kunden vorhanden.';
+      } catch (error) {
+        chatCustomers = [];
+        renderChatCustomerOverview([]);
+        chatCustomersStatus.textContent = error.message || 'Kunden-Chats konnten nicht geladen werden.';
+      } finally {
+        refreshChatCustomersButton.disabled = false;
+      }
+    }
+
     async function loadAll() {
-      await Promise.all([loadDashboard(), loadIdeas()]);
+      await Promise.all([loadDashboard(), loadIdeas(), loadChatCustomers()]);
     }
 
     async function toggleWorkflow(workflowId, action, button) {
@@ -908,18 +1003,19 @@
       chatBody.scrollTop = chatBody.scrollHeight;
     }
 
-    async function openChat(slug, name) {
-      currentChat = { slug, name };
+    async function openChat(customerCode, name, email = '') {
+      currentChat = { customerCode, name, email };
       chatTitle.textContent = `Chat · ${name}`;
-      chatSubtitle.textContent = `Slug: ${slug}`;
+      chatSubtitle.textContent = `Kunden-Code: ${customerCode}${email ? ` · ${email}` : ''}`;
       chatReply.value = '';
       chatStatus.textContent = 'Verlauf wird geladen…';
       chatOverlay.classList.add('open');
       try {
-        const url = `${CHAT_HISTORY_API}?slug=${encodeURIComponent(slug)}&adminKey=${encodeURIComponent(getStoredSecret())}`;
+        const url = `${CHAT_HISTORY_API}?customerCode=${encodeURIComponent(customerCode)}&adminKey=${encodeURIComponent(getStoredSecret())}`;
         const data = await apiJson(url, { method: 'GET' });
         renderChatMessages(Array.isArray(data.messages) ? data.messages : []);
         chatStatus.textContent = data.customerEmail ? `Antwort geht an ${data.customerEmail}` : 'Keine Kunden-E-Mail hinterlegt.';
+        await loadChatCustomers();
       } catch (error) {
         renderChatMessages([]);
         chatStatus.textContent = error.message || 'Chat konnte nicht geladen werden.';
@@ -939,11 +1035,12 @@
         const data = await apiJson(CHAT_API, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ slug: currentChat.slug, type: 'admin_to_customer', adminKey: getStoredSecret(), message })
+          body: JSON.stringify({ action: 'admin-reply', adminKey: getStoredSecret(), customerCode: currentChat.customerCode, message })
         });
         renderChatMessages(Array.isArray(data.messages) ? data.messages : []);
         chatReply.value = '';
         chatStatus.textContent = data.customerEmail ? `Gesendet an ${data.customerEmail}` : 'Antwort gespeichert, aber keine Kunden-E-Mail vorhanden.';
+        await loadChatCustomers();
       } catch (error) {
         chatStatus.textContent = error.message || 'Antwort konnte nicht gesendet werden.';
       } finally {
@@ -976,16 +1073,18 @@
     searchInput.addEventListener('input', () => renderCustomerList(workflows));
     refreshButton.addEventListener('click', loadAll);
     refreshIdeasButton.addEventListener('click', loadIdeas);
+    refreshChatCustomersButton.addEventListener('click', loadChatCustomers);
     syncAllButton.addEventListener('click', syncAllBots);
     logoutButton.addEventListener('click', () => {
       clearStoredSecret();
       workflows = [];
       ideas = [];
       syncData = { syncLog: [], activeBots: 0, lastSyncAt: null };
-      customerList.innerHTML = ideasList.innerHTML = feedbackFeed.innerHTML = syncBotList.innerHTML = syncLog.innerHTML = '';
+      customerList.innerHTML = ideasList.innerHTML = feedbackFeed.innerHTML = syncBotList.innerHTML = syncLog.innerHTML = chatCustomerList.innerHTML = '';
       totalCount.textContent = activeCount.textContent = inactiveCount.textContent = lastSync.textContent = '—';
       ideasNewCount.textContent = ideasApprovedCount.textContent = ideasWeekCount.textContent = ideasDeployedCount.textContent = '—';
       positiveFeedbackCount.textContent = improvementCount.textContent = averageRating.textContent = trendThisWeek.textContent = trendLastWeek.textContent = complaintCount.textContent = feedbackTotalCount.textContent = '—';
+      chatCustomerCount.textContent = chatUnreadCount.textContent = chatLastTime.textContent = '—';
       apiStatus.textContent = 'Abgemeldet';
       listStatus.textContent = ideasStatus.textContent = syncStatus.textContent = '';
       chatOverlay.classList.remove('open');
