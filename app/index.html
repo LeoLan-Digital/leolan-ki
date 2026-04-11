@@ -196,11 +196,11 @@
 
       <!-- Reservierungen -->
       <div class="card settings-section">
-        <h3>Reservierungen</h3>
+        <h3 id="t-settings-res-title">Reservierungen</h3>
         <div class="toggle-row">
           <div>
-            <div class="toggle-label">Reservierungen annehmen</div>
-            <div class="toggle-sub">Bot nimmt Buchungen entgegen</div>
+            <div class="toggle-label" id="t-res-toggle-label">Reservierungen annehmen</div>
+            <div class="toggle-sub" id="t-res-toggle-sub">Bot nimmt Buchungen entgegen</div>
           </div>
           <label class="toggle">
             <input type="checkbox" id="toggleReservations" onchange="saveReservationSettings()">
@@ -208,7 +208,7 @@
           </label>
         </div>
         <div class="seats-row">
-          <label for="inputSeats">Maximale Platzanzahl</label>
+          <label for="inputSeats" id="t-seats-label">Maximale Platzanzahl</label>
           <input type="number" id="inputSeats" min="1" max="999" placeholder="50" oninput="saveReservationSettings()">
         </div>
         <div class="upload-status" id="reservStatus"></div>
@@ -216,11 +216,11 @@
 
       <!-- Speisekarte -->
       <div class="card settings-section">
-        <h3>Speisekarte</h3>
+        <h3 id="t-menu-title">Speisekarte</h3>
         <div class="upload-area" id="menuDropZone" onclick="document.getElementById('menuFileInput').click()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg>
-          <p>PDF oder Bild hochladen</p>
-          <small>PDF, JPG, PNG · max. 10 MB</small>
+          <p id="t-menu-hint">PDF oder Bild hochladen</p>
+          <small id="t-menu-small">PDF, JPG, PNG · max. 10 MB</small>
         </div>
         <input type="file" id="menuFileInput" accept=".pdf,image/*" style="display:none" onchange="onMenuFileSelected(this)">
         <div class="upload-preview" id="menuPreview"></div>
@@ -230,11 +230,11 @@
 
       <!-- Speisefotos -->
       <div class="card settings-section">
-        <h3>Speisefotos</h3>
+        <h3 id="t-photos-title">Speisefotos</h3>
         <div class="upload-area" id="photosDropZone" onclick="document.getElementById('photosFileInput').click()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>
-          <p>Fotos auswählen</p>
-          <small>JPG, PNG · max. 10 Bilder · je 10 MB</small>
+          <p id="t-photos-hint">Fotos auswählen</p>
+          <small id="t-photos-small">JPG, PNG · max. 10 Bilder · je 10 MB</small>
         </div>
         <input type="file" id="photosFileInput" accept="image/*" multiple style="display:none" onchange="onPhotosSelected(this)">
         <div class="upload-preview" id="photosPreview"></div>
@@ -244,8 +244,8 @@
 
       <!-- Extras / Upsells -->
       <div class="card settings-section">
-        <h3>🌸 Extras &amp; Upsells</h3>
-        <div style="font-size:13px;color:var(--muted);margin-bottom:12px;">Der KI-Bot fragt Gäste nur nach Extras, die du hier aktiviert hast.</div>
+        <h3 id="t-extras-title">🌸 Extras &amp; Upsells</h3>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:12px;" id="t-extras-sub">Der KI-Bot fragt Gäste nur nach Extras, die du hier aktiviert hast.</div>
         <div style="display:flex;flex-direction:column;gap:8px;" id="extrasList"></div>
         <div class="upload-status" id="extrasStatus"></div>
       </div>
@@ -508,6 +508,23 @@ function applyTranslations() {
   setText('t-restaurant-lbl', lang.restaurantLbl);
   setText('t-code-lbl', lang.codeLbl);
   setText('t-logout-btn', lang.logoutBtn);
+  // Settings content
+  setText('t-settings-res-title', lang.settingsRes);
+  setText('t-res-toggle-label', lang.resToggleLabel);
+  setText('t-res-toggle-sub', lang.resToggleSub);
+  setText('t-seats-label', lang.seatsLabel);
+  setText('t-menu-title', lang.menuTitle);
+  setText('t-menu-hint', lang.menuUploadHint);
+  setText('t-menu-small', lang.menuUploadSmall);
+  setText('t-photos-title', lang.photosTitle);
+  setText('t-photos-hint', lang.photosUploadHint);
+  setText('t-photos-small', lang.photosUploadSmall);
+  setText('t-extras-title', lang.extrasTitle);
+  setText('t-extras-sub', lang.extrasSub);
+  const menuBtn = document.getElementById('menuUploadBtn');
+  if (menuBtn && !menuBtn.textContent.includes('…')) menuBtn.textContent = lang.menuSaveBtn;
+  const photosBtn = document.getElementById('photosUploadBtn');
+  if (photosBtn && !photosBtn.textContent.includes('…')) photosBtn.textContent = lang.photosSaveBtn;
   // App title
   const titles = { Dashboard: lang.tabDashboard, Messages: lang.tabMessages, Reservations: lang.tabBookings, Settings: lang.tabSettings };
   document.getElementById('appTitle').textContent = titles[state.tab] || lang.tabDashboard;
@@ -683,17 +700,21 @@ const EXTRAS_LIST = [
 function loadExtras() {
   const saved = JSON.parse(localStorage.getItem('ll_extras_' + state.code) || '{}');
   const container = document.getElementById('extrasList');
-  container.innerHTML = EXTRAS_LIST.map(ex => `
+  const lang = T[state.lang] || T.de;
+  container.innerHTML = EXTRAS_LIST.map(ex => {
+    const [label, sub] = (lang.extras && lang.extras[ex.id]) ? lang.extras[ex.id] : [ex.label, ex.sub];
+    return `
     <div class="toggle-row">
       <div>
-        <div class="toggle-label">${ex.emoji} ${ex.label}</div>
-        <div class="toggle-sub">${ex.sub}</div>
+        <div class="toggle-label">${ex.emoji} ${label}</div>
+        <div class="toggle-sub">${sub}</div>
       </div>
       <label class="toggle">
         <input type="checkbox" id="extra_${ex.id}" ${saved[ex.id] ? 'checked' : ''} onchange="saveExtras()">
         <span class="toggle-slider"></span>
       </label>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 function saveExtras() {
