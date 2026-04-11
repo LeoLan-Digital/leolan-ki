@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Datenschutzerklärung von LeoLan Digital nach DSGVO für Website und WhatsApp-Bot.">
+  <title>Datenschutzerklärung | LeoLan Digital</title>
+  <style>
+    :root {
+      --navy: #1a2744;
+      --navy-soft: #233558;
+      --orange: #f5a623;
+      --bg: #0f1728;
+      --card: rgba(255,255,255,0.08);
+      --card-border: rgba(255,255,255,0.12);
+      --text: #eef3ff;
+      --muted: #b8c4df;
+      --line: rgba(255,255,255,0.1);
+      --shadow: 0 24px 60px rgba(0,0,0,0.35);
+      --radius: 22px;
+      --font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      background:
+        radial-gradient(circle at top right, rgba(245,166,35,0.14), transparent 26%),
+        radial-gradient(circle at top left, rgba(80,120,255,0.16), transparent 30%),
+        linear-gradient(180deg, #0b1220 0%, var(--navy) 42%, #101827 100%);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    a {
+      color: var(--orange);
+      text-decoration: none;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    .wrap {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      padding: 72px 0 42px;
+    }
+
+    .hero-card {
+      background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      border: 1px solid var(--card-border);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(245,166,35,0.13), transparent 38%, rgba(255,255,255,0.02));
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      padding: 42px 34px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(245,166,35,0.14);
+      color: #ffd58e;
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 18px 0 14px;
+      font-size: clamp(2.2rem, 5vw, 4.2rem);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .meta-item {
+      padding: 18px 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .meta-item strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.9rem;
+      color: #ffffff;
+    }
+
+    .meta-item span {
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .content {
+      padding: 18px 0 72px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .toc, .panel {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .toc {
+      position: sticky;
+      top: 24px;
+      padding: 22px;
+    }
+
+    .toc h2 {
+      margin: 0 0 14px;
+      font-size: 1rem;
+      color: #fff;
+    }
+
+    .toc a {
+      display: block;
+      padding: 9px 0;
+      color: var(--muted);
+      font-size: 0.96rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .toc a:last-child { border-bottom: 0; }
+
+    .panel {
+      padding: 30px;
+    }
+
+    section {
+      padding-bottom: 28px;
+      margin-bottom: 28px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    section:last-child {
+      border-bottom: 0;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 1.55rem;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    h3 {
+      margin: 18px 0 8px;
+      font-size: 1.05rem;
+      color: #fff;
+    }
+
+    p, li {
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    ul {
+      margin: 10px 0 0 0;
+      padding-left: 20px;
+    }
+
+    .highlight {
+      padding: 16px 18px;
+      border-left: 4px solid var(--orange);
+      background: rgba(245,166,35,0.08);
+      border-radius: 14px;
+      margin-top: 14px;
+      color: #fff2d7;
+    }
+
+    .footer {
+      padding: 0 0 48px;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 10px;
+      margin: 6px 8px 0 0;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      color: #dfe8ff;
+      font-size: 0.86rem;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    @media (max-width: 920px) {
+      .grid { grid-template-columns: 1fr; }
+      .toc { position: static; }
+      .meta-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .hero-inner, .panel, .toc { padding: 22px; }
+      h2 { font-size: 1.32rem; }
+      p, li { font-size: 0.97rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap hero">
+    <div class="hero-card">
+      <div class="hero-inner">
+        <div class="eyebrow">LeoLan Digital · Datenschutz</div>
+        <h1>Datenschutzerklärung</h1>
+        <p>
+          Diese Datenschutzerklärung informiert über Art, Umfang und Zweck der Verarbeitung personenbezogener Daten
+          bei der Nutzung der Website von LeoLan Digital sowie im Zusammenhang mit dem angebotenen WhatsApp-Bot.
+          Grundlage sind insbesondere die Datenschutz-Grundverordnung (DSGVO) und das Bundesdatenschutzgesetz (BDSG).
+        </p>
+        <div class="meta-grid">
+          <div class="meta-item">
+            <strong>Verantwortlicher</strong>
+            <span>LeoLan Digital<br>Inhaber: Kamaleddin Nazari<br>Hamburg, Deutschland</span>
+          </div>
+          <div class="meta-item">
+            <strong>Kontakt</strong>
+            <span><a href="mailto:business@leolan.net">business@leolan.net</a></span>
+          </div>
+          <div class="meta-item">
+            <strong>Stand</strong>
+            <span>08. April 2026</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap content">
+    <div class="grid">
+      <aside class="toc" aria-label="Inhaltsverzeichnis">
+        <h2>Inhalt</h2>
+        <a href="#verantwortlicher">1. Verantwortlicher</a>
+        <a href="#allgemeines">2. Allgemeine Hinweise</a>
+        <a href="#hosting">3. Hosting & Server-Logs</a>
+        <a href="#website">4. Website-Nutzung</a>
+        <a href="#analytics">5. Google Analytics (GA4)</a>
+        <a href="#pixel">6. Facebook Pixel</a>
+        <a href="#whatsapp">7. WhatsApp-Bot</a>
+        <a href="#speicherdauer">8. Speicherdauer</a>
+        <a href="#rechte">9. Betroffenenrechte</a>
+        <a href="#widerruf">10. Widerruf & Widerspruch</a>
+        <a href="#kontakt">11. Datenschutz-Kontakt</a>
+      </aside>
+
+      <main class="panel">
+        <section id="verantwortlicher">
+          <h2>1. Verantwortlicher</h2>
+          <p>
+            Verantwortlich für die Datenverarbeitung im Sinne von Art. 4 Nr. 7 DSGVO ist:
+          </p>
+          <p>
+            <strong>LeoLan Digital</strong><br>
+            Inhaber: Kamaleddin Nazari<br>
+            Hamburg, Deutschland<br>
+            E-Mail: <a href="mailto:business@leolan.net">business@leolan.net</a>
+          </p>
+        </section>
+
+        <section id="allgemeines">
+          <h2>2. Allgemeine Hinweise zur Datenverarbeitung</h2>
+          <p>
+            Personenbezogene Daten werden von uns grundsätzlich nur verarbeitet, soweit dies zur Bereitstellung einer
+            funktionsfähigen Website, zur Kommunikation mit Interessenten und Kunden sowie zur Bereitstellung unseres
+            WhatsApp-Bot-Services erforderlich ist oder eine entsprechende Einwilligung vorliegt.
+          </p>
+          <p>
+            Die Verarbeitung erfolgt insbesondere auf Grundlage folgender Rechtsgrundlagen:
+          </p>
+          <ul>
+            <li><strong>Art. 6 Abs. 1 lit. a DSGVO</strong> – Einwilligung</li>
+            <li><strong>Art. 6 Abs. 1 lit. b DSGVO</strong> – Vertrag bzw. vorvertragliche Maßnahmen</li>
+            <li><strong>Art. 6 Abs. 1 lit. f DSGVO</strong> – berechtigtes Interesse an sicherem, wirtschaftlichem und nutzerfreundlichem Betrieb</li>
+            <li><strong>§ 25 Abs. 1 TTDSG</strong> – Einwilligung für bestimmte Cookies/Tracking-Technologien</li>
+          </ul>
+          <div class="highlight">
+            Analyse- und Marketing-Tools wie Google Analytics und Facebook Pixel werden nur auf Grundlage einer vorherigen
+            Einwilligung über ein entsprechendes Consent-/Cookie-Banner eingesetzt.
+          </div>
+        </section>
+
+        <section id="hosting">
+          <h2>3. Hosting und Server-Logfiles</h2>
+          <p>
+            Beim Aufruf dieser Website werden technisch erforderliche Informationen automatisiert verarbeitet, um die Seite
+            auszuliefern und die Sicherheit sowie Stabilität des Angebots zu gewährleisten. Dabei können insbesondere folgende
+            Daten in Server-Logfiles verarbeitet werden:
+          </p>
+          <ul>
+            <li>IP-Adresse des anfragenden Endgeräts</li>
+            <li>Datum und Uhrzeit des Zugriffs</li>
+            <li>aufgerufene Seite bzw. Datei</li>
+            <li>übertragene Datenmenge</li>
+            <li>Browsertyp und Browserversion</li>
+            <li>Betriebssystem</li>
+            <li>Referrer-URL</li>
+          </ul>
+          <p>
+            Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Unser berechtigtes Interesse liegt in der
+            sicheren Bereitstellung der Website, Fehleranalyse und Missbrauchserkennung.
+          </p>
+        </section>
+
+        <section id="website">
+          <h2>4. Nutzung der Website</h2>
+          <p>
+            Wenn Sie uns per E-Mail oder über sonstige Kontaktwege kontaktieren, verarbeiten wir die von Ihnen mitgeteilten
+            Daten (z. B. Name, E-Mail-Adresse, Telefonnummer, Inhalt der Nachricht), um Ihre Anfrage zu bearbeiten.
+          </p>
+          <p>
+            Die Verarbeitung erfolgt je nach Anlass auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche oder
+            vertragliche Kommunikation) oder Art. 6 Abs. 1 lit. f DSGVO (allgemeine Anfragen und effiziente Kommunikation).
+          </p>
+        </section>
+
+        <section id="analytics">
+          <h2>5. Google Analytics 4 (GA4)</h2>
+          <span class="badge">Mess-ID: G-25WZQPJ5F3</span>
+          <p>
+            Soweit Sie eingewilligt haben, verwenden wir auf dieser Website Google Analytics 4, einen Webanalysedienst zur
+            statistischen Auswertung der Nutzung unserer Website. Anbieter ist Google Ireland Limited, Gordon House,
+            Barrow Street, Dublin 4, Irland.
+          </p>
+          <h3>Verarbeitete Daten</h3>
+          <ul>
+            <li>Nutzungsdaten wie Seitenaufrufe, Verweildauer, Interaktionen und technische Informationen</li>
+            <li>ungefähre Standortdaten auf Basis gekürzter IP-Informationen</li>
+            <li>Geräte- und Browserinformationen</li>
+          </ul>
+          <h3>Zweck der Verarbeitung</h3>
+          <p>
+            Die Verarbeitung dient der Reichweitenmessung, Analyse des Nutzerverhaltens sowie der Optimierung unserer Website
+            und Angebote.
+          </p>
+          <h3>Rechtsgrundlage</h3>
+          <p>
+            Rechtsgrundlage ist Ihre Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO in Verbindung mit § 25 Abs. 1 TTDSG.
+          </p>
+          <h3>Hinweis zu Drittlandübermittlungen</h3>
+          <p>
+            Es kann nicht ausgeschlossen werden, dass im Rahmen der Nutzung von Google-Diensten Daten in die USA übertragen
+            werden. Soweit dies geschieht, erfolgt die Verarbeitung auf Grundlage geeigneter Garantien, insbesondere der von
+            der EU-Kommission anerkannten Standardvertragsklauseln sowie – soweit anwendbar – des EU-US Data Privacy Framework.
+          </p>
+          <p>
+            Sie können eine erteilte Einwilligung jederzeit mit Wirkung für die Zukunft über Ihre Cookie-Einstellungen widerrufen.
+          </p>
+        </section>
+
+        <section id="pixel">
+          <h2>6. Facebook Pixel</h2>
+          <span class="badge">Pixel-ID: 584799746334676</span>
+          <p>
+            Soweit Sie eingewilligt haben, nutzen wir auf unserer Website das Meta Pixel (Facebook Pixel) der Meta Platforms
+            Ireland Limited, 4 Grand Canal Square, Dublin 2, Irland.
+          </p>
+          <h3>Zwecke</h3>
+          <ul>
+            <li>Messung der Wirksamkeit von Werbeanzeigen</li>
+            <li>Optimierung unserer Marketingmaßnahmen</li>
+            <li>Bildung von Zielgruppen für relevante Werbeansprache</li>
+          </ul>
+          <h3>Rechtsgrundlage</h3>
+          <p>
+            Die Nutzung erfolgt ausschließlich auf Grundlage Ihrer Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO in Verbindung
+            mit § 25 Abs. 1 TTDSG.
+          </p>
+          <h3>Gemeinsame Verantwortlichkeit / weitere Informationen</h3>
+          <p>
+            Soweit personenbezogene Daten im Zusammenhang mit dem Meta Pixel erhoben und an Meta übermittelt werden, können
+            wir und Meta hierfür gemeinsam verantwortlich sein. Weitere Informationen zur Datenverarbeitung durch Meta finden
+            Sie in den Datenschutzhinweisen von Meta.
+          </p>
+          <p>
+            Auch hier kann eine Übermittlung von Daten in Drittländer, insbesondere in die USA, nicht ausgeschlossen werden.
+            Ihre Einwilligung können Sie jederzeit mit Wirkung für die Zukunft widerrufen.
+          </p>
+        </section>
+
+        <section id="whatsapp">
+          <h2>7. WhatsApp-Bot und Konversationsdaten</h2>
+          <p>
+            LeoLan Digital bietet einen WhatsApp-basierten Bot bzw. Messaging-Service an. Wenn Sie diesen Dienst nutzen,
+            verarbeiten wir die von Ihnen im Chat bereitgestellten Daten, um automatisierte Antworten, Termin- oder
+            Serviceinformationen sowie die gewünschte Kommunikation bereitzustellen.
+          </p>
+          <h3>Welche Daten verarbeitet werden können</h3>
+          <ul>
+            <li>Mobilfunknummer bzw. WhatsApp-Kennung</li>
+            <li>Nachrichteninhalte, Antworten und sonstige Konversationsdaten</li>
+            <li>Zeitpunkte der Kommunikation</li>
+            <li>freiwillig mitgeteilte Angaben, z. B. Name, Wünsche, Anfragen oder Präferenzen</li>
+          </ul>
+          <h3>Zweck der Verarbeitung</h3>
+          <ul>
+            <li>Bearbeitung Ihrer Anfrage</li>
+            <li>Bereitstellung automatisierter Kommunikation über den WhatsApp-Bot</li>
+            <li>Verbesserung unseres Services und nachvollziehbare Dokumentation von Anfragen</li>
+          </ul>
+          <h3>Rechtsgrundlagen</h3>
+          <ul>
+            <li><strong>Art. 6 Abs. 1 lit. b DSGVO</strong>, soweit die Kommunikation der Vertragsanbahnung oder Vertragsdurchführung dient</li>
+            <li><strong>Art. 6 Abs. 1 lit. a DSGVO</strong>, soweit eine ausdrückliche Einwilligung zur Speicherung und weiteren Verarbeitung von Konversationsdaten erteilt wurde</li>
+            <li><strong>Art. 6 Abs. 1 lit. f DSGVO</strong>, soweit dies zur sicheren und effizienten Bearbeitung allgemeiner Anfragen erforderlich ist</li>
+          </ul>
+          <div class="highlight">
+            Konversationsdaten werden nur dann über die eigentliche Bearbeitung Ihrer Anfrage hinaus gespeichert, wenn hierfür
+            eine ausdrückliche Einwilligung vorliegt oder eine gesetzliche bzw. vertragliche Notwendigkeit besteht.
+          </div>
+          <h3>Hinweis zu WhatsApp / Meta</h3>
+          <p>
+            Bei der Nutzung von WhatsApp werden Daten auch durch WhatsApp Ireland Limited bzw. Meta verarbeitet. Dabei kann
+            nicht ausgeschlossen werden, dass Daten auf Servern außerhalb der Europäischen Union verarbeitet werden. Auf die
+            Datenverarbeitung durch WhatsApp/Meta haben wir nur begrenzten Einfluss. Es gelten ergänzend die Datenschutz- und
+            Nutzungsbedingungen von WhatsApp.
+          </p>
+        </section>
+
+        <section id="speicherdauer">
+          <h2>8. Speicherdauer</h2>
+          <p>
+            Personenbezogene Daten werden nur so lange gespeichert, wie dies für die jeweiligen Zwecke erforderlich ist oder
+            gesetzliche Aufbewahrungspflichten bestehen.
+          </p>
+          <ul>
+            <li>technische Logdaten: grundsätzlich nur für einen begrenzten Zeitraum</li>
+            <li>Kontaktanfragen: bis zur abschließenden Bearbeitung und darüber hinaus nur, soweit rechtlich erforderlich</li>
+            <li>WhatsApp-Konversationsdaten: nur im erforderlichen Umfang; weitergehende Speicherung nur mit Einwilligung oder rechtlicher Grundlage</li>
+            <li>Analytics- und Marketingdaten: nach Maßgabe der eingesetzten Tools und Ihrer Einwilligungseinstellungen</li>
+          </ul>
+        </section>
+
+        <section id="rechte">
+          <h2>9. Ihre Rechte als betroffene Person</h2>
+          <p>Sie haben nach Maßgabe der gesetzlichen Vorschriften insbesondere folgende Rechte:</p>
+          <ul>
+            <li>Recht auf Auskunft nach Art. 15 DSGVO</li>
+            <li>Recht auf Berichtigung nach Art. 16 DSGVO</li>
+            <li>Recht auf Löschung nach Art. 17 DSGVO</li>
+            <li>Recht auf Einschränkung der Verarbeitung nach Art. 18 DSGVO</li>
+            <li>Recht auf Datenübertragbarkeit nach Art. 20 DSGVO</li>
+            <li>Widerspruchsrecht nach Art. 21 DSGVO</li>
+            <li>Recht auf Widerruf erteilter Einwilligungen mit Wirkung für die Zukunft</li>
+            <li>Beschwerderecht bei einer Datenschutz-Aufsichtsbehörde nach Art. 77 DSGVO</li>
+          </ul>
+        </section>
+
+        <section id="widerruf">
+          <h2>10. Widerruf von Einwilligungen und Widerspruch</h2>
+          <p>
+            Sofern die Verarbeitung auf Ihrer Einwilligung beruht, können Sie diese jederzeit mit Wirkung für die Zukunft
+            widerrufen. Die Rechtmäßigkeit der bis zum Widerruf erfolgten Verarbeitung bleibt hiervon unberührt.
+          </p>
+          <p>
+            Soweit wir Daten auf Grundlage berechtigter Interessen verarbeiten, können Sie aus Gründen, die sich aus Ihrer
+            besonderen Situation ergeben, Widerspruch gegen die Verarbeitung einlegen.
+          </p>
+        </section>
+
+        <section id="kontakt">
+          <h2>11. Kontakt zum Datenschutz</h2>
+          <p>
+            Bei Fragen zum Datenschutz oder zur Geltendmachung Ihrer Rechte wenden Sie sich bitte an:
+          </p>
+          <p>
+            LeoLan Digital<br>
+            Inhaber: Kamaleddin Nazari<br>
+            Hamburg, Deutschland<br>
+            E-Mail: <a href="mailto:business@leolan.net">business@leolan.net</a>
+          </p>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="wrap footer">
+    <p>
+      Diese Datenschutzerklärung wurde für die Website und den WhatsApp-Bot von LeoLan Digital in deutscher Sprache erstellt.
+      Je nach technischer oder rechtlicher Weiterentwicklung sollte sie bei Änderungen der eingesetzten Dienste angepasst werden.
+    </p>
+  </div>
+</body>
+</html>
