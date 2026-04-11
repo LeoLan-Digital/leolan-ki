@@ -35,7 +35,7 @@
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
-    .shell { width: min(1280px, calc(100% - 28px)); margin: 0 auto; padding: 22px 0 48px; }
+    .shell { width: min(1360px, calc(100% - 28px)); margin: 0 auto; padding: 22px 0 48px; }
     .login-screen { min-height: 100vh; display: grid; place-items: center; padding: 24px; }
     .login-card, .panel, .hero, .chat-modal {
       background: linear-gradient(180deg, var(--panel), var(--panel-2));
@@ -51,7 +51,7 @@
     h1,h2,h3,p { margin: 0; }
     .login-card h1 { font-size: clamp(1.8rem, 4vw, 2.4rem); margin-bottom: 10px; }
     .login-card p { color: var(--muted); line-height: 1.6; margin-bottom: 22px; }
-    .input, .button, .ghost-button, .toggle-button, .chat-button {
+    .input, .button, .ghost-button, .toggle-button, .chat-button, .tab-button, .action-button {
       font: inherit; border-radius: 16px; transition: 0.2s ease;
     }
     .input {
@@ -61,9 +61,15 @@
       border-color: rgba(77,163,255,0.8); box-shadow: 0 0 0 4px rgba(77,163,255,0.12);
     }
     .login-form { display: grid; gap: 12px; }
-    .button, .ghost-button, .toggle-button, .chat-button { border: none; cursor: pointer; font-weight: 700; }
+    .button, .ghost-button, .toggle-button, .chat-button, .tab-button, .action-button { border: none; cursor: pointer; font-weight: 700; }
     .button { padding: 16px 18px; color: #07101f; background: linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow: 0 18px 30px rgba(77,163,255,0.22); }
-    .ghost-button { padding: 13px 16px; color: var(--text); background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); }
+    .ghost-button, .action-button {
+      padding: 13px 16px; color: var(--text); background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);
+    }
+    .action-button.primary { background: linear-gradient(135deg, rgba(77,163,255,0.28), rgba(124,195,255,0.18)); }
+    .action-button.success { background: linear-gradient(135deg, rgba(47,210,126,0.25), rgba(47,210,126,0.12)); }
+    .action-button.warning { background: linear-gradient(135deg, rgba(255,184,77,0.25), rgba(255,184,77,0.12)); }
+    .action-button.danger { background: linear-gradient(135deg, rgba(255,95,109,0.22), rgba(255,95,109,0.12)); }
     .error, .status-line { min-height: 22px; font-size: 0.95rem; margin-top: 4px; }
     .error { color: var(--danger); }
     .status-line { color: var(--muted); }
@@ -85,10 +91,23 @@
       background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); color: var(--muted); font-size: 0.92rem; white-space: nowrap;
     }
     .dot { width: 10px; height: 10px; border-radius: 999px; background: var(--success); }
+    .tabs {
+      display: flex; gap: 10px; flex-wrap: wrap; margin: 0 0 18px;
+    }
+    .tab-button {
+      padding: 12px 16px; color: var(--muted); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+    }
+    .tab-button.active {
+      color: var(--text); background: linear-gradient(135deg, rgba(77,163,255,0.22), rgba(124,195,255,0.16)); border-color: rgba(77,163,255,0.25);
+    }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
     .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 18px; }
     .panel { border-radius: var(--radius); padding: 22px; overflow: hidden; }
     .span-3 { grid-column: span 3; }
+    .span-4 { grid-column: span 4; }
     .span-6 { grid-column: span 6; }
+    .span-8 { grid-column: span 8; }
     .span-12 { grid-column: span 12; }
     .eyebrow { font-size: .82rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
     .metric-number { font-size: clamp(2rem, 3vw, 2.8rem); font-weight: 900; margin-top: 8px; }
@@ -97,19 +116,26 @@
     .metric-number.warning { color: var(--warning); }
     .metric-sub { color: var(--muted); margin-top: 8px; line-height: 1.6; }
     .toolbar { display: flex; justify-content: space-between; gap: 12px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 18px; }
+    .toolbar-actions { display: flex; gap: 10px; flex-wrap: wrap; }
     .search-wrap { flex: 1; min-width: 220px; }
     .list { display: grid; gap: 12px; }
-    .customer-row {
-      display: grid; grid-template-columns: minmax(0, 1.6fr) auto auto auto; gap: 12px; align-items: center;
-      padding: 16px; border-radius: 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
+    .customer-row, .idea-row, .sync-row, .feedback-row {
+      display: grid; gap: 12px; align-items: center; padding: 16px; border-radius: 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
     }
-    .customer-name { font-weight: 700; line-height: 1.45; word-break: break-word; }
-    .customer-meta { color: var(--muted); font-size: 0.92rem; margin-top: 4px; }
-    .status-badge {
+    .customer-row { grid-template-columns: minmax(0, 1.5fr) auto auto auto; }
+    .idea-row { grid-template-columns: minmax(0, 1.7fr) auto auto; }
+    .sync-row { grid-template-columns: minmax(0, 1.3fr) auto auto auto; }
+    .feedback-row { grid-template-columns: minmax(0, 1fr) auto; }
+    .customer-name, .idea-title, .sync-title, .feedback-title { font-weight: 700; line-height: 1.45; word-break: break-word; }
+    .customer-meta, .idea-meta, .sync-meta, .feedback-meta { color: var(--muted); font-size: 0.92rem; margin-top: 4px; line-height: 1.5; }
+    .status-badge, .type-badge {
       display: inline-flex; align-items: center; justify-content: center; padding: 10px 14px; border-radius: 999px; font-size: 0.9rem; font-weight: 800; min-width: 98px;
     }
-    .status-active { color: #9af1c5; background: rgba(47,210,126,0.14); border: 1px solid rgba(47,210,126,0.2); }
-    .status-inactive { color: #ffabb2; background: rgba(255,95,109,0.12); border: 1px solid rgba(255,95,109,0.18); }
+    .status-active, .type-feedback { color: #9af1c5; background: rgba(47,210,126,0.14); border: 1px solid rgba(47,210,126,0.2); }
+    .status-inactive, .status-new, .type-complaint { color: #ffabb2; background: rgba(255,95,109,0.12); border: 1px solid rgba(255,95,109,0.18); }
+    .status-approved, .type-idea { color: #ffe0a8; background: rgba(255,184,77,0.14); border: 1px solid rgba(255,184,77,0.22); }
+    .status-deployed { color: #a9d5ff; background: rgba(77,163,255,0.16); border: 1px solid rgba(77,163,255,0.22); }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
     .toggle-button, .chat-button { min-width: 128px; padding: 12px 16px; color: var(--text); background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.08); }
     .toggle-button.activate { color: #08120d; background: linear-gradient(135deg, #3de18d, #6df2ad); }
     .toggle-button.deactivate { color: #fff; background: linear-gradient(135deg, #ff5f6d, #ff8b95); }
@@ -117,6 +143,20 @@
     .empty-state, .note-box {
       padding: 18px; border-radius: 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); color: var(--muted); line-height: 1.6;
     }
+    .two-col { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .mini-card {
+      padding: 16px; border-radius: 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
+    }
+    .mini-card strong { display: block; font-size: 1.5rem; margin-top: 6px; }
+    .mini-card span { color: var(--muted); font-size: 0.92rem; }
+    .trend-up { color: var(--success); }
+    .trend-down { color: var(--danger); }
+    .log-list { display: grid; gap: 12px; }
+    .log-item {
+      padding: 14px 16px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.03);
+    }
+    .log-item strong { display: block; margin-bottom: 6px; }
+    .log-item small { color: var(--muted); }
     .footer-note { color: rgba(245,247,255,0.5); font-size: 0.92rem; text-align: center; margin-top: 18px; }
 
     .chat-overlay { position: fixed; inset: 0; background: rgba(2,5,11,0.62); backdrop-filter: blur(8px); z-index: 40; display: none; }
@@ -136,14 +176,16 @@
       border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); outline: none;
     }
 
-    @media (max-width: 1080px) { .span-3, .span-6 { grid-column: span 6; } }
+    @media (max-width: 1080px) { .span-3, .span-4, .span-6, .span-8 { grid-column: span 6; } }
     @media (max-width: 860px) {
       .hero { position: static; flex-direction: column; align-items: stretch; }
       .hero-actions { justify-content: stretch; }
       .live-pill, .ghost-button, .button { width: 100%; justify-content: center; }
-      .span-3, .span-6, .span-12 { grid-column: span 12; }
-      .customer-row { grid-template-columns: 1fr; align-items: stretch; }
-      .status-badge, .toggle-button, .chat-button { width: 100%; }
+      .span-3, .span-4, .span-6, .span-8, .span-12 { grid-column: span 12; }
+      .customer-row, .idea-row, .sync-row, .feedback-row { grid-template-columns: 1fr; align-items: stretch; }
+      .status-badge, .toggle-button, .chat-button, .action-button { width: 100%; }
+      .two-col { grid-template-columns: 1fr; }
+      .actions { justify-content: stretch; }
     }
   </style>
 </head>
@@ -152,7 +194,7 @@
     <div class="login-card">
       <div class="lock-icon">🛡️</div>
       <h1>Admin Dashboard</h1>
-      <p>WhatsApp-Bots steuern und direkt mit Kunden schreiben. Passwort bleibt lokal im Browser gespeichert.</p>
+      <p>Kunden, Ideen, Bot-Feedback und Synchronisation zentral steuern. Passwort bleibt lokal im Browser gespeichert.</p>
       <form class="login-form" id="loginForm">
         <input class="input" id="passwordInput" type="password" placeholder="Admin-Passwort" autocomplete="current-password" />
         <button class="button" type="submit">Einloggen</button>
@@ -167,8 +209,8 @@
         <div class="brand">
           <div class="brand-badge">📊</div>
           <div class="brand-copy">
-            <h1>LeoLan Digital — Kundenverwaltung</h1>
-            <p>WhatsApp-Bots live überwachen, aktivieren/deaktivieren und Kundenchat öffnen.</p>
+            <h1>LeoLan Digital — Admin Control Center</h1>
+            <p>Kunden steuern, Ideen auswerten, Bot-Feedback lesen und alle Bots zentral synchronisieren.</p>
           </div>
         </div>
         <div class="hero-actions">
@@ -178,61 +220,192 @@
         </div>
       </header>
 
-      <section class="grid">
-        <article class="panel span-3">
-          <div class="eyebrow">Gesamt</div>
-          <div class="metric-number" id="totalCount">—</div>
-          <div class="metric-sub">Kunden-Workflows mit „WA Bot“ im Namen</div>
-        </article>
-        <article class="panel span-3">
-          <div class="eyebrow">Aktiv</div>
-          <div class="metric-number success" id="activeCount">—</div>
-          <div class="metric-sub">Aktuell eingeschaltete Bots</div>
-        </article>
-        <article class="panel span-3">
-          <div class="eyebrow">Inaktiv</div>
-          <div class="metric-number danger" id="inactiveCount">—</div>
-          <div class="metric-sub">Aktuell ausgeschaltete Bots</div>
-        </article>
-        <article class="panel span-3">
-          <div class="eyebrow">Sync</div>
-          <div class="metric-number warning" id="lastSync">—</div>
-          <div class="metric-sub">Letzte Aktualisierung</div>
-        </article>
+      <nav class="tabs" id="tabs">
+        <button class="tab-button active" data-tab="customers" type="button">👥 Kunden</button>
+        <button class="tab-button" data-tab="ideas" type="button">💡 Ideen & Feedback</button>
+        <button class="tab-button" data-tab="bot-feedback" type="button">📊 Bot-Feedback</button>
+        <button class="tab-button" data-tab="sync" type="button">🔄 Synchronisation</button>
+      </nav>
 
-        <article class="panel span-12">
-          <div class="toolbar">
-            <div>
-              <h2>Kundenübersicht</h2>
-              <p style="color:var(--muted);margin-top:8px">Ein Klick zum Schalten, ein Klick zum Chat.</p>
+      <section class="tab-panel active" id="panel-customers">
+        <section class="grid">
+          <article class="panel span-3">
+            <div class="eyebrow">Gesamt</div>
+            <div class="metric-number" id="totalCount">—</div>
+            <div class="metric-sub">Kunden-Bots im System</div>
+          </article>
+          <article class="panel span-3">
+            <div class="eyebrow">Aktiv</div>
+            <div class="metric-number success" id="activeCount">—</div>
+            <div class="metric-sub">Aktuell eingeschaltete Bots</div>
+          </article>
+          <article class="panel span-3">
+            <div class="eyebrow">Inaktiv</div>
+            <div class="metric-number danger" id="inactiveCount">—</div>
+            <div class="metric-sub">Aktuell ausgeschaltete Bots</div>
+          </article>
+          <article class="panel span-3">
+            <div class="eyebrow">Letzter Sync</div>
+            <div class="metric-number warning" id="lastSync">—</div>
+            <div class="metric-sub">Letzte Aktualisierung aus n8n</div>
+          </article>
+
+          <article class="panel span-12">
+            <div class="toolbar">
+              <div>
+                <h2>Kundenübersicht</h2>
+                <p style="color:var(--muted);margin-top:8px">Ein Klick zum Schalten, ein Klick zum Chat.</p>
+              </div>
+              <div class="search-wrap">
+                <input class="input" id="searchInput" type="search" placeholder="Restaurant suchen…" />
+              </div>
             </div>
-            <div class="search-wrap">
-              <input class="input" id="searchInput" type="search" placeholder="Restaurant suchen…" />
-            </div>
-          </div>
-          <div class="status-line" id="listStatus"></div>
-          <div class="list" id="customerList"></div>
-        </article>
-
-        <article class="panel span-6">
-          <h3>API-Endpunkte</h3>
-          <div class="note-box" style="margin-top:14px">
-            <div><strong>Liste:</strong> <code>https://n8n.leolan.net/webhook/admin-dashboard</code></div>
-            <div style="margin-top:10px"><strong>Toggle:</strong> <code>https://n8n.leolan.net/webhook/admin-toggle</code></div>
-            <div style="margin-top:10px"><strong>Chat POST:</strong> <code>https://n8n.leolan.net/webhook/portal-chat</code></div>
-            <div style="margin-top:10px"><strong>Chat GET:</strong> <code>https://n8n.leolan.net/webhook/portal-chat-history</code></div>
-          </div>
-        </article>
-
-        <article class="panel span-6">
-          <h3>Hinweis</h3>
-          <div class="note-box" style="margin-top:14px">
-            Das Dashboard liest Kunden weiter aus den WA-Bot-Workflows. Für den Chat wird der Slug automatisch aus dem Workflow-Namen abgeleitet.
-          </div>
-        </article>
+            <div class="status-line" id="listStatus"></div>
+            <div class="list" id="customerList"></div>
+          </article>
+        </section>
       </section>
 
-      <div class="footer-note">LeoLan Digital Admin Panel · GitHub Pages ready</div>
+      <section class="tab-panel" id="panel-ideas">
+        <section class="grid">
+          <article class="panel span-3">
+            <div class="eyebrow">Neu</div>
+            <div class="metric-number" id="ideasNewCount">—</div>
+            <div class="metric-sub">Noch unbehandelte Ideen und Feedbacks</div>
+          </article>
+          <article class="panel span-3">
+            <div class="eyebrow">Genehmigt</div>
+            <div class="metric-number success" id="ideasApprovedCount">—</div>
+            <div class="metric-sub">Bereit für Deployment</div>
+          </article>
+          <article class="panel span-3">
+            <div class="eyebrow">Diese Woche</div>
+            <div class="metric-number warning" id="ideasWeekCount">—</div>
+            <div class="metric-sub">Neue Einträge in den letzten 7 Tagen</div>
+          </article>
+          <article class="panel span-3">
+            <div class="eyebrow">Deployed</div>
+            <div class="metric-number" id="ideasDeployedCount">—</div>
+            <div class="metric-sub">Bereits in Bots ausgerollt</div>
+          </article>
+
+          <article class="panel span-12">
+            <div class="toolbar">
+              <div>
+                <h2>💡 Ideen & Feedback</h2>
+                <p style="color:var(--muted);margin-top:8px">Gesammelt aus Gastgesprächen und Onboarding-Demos.</p>
+              </div>
+              <div class="toolbar-actions">
+                <button class="action-button primary" id="refreshIdeasButton" type="button">Ideen neu laden</button>
+              </div>
+            </div>
+            <div class="status-line" id="ideasStatus"></div>
+            <div class="list" id="ideasList"></div>
+          </article>
+        </section>
+      </section>
+
+      <section class="tab-panel" id="panel-bot-feedback">
+        <section class="grid">
+          <article class="panel span-4">
+            <div class="eyebrow">Positives Feedback</div>
+            <div class="metric-number success" id="positiveFeedbackCount">—</div>
+            <div class="metric-sub">Lob und starke Rückmeldungen</div>
+          </article>
+          <article class="panel span-4">
+            <div class="eyebrow">Verbesserungsvorschläge</div>
+            <div class="metric-number warning" id="improvementCount">—</div>
+            <div class="metric-sub">Ideen, Feedbacks und Beschwerden mit Potenzial</div>
+          </article>
+          <article class="panel span-4">
+            <div class="eyebrow">Ø Bewertung</div>
+            <div class="metric-number" id="averageRating">—</div>
+            <div class="metric-sub">Falls Nutzer Sterne oder Scores genannt haben</div>
+          </article>
+
+          <article class="panel span-6">
+            <h3>Trend</h3>
+            <div class="two-col" style="margin-top:14px">
+              <div class="mini-card">
+                <span>Aktuelle Woche</span>
+                <strong id="trendThisWeek">—</strong>
+              </div>
+              <div class="mini-card">
+                <span>Vorwoche</span>
+                <strong id="trendLastWeek">—</strong>
+              </div>
+            </div>
+            <div class="metric-sub" id="trendLabel" style="margin-top:14px">Noch keine Trenddaten vorhanden.</div>
+          </article>
+
+          <article class="panel span-6">
+            <h3>Feedback-Split</h3>
+            <div class="two-col" style="margin-top:14px">
+              <div class="mini-card">
+                <span>Beschwerden</span>
+                <strong id="complaintCount">—</strong>
+              </div>
+              <div class="mini-card">
+                <span>Gesamte Feedback-Einträge</span>
+                <strong id="feedbackTotalCount">—</strong>
+              </div>
+            </div>
+          </article>
+
+          <article class="panel span-12">
+            <div class="toolbar">
+              <div>
+                <h2>📊 Bot-Feedback Feed</h2>
+                <p style="color:var(--muted);margin-top:8px">Verdichtete Sicht auf positives Feedback, Kritik und Verbesserungen.</p>
+              </div>
+            </div>
+            <div class="list" id="feedbackFeed"></div>
+          </article>
+        </section>
+      </section>
+
+      <section class="tab-panel" id="panel-sync">
+        <section class="grid">
+          <article class="panel span-8">
+            <div class="toolbar">
+              <div>
+                <h2>🔄 Aktive Kunden-Bots</h2>
+                <p style="color:var(--muted);margin-top:8px">Letzter Sync, Paket und Auslastung pro Bot.</p>
+              </div>
+              <div class="toolbar-actions">
+                <button class="button" id="syncAllButton" type="button">Alle Bots aktualisieren</button>
+              </div>
+            </div>
+            <div class="status-line" id="syncStatus"></div>
+            <div class="list" id="syncBotList"></div>
+          </article>
+
+          <article class="panel span-4">
+            <h3>Letzte Updates</h3>
+            <div class="log-list" id="syncLog" style="margin-top:14px"></div>
+          </article>
+
+          <article class="panel span-6">
+            <h3>API-Endpunkte</h3>
+            <div class="note-box" style="margin-top:14px">
+              <div><strong>Kunden:</strong> <code>https://n8n.leolan.net/webhook/admin-dashboard</code></div>
+              <div style="margin-top:10px"><strong>Toggle:</strong> <code>https://n8n.leolan.net/webhook/admin-toggle</code></div>
+              <div style="margin-top:10px"><strong>Ideen:</strong> <code>https://n8n.leolan.net/webhook/admin-ideas</code></div>
+              <div style="margin-top:10px"><strong>Chat POST:</strong> <code>https://n8n.leolan.net/webhook/portal-chat</code></div>
+              <div style="margin-top:10px"><strong>Chat GET:</strong> <code>https://n8n.leolan.net/webhook/portal-chat-history</code></div>
+            </div>
+          </article>
+
+          <article class="panel span-6">
+            <h3>Hinweis</h3>
+            <div class="note-box" style="margin-top:14px">
+              Ideen-Deployments und globale Synchronisation schreiben jetzt Log-Einträge in n8n. So ist sichtbar, wann Updates in die Kunden-Bots ausgerollt wurden.
+            </div>
+          </article>
+        </section>
+      </section>
+
+      <div class="footer-note">LeoLan Digital Admin Panel · Ideas, Feedback & Sync Center</div>
     </div>
   </main>
 
@@ -259,6 +432,7 @@
     const STORAGE_KEY = 'leolan-admin-secret';
     const DASHBOARD_API = 'https://n8n.leolan.net/webhook/admin-dashboard';
     const TOGGLE_API = 'https://n8n.leolan.net/webhook/admin-toggle';
+    const IDEAS_API = 'https://n8n.leolan.net/webhook/admin-ideas';
     const CHAT_API = 'https://n8n.leolan.net/webhook/portal-chat';
     const CHAT_HISTORY_API = 'https://n8n.leolan.net/webhook/portal-chat-history';
 
@@ -268,15 +442,41 @@
     const passwordInput = document.getElementById('passwordInput');
     const loginError = document.getElementById('loginError');
     const apiStatus = document.getElementById('apiStatus');
-    const customerList = document.getElementById('customerList');
-    const listStatus = document.getElementById('listStatus');
-    const searchInput = document.getElementById('searchInput');
     const refreshButton = document.getElementById('refreshButton');
     const logoutButton = document.getElementById('logoutButton');
+    const tabs = document.querySelectorAll('.tab-button');
+
     const totalCount = document.getElementById('totalCount');
     const activeCount = document.getElementById('activeCount');
     const inactiveCount = document.getElementById('inactiveCount');
     const lastSync = document.getElementById('lastSync');
+    const customerList = document.getElementById('customerList');
+    const listStatus = document.getElementById('listStatus');
+    const searchInput = document.getElementById('searchInput');
+
+    const ideasNewCount = document.getElementById('ideasNewCount');
+    const ideasApprovedCount = document.getElementById('ideasApprovedCount');
+    const ideasWeekCount = document.getElementById('ideasWeekCount');
+    const ideasDeployedCount = document.getElementById('ideasDeployedCount');
+    const ideasStatus = document.getElementById('ideasStatus');
+    const ideasList = document.getElementById('ideasList');
+    const refreshIdeasButton = document.getElementById('refreshIdeasButton');
+
+    const positiveFeedbackCount = document.getElementById('positiveFeedbackCount');
+    const improvementCount = document.getElementById('improvementCount');
+    const averageRating = document.getElementById('averageRating');
+    const trendThisWeek = document.getElementById('trendThisWeek');
+    const trendLastWeek = document.getElementById('trendLastWeek');
+    const trendLabel = document.getElementById('trendLabel');
+    const complaintCount = document.getElementById('complaintCount');
+    const feedbackTotalCount = document.getElementById('feedbackTotalCount');
+    const feedbackFeed = document.getElementById('feedbackFeed');
+
+    const syncBotList = document.getElementById('syncBotList');
+    const syncStatus = document.getElementById('syncStatus');
+    const syncLog = document.getElementById('syncLog');
+    const syncAllButton = document.getElementById('syncAllButton');
+
     const chatOverlay = document.getElementById('chatOverlay');
     const chatTitle = document.getElementById('chatTitle');
     const chatSubtitle = document.getElementById('chatSubtitle');
@@ -287,6 +487,8 @@
     const chatClose = document.getElementById('chatClose');
 
     let workflows = [];
+    let ideas = [];
+    let syncData = { syncLog: [], activeBots: 0, lastSyncAt: null };
     let currentChat = null;
 
     function getStoredSecret() { return localStorage.getItem(STORAGE_KEY) || ''; }
@@ -294,7 +496,7 @@
     function clearStoredSecret() { localStorage.removeItem(STORAGE_KEY); }
     function isAuthorized(secret) { return secret === ADMIN_SECRET; }
     function escapeHtml(value) {
-      return String(value)
+      return String(value ?? '')
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
@@ -306,11 +508,41 @@
       if (Number.isNaN(date.getTime())) return '—';
       return new Intl.DateTimeFormat('de-DE', { hour: '2-digit', minute: '2-digit' }).format(date);
     }
+    function formatDateTime(dateLike) {
+      const date = new Date(dateLike);
+      if (Number.isNaN(date.getTime())) return '—';
+      return new Intl.DateTimeFormat('de-DE', { dateStyle: 'medium', timeStyle: 'short' }).format(date);
+    }
+    function formatDate(dateLike) {
+      const date = new Date(dateLike);
+      if (Number.isNaN(date.getTime())) return '—';
+      return new Intl.DateTimeFormat('de-DE', { dateStyle: 'medium' }).format(date);
+    }
     function extractRestaurantName(name) {
       return String(name || '').replace(/^WA Bot\s*[—-]\s*/i, '').replace(/\s*[—-]\s*v\d+$/i, '').trim() || name || 'Unbenannter Kunde';
     }
     function slugify(name) {
       return extractRestaurantName(name).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    }
+    function ideaStatusClass(status) {
+      if (status === 'approved') return 'status-approved';
+      if (status === 'deployed') return 'status-deployed';
+      return 'status-new';
+    }
+    function ideaStatusLabel(status) {
+      if (status === 'approved') return 'Genehmigt';
+      if (status === 'deployed') return 'Deployed';
+      return 'Neu';
+    }
+    function ideaTypeClass(type) {
+      if (type === 'feedback') return 'type-feedback';
+      if (type === 'complaint') return 'type-complaint';
+      return 'type-idea';
+    }
+    function ideaTypeLabel(type) {
+      if (type === 'feedback') return 'Feedback';
+      if (type === 'complaint') return 'Beschwerde';
+      return 'Idee';
     }
     async function apiJson(url, options) {
       const response = await fetch(url, options);
@@ -318,16 +550,26 @@
       if (!response.ok || data.success === false) throw new Error(data.error || `HTTP ${response.status}`);
       return data;
     }
-    function renderStats(items) {
+
+    function setActiveTab(tabId) {
+      tabs.forEach(button => button.classList.toggle('active', button.dataset.tab === tabId));
+      document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.toggle('active', panel.id === `panel-${tabId}`));
+    }
+
+    function renderCustomerStats(items) {
       const active = items.filter(item => item.active).length;
       totalCount.textContent = items.length;
       activeCount.textContent = active;
       inactiveCount.textContent = items.length - active;
-      lastSync.textContent = formatTime(new Date());
+      lastSync.textContent = formatTime(syncData.lastSyncAt || new Date());
     }
-    function renderList(items) {
+
+    function renderCustomerList(items) {
       const query = searchInput.value.trim().toLowerCase();
-      const filtered = items.filter(item => !query || item.name.toLowerCase().includes(query) || extractRestaurantName(item.name).toLowerCase().includes(query));
+      const filtered = items.filter(item => {
+        const haystack = [item.name, extractRestaurantName(item.name), item.restaurantName, item.customerEmail].join(' ').toLowerCase();
+        return !query || haystack.includes(query);
+      });
       if (!filtered.length) {
         customerList.innerHTML = '<div class="empty-state">Keine passenden Kunden gefunden.</div>';
         return;
@@ -338,11 +580,11 @@
         return `
           <article class="customer-row">
             <div>
-              <div class="customer-name">${escapeHtml(extractRestaurantName(item.name))}</div>
-              <div class="customer-meta">${escapeHtml(item.name)} · ID ${escapeHtml(item.id)} · slug ${escapeHtml(slug)}</div>
+              <div class="customer-name">${escapeHtml(item.restaurantName || extractRestaurantName(item.name))}</div>
+              <div class="customer-meta">${escapeHtml(item.name)} · ID ${escapeHtml(item.id)} · Plan ${escapeHtml(item.plan || 'starter')} · ${item.monthUsage || 0}/${item.msgLimit || 500} Nachrichten</div>
             </div>
             <div class="status-badge ${active ? 'status-active' : 'status-inactive'}">${active ? 'Aktiv' : 'Inaktiv'}</div>
-            <button class="chat-button" type="button" data-chat="${escapeHtml(slug)}" data-name="${escapeHtml(extractRestaurantName(item.name))}">Chat</button>
+            <button class="chat-button" type="button" data-chat="${escapeHtml(slug)}" data-name="${escapeHtml(item.restaurantName || extractRestaurantName(item.name))}">Chat</button>
             <button class="toggle-button ${active ? 'deactivate' : 'activate'}" type="button" data-id="${escapeHtml(item.id)}" data-action="${active ? 'deactivate' : 'activate'}">${active ? 'Deaktivieren' : 'Aktivieren'}</button>
           </article>
         `;
@@ -350,41 +592,203 @@
       customerList.querySelectorAll('.toggle-button').forEach(button => button.addEventListener('click', () => toggleWorkflow(button.dataset.id, button.dataset.action, button)));
       customerList.querySelectorAll('.chat-button').forEach(button => button.addEventListener('click', () => openChat(button.dataset.chat, button.dataset.name)));
     }
-    async function loadWorkflows() {
+
+    function renderIdeas(data) {
+      const stats = data.stats || {};
+      ideasNewCount.textContent = stats.newIdeas ?? 0;
+      ideasApprovedCount.textContent = stats.approved ?? 0;
+      ideasWeekCount.textContent = stats.thisWeek ?? 0;
+      ideasDeployedCount.textContent = stats.deployed ?? 0;
+      if (!ideas.length) {
+        ideasList.innerHTML = '<div class="empty-state">Noch keine Ideen oder Feedbacks gespeichert.</div>';
+        return;
+      }
+      ideasList.innerHTML = ideas.map(item => `
+        <article class="idea-row">
+          <div>
+            <div class="idea-title">${escapeHtml(item.text)}</div>
+            <div class="idea-meta">${escapeHtml(item.source || 'Unbekannt')} · ${formatDate(item.timestamp)} · ${escapeHtml(ideaTypeLabel(item.type))}</div>
+          </div>
+          <div class="actions">
+            <span class="type-badge ${ideaTypeClass(item.type)}">${escapeHtml(ideaTypeLabel(item.type))}</span>
+            <span class="status-badge ${ideaStatusClass(item.status)}">${escapeHtml(ideaStatusLabel(item.status))}</span>
+          </div>
+          <div class="actions">
+            <button class="action-button success" type="button" data-approve="${escapeHtml(item.id)}">✅ Genehmigen</button>
+            <button class="action-button warning" type="button" data-deploy="${escapeHtml(item.id)}">🚀 Deploy</button>
+            <button class="action-button danger" type="button" data-delete="${escapeHtml(item.id)}">🗑️ Löschen</button>
+          </div>
+        </article>
+      `).join('');
+      ideasList.querySelectorAll('[data-approve]').forEach(button => button.addEventListener('click', () => approveIdea(button.dataset.approve)));
+      ideasList.querySelectorAll('[data-delete]').forEach(button => button.addEventListener('click', () => deleteIdea(button.dataset.delete)));
+      ideasList.querySelectorAll('[data-deploy]').forEach(button => button.addEventListener('click', () => deployIdea(button.dataset.deploy)));
+    }
+
+    function computeFeedbackMetrics() {
+      const now = new Date();
+      const currentWeekStart = new Date(now);
+      currentWeekStart.setDate(now.getDate() - 7);
+      const previousWeekStart = new Date(now);
+      previousWeekStart.setDate(now.getDate() - 14);
+      const ratings = ideas.map(item => Number(item.rating)).filter(value => !Number.isNaN(value));
+      const positiveEntries = ideas.filter(item => item.sentiment === 'positive' || (item.type === 'feedback' && /(super|mega|toll|gut|klasse|stark|perfekt|liebe|großartig|hammer|top|5\s*sterne)/i.test(item.text || '')));
+      const improvementEntries = ideas.filter(item => item.type === 'idea' || item.type === 'complaint' || (item.type === 'feedback' && !positiveEntries.includes(item)));
+      const currentWeek = ideas.filter(item => new Date(item.timestamp || 0) >= currentWeekStart).length;
+      const previousWeek = ideas.filter(item => {
+        const ts = new Date(item.timestamp || 0);
+        return ts >= previousWeekStart && ts < currentWeekStart;
+      }).length;
+      return {
+        positiveEntries,
+        improvementEntries,
+        ratings,
+        currentWeek,
+        previousWeek,
+        complaints: ideas.filter(item => item.type === 'complaint').length,
+        feedbackTotal: ideas.filter(item => item.type === 'feedback').length,
+      };
+    }
+
+    function renderFeedback() {
+      const metrics = computeFeedbackMetrics();
+      positiveFeedbackCount.textContent = metrics.positiveEntries.length;
+      improvementCount.textContent = metrics.improvementEntries.length;
+      averageRating.textContent = metrics.ratings.length ? `${(metrics.ratings.reduce((sum, value) => sum + value, 0) / metrics.ratings.length).toFixed(1)} / 5` : '—';
+      trendThisWeek.textContent = metrics.currentWeek;
+      trendLastWeek.textContent = metrics.previousWeek;
+      complaintCount.textContent = metrics.complaints;
+      feedbackTotalCount.textContent = metrics.feedbackTotal;
+      const delta = metrics.currentWeek - metrics.previousWeek;
+      trendLabel.innerHTML = delta > 0 ? `<span class="trend-up">▲ ${delta} mehr Rückmeldungen als in der Vorwoche</span>` : delta < 0 ? `<span class="trend-down">▼ ${Math.abs(delta)} weniger Rückmeldungen als in der Vorwoche</span>` : '↔︎ Gleich viele Rückmeldungen wie in der Vorwoche';
+
+      const feedItems = [...ideas]
+        .sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0))
+        .slice(0, 12);
+      if (!feedItems.length) {
+        feedbackFeed.innerHTML = '<div class="empty-state">Noch keine Feedback-Daten vorhanden.</div>';
+        return;
+      }
+      feedbackFeed.innerHTML = feedItems.map(item => `
+        <article class="feedback-row">
+          <div>
+            <div class="feedback-title">${escapeHtml(item.text)}</div>
+            <div class="feedback-meta">${escapeHtml(item.source || 'Unbekannt')} · ${formatDateTime(item.timestamp)} · ${escapeHtml(ideaTypeLabel(item.type))}${item.rating ? ` · ${escapeHtml(item.rating)} / 5` : ''}</div>
+          </div>
+          <div class="actions">
+            <span class="type-badge ${ideaTypeClass(item.type)}">${escapeHtml(ideaTypeLabel(item.type))}</span>
+            <span class="status-badge ${ideaStatusClass(item.status)}">${escapeHtml(ideaStatusLabel(item.status))}</span>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function renderSync() {
+      const bots = [...workflows].sort((a, b) => Number(b.active) - Number(a.active) || String(a.restaurantName || a.name).localeCompare(String(b.restaurantName || b.name), 'de'));
+      if (!bots.length) {
+        syncBotList.innerHTML = '<div class="empty-state">Aktuell keine Kunden-Bots gefunden.</div>';
+      } else {
+        syncBotList.innerHTML = bots.map(item => `
+          <article class="sync-row">
+            <div>
+              <div class="sync-title">${escapeHtml(item.restaurantName || extractRestaurantName(item.name))}</div>
+              <div class="sync-meta">Plan ${escapeHtml(item.plan || 'starter')} · ${item.monthUsage || 0}/${item.msgLimit || 500} Nachrichten · letzter Deploy: ${escapeHtml(item.lastDeploymentText || '—')}</div>
+            </div>
+            <div class="status-badge ${item.active ? 'status-active' : 'status-inactive'}">${item.active ? 'Aktiv' : 'Inaktiv'}</div>
+            <div class="sync-meta">${item.lastSyncedAt ? `Sync ${formatDateTime(item.lastSyncedAt)}` : 'Noch kein Sync'}</div>
+            <button class="toggle-button ${item.active ? 'deactivate' : 'activate'}" type="button" data-id="${escapeHtml(item.id)}" data-action="${item.active ? 'deactivate' : 'activate'}">${item.active ? 'Deaktivieren' : 'Aktivieren'}</button>
+          </article>
+        `).join('');
+        syncBotList.querySelectorAll('.toggle-button').forEach(button => button.addEventListener('click', () => toggleWorkflow(button.dataset.id, button.dataset.action, button)));
+      }
+
+      const logs = Array.isArray(syncData.syncLog) ? syncData.syncLog : [];
+      if (!logs.length) {
+        syncLog.innerHTML = '<div class="empty-state">Noch keine Synchronisations-Logs vorhanden.</div>';
+        return;
+      }
+      syncLog.innerHTML = logs.slice(0, 10).map(entry => `
+        <div class="log-item">
+          <strong>${escapeHtml(entry.label || entry.type || 'Sync')}</strong>
+          <small>${formatDateTime(entry.timestamp)} · ${entry.affectedBots || 0} Bots${entry.note ? ` · ${escapeHtml(entry.note)}` : ''}</small>
+        </div>
+      `).join('');
+    }
+
+    async function loadDashboard() {
       const secret = getStoredSecret();
       if (!isAuthorized(secret)) return showLogin();
-      apiStatus.textContent = 'Lade Kundendaten…';
+      apiStatus.textContent = 'Lade Dashboard…';
       listStatus.textContent = 'Synchronisiere mit n8n…';
+      syncStatus.textContent = 'Lade Bot-Status…';
       refreshButton.disabled = true;
       try {
-        const data = await apiJson(DASHBOARD_API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ key: secret }) });
+        const data = await apiJson(DASHBOARD_API, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ key: secret, action: 'list' })
+        });
         workflows = Array.isArray(data.workflows) ? data.workflows : [];
-        renderStats(workflows);
-        renderList(workflows);
+        syncData = data.sync || { syncLog: [], activeBots: 0, lastSyncAt: null };
+        renderCustomerStats(workflows);
+        renderCustomerList(workflows);
+        renderSync();
         apiStatus.textContent = 'n8n verbunden';
-        listStatus.textContent = workflows.length ? `${workflows.length} Kunden geladen.` : 'Aktuell keine WA-Bot-Workflows gefunden.';
-        if (data.updatedAt) lastSync.textContent = formatTime(data.updatedAt);
+        listStatus.textContent = workflows.length ? `${workflows.length} Bots geladen.` : 'Aktuell keine Kunden-Bots gefunden.';
+        syncStatus.textContent = syncData.lastSyncAt ? `Letzter Sync: ${formatDateTime(syncData.lastSyncAt)}` : 'Noch kein globaler Sync ausgeführt.';
+        if (data.updatedAt) lastSync.textContent = formatTime(syncData.lastSyncAt || data.updatedAt);
       } catch (error) {
         console.error(error);
         apiStatus.textContent = 'Verbindung fehlgeschlagen';
         listStatus.textContent = 'Kundendaten konnten nicht geladen werden.';
+        syncStatus.textContent = 'Synchronisationsdaten konnten nicht geladen werden.';
         customerList.innerHTML = '<div class="empty-state">API aktuell nicht erreichbar oder Passwort ungültig.</div>';
+        syncBotList.innerHTML = '<div class="empty-state">Keine Sync-Daten verfügbar.</div>';
+        syncLog.innerHTML = '<div class="empty-state">Keine Logs verfügbar.</div>';
       } finally {
         refreshButton.disabled = false;
       }
     }
+
+    async function loadIdeas() {
+      ideasStatus.textContent = 'Ideen werden geladen…';
+      refreshIdeasButton.disabled = true;
+      try {
+        const data = await apiJson(IDEAS_API, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ key: getStoredSecret(), action: 'list' })
+        });
+        ideas = Array.isArray(data.ideas) ? data.ideas : [];
+        renderIdeas(data);
+        renderFeedback();
+        ideasStatus.textContent = ideas.length ? `${ideas.length} Einträge geladen.` : 'Noch keine Ideen oder Feedbacks vorhanden.';
+      } catch (error) {
+        console.error(error);
+        ideasStatus.textContent = error.message || 'Ideen konnten nicht geladen werden.';
+        ideasList.innerHTML = '<div class="empty-state">Ideen-API aktuell nicht erreichbar.</div>';
+        feedbackFeed.innerHTML = '<div class="empty-state">Keine Feedback-Daten verfügbar.</div>';
+      } finally {
+        refreshIdeasButton.disabled = false;
+      }
+    }
+
+    async function loadAll() {
+      await Promise.all([loadDashboard(), loadIdeas()]);
+    }
+
     async function toggleWorkflow(workflowId, action, button) {
       const originalText = button.textContent;
       button.disabled = true;
       button.textContent = action === 'activate' ? 'Aktiviere…' : 'Deaktiviere…';
       listStatus.textContent = `Workflow ${action === 'activate' ? 'wird aktiviert' : 'wird deaktiviert'}…`;
       try {
-        const data = await apiJson(TOGGLE_API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ workflowId, action, key: getStoredSecret() }) });
-        workflows = workflows.map(item => item.id === workflowId ? { ...item, active: data.workflow.active } : item);
-        renderStats(workflows);
-        renderList(workflows);
-        lastSync.textContent = formatTime(data.updatedAt || new Date());
-        listStatus.textContent = `${extractRestaurantName(data.workflow.name)} ist jetzt ${data.workflow.active ? 'aktiv' : 'inaktiv'}.`;
+        await apiJson(TOGGLE_API, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ workflowId, action, key: getStoredSecret() })
+        });
+        await loadDashboard();
       } catch (error) {
         console.error(error);
         button.disabled = false;
@@ -392,6 +796,71 @@
         listStatus.textContent = 'Umschalten fehlgeschlagen.';
       }
     }
+
+    async function approveIdea(ideaId) {
+      ideasStatus.textContent = 'Idee wird genehmigt…';
+      try {
+        await apiJson(IDEAS_API, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ key: getStoredSecret(), action: 'approve', ideaId })
+        });
+        await loadIdeas();
+        ideasStatus.textContent = 'Idee genehmigt.';
+      } catch (error) {
+        ideasStatus.textContent = error.message || 'Genehmigung fehlgeschlagen.';
+      }
+    }
+
+    async function deleteIdea(ideaId) {
+      ideasStatus.textContent = 'Eintrag wird gelöscht…';
+      try {
+        await apiJson(IDEAS_API, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ key: getStoredSecret(), action: 'delete', ideaId })
+        });
+        await loadIdeas();
+        ideasStatus.textContent = 'Eintrag gelöscht.';
+      } catch (error) {
+        ideasStatus.textContent = error.message || 'Löschen fehlgeschlagen.';
+      }
+    }
+
+    async function deployIdea(ideaId) {
+      ideasStatus.textContent = 'Idee wird in alle Bots deployed…';
+      try {
+        await apiJson(IDEAS_API, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ key: getStoredSecret(), action: 'deploy', ideaId })
+        });
+        await loadAll();
+        ideasStatus.textContent = 'Deployment abgeschlossen.';
+        syncStatus.textContent = 'Idee erfolgreich in alle Bots ausgerollt.';
+      } catch (error) {
+        ideasStatus.textContent = error.message || 'Deployment fehlgeschlagen.';
+      }
+    }
+
+    async function syncAllBots() {
+      syncStatus.textContent = 'Alle Bots werden aktualisiert…';
+      syncAllButton.disabled = true;
+      try {
+        await apiJson(DASHBOARD_API, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ key: getStoredSecret(), action: 'syncAll', label: 'Globaler Dashboard-Sync', note: 'Manuell aus dem Admin-Dashboard ausgelöst' })
+        });
+        await loadDashboard();
+        syncStatus.textContent = 'Alle Bots wurden aktualisiert.';
+      } catch (error) {
+        syncStatus.textContent = error.message || 'Globaler Sync fehlgeschlagen.';
+      } finally {
+        syncAllButton.disabled = false;
+      }
+    }
+
     function renderChatMessages(messages) {
       if (!messages.length) {
         chatBody.innerHTML = '<div class="chat-empty">Noch keine Nachrichten vorhanden.</div>';
@@ -400,11 +869,12 @@
       chatBody.innerHTML = messages.map(item => `
         <div class="bubble ${item.from === 'admin' ? 'admin' : 'customer'}">
           ${escapeHtml(item.message || '')}
-          <div class="bubble-meta">${item.from === 'admin' ? 'Admin' : 'Kunde'} · ${new Date(item.timestamp).toLocaleString('de-DE')}</div>
+          <div class="bubble-meta">${item.from === 'admin' ? 'Admin' : 'Kunde'} · ${formatDateTime(item.timestamp)}</div>
         </div>
       `).join('');
       chatBody.scrollTop = chatBody.scrollHeight;
     }
+
     async function openChat(slug, name) {
       currentChat = { slug, name };
       chatTitle.textContent = `Chat · ${name}`;
@@ -422,6 +892,7 @@
         chatStatus.textContent = error.message || 'Chat konnte nicht geladen werden.';
       }
     }
+
     async function sendChatReply() {
       if (!currentChat) return;
       const message = chatReply.value.trim();
@@ -446,10 +917,17 @@
         chatSend.disabled = false;
       }
     }
-    function showApp() { loginScreen.style.display = 'none'; app.classList.add('visible'); }
-    function showLogin() { app.classList.remove('visible'); loginScreen.style.display = 'grid'; passwordInput.value = getStoredSecret(); passwordInput.focus(); }
 
-    loginForm.addEventListener('submit', event => {
+    function showApp() { loginScreen.style.display = 'none'; app.classList.add('visible'); }
+    function showLogin() {
+      app.classList.remove('visible');
+      loginScreen.style.display = 'grid';
+      passwordInput.value = getStoredSecret();
+      passwordInput.focus();
+    }
+
+    tabs.forEach(button => button.addEventListener('click', () => setActiveTab(button.dataset.tab)));
+    loginForm.addEventListener('submit', async event => {
       event.preventDefault();
       const password = passwordInput.value.trim();
       if (!isAuthorized(password)) {
@@ -459,17 +937,23 @@
       loginError.textContent = '';
       setStoredSecret(password);
       showApp();
-      loadWorkflows();
+      await loadAll();
     });
-    searchInput.addEventListener('input', () => renderList(workflows));
-    refreshButton.addEventListener('click', loadWorkflows);
+    searchInput.addEventListener('input', () => renderCustomerList(workflows));
+    refreshButton.addEventListener('click', loadAll);
+    refreshIdeasButton.addEventListener('click', loadIdeas);
+    syncAllButton.addEventListener('click', syncAllBots);
     logoutButton.addEventListener('click', () => {
       clearStoredSecret();
       workflows = [];
-      customerList.innerHTML = '';
+      ideas = [];
+      syncData = { syncLog: [], activeBots: 0, lastSyncAt: null };
+      customerList.innerHTML = ideasList.innerHTML = feedbackFeed.innerHTML = syncBotList.innerHTML = syncLog.innerHTML = '';
       totalCount.textContent = activeCount.textContent = inactiveCount.textContent = lastSync.textContent = '—';
+      ideasNewCount.textContent = ideasApprovedCount.textContent = ideasWeekCount.textContent = ideasDeployedCount.textContent = '—';
+      positiveFeedbackCount.textContent = improvementCount.textContent = averageRating.textContent = trendThisWeek.textContent = trendLastWeek.textContent = complaintCount.textContent = feedbackTotalCount.textContent = '—';
       apiStatus.textContent = 'Abgemeldet';
-      listStatus.textContent = '';
+      listStatus.textContent = ideasStatus.textContent = syncStatus.textContent = '';
       chatOverlay.classList.remove('open');
       showLogin();
     });
@@ -478,7 +962,12 @@
     chatSend.addEventListener('click', sendChatReply);
 
     const initialSecret = getStoredSecret();
-    if (isAuthorized(initialSecret)) { showApp(); loadWorkflows(); } else { showLogin(); }
+    if (isAuthorized(initialSecret)) {
+      showApp();
+      loadAll();
+    } else {
+      showLogin();
+    }
   </script>
 </body>
 </html>
