@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="LeoLan">
+  <title>LeoLan Digital — Betreiber App</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    :root {
+      --navy: #1a2744; --navy2: #0d1526; --orange: #f5a623;
+      --text: #fff; --muted: rgba(255,255,255,.6); --border: rgba(255,255,255,.1);
+      --green: #2dd881; --red: #e74c3c;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    body { background: var(--navy2); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; display: flex; flex-direction: column; }
+    
+    /* LOGIN */
+    #loginScreen { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 24px; gap: 24px; }
+    .logo-wrap { text-align: center; }
+    .logo-wrap img { width: 80px; border-radius: 20px; }
+    .logo-wrap h1 { color: var(--orange); font-size: 24px; margin-top: 12px; }
+    .logo-wrap p { color: var(--muted); font-size: 14px; margin-top: 4px; }
+    .login-card { background: var(--navy); border-radius: 20px; padding: 28px; width: 100%; max-width: 400px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 14px; }
+    input { background: rgba(255,255,255,.08); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; color: #fff; font-size: 16px; font-family: inherit; outline: none; width: 100%; }
+    input::placeholder { color: var(--muted); }
+    .btn { background: linear-gradient(135deg, var(--orange), #e8920a); color: var(--navy); border: none; border-radius: 14px; padding: 15px; font-weight: 900; font-size: 16px; cursor: pointer; width: 100%; font-family: inherit; }
+    .error-msg { color: var(--red); font-size: 13px; text-align: center; }
+
+    /* APP */
+    #app { display: none; flex-direction: column; min-height: 100vh; }
+    .top-bar { background: var(--navy); padding: 16px 20px 12px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
+    .top-bar h2 { font-size: 18px; font-weight: 800; }
+    .top-bar .badge { background: var(--red); color: #fff; border-radius: 999px; padding: 2px 8px; font-size: 11px; font-weight: 800; }
+    .content { flex: 1; padding: 16px; overflow-y: auto; padding-bottom: 80px; }
+    
+    /* TABS */
+    .tab-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--navy); border-top: 1px solid var(--border); display: flex; z-index: 10; padding-bottom: env(safe-area-inset-bottom); }
+    .tab { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 10px 4px 8px; cursor: pointer; color: var(--muted); font-size: 10px; gap: 4px; border: none; background: none; font-family: inherit; position: relative; }
+    .tab.active { color: var(--orange); }
+    .tab svg { width: 24px; height: 24px; }
+    .tab .tab-badge { position: absolute; top: 6px; right: calc(50% - 16px); background: var(--red); color: #fff; border-radius: 999px; width: 16px; height: 16px; font-size: 9px; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+    
+    /* CARDS */
+    .card { background: var(--navy); border-radius: 16px; padding: 16px; border: 1px solid var(--border); margin-bottom: 12px; }
+    .card h3 { font-size: 14px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+    .stat-row { display: flex; gap: 10px; margin-bottom: 12px; }
+    .stat { flex: 1; background: rgba(255,255,255,.05); border-radius: 12px; padding: 14px; text-align: center; }
+    .stat .val { font-size: 28px; font-weight: 900; color: var(--orange); }
+    .stat .lbl { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    
+    /* NACHRICHTEN */
+    .msg-item { display: flex; align-items: flex-start; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--border); cursor: pointer; }
+    .msg-item:last-child { border-bottom: none; }
+    .msg-avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--orange); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 16px; color: var(--navy); flex-shrink: 0; }
+    .msg-body { flex: 1; min-width: 0; }
+    .msg-name { font-weight: 700; font-size: 15px; margin-bottom: 2px; }
+    .msg-preview { font-size: 13px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .msg-meta { font-size: 11px; color: var(--muted); flex-shrink: 0; text-align: right; }
+    .unread-dot { width: 8px; height: 8px; background: var(--orange); border-radius: 50%; margin-top: 4px; margin-left: auto; }
+    
+    /* RESERVIERUNGEN */
+    .res-item { background: rgba(255,255,255,.05); border-radius: 12px; padding: 14px; margin-bottom: 10px; }
+    .res-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .res-name { font-weight: 700; font-size: 15px; }
+    .res-status { font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 999px; }
+    .status-new { background: rgba(245,166,35,.2); color: var(--orange); }
+    .status-confirmed { background: rgba(45,216,129,.2); color: var(--green); }
+    .res-details { font-size: 13px; color: var(--muted); display: flex; gap: 12px; flex-wrap: wrap; }
+    
+    /* REPLY */
+    .reply-bar { display: flex; gap: 10px; padding: 12px 16px; background: var(--navy); border-top: 1px solid var(--border); position: fixed; bottom: 0; left: 0; right: 0; }
+    .reply-bar input { flex: 1; }
+    .reply-bar button { background: var(--orange); color: var(--navy); border: none; border-radius: 12px; padding: 12px 18px; font-weight: 800; font-size: 14px; cursor: pointer; white-space: nowrap; }
+    
+    .screen { display: none; }
+    .screen.active { display: block; }
+    
+    .loading { text-align: center; padding: 40px; color: var(--muted); }
+    .empty { text-align: center; padding: 60px 20px; color: var(--muted); }
+    .empty svg { width: 48px; height: 48px; opacity: .3; margin-bottom: 12px; }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="logo-wrap">
+    <img src="https://ki.leolan.net/leolan-logo.png" alt="LeoLan">
+    <h1>LeoLan Digital</h1>
+    <p>Betreiber-Dashboard</p>
+  </div>
+  <div class="login-card">
+    <input id="codeInput" type="text" placeholder="Kundencode (z.B. REST42)" autocomplete="off" autocapitalize="characters">
+    <button class="btn" onclick="doLogin()">Anmelden →</button>
+    <div class="error-msg" id="loginError"></div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="top-bar">
+    <h2 id="appTitle">Dashboard</h2>
+    <span class="badge" id="unreadBadge" style="display:none">0</span>
+  </div>
+  
+  <div class="content">
+    <!-- DASHBOARD -->
+    <div class="screen active" id="screenDashboard">
+      <div class="card">
+        <h3>Heute</h3>
+        <div class="stat-row">
+          <div class="stat"><div class="val" id="statReservations">—</div><div class="lbl">Reservierungen</div></div>
+          <div class="stat"><div class="val" id="statMessages">—</div><div class="lbl">Nachrichten</div></div>
+          <div class="stat"><div class="val" id="statGuests">—</div><div class="lbl">Gäste</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Nächste Reservierungen</h3>
+        <div id="nextReservations"><div class="loading">Laden...</div></div>
+      </div>
+    </div>
+
+    <!-- NACHRICHTEN -->
+    <div class="screen" id="screenMessages">
+      <div class="card">
+        <h3>WhatsApp-Nachrichten</h3>
+        <div id="messageList"><div class="loading">Laden...</div></div>
+      </div>
+    </div>
+
+    <!-- RESERVIERUNGEN -->
+    <div class="screen" id="screenReservations">
+      <div class="card">
+        <h3>Alle Reservierungen</h3>
+        <div id="reservationList"><div class="loading">Laden...</div></div>
+      </div>
+    </div>
+
+    <!-- EINSTELLUNGEN -->
+    <div class="screen" id="screenSettings">
+      <div class="card">
+        <h3>Account</h3>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="background:rgba(255,255,255,.05);border-radius:12px;padding:14px;">
+            <div style="font-size:12px;color:var(--muted);">Restaurant</div>
+            <div style="font-weight:700;margin-top:4px;" id="settingsName">—</div>
+          </div>
+          <div style="background:rgba(255,255,255,.05);border-radius:12px;padding:14px;">
+            <div style="font-size:12px;color:var(--muted);">Kundencode</div>
+            <div style="font-weight:700;margin-top:4px;" id="settingsCode">—</div>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:12px;">
+        <button class="btn" style="background:rgba(255,255,255,.08);color:var(--muted);" onclick="doLogout()">Abmelden</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB BAR -->
+  <div class="tab-bar">
+    <button class="tab active" onclick="showTab('Dashboard')" id="tab0">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Dashboard
+    </button>
+    <button class="tab" onclick="showTab('Messages')" id="tab1">
+      <div class="tab-badge" id="msgTabBadge" style="display:none">0</div>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Nachrichten
+    </button>
+    <button class="tab" onclick="showTab('Reservations')" id="tab2">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Buchungen
+    </button>
+    <button class="tab" onclick="showTab('Settings')" id="tab3">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      Einstellungen
+    </button>
+  </div>
+</div>
+
+<script>
+const API = 'https://n8n.leolan.net/webhook';
+const ADMIN_KEY = 'LeoLan2026Admin!';
+let state = { code: '', name: '', slug: '', tab: 'Dashboard' };
+
+// LOGIN
+function doLogin() {
+  const code = document.getElementById('codeInput').value.trim().toUpperCase();
+  if (!code) return;
+  document.getElementById('loginError').textContent = '';
+  fetch(`${API}/portal-auth`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({code}) })
+    .then(r => r.json())
+    .then(d => {
+      if (d.success) {
+        state.code = code; state.name = d.restaurantName || d.hotelName || code; state.slug = d.slug || '';
+        localStorage.setItem('ll_pwa_code', code);
+        localStorage.setItem('ll_pwa_name', state.name);
+        showApp();
+      } else {
+        document.getElementById('loginError').textContent = 'Ungültiger Code. Bitte erneut versuchen.';
+      }
+    })
+    .catch(() => {
+      // Fallback: code akzeptieren wenn Offline
+      state.code = code; state.name = code;
+      localStorage.setItem('ll_pwa_code', code);
+      showApp();
+    });
+}
+
+function doLogout() {
+  localStorage.removeItem('ll_pwa_code');
+  localStorage.removeItem('ll_pwa_name');
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
+}
+
+function showApp() {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('app').style.display = 'flex';
+  document.getElementById('settingsName').textContent = state.name;
+  document.getElementById('settingsCode').textContent = state.code;
+  loadAll();
+}
+
+// TAB NAVIGATION
+function showTab(tab) {
+  state.tab = tab;
+  ['Dashboard','Messages','Reservations','Settings'].forEach((t,i) => {
+    document.getElementById(`screen${t}`).classList.toggle('active', t === tab);
+    document.getElementById(`tab${i}`).classList.toggle('active', t === tab);
+  });
+  const titles = { Dashboard: 'Dashboard', Messages: 'Nachrichten', Reservations: 'Buchungen', Settings: 'Einstellungen' };
+  document.getElementById('appTitle').textContent = titles[tab];
+}
+
+// DATA LOADING
+async function loadAll() {
+  loadDashboard();
+  loadMessages();
+  loadReservations();
+}
+
+async function loadDashboard() {
+  try {
+    const r = await fetch(`${API}/admin-dashboard`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({key: ADMIN_KEY}) });
+    const d = await r.json();
+    document.getElementById('statReservations').textContent = d.totalReservations || '0';
+    document.getElementById('statMessages').textContent = d.totalMessages || '0';
+    document.getElementById('statGuests').textContent = d.activeGuests || '0';
+  } catch {
+    document.getElementById('statReservations').textContent = '—';
+    document.getElementById('statMessages').textContent = '—';
+    document.getElementById('statGuests').textContent = '—';
+  }
+  document.getElementById('nextReservations').innerHTML = '<div style="color:var(--muted);font-size:13px;text-align:center;padding:20px;">Keine Reservierungen heute</div>';
+}
+
+async function loadMessages() {
+  const list = document.getElementById('messageList');
+  try {
+    const r = await fetch(`${API}/b2b-chat/history?adminKey=${encodeURIComponent(ADMIN_KEY)}`);
+    const d = await r.json();
+    const chats = d.chats || [];
+    if (!chats.length) { list.innerHTML = '<div class="empty">Noch keine Nachrichten</div>'; return; }
+    const unread = chats.filter(c => c.unread).length;
+    document.getElementById('unreadBadge').style.display = unread ? 'inline' : 'none';
+    document.getElementById('unreadBadge').textContent = unread;
+    document.getElementById('msgTabBadge').style.display = unread ? 'flex' : 'none';
+    document.getElementById('msgTabBadge').textContent = unread;
+    list.innerHTML = chats.map(c => `
+      <div class="msg-item">
+        <div class="msg-avatar">${(c.name||c.code||'?')[0]}</div>
+        <div class="msg-body">
+          <div class="msg-name">${c.name || c.code}</div>
+          <div class="msg-preview">${c.lastMessage || '—'}</div>
+        </div>
+        <div class="msg-meta">
+          <div>${c.time || ''}</div>
+          ${c.unread ? '<div class="unread-dot"></div>' : ''}
+        </div>
+      </div>`).join('');
+  } catch {
+    list.innerHTML = '<div class="empty">Nachrichten nicht verfügbar</div>';
+  }
+}
+
+async function loadReservations() {
+  const list = document.getElementById('reservationList');
+  list.innerHTML = '<div class="empty">Keine Buchungen vorhanden</div>';
+}
+
+// Auto-refresh alle 60 Sekunden
+setInterval(() => { if (state.code) loadAll(); }, 60000);
+
+// Auto-Login wenn Code gespeichert
+window.onload = () => {
+  const saved = localStorage.getItem('ll_pwa_code');
+  const savedName = localStorage.getItem('ll_pwa_name');
+  if (saved) {
+    state.code = saved; state.name = savedName || saved;
+    showApp();
+  }
+};
+
+// Service Worker registrieren
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+</script>
+</body>
+</html>
