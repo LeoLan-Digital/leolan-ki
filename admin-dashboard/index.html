@@ -9,8 +9,8 @@
     :root {
       --bg: #060816;
       --bg-2: #0d1327;
-      --panel: rgba(15, 20, 38, 0.88);
-      --panel-2: rgba(20, 27, 50, 0.9);
+      --panel: rgba(15, 20, 38, 0.9);
+      --panel-2: rgba(20, 27, 50, 0.94);
       --border: rgba(255, 255, 255, 0.08);
       --text: #f5f7ff;
       --muted: rgba(245, 247, 255, 0.62);
@@ -23,7 +23,6 @@
       --radius: 24px;
       --font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
-
     * { box-sizing: border-box; }
     html, body { margin: 0; min-height: 100%; }
     body {
@@ -36,382 +35,115 @@
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px);
-      background-size: 36px 36px;
-      opacity: 0.3;
-      pointer-events: none;
-      mask-image: radial-gradient(circle at center, black 34%, transparent 92%);
-    }
-
-    .shell {
-      width: min(1280px, calc(100% - 28px));
-      margin: 0 auto;
-      padding: 22px 0 48px;
-    }
-
-    .login-screen {
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 24px;
-    }
-
-    .login-card,
-    .panel,
-    .hero {
+    .shell { width: min(1280px, calc(100% - 28px)); margin: 0 auto; padding: 22px 0 48px; }
+    .login-screen { min-height: 100vh; display: grid; place-items: center; padding: 24px; }
+    .login-card, .panel, .hero, .chat-modal {
       background: linear-gradient(180deg, var(--panel), var(--panel-2));
       border: 1px solid var(--border);
       box-shadow: var(--shadow);
       backdrop-filter: blur(18px);
     }
-
-    .login-card {
-      width: min(460px, 100%);
-      border-radius: 30px;
-      padding: 32px;
-    }
-
+    .login-card { width: min(460px, 100%); border-radius: 30px; padding: 32px; }
     .lock-icon {
-      width: 70px;
-      height: 70px;
-      display: grid;
-      place-items: center;
-      border-radius: 22px;
-      margin-bottom: 18px;
-      background: linear-gradient(135deg, rgba(77,163,255,0.18), rgba(77,163,255,0.06));
-      border: 1px solid rgba(77,163,255,0.28);
-      font-size: 30px;
+      width: 70px; height: 70px; display: grid; place-items: center; border-radius: 22px; margin-bottom: 18px;
+      background: linear-gradient(135deg, rgba(77,163,255,0.18), rgba(77,163,255,0.06)); border: 1px solid rgba(77,163,255,0.28); font-size: 30px;
     }
-
-    h1, h2, h3, p { margin: 0; }
-
+    h1,h2,h3,p { margin: 0; }
     .login-card h1 { font-size: clamp(1.8rem, 4vw, 2.4rem); margin-bottom: 10px; }
     .login-card p { color: var(--muted); line-height: 1.6; margin-bottom: 22px; }
-
-    .input,
-    .button,
-    .ghost-button,
-    .toggle-button {
-      font: inherit;
-      border-radius: 16px;
-      transition: 0.2s ease;
+    .input, .button, .ghost-button, .toggle-button, .chat-button {
+      font: inherit; border-radius: 16px; transition: 0.2s ease;
     }
-
     .input {
-      width: 100%;
-      border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(255,255,255,0.05);
-      color: var(--text);
-      padding: 16px 18px;
-      outline: none;
+      width: 100%; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: var(--text); padding: 16px 18px; outline: none;
     }
-
-    .input:focus {
-      border-color: rgba(77,163,255,0.8);
-      box-shadow: 0 0 0 4px rgba(77,163,255,0.12);
+    .input:focus, .chat-textarea:focus {
+      border-color: rgba(77,163,255,0.8); box-shadow: 0 0 0 4px rgba(77,163,255,0.12);
     }
-
     .login-form { display: grid; gap: 12px; }
-
-    .button,
-    .ghost-button,
-    .toggle-button {
-      border: none;
-      cursor: pointer;
-      font-weight: 700;
-    }
-
-    .button {
-      padding: 16px 18px;
-      color: #07101f;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      box-shadow: 0 18px 30px rgba(77,163,255,0.22);
-    }
-
-    .button:hover { transform: translateY(-1px); }
-    .button:disabled,
-    .ghost-button:disabled,
-    .toggle-button:disabled { opacity: 0.55; cursor: wait; }
-
-    .ghost-button {
-      padding: 13px 16px;
-      color: var(--text);
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .ghost-button:hover { background: rgba(255,255,255,0.1); }
-
-    .error,
-    .status-line {
-      min-height: 22px;
-      font-size: 0.95rem;
-      margin-top: 4px;
-    }
-
+    .button, .ghost-button, .toggle-button, .chat-button { border: none; cursor: pointer; font-weight: 700; }
+    .button { padding: 16px 18px; color: #07101f; background: linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow: 0 18px 30px rgba(77,163,255,0.22); }
+    .ghost-button { padding: 13px 16px; color: var(--text); background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); }
+    .error, .status-line { min-height: 22px; font-size: 0.95rem; margin-top: 4px; }
     .error { color: var(--danger); }
     .status-line { color: var(--muted); }
-
     .app { display: none; }
     .app.visible { display: block; }
-
     .hero {
-      position: sticky;
-      top: 16px;
-      z-index: 5;
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      align-items: center;
-      border-radius: 28px;
-      padding: 24px;
-      margin-bottom: 18px;
+      position: sticky; top: 16px; z-index: 5; display: flex; justify-content: space-between; gap: 20px; align-items: center;
+      border-radius: 28px; padding: 24px; margin-bottom: 18px;
     }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      min-width: 0;
-    }
-
+    .brand { display: flex; align-items: center; gap: 18px; min-width: 0; }
     .brand-badge {
-      width: 60px;
-      height: 60px;
-      border-radius: 20px;
-      display: grid;
-      place-items: center;
-      font-size: 28px;
-      background: linear-gradient(135deg, rgba(77,163,255,0.20), rgba(77,163,255,0.07));
-      border: 1px solid rgba(77,163,255,0.28);
-      flex-shrink: 0;
+      width: 60px; height: 60px; border-radius: 20px; display: grid; place-items: center; font-size: 28px;
+      background: linear-gradient(135deg, rgba(77,163,255,0.20), rgba(77,163,255,0.07)); border: 1px solid rgba(77,163,255,0.28); flex-shrink: 0;
     }
-
     .brand-copy p { color: var(--muted); margin-top: 8px; }
-
-    .hero-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
+    .hero-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
     .live-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 15px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      color: var(--muted);
-      font-size: 0.92rem;
-      white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 10px; padding: 12px 15px; border-radius: 999px;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); color: var(--muted); font-size: 0.92rem; white-space: nowrap;
     }
-
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
-      background: var(--success);
-      box-shadow: 0 0 0 0 rgba(47,210,126,0.55);
-      animation: pulse 1.8s infinite;
-    }
-
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(47,210,126,0.55); }
-      70% { box-shadow: 0 0 0 12px rgba(47,210,126,0); }
-      100% { box-shadow: 0 0 0 0 rgba(47,210,126,0); }
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 18px;
-    }
-
-    .panel {
-      border-radius: var(--radius);
-      padding: 22px;
-      overflow: hidden;
-    }
-
+    .dot { width: 10px; height: 10px; border-radius: 999px; background: var(--success); }
+    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 18px; }
+    .panel { border-radius: var(--radius); padding: 22px; overflow: hidden; }
     .span-3 { grid-column: span 3; }
-    .span-4 { grid-column: span 4; }
     .span-6 { grid-column: span 6; }
     .span-12 { grid-column: span 12; }
-
-    .panel-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: flex-start;
-      margin-bottom: 18px;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: #bfdcff;
-      font-size: 0.84rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-      padding: 8px 11px;
-      border-radius: 999px;
-      background: rgba(77,163,255,0.12);
-      border: 1px solid rgba(77,163,255,0.16);
-    }
-
-    .metric-number {
-      font-size: clamp(2rem, 5vw, 3rem);
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      margin-top: 22px;
-    }
-
-    .metric-sub {
-      color: var(--muted);
-      margin-top: 8px;
-      line-height: 1.5;
-    }
-
-    .metric-number.success { color: #95f0c1; }
-    .metric-number.danger { color: #ff9aa3; }
-    .metric-number.warning { color: #ffd08b; }
-
-    .toolbar {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 16px;
-    }
-
-    .search-wrap {
-      flex: 1;
-      min-width: 220px;
-    }
-
-    .list {
-      display: grid;
-      gap: 12px;
-    }
-
+    .eyebrow { font-size: .82rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+    .metric-number { font-size: clamp(2rem, 3vw, 2.8rem); font-weight: 900; margin-top: 8px; }
+    .metric-number.success { color: var(--success); }
+    .metric-number.danger { color: var(--danger); }
+    .metric-number.warning { color: var(--warning); }
+    .metric-sub { color: var(--muted); margin-top: 8px; line-height: 1.6; }
+    .toolbar { display: flex; justify-content: space-between; gap: 12px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 18px; }
+    .search-wrap { flex: 1; min-width: 220px; }
+    .list { display: grid; gap: 12px; }
     .customer-row {
-      display: grid;
-      grid-template-columns: minmax(0, 1.4fr) auto auto;
-      gap: 12px;
-      align-items: center;
-      padding: 16px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.06);
+      display: grid; grid-template-columns: minmax(0, 1.6fr) auto auto auto; gap: 12px; align-items: center;
+      padding: 16px; border-radius: 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
     }
-
-    .customer-name {
-      font-weight: 700;
-      line-height: 1.45;
-      word-break: break-word;
-    }
-
-    .customer-meta {
-      color: var(--muted);
-      font-size: 0.92rem;
-      margin-top: 4px;
-    }
-
+    .customer-name { font-weight: 700; line-height: 1.45; word-break: break-word; }
+    .customer-meta { color: var(--muted); font-size: 0.92rem; margin-top: 4px; }
     .status-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 10px 14px;
-      border-radius: 999px;
-      font-size: 0.9rem;
-      font-weight: 800;
-      white-space: nowrap;
-      min-width: 98px;
+      display: inline-flex; align-items: center; justify-content: center; padding: 10px 14px; border-radius: 999px; font-size: 0.9rem; font-weight: 800; min-width: 98px;
+    }
+    .status-active { color: #9af1c5; background: rgba(47,210,126,0.14); border: 1px solid rgba(47,210,126,0.2); }
+    .status-inactive { color: #ffabb2; background: rgba(255,95,109,0.12); border: 1px solid rgba(255,95,109,0.18); }
+    .toggle-button, .chat-button { min-width: 128px; padding: 12px 16px; color: var(--text); background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.08); }
+    .toggle-button.activate { color: #08120d; background: linear-gradient(135deg, #3de18d, #6df2ad); }
+    .toggle-button.deactivate { color: #fff; background: linear-gradient(135deg, #ff5f6d, #ff8b95); }
+    .chat-button { background: linear-gradient(135deg, rgba(77,163,255,0.22), rgba(124,195,255,0.18)); }
+    .empty-state, .note-box {
+      padding: 18px; border-radius: 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); color: var(--muted); line-height: 1.6;
+    }
+    .footer-note { color: rgba(245,247,255,0.5); font-size: 0.92rem; text-align: center; margin-top: 18px; }
+
+    .chat-overlay { position: fixed; inset: 0; background: rgba(2,5,11,0.62); backdrop-filter: blur(8px); z-index: 40; display: none; }
+    .chat-overlay.open { display: grid; place-items: center; padding: 16px; }
+    .chat-modal { width: min(760px, 100%); border-radius: 26px; overflow: hidden; }
+    .chat-head { padding: 18px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+    .chat-head small { color: var(--muted); display: block; margin-top: 4px; }
+    .chat-body { padding: 18px; max-height: 420px; overflow: auto; display: grid; gap: 12px; }
+    .chat-empty { color: var(--muted); line-height: 1.6; }
+    .bubble { max-width: 85%; padding: 12px 14px; border-radius: 18px; white-space: pre-wrap; line-height: 1.5; border: 1px solid rgba(255,255,255,0.08); }
+    .bubble.customer { background: rgba(255,255,255,0.05); }
+    .bubble.admin { margin-left: auto; background: rgba(77,163,255,0.18); border-color: rgba(77,163,255,0.24); }
+    .bubble-meta { margin-top: 6px; color: rgba(255,255,255,0.5); font-size: .78rem; }
+    .chat-compose { padding: 18px; border-top: 1px solid var(--border); display: grid; gap: 10px; }
+    .chat-textarea {
+      width: 100%; min-height: 110px; resize: vertical; padding: 15px 16px; font: inherit; color: var(--text);
+      border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); outline: none;
     }
 
-    .status-active {
-      color: #9af1c5;
-      background: rgba(47,210,126,0.14);
-      border: 1px solid rgba(47,210,126,0.2);
-    }
-
-    .status-inactive {
-      color: #ffabb2;
-      background: rgba(255,95,109,0.12);
-      border: 1px solid rgba(255,95,109,0.18);
-    }
-
-    .toggle-button {
-      min-width: 134px;
-      padding: 12px 16px;
-      color: var(--text);
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .toggle-button.activate {
-      color: #08120d;
-      background: linear-gradient(135deg, #3de18d, #6df2ad);
-    }
-
-    .toggle-button.deactivate {
-      color: #fff;
-      background: linear-gradient(135deg, #ff5f6d, #ff8b95);
-    }
-
-    .empty-state,
-    .note-box {
-      padding: 18px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.06);
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    .note-box strong { color: var(--text); }
-
-    .footer-note {
-      color: rgba(245,247,255,0.5);
-      font-size: 0.92rem;
-      text-align: center;
-      margin-top: 18px;
-    }
-
-    @media (max-width: 1080px) {
-      .span-3, .span-4, .span-6 { grid-column: span 6; }
-    }
-
-    @media (max-width: 760px) {
-      .shell { width: min(100% - 18px, 1280px); }
-      .hero {
-        position: static;
-        flex-direction: column;
-        align-items: stretch;
-      }
+    @media (max-width: 1080px) { .span-3, .span-6 { grid-column: span 6; } }
+    @media (max-width: 860px) {
+      .hero { position: static; flex-direction: column; align-items: stretch; }
       .hero-actions { justify-content: stretch; }
       .live-pill, .ghost-button, .button { width: 100%; justify-content: center; }
-      .span-3, .span-4, .span-6, .span-12 { grid-column: span 12; }
-      .customer-row {
-        grid-template-columns: 1fr;
-        align-items: stretch;
-      }
-      .status-badge,
-      .toggle-button { width: 100%; }
+      .span-3, .span-6, .span-12 { grid-column: span 12; }
+      .customer-row { grid-template-columns: 1fr; align-items: stretch; }
+      .status-badge, .toggle-button, .chat-button { width: 100%; }
     }
   </style>
 </head>
@@ -420,7 +152,7 @@
     <div class="login-card">
       <div class="lock-icon">🛡️</div>
       <h1>Admin Dashboard</h1>
-      <p>Shopify-ähnliches Kontrollzentrum für alle LeoLan-Kunden. Passwort wird lokal im Browser gespeichert.</p>
+      <p>WhatsApp-Bots steuern und direkt mit Kunden schreiben. Passwort bleibt lokal im Browser gespeichert.</p>
       <form class="login-form" id="loginForm">
         <input class="input" id="passwordInput" type="password" placeholder="Admin-Passwort" autocomplete="current-password" />
         <button class="button" type="submit">Einloggen</button>
@@ -436,7 +168,7 @@
           <div class="brand-badge">📊</div>
           <div class="brand-copy">
             <h1>LeoLan Digital — Kundenverwaltung</h1>
-            <p>WhatsApp-Bots live überwachen, aktivieren und deaktivieren.</p>
+            <p>WhatsApp-Bots live überwachen, aktivieren/deaktivieren und Kundenchat öffnen.</p>
           </div>
         </div>
         <div class="hero-actions">
@@ -448,82 +180,54 @@
 
       <section class="grid">
         <article class="panel span-3">
-          <div class="panel-head">
-            <div>
-              <div class="eyebrow">Gesamt</div>
-              <div class="metric-number" id="totalCount">—</div>
-              <div class="metric-sub">Kunden-Workflows mit „WA Bot“ im Namen</div>
-            </div>
-          </div>
+          <div class="eyebrow">Gesamt</div>
+          <div class="metric-number" id="totalCount">—</div>
+          <div class="metric-sub">Kunden-Workflows mit „WA Bot“ im Namen</div>
         </article>
-
         <article class="panel span-3">
-          <div class="panel-head">
-            <div>
-              <div class="eyebrow">Aktiv</div>
-              <div class="metric-number success" id="activeCount">—</div>
-              <div class="metric-sub">Aktuell eingeschaltete Bots</div>
-            </div>
-          </div>
+          <div class="eyebrow">Aktiv</div>
+          <div class="metric-number success" id="activeCount">—</div>
+          <div class="metric-sub">Aktuell eingeschaltete Bots</div>
         </article>
-
         <article class="panel span-3">
-          <div class="panel-head">
-            <div>
-              <div class="eyebrow">Inaktiv</div>
-              <div class="metric-number danger" id="inactiveCount">—</div>
-              <div class="metric-sub">Aktuell ausgeschaltete Bots</div>
-            </div>
-          </div>
+          <div class="eyebrow">Inaktiv</div>
+          <div class="metric-number danger" id="inactiveCount">—</div>
+          <div class="metric-sub">Aktuell ausgeschaltete Bots</div>
         </article>
-
         <article class="panel span-3">
-          <div class="panel-head">
-            <div>
-              <div class="eyebrow">Sync</div>
-              <div class="metric-number warning" id="lastSync">—</div>
-              <div class="metric-sub">Letzte Aktualisierung</div>
-            </div>
-          </div>
+          <div class="eyebrow">Sync</div>
+          <div class="metric-number warning" id="lastSync">—</div>
+          <div class="metric-sub">Letzte Aktualisierung</div>
         </article>
 
         <article class="panel span-12">
           <div class="toolbar">
             <div>
               <h2>Kundenübersicht</h2>
-              <p style="color:var(--muted);margin-top:8px">Ein Klick pro Kunde zum Ein- oder Ausschalten.</p>
+              <p style="color:var(--muted);margin-top:8px">Ein Klick zum Schalten, ein Klick zum Chat.</p>
             </div>
             <div class="search-wrap">
               <input class="input" id="searchInput" type="search" placeholder="Restaurant suchen…" />
             </div>
           </div>
-
           <div class="status-line" id="listStatus"></div>
           <div class="list" id="customerList"></div>
         </article>
 
         <article class="panel span-6">
-          <div class="panel-head">
-            <div>
-              <h3>Sicherheit</h3>
-              <p style="color:var(--muted);margin-top:8px">Das Admin-Passwort wird wie gewünscht in <strong style="color:var(--text)">localStorage</strong> gehalten.</p>
-            </div>
-          </div>
-          <div class="note-box">
-            <strong>Hinweis:</strong> Das ist bequem, aber nicht hochsicher. Für den nächsten Schritt würde ich daraus eine Session mit serverseitiger Prüfung und CORS-Whitelist machen.
+          <h3>API-Endpunkte</h3>
+          <div class="note-box" style="margin-top:14px">
+            <div><strong>Liste:</strong> <code>https://n8n.leolan.net/webhook/admin-dashboard</code></div>
+            <div style="margin-top:10px"><strong>Toggle:</strong> <code>https://n8n.leolan.net/webhook/admin-toggle</code></div>
+            <div style="margin-top:10px"><strong>Chat POST:</strong> <code>https://n8n.leolan.net/webhook/portal-chat</code></div>
+            <div style="margin-top:10px"><strong>Chat GET:</strong> <code>https://n8n.leolan.net/webhook/portal-chat-history</code></div>
           </div>
         </article>
 
         <article class="panel span-6">
-          <div class="panel-head">
-            <div>
-              <h3>API-Endpunkte</h3>
-              <p style="color:var(--muted);margin-top:8px">Aktive Webhooks im n8n-Backend.</p>
-            </div>
-          </div>
-          <div class="note-box">
-            <div><strong>Liste:</strong> <code>https://n8n.leolan.net/webhook/admin-dashboard</code></div>
-            <div style="margin-top:10px"><strong>Toggle:</strong> <code>https://n8n.leolan.net/webhook/admin-toggle</code></div>
+          <h3>Hinweis</h3>
+          <div class="note-box" style="margin-top:14px">
+            Das Dashboard liest Kunden weiter aus den WA-Bot-Workflows. Für den Chat wird der Slug automatisch aus dem Workflow-Namen abgeleitet.
           </div>
         </article>
       </section>
@@ -532,11 +236,31 @@
     </div>
   </main>
 
+  <div class="chat-overlay" id="chatOverlay">
+    <section class="chat-modal">
+      <div class="chat-head">
+        <div>
+          <strong id="chatTitle">Kundenchat</strong>
+          <small id="chatSubtitle">Verlauf wird aus n8n geladen.</small>
+        </div>
+        <button class="ghost-button" id="chatClose" type="button">Schließen</button>
+      </div>
+      <div class="chat-body" id="chatBody"></div>
+      <div class="chat-compose">
+        <textarea class="chat-textarea" id="chatReply" placeholder="Antwort an den Kunden"></textarea>
+        <button class="button" id="chatSend" type="button">Antwort senden</button>
+        <div class="status-line" id="chatStatus"></div>
+      </div>
+    </section>
+  </div>
+
   <script>
     const ADMIN_SECRET = 'LeoLan2026Admin!';
     const STORAGE_KEY = 'leolan-admin-secret';
     const DASHBOARD_API = 'https://n8n.leolan.net/webhook/admin-dashboard';
     const TOGGLE_API = 'https://n8n.leolan.net/webhook/admin-toggle';
+    const CHAT_API = 'https://n8n.leolan.net/webhook/portal-chat';
+    const CHAT_HISTORY_API = 'https://n8n.leolan.net/webhook/portal-chat-history';
 
     const loginScreen = document.getElementById('loginScreen');
     const app = document.getElementById('app');
@@ -553,91 +277,22 @@
     const activeCount = document.getElementById('activeCount');
     const inactiveCount = document.getElementById('inactiveCount');
     const lastSync = document.getElementById('lastSync');
+    const chatOverlay = document.getElementById('chatOverlay');
+    const chatTitle = document.getElementById('chatTitle');
+    const chatSubtitle = document.getElementById('chatSubtitle');
+    const chatBody = document.getElementById('chatBody');
+    const chatReply = document.getElementById('chatReply');
+    const chatStatus = document.getElementById('chatStatus');
+    const chatSend = document.getElementById('chatSend');
+    const chatClose = document.getElementById('chatClose');
 
     let workflows = [];
-    let isLoading = false;
+    let currentChat = null;
 
-    function getStoredSecret() {
-      return localStorage.getItem(STORAGE_KEY) || '';
-    }
-
-    function setStoredSecret(secret) {
-      localStorage.setItem(STORAGE_KEY, secret);
-    }
-
-    function clearStoredSecret() {
-      localStorage.removeItem(STORAGE_KEY);
-    }
-
-    function isAuthorized(secret) {
-      return secret === ADMIN_SECRET;
-    }
-
-    function formatTime(dateLike) {
-      const date = dateLike ? new Date(dateLike) : new Date();
-      if (Number.isNaN(date.getTime())) return '—';
-      return new Intl.DateTimeFormat('de-DE', {
-        hour: '2-digit',
-        minute: '2-digit'
-      }).format(date);
-    }
-
-    function extractRestaurantName(name) {
-      return String(name || '')
-        .replace(/^WA Bot\s*[—-]\s*/i, '')
-        .replace(/\s*[—-]\s*v\d+$/i, '')
-        .trim() || name || 'Unbenannter Kunde';
-    }
-
-    function renderStats(items) {
-      const active = items.filter(item => item.active).length;
-      const inactive = items.filter(item => !item.active).length;
-      totalCount.textContent = items.length;
-      activeCount.textContent = active;
-      inactiveCount.textContent = inactive;
-      lastSync.textContent = formatTime(new Date());
-    }
-
-    function renderList(items) {
-      const query = searchInput.value.trim().toLowerCase();
-      const filtered = items.filter(item => {
-        if (!query) return true;
-        return item.name.toLowerCase().includes(query) || extractRestaurantName(item.name).toLowerCase().includes(query);
-      });
-
-      if (!filtered.length) {
-        customerList.innerHTML = '<div class="empty-state">Keine passenden Kunden gefunden.</div>';
-        return;
-      }
-
-      customerList.innerHTML = filtered.map(item => {
-        const active = Boolean(item.active);
-        return `
-          <article class="customer-row">
-            <div>
-              <div class="customer-name">${escapeHtml(extractRestaurantName(item.name))}</div>
-              <div class="customer-meta">${escapeHtml(item.name)} · ID ${escapeHtml(item.id)}</div>
-            </div>
-            <div class="status-badge ${active ? 'status-active' : 'status-inactive'}">
-              ${active ? 'Aktiv' : 'Inaktiv'}
-            </div>
-            <button
-              class="toggle-button ${active ? 'deactivate' : 'activate'}"
-              type="button"
-              data-id="${escapeHtml(item.id)}"
-              data-action="${active ? 'deactivate' : 'activate'}"
-            >
-              ${active ? 'Deaktivieren' : 'Aktivieren'}
-            </button>
-          </article>
-        `;
-      }).join('');
-
-      customerList.querySelectorAll('.toggle-button').forEach(button => {
-        button.addEventListener('click', () => toggleWorkflow(button.dataset.id, button.dataset.action, button));
-      });
-    }
-
+    function getStoredSecret() { return localStorage.getItem(STORAGE_KEY) || ''; }
+    function setStoredSecret(secret) { localStorage.setItem(STORAGE_KEY, secret); }
+    function clearStoredSecret() { localStorage.removeItem(STORAGE_KEY); }
+    function isAuthorized(secret) { return secret === ADMIN_SECRET; }
     function escapeHtml(value) {
       return String(value)
         .replace(/&/g, '&amp;')
@@ -646,77 +301,85 @@
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#039;');
     }
-
-    async function loadWorkflows() {
-      const secret = getStoredSecret();
-      if (!isAuthorized(secret)) {
-        showLogin();
+    function formatTime(dateLike) {
+      const date = dateLike ? new Date(dateLike) : new Date();
+      if (Number.isNaN(date.getTime())) return '—';
+      return new Intl.DateTimeFormat('de-DE', { hour: '2-digit', minute: '2-digit' }).format(date);
+    }
+    function extractRestaurantName(name) {
+      return String(name || '').replace(/^WA Bot\s*[—-]\s*/i, '').replace(/\s*[—-]\s*v\d+$/i, '').trim() || name || 'Unbenannter Kunde';
+    }
+    function slugify(name) {
+      return extractRestaurantName(name).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    }
+    async function apiJson(url, options) {
+      const response = await fetch(url, options);
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || data.success === false) throw new Error(data.error || `HTTP ${response.status}`);
+      return data;
+    }
+    function renderStats(items) {
+      const active = items.filter(item => item.active).length;
+      totalCount.textContent = items.length;
+      activeCount.textContent = active;
+      inactiveCount.textContent = items.length - active;
+      lastSync.textContent = formatTime(new Date());
+    }
+    function renderList(items) {
+      const query = searchInput.value.trim().toLowerCase();
+      const filtered = items.filter(item => !query || item.name.toLowerCase().includes(query) || extractRestaurantName(item.name).toLowerCase().includes(query));
+      if (!filtered.length) {
+        customerList.innerHTML = '<div class="empty-state">Keine passenden Kunden gefunden.</div>';
         return;
       }
-
-      isLoading = true;
+      customerList.innerHTML = filtered.map(item => {
+        const active = Boolean(item.active);
+        const slug = slugify(item.name);
+        return `
+          <article class="customer-row">
+            <div>
+              <div class="customer-name">${escapeHtml(extractRestaurantName(item.name))}</div>
+              <div class="customer-meta">${escapeHtml(item.name)} · ID ${escapeHtml(item.id)} · slug ${escapeHtml(slug)}</div>
+            </div>
+            <div class="status-badge ${active ? 'status-active' : 'status-inactive'}">${active ? 'Aktiv' : 'Inaktiv'}</div>
+            <button class="chat-button" type="button" data-chat="${escapeHtml(slug)}" data-name="${escapeHtml(extractRestaurantName(item.name))}">Chat</button>
+            <button class="toggle-button ${active ? 'deactivate' : 'activate'}" type="button" data-id="${escapeHtml(item.id)}" data-action="${active ? 'deactivate' : 'activate'}">${active ? 'Deaktivieren' : 'Aktivieren'}</button>
+          </article>
+        `;
+      }).join('');
+      customerList.querySelectorAll('.toggle-button').forEach(button => button.addEventListener('click', () => toggleWorkflow(button.dataset.id, button.dataset.action, button)));
+      customerList.querySelectorAll('.chat-button').forEach(button => button.addEventListener('click', () => openChat(button.dataset.chat, button.dataset.name)));
+    }
+    async function loadWorkflows() {
+      const secret = getStoredSecret();
+      if (!isAuthorized(secret)) return showLogin();
       apiStatus.textContent = 'Lade Kundendaten…';
       listStatus.textContent = 'Synchronisiere mit n8n…';
       refreshButton.disabled = true;
-
       try {
-        const response = await fetch(DASHBOARD_API, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ key: secret })
-        });
-
-        const data = await response.json();
-
-        if (!response.ok || !data.success) {
-          throw new Error(data.error || 'API-Fehler');
-        }
-
+        const data = await apiJson(DASHBOARD_API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ key: secret }) });
         workflows = Array.isArray(data.workflows) ? data.workflows : [];
         renderStats(workflows);
         renderList(workflows);
         apiStatus.textContent = 'n8n verbunden';
-        listStatus.textContent = workflows.length
-          ? `${workflows.length} Kunden geladen.`
-          : 'Aktuell wurden keine „WA Bot“-Workflows gefunden.';
-        if (data.updatedAt) {
-          lastSync.textContent = formatTime(data.updatedAt);
-        }
+        listStatus.textContent = workflows.length ? `${workflows.length} Kunden geladen.` : 'Aktuell keine WA-Bot-Workflows gefunden.';
+        if (data.updatedAt) lastSync.textContent = formatTime(data.updatedAt);
       } catch (error) {
         console.error(error);
         apiStatus.textContent = 'Verbindung fehlgeschlagen';
         listStatus.textContent = 'Kundendaten konnten nicht geladen werden.';
         customerList.innerHTML = '<div class="empty-state">API aktuell nicht erreichbar oder Passwort ungültig.</div>';
       } finally {
-        isLoading = false;
         refreshButton.disabled = false;
       }
     }
-
     async function toggleWorkflow(workflowId, action, button) {
-      const secret = getStoredSecret();
-      if (!isAuthorized(secret)) {
-        showLogin();
-        return;
-      }
-
       const originalText = button.textContent;
       button.disabled = true;
       button.textContent = action === 'activate' ? 'Aktiviere…' : 'Deaktiviere…';
       listStatus.textContent = `Workflow ${action === 'activate' ? 'wird aktiviert' : 'wird deaktiviert'}…`;
-
       try {
-        const response = await fetch(TOGGLE_API, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ workflowId, action, key: secret })
-        });
-
-        const data = await response.json();
-        if (!response.ok || !data.success) {
-          throw new Error(data.error || 'Toggle fehlgeschlagen');
-        }
-
+        const data = await apiJson(TOGGLE_API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ workflowId, action, key: getStoredSecret() }) });
         workflows = workflows.map(item => item.id === workflowId ? { ...item, active: data.workflow.active } : item);
         renderStats(workflows);
         renderList(workflows);
@@ -729,56 +392,93 @@
         listStatus.textContent = 'Umschalten fehlgeschlagen.';
       }
     }
-
-    function showApp() {
-      loginScreen.style.display = 'none';
-      app.classList.add('visible');
+    function renderChatMessages(messages) {
+      if (!messages.length) {
+        chatBody.innerHTML = '<div class="chat-empty">Noch keine Nachrichten vorhanden.</div>';
+        return;
+      }
+      chatBody.innerHTML = messages.map(item => `
+        <div class="bubble ${item.from === 'admin' ? 'admin' : 'customer'}">
+          ${escapeHtml(item.message || '')}
+          <div class="bubble-meta">${item.from === 'admin' ? 'Admin' : 'Kunde'} · ${new Date(item.timestamp).toLocaleString('de-DE')}</div>
+        </div>
+      `).join('');
+      chatBody.scrollTop = chatBody.scrollHeight;
     }
-
-    function showLogin() {
-      app.classList.remove('visible');
-      loginScreen.style.display = 'grid';
-      passwordInput.value = getStoredSecret();
-      passwordInput.focus();
+    async function openChat(slug, name) {
+      currentChat = { slug, name };
+      chatTitle.textContent = `Chat · ${name}`;
+      chatSubtitle.textContent = `Slug: ${slug}`;
+      chatReply.value = '';
+      chatStatus.textContent = 'Verlauf wird geladen…';
+      chatOverlay.classList.add('open');
+      try {
+        const url = `${CHAT_HISTORY_API}?slug=${encodeURIComponent(slug)}&adminKey=${encodeURIComponent(getStoredSecret())}`;
+        const data = await apiJson(url, { method: 'GET' });
+        renderChatMessages(Array.isArray(data.messages) ? data.messages : []);
+        chatStatus.textContent = data.customerEmail ? `Antwort geht an ${data.customerEmail}` : 'Keine Kunden-E-Mail hinterlegt.';
+      } catch (error) {
+        renderChatMessages([]);
+        chatStatus.textContent = error.message || 'Chat konnte nicht geladen werden.';
+      }
     }
+    async function sendChatReply() {
+      if (!currentChat) return;
+      const message = chatReply.value.trim();
+      if (!message) {
+        chatStatus.textContent = 'Bitte zuerst eine Nachricht eingeben.';
+        return;
+      }
+      chatSend.disabled = true;
+      try {
+        chatStatus.textContent = 'Antwort wird gesendet…';
+        const data = await apiJson(CHAT_API, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ slug: currentChat.slug, type: 'admin_to_customer', adminKey: getStoredSecret(), message })
+        });
+        renderChatMessages(Array.isArray(data.messages) ? data.messages : []);
+        chatReply.value = '';
+        chatStatus.textContent = data.customerEmail ? `Gesendet an ${data.customerEmail}` : 'Antwort gespeichert, aber keine Kunden-E-Mail vorhanden.';
+      } catch (error) {
+        chatStatus.textContent = error.message || 'Antwort konnte nicht gesendet werden.';
+      } finally {
+        chatSend.disabled = false;
+      }
+    }
+    function showApp() { loginScreen.style.display = 'none'; app.classList.add('visible'); }
+    function showLogin() { app.classList.remove('visible'); loginScreen.style.display = 'grid'; passwordInput.value = getStoredSecret(); passwordInput.focus(); }
 
-    loginForm.addEventListener('submit', (event) => {
+    loginForm.addEventListener('submit', event => {
       event.preventDefault();
       const password = passwordInput.value.trim();
-
       if (!isAuthorized(password)) {
         loginError.textContent = 'Passwort falsch.';
         return;
       }
-
       loginError.textContent = '';
       setStoredSecret(password);
       showApp();
       loadWorkflows();
     });
-
     searchInput.addEventListener('input', () => renderList(workflows));
     refreshButton.addEventListener('click', loadWorkflows);
     logoutButton.addEventListener('click', () => {
       clearStoredSecret();
       workflows = [];
       customerList.innerHTML = '';
-      totalCount.textContent = '—';
-      activeCount.textContent = '—';
-      inactiveCount.textContent = '—';
-      lastSync.textContent = '—';
+      totalCount.textContent = activeCount.textContent = inactiveCount.textContent = lastSync.textContent = '—';
       apiStatus.textContent = 'Abgemeldet';
       listStatus.textContent = '';
+      chatOverlay.classList.remove('open');
       showLogin();
     });
+    chatClose.addEventListener('click', () => chatOverlay.classList.remove('open'));
+    chatOverlay.addEventListener('click', event => { if (event.target === chatOverlay) chatOverlay.classList.remove('open'); });
+    chatSend.addEventListener('click', sendChatReply);
 
     const initialSecret = getStoredSecret();
-    if (isAuthorized(initialSecret)) {
-      showApp();
-      loadWorkflows();
-    } else {
-      showLogin();
-    }
+    if (isAuthorized(initialSecret)) { showApp(); loadWorkflows(); } else { showLogin(); }
   </script>
 </body>
 </html>
