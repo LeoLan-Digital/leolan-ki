@@ -1,0 +1,206 @@
+{
+  "name": "Stripe Webhook — Kaufbestätigung v1",
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "nodes": [
+    {
+      "id": "st1",
+      "name": "Stripe Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        280
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "stripe-webhook",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "webhookId": "stripe-webhook-confirm-v1"
+    },
+    {
+      "id": "st2",
+      "name": "Build Invoice",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        280
+      ],
+      "parameters": {
+        "jsCode": "\nconst event = $input.first().json.body || $input.first().json || {};\nif ((event.type || '') !== 'checkout.session.completed') {\n  return [{ json: { success: true, ignored: true, type: event.type || 'unknown' } }];\n}\n\nconst payload = event.data?.object || {};\nconst meta = payload.metadata || {};\nconst purchaseCategory = meta.purchaseCategory || (meta.addonType ? 'addon' : 'core');\nconst customerEmail = payload.customer_details?.email || payload.customer_email || meta.email || '';\nif (!customerEmail) return [{ json: { success: false, error: 'customer_email_missing' } }];\n\nconst addr = payload.customer_details?.address || {};\nconst addrParts = [\n  addr.line1,\n  addr.line2,\n  [addr.postal_code, addr.city].filter(Boolean).join(' '),\n  addr.country\n].filter(Boolean);\nconst customerAddress = (meta.customerAddress || addrParts.join('\\n') || '');\nconst customerPhone = meta.phone || payload.customer_details?.phone || '';\nconst customerWebsite = meta.website || '';\nconst customerVatId = meta.vatId || '';\nconst whatsappNumber = meta.whatsappNumber || '';\nconst currency = (payload.currency || 'eur').toUpperCase();\n\nif (purchaseCategory === 'addon') {\n  const addonType = String(meta.addonType || '').trim();\n  const addonLabel = meta.addonLabel || addonType || 'Add-On';\n  const addonAmount = parseFloat(meta.addonAmount) || 0;\n  const code = String(meta.code || '').trim().toUpperCase();\n  const slug = String(meta.slug || '').trim();\n  const restaurantName = meta.restaurantName || payload.customer_details?.name || customerEmail.split('@')[0] || 'Kunde';\n\n  const N8N_API_KEY = 'REDACTED';\n  const BASE = 'https://n8n.leolan.net/api/v1';\n  const PORTAL_WORKFLOW_ID = 'zmjsS7oWl89aAVH7';\n\n  async function n8nApi(method, path, body) {\n    return await this.helpers.httpRequest({\n      method,\n      url: `${BASE}${path}`,\n      headers: {\n        'X-N8N-API-KEY': N8N_API_KEY,\n        'Content-Type': 'application/json',\n      },\n      body,\n      json: true,\n    });\n  }\n\n  function ensureCustomer(staticData) {\n    if (!staticData.global) staticData.global = {};\n    if (!staticData.global.customers) staticData.global.customers = {};\n    if (!staticData.global.customers[code]) {\n      staticData.global.customers[code] = {\n        code,\n        name: restaurantName,\n        restaurantName,\n        slug: slug || code.toLowerCase(),\n        plan: 'starter',\n        msgLimit: 500,\n        msgCount: {},\n        customerEmail,\n        activeAddons: [],\n        warned80: false,\n        warned100: false,\n      };\n    }\n    const customer = staticData.global.customers[code];\n    if (!Array.isArray(customer.activeAddons)) customer.activeAddons = [];\n    customer.customerEmail = customerEmail || customer.customerEmail || '';\n    customer.restaurantName = customer.restaurantName || restaurantName;\n    customer.slug = customer.slug || slug || code.toLowerCase();\n    if (addonType === 'starter_to_pro') {\n      customer.plan = 'pro';\n      customer.msgLimit = Math.max(Number(customer.msgLimit || 0), 2000);\n    } else {\n      if (!customer.activeAddons.includes(addonType)) customer.activeAddons.push(addonType);\n      if (addonType === 'messages_s') customer.msgLimit = Math.max(Number(customer.msgLimit || 0), 1000);\n      if (addonType === 'messages_m') customer.msgLimit = Math.max(Number(customer.msgLimit || 0), 2000);\n      if (addonType === 'messages_l') customer.msgLimit = Math.max(Number(customer.msgLimit || 0), 20000);\n    }\n    customer.lastAddonPurchase = {\n      addonType,\n      addonLabel,\n      amount: addonAmount,\n      stripeSessionId: payload.id || '',\n      purchasedAt: new Date().toISOString(),\n    };\n    customer.warned80 = false;\n    customer.warned100 = false;\n  }\n\n  try {\n    const workflow = await n8nApi('GET', `/workflows/${PORTAL_WORKFLOW_ID}`);\n    const staticData = workflow.staticData || {};\n    ensureCustomer(staticData);\n    await n8nApi('PUT', `/workflows/${PORTAL_WORKFLOW_ID}`, {\n      name: workflow.name,\n      nodes: workflow.nodes,\n      connections: workflow.connections,\n      settings: workflow.settings,\n      staticData,\n    });\n    await n8nApi('POST', `/workflows/${PORTAL_WORKFLOW_ID}/activate`, {});\n  } catch (error) {\n    console.log('portal staticData update failed:', error.message);\n  }\n\n  return [{ json: {\n    success: true,\n    purchaseCategory: 'addon',\n    customerEmail,\n    email: customerEmail,\n    companyName: restaurantName,\n    restaurantName,\n    modules: addonLabel,\n    amount: addonAmount.toFixed(2).replace('.', ',') + ' ' + currency,\n    monthlyNetTotal: addonAmount,\n    setupFeeAmount: 0,\n    vatAmount: 0,\n    grossTotal: addonAmount,\n    currency,\n    customerAddress,\n    customerPhone,\n    customerWebsite,\n    customerVatId,\n    whatsappNumber,\n    addonType,\n    addonLabel,\n    code,\n    slug,\n  }}];\n}\n\nconst companyName = meta.companyName || payload.customer_details?.name || customerEmail.split('@')[0] || 'Kunde';\nconst modules = meta.modules || 'LeoLan Digital Paket';\nconst monthlyNetTotal = parseFloat(meta.monthlyNetTotal) || 0;\nconst setupFeeAmount = parseFloat(meta.setupFeeAmount) || 349;\nconst vatAmount = 0;\nconst netTotal = monthlyNetTotal + setupFeeAmount;\nconst grossTotal = netTotal;\nconst amount = grossTotal.toFixed(2).replace('.', ',') + ' ' + currency;\n\nreturn [{ json: {\n  success: true,\n  purchaseCategory: 'core',\n  email: customerEmail,\n  customerEmail,\n  companyName,\n  modules,\n  amount,\n  monthlyNetTotal,\n  setupFeeAmount,\n  vatAmount,\n  grossTotal,\n  whatsappNumber,\n  currency,\n  customerAddress,\n  customerPhone,\n  customerWebsite,\n  customerVatId\n}}];\n"
+      }
+    },
+    {
+      "id": "st3",
+      "name": "Stripe Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1380,
+        280
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "responseCode": 200
+        }
+      }
+    },
+    {
+      "id": "nas1",
+      "name": "NAS Upload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        720,
+        300
+      ],
+      "parameters": {
+        "jsCode": "\nconst data = $input.first().json;\nconst companyName = data.companyName || data.company || 'Unbekannt';\nconst slug = companyName.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').substring(0, 40);\nconst date = new Date().toISOString().split('T')[0];\nconst folderName = `${date}_${slug}`;\nconst NAS_BASE = 'http://192.168.178.129:5005/home/Kunden-Uploads';\nconst AUTH = 'Basic ' + Buffer.from('Mira:!Mira2026/04').toString('base64');\n\ntry {\n  await $http.request({ method: 'MKCOL', url: `${NAS_BASE}/Speisekarten/${folderName}/`, headers: { 'Authorization': AUTH } });\n  await $http.request({ method: 'MKCOL', url: `${NAS_BASE}/Speisefotos/${folderName}/`, headers: { 'Authorization': AUTH } });\n} catch(e) {}\n\nreturn [{ json: { ...data, nasFolder: folderName } }];\n"
+      }
+    },
+    {
+      "id": "brevo1",
+      "name": "Brevo Payload vorbereiten",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        480,
+        300
+      ],
+      "parameters": {
+        "jsCode": "\nconst data = $input.first().json;\nconst customerEmail = data.email || data.customerEmail || '';\nconst companyName = data.companyName || customerEmail;\nconst purchaseCategory = data.purchaseCategory || 'core';\nconst modulesRaw = data.modules;\nconst modules = Array.isArray(modulesRaw) ? modulesRaw.map(m => m.name || String(m)).join(', ') : (modulesRaw ? String(modulesRaw) : 'Ihre Module');\nconst monthlyNet = parseFloat(data.monthlyNetTotal) || 0;\nconst setupFee = parseFloat(data.setupFeeAmount) || 0;\nconst vatAmount = parseFloat(data.vatAmount) || 0;\nconst grossTotal = parseFloat(data.grossTotal) || 0;\nconst dateStr = new Date().toLocaleDateString('de-DE');\nif (!customerEmail) return [{ json: { skipped: true } }];\n\nconst staticData = $getWorkflowStaticData('global');\nif (!staticData.invoiceCounter || staticData.invoiceCounter < 33) {\n  staticData.invoiceCounter = 33;\n}\n\nlet invoiceNr = null;\nif (purchaseCategory !== 'addon') {\n  staticData.invoiceCounter += 1;\n  invoiceNr = 'LD-' + new Date().getFullYear() + '-' + String(staticData.invoiceCounter).padStart(4, '0');\n}\n\nreturn [{ json: {\n  ...data,\n  _brevo_to: customerEmail,\n  _brevo_name: companyName,\n  _brevo_subject: purchaseCategory === 'addon'\n    ? '✅ Add-On erfolgreich gebucht — LeoLan Digital'\n    : ('✅ Kaufbestätigung & Rechnung — LeoLan Digital (' + invoiceNr + ')'),\n  invoiceNr,\n  dateStr,\n  modules,\n  monthlyNetTotal: monthlyNet,\n  setupFeeAmount: setupFee,\n  vatAmount,\n  grossTotal\n} }];\n"
+      }
+    },
+    {
+      "id": "brevo_http",
+      "name": "Brevo Email Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        300
+      ],
+      "parameters": {
+        "jsCode": "\nconst data = $input.first().json;\nconst customerEmail = data._brevo_to || data.email || data.customerEmail || '';\nconst companyName = data.companyName || data._brevo_name || customerEmail;\nconst subject = data._brevo_subject || 'Kaufbestätigung LeoLan Digital';\nconst purchaseCategory = data.purchaseCategory || 'core';\nconst invoiceNr = data.invoiceNr || 'LD-0000';\nconst dateStr = new Date().toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });\nconst monthlyNet = parseFloat(data.monthlyNetTotal) || 0;\nconst setupFee = parseFloat(data.setupFeeAmount) || 0;\nconst pdfBase64 = data.pdfBase64 || null;\nconst pdfFilename = data.pdfFilename || ('Rechnung_' + invoiceNr + '.pdf');\n\nif (!customerEmail) return [{ json: { skipped: true } }];\n\nlet html = '';\nif (purchaseCategory === 'addon') {\n  const addonLabel = data.addonLabel || data.modules || 'Ihr Add-On';\n  const amount = monthlyNet.toFixed(2).replace('.', ',') + ' € / Monat';\n  html = `<!DOCTYPE html><html lang=\"de\"><body style=\"margin:0;padding:0;background:#0d1526;font-family:Arial,sans-serif;color:#ffffff;\">\n  <table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" style=\"background:#0d1526;padding:24px 12px;\">\n    <tr><td align=\"center\">\n      <table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" style=\"max-width:620px;\">\n        <tr><td style=\"background:#f5a623;padding:16px 28px;border-radius:12px 12px 0 0;\">\n          <p style=\"margin:0;color:#1a2744;font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:2px;\">Add-On aktiviert</p>\n        </td></tr>\n        <tr><td style=\"background:#1a2744;padding:34px 28px 30px;border-radius:0 0 12px 12px;\">\n          <h1 style=\"margin:0 0 10px;color:#fff;font-size:28px;line-height:1.25;\">${addonLabel} erfolgreich gebucht</h1>\n          <p style=\"margin:0 0 18px;color:#8a9bbf;font-size:15px;line-height:1.7;\">Hallo <strong>${companyName}</strong>, Ihr neues Modul wurde erfolgreich über Stripe aktiviert.</p>\n          <div style=\"background:#0d1526;border:1px solid #253655;border-radius:14px;padding:18px 20px;margin-bottom:22px;\">\n            <p style=\"margin:0 0 8px;color:#8a9bbf;font-size:12px;text-transform:uppercase;letter-spacing:1.5px;\">Gebuchtes Modul</p>\n            <p style=\"margin:0 0 4px;color:#fff;font-size:20px;font-weight:900;\">${addonLabel}</p>\n            <p style=\"margin:0;color:#f5a623;font-size:16px;font-weight:900;\">${amount}</p>\n          </div>\n          <p style=\"margin:0 0 8px;color:#8ab89a;font-size:14px;line-height:1.7;\">• Das Add-On ist jetzt in Ihrem Kundenkonto hinterlegt.</p>\n          <p style=\"margin:0 0 8px;color:#8ab89a;font-size:14px;line-height:1.7;\">• Abrechnung läuft automatisch über Stripe.</p>\n          <p style=\"margin:0 0 24px;color:#8ab89a;font-size:14px;line-height:1.7;\">• Bei Fragen antworten Sie einfach auf diese E-Mail.</p>\n          <a href=\"https://ki.leolan.net/portal/\" style=\"display:inline-block;background:#f5a623;color:#1a2744;text-decoration:none;font-weight:900;padding:14px 28px;border-radius:10px;font-size:15px;\">Zum Kunden-Portal →</a>\n        </td></tr>\n      </table>\n    </td></tr>\n  </table>\n  </body></html>`;\n} else {\n  let leistungsRows = '';\n  if (monthlyNet > 0) {\n    leistungsRows += `<tr style=\"background:#0d1526;\"><td style=\"padding:12px 16px;color:#fff;font-size:14px;border-top:1px solid #1e2e4a;\">${data.modules || 'KI-Paket'}</td><td style=\"padding:12px 16px;color:#8a9bbf;font-size:13px;text-align:right;border-top:1px solid #1e2e4a;\">monatlich</td></tr>`;\n  }\n  if (setupFee > 0) {\n    leistungsRows += `<tr style=\"background:#111d30;\"><td style=\"padding:12px 16px;color:#fff;font-size:14px;border-top:1px solid #1e2e4a;\">Setup-Gebühr (einmalig)</td><td style=\"padding:12px 16px;color:#8a9bbf;font-size:13px;text-align:right;border-top:1px solid #1e2e4a;\">einmalig</td></tr>`;\n  }\n\n  let betragLine = '';\n  if (setupFee > 0 && monthlyNet > 0) {\n    betragLine = `Setup: ${setupFee.toFixed(2).replace('.', ',')} € • Monatlich: ${monthlyNet.toFixed(2).replace('.', ',')} €`;\n  } else if (setupFee > 0) {\n    betragLine = `Setup: ${setupFee.toFixed(2).replace('.', ',')} €`;\n  } else {\n    betragLine = `Monatlich: ${monthlyNet.toFixed(2).replace('.', ',')} €`;\n  }\n\n  html = `<!DOCTYPE html><html lang=\"de\" style=\"background:#0d1526;\"><head>\n    <meta charset=\"UTF-8\"/>\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/>\n    <meta name=\"color-scheme\" content=\"only light\"/>\n    <title>Kaufbestätigung LeoLan Digital</title>\n  </head>\n  <body style=\"margin:0;padding:0;background:#0d1526;font-family:Arial,sans-serif;color:#ffffff;\" bgcolor=\"#0d1526\">\n  <table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" style=\"background:#0d1526;padding:24px 12px;\">\n  <tr><td align=\"center\">\n  <table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" style=\"max-width:600px;\">\n  <tr><td align=\"center\" style=\"padding:32px 0 20px;\">\n    <img src=\"https://ki.leolan.net/leolan-logo.png\" width=\"100\" height=\"100\" style=\"display:block;border-radius:20px;border:0;\" alt=\"LeoLan\"/>\n  </td></tr>\n  <tr><td style=\"background:#f5a623;padding:14px 28px;border-radius:8px 8px 0 0;\">\n    <p style=\"margin:0;color:#1a2744;font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:2px;\">✓ KAUFBESTÄTIGUNG & RECHNUNG</p>\n  </td></tr>\n  <tr><td style=\"background:#1a2744;padding:32px 28px 24px;\">\n    <h1 style=\"margin:0 0 6px;color:#fff;font-size:26px;line-height:1.3;font-weight:900;\">Vielen Dank für Ihre Bestellung!</h1>\n    <p style=\"margin:0 0 24px;color:#8a9bbf;font-size:14px;\">LeoLan Digital · KI-Automatisierung für Gastronomie & Hotellerie</p>\n    <table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" style=\"margin-bottom:28px;\">\n    <tr>\n      <td style=\"width:33%;padding-right:8px;border-right:1px solid #2d3e60;\">\n        <p style=\"margin:0 0 4px;color:#8a9bbf;font-size:10px;text-transform:uppercase;letter-spacing:1px;\">Rechnungsnr.</p>\n        <p style=\"margin:0;color:#f5a623;font-size:14px;font-weight:900;\">${invoiceNr}</p>\n      </td>\n      <td style=\"width:33%;padding:0 8px;border-right:1px solid #2d3e60;\">\n        <p style=\"margin:0 0 4px;color:#8a9bbf;font-size:10px;text-transform:uppercase;letter-spacing:1px;\">Datum</p>\n        <p style=\"margin:0;color:#fff;font-size:14px;font-weight:700;\">${dateStr}</p>\n      </td>\n      <td style=\"width:33%;padding-left:8px;\">\n        <p style=\"margin:0 0 4px;color:#8a9bbf;font-size:10px;text-transform:uppercase;letter-spacing:1px;\">Status</p>\n        <p style=\"margin:0;color:#2dd881;font-size:14px;font-weight:900;\">✓ Bezahlt</p>\n      </td>\n    </tr>\n    </table>\n    <p style=\"margin:0 0 8px;color:#fff;font-size:15px;\">Hallo <strong>${companyName}</strong>,</p>\n    <p style=\"margin:0 0 6px;color:#8a9bbf;font-size:14px;line-height:1.7;\">Ihre Bestellung wurde erfolgreich aufgenommen. Wir richten Ihr System innerhalb von <strong style=\"color:#f5a623;\">48 Stunden</strong> ein.</p>\n    <p style=\"margin:0 0 28px;color:#8a9bbf;font-size:14px;line-height:1.7;\">Sie erhalten Ihre Zugangsdaten und alle weiteren Informationen automatisch per E-Mail.</p>\n    <p style=\"margin:0 0 10px;color:#8a9bbf;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;\">Gebuchte Leistungen</p>\n    <table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" style=\"margin-bottom:24px;border-radius:10px;overflow:hidden;\">\n      <tr style=\"background:#243250;\">\n        <td style=\"padding:10px 16px;color:#f5a623;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;width:70%;\">Leistung</td>\n        <td style=\"padding:10px 16px;color:#f5a623;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;text-align:right;\">Info</td>\n      </tr>\n      ${leistungsRows}\n    </table>\n    <table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" style=\"margin-bottom:24px;\">\n    <tr><td style=\"background:#0d1526;border-radius:10px;padding:14px 18px;\">\n      <p style=\"margin:0 0 4px;color:#8a9bbf;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;\">Gesamtbetrag</p>\n      <p style=\"margin:0;color:#f5a623;font-size:16px;font-weight:900;\">${betragLine}</p>\n    </td></tr>\n    </table>\n    <div style=\"background:#0d2a1a;border:1px solid #1a5c35;border-radius:10px;padding:18px 20px;margin-bottom:24px;\">\n      <p style=\"margin:0 0 12px;color:#2dd881;font-size:15px;font-weight:900;\">Wie geht es weiter?</p>\n      <p style=\"margin:0 0 6px;color:#8ab89a;font-size:13px;line-height:1.7;\">1. Wir richten Ihren WhatsApp-Bot innerhalb von 48 Stunden ein.</p>\n      <p style=\"margin:0 0 6px;color:#8ab89a;font-size:13px;line-height:1.7;\">2. Sie erhalten Login-Daten für Ihr persönliches Dashboard.</p>\n      <p style=\"margin:0;color:#8ab89a;font-size:13px;line-height:1.7;\">3. Unser Team begleitet Sie durch den Start — bei Fragen sind wir sofort da.</p>\n    </div>\n    <a href=\"https://ki.leolan.net\" style=\"display:inline-block;background:#f5a623;color:#1a2744;text-decoration:none;font-weight:900;padding:14px 28px;border-radius:10px;font-size:15px;\">Zu Ihrem Dashboard →</a>\n  </td></tr>\n  <tr><td style=\"background:#0a1020;padding:18px 28px;border-radius:0 0 8px 8px;\">\n    <p style=\"margin:0 0 4px;color:#fff;font-size:13px;font-weight:700;\">LeoLan Digital</p>\n    <p style=\"margin:0;color:#56677f;font-size:12px;line-height:1.7;\">Kamaleddin Nazari · Reicker Straße 132 · 01237 Dresden<br/>business@leolan.net · ki.leolan.net<br/>Steuernr.: 203/252/14709 · USt-IdNr.: DE351138587</p>\n  </td></tr>\n  </table>\n  </td></tr>\n  </table>\n  </body></html>`;\n}\n\nconst emailPayload = {\n  sender: { name: 'LeoLan Digital', email: 'business@leolan.net' },\n  to: [{ email: customerEmail, name: companyName }],\n  bcc: [{ email: 'business@leolan.net' }],\n  subject,\n  htmlContent: html,\n};\n\nif (pdfBase64) {\n  emailPayload.attachment = [{ name: pdfFilename, content: pdfBase64 }];\n}\n\nconst resp = await this.helpers.request({\n  method: 'POST',\n  uri: 'https://api.brevo.com/v3/smtp/email',\n  headers: {\n    'api-key': 'REDACTED',\n    'Content-Type': 'application/json',\n  },\n  body: JSON.stringify(emailPayload),\n});\n\nconst result = typeof resp === 'string' ? JSON.parse(resp) : resp;\nreturn [{ json: { ...data, brevoSent: true, messageId: result.messageId, pdfAttached: !!pdfBase64 } }];\n"
+      }
+    },
+    {
+      "id": "nl1",
+      "name": "Newsletter Anmeldung",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1160,
+        280
+      ],
+      "parameters": {
+        "jsCode": "return [{ json: $input.first().json }];"
+      }
+    },
+    {
+      "id": "s_pdf",
+      "name": "Generate PDF",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        700,
+        300
+      ],
+      "parameters": {
+        "jsCode": "\nconst data = $input.first().json;\nif ((data.purchaseCategory || 'core') === 'addon') {\n  return [{ json: { ...data, pdfBase64: null, pdfFilename: null } }];\n}\n\nlet pdfBase64 = null;\ntry {\n  const invoicePayload = JSON.stringify({\n    invoice_nr: data.invoiceNr || 'LD-0000',\n    date_str: data.dateStr || new Date().toLocaleDateString('de-DE'),\n    company_name: data.companyName || data._brevo_name || data.customerEmail || 'Kunde',\n    customer_email: data._brevo_to || data.customerEmail || '',\n    modules: data.modules || '',\n    monthly_net: parseFloat(data.monthlyNetTotal) || 0,\n    setup_fee: parseFloat(data.setupFeeAmount) || 349,\n    vat_amount: 0,\n    gross_total: (parseFloat(data.monthlyNetTotal) || 0) + (parseFloat(data.setupFeeAmount) || 349),\n    customer_address: data.customerAddress || '',\n    customer_phone: data.customerPhone || '',\n    customer_website: data.customerWebsite || '',\n    customer_vat_id: data.customerVatId || '',\n    service_period: data.servicePeriod || '',\n    payment_terms: 'Zahlbar sofort, rein netto.'\n  });\n\n  const resp = await this.helpers.request({\n    method: 'POST',\n    uri: 'http://172.18.0.1:5050/generate-invoice',\n    headers: { 'Content-Type': 'application/json' },\n    body: invoicePayload\n  });\n\n  const result = typeof resp === 'string' ? JSON.parse(resp) : resp;\n  if (result && result.pdf) {\n    pdfBase64 = result.pdf;\n  }\n} catch (e) {\n  console.log('PDF error:', e.message);\n}\n\nreturn [{ json: {\n  ...data,\n  vatAmount: 0,\n  grossTotal: (parseFloat(data.monthlyNetTotal) || 0) + (parseFloat(data.setupFeeAmount) || 349),\n  pdfBase64,\n  pdfFilename: 'Rechnung_' + (data.invoiceNr || 'LD-0000') + '.pdf'\n} }];\n"
+      }
+    }
+  ],
+  "connections": {
+    "Stripe Webhook": {
+      "main": [
+        [
+          {
+            "node": "Build Invoice",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Invoice": {
+      "main": [
+        [
+          {
+            "node": "NAS Upload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NAS Upload": {
+      "main": [
+        [
+          {
+            "node": "Brevo Payload vorbereiten",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Newsletter Anmeldung": {
+      "main": [
+        [
+          {
+            "node": "Stripe Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Brevo Payload vorbereiten": {
+      "main": [
+        [
+          {
+            "node": "Generate PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Brevo Email Code": {
+      "main": [
+        [
+          {
+            "node": "Newsletter Anmeldung",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate PDF": {
+      "main": [
+        [
+          {
+            "node": "Brevo Email Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "staticData": {
+    "global": {
+      "invoiceCounter": 66
+    }
+  }
+}

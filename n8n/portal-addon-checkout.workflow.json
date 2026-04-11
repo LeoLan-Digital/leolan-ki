@@ -1,0 +1,187 @@
+{
+  "name": "Portal Add-On Checkout",
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "nodes": [
+    {
+      "id": "ug1",
+      "name": "Portal Add-On Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        220,
+        180
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "portal-addon",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "webhookId": "d8ddace9-66ee-4e3e-a45d-ee3d4f710c35"
+    },
+    {
+      "id": "ug2",
+      "name": "Portal Add-On Status Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        220,
+        360
+      ],
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "portal-addon-status",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "webhookId": "87dd5ee4-d4c5-454b-b31b-73b5ca68c36c"
+    },
+    {
+      "id": "ug3",
+      "name": "Portal Add-On Stripe Legacy",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        220,
+        540
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "portal-addon-stripe",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "webhookId": "d8b0ed35-2ae8-4960-a78e-3bce27887d3c"
+    },
+    {
+      "id": "ug4",
+      "name": "Handle Add-On Checkout",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        360
+      ],
+      "parameters": {
+        "jsCode": "\nconst DEFAULT_CUSTOMERS = {\n  TEST01: {\n    code: 'TEST01',\n    name: 'Test Restaurant',\n    restaurantName: 'Test Restaurant',\n    slug: 'test-restaurant',\n    plan: 'starter',\n    msgLimit: 500,\n    msgCount: { '2026-04-01': 32, '2026-04-02': 28, '2026-04-08': 41, '2026-04-10': 53, '2026-04-11': 17 },\n    customerEmail: 'restaurant@example.com',\n    activeAddons: [],\n    warned80: false,\n    warned100: false,\n  },\n};\n\nconst ADDON_CONFIG = {\n  starter_to_pro: { amount: 14900, label: 'Starter → Pro Upgrade', description: 'Upgrade von Starter auf Pro', category: 'plan', plan: 'pro', msgLimit: 2000 },\n  messages_s: { amount: 49900, label: 'Nachrichten S', description: '1.000 Nachrichten / Monat', category: 'messages', msgLimit: 1000 },\n  messages_m: { amount: 59900, label: 'Nachrichten M', description: '2.000 Nachrichten / Monat', category: 'messages', msgLimit: 2000 },\n  messages_l: { amount: 69900, label: 'Nachrichten L', description: 'Bis zu 20.000 Nachrichten / Monat', category: 'messages', msgLimit: 20000 },\n  instagram_autoposts: { amount: 8900, label: 'Instagram Auto-Posts', description: 'Täglich KI-Posts', category: 'social' },\n  facebook_autoposts: { amount: 5900, label: 'Facebook Auto-Posts', description: 'Täglich KI-Posts', category: 'social' },\n  review_management: { amount: 8900, label: 'Bewertungsmanagement', description: 'KI antwortet auf Reviews', category: 'reputation' },\n  google_business: { amount: 7900, label: 'Google Business', description: 'Profil automatisch', category: 'visibility' },\n  dashboard: { amount: 3900, label: 'Dashboard', description: 'Statistiken', category: 'analytics' },\n  email_monitor: { amount: 5900, label: 'E-Mail Monitor', description: 'Wichtige E-Mails', category: 'monitoring' },\n  reels_ai_videos: { amount: 14900, label: 'Reels KI-Videos', description: 'Automatische Reels', category: 'content' },\n};\n\nfunction initCustomers(staticData) {\n  if (!staticData.customers) staticData.customers = JSON.parse(JSON.stringify(DEFAULT_CUSTOMERS));\n  for (const [code, customer] of Object.entries(DEFAULT_CUSTOMERS)) {\n    if (!staticData.customers[code]) staticData.customers[code] = JSON.parse(JSON.stringify(customer));\n  }\n  for (const customer of Object.values(staticData.customers)) {\n    if (!Array.isArray(customer.activeAddons)) customer.activeAddons = [];\n    if (!customer.plan) customer.plan = 'starter';\n    if (!customer.msgLimit) customer.msgLimit = 500;\n  }\n  return staticData.customers;\n}\n\nfunction normalizeCode(value) {\n  return String(value || '').trim().toUpperCase();\n}\n\nfunction getCustomerByCode(staticData, code) {\n  const customers = initCustomers(staticData);\n  return customers[normalizeCode(code)] || null;\n}\n\nfunction monthUsage(msgCount = {}) {\n  const now = new Date();\n  const monthKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;\n  return Object.entries(msgCount).reduce((sum, [day, count]) => day.startsWith(monthKey) ? sum + Number(count || 0) : sum, 0);\n}\n\nfunction weekUsage(msgCount = {}) {\n  const now = new Date();\n  const start = new Date(now);\n  start.setDate(now.getDate() - 6);\n  start.setHours(0, 0, 0, 0);\n  return Object.entries(msgCount).reduce((sum, [day, count]) => {\n    const date = new Date(`${day}T00:00:00`);\n    return date >= start && date <= now ? sum + Number(count || 0) : sum;\n  }, 0);\n}\n\nconst staticData = $getWorkflowStaticData('global');\nconst customers = initCustomers(staticData);\nif (!staticData.priceIds) staticData.priceIds = {};\n\nfunction toFormBody(form) {\n  return Object.entries(form)\n    .filter(([, value]) => value !== undefined && value !== null)\n    .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`)\n    .join('&');\n}\n\nasync function stripeRequest(method, path, form) {\n  const body = toFormBody(form);\n  return await this.helpers.httpRequest({\n    method,\n    url: `https://api.stripe.com/v1/${path}`,\n    headers: {\n      Authorization: 'Bearer REDACTED',\n      'Content-Type': 'application/x-www-form-urlencoded',\n    },\n    body,\n    json: true,\n  });\n}\n\nasync function ensureRecurringPrice(key, config) {\n  if (staticData.priceIds[key]) return staticData.priceIds[key];\n  const product = await stripeRequest('POST', 'products', {\n    name: `LeoLan Digital · ${config.label}`,\n    description: config.description || config.label,\n    'metadata[addonType]': key,\n  });\n  const price = await stripeRequest('POST', 'prices', {\n    product: product.id,\n    unit_amount: String(config.amount),\n    currency: 'eur',\n    'recurring[interval]': 'month',\n    'metadata[addonType]': key,\n  });\n  staticData.priceIds[key] = price.id;\n  return price.id;\n}\n\nasync function warmupPrices() {\n  for (const [key, config] of Object.entries(ADDON_CONFIG)) {\n    await ensureRecurringPrice(key, config);\n  }\n}\n\nconst payload = { ...($json || {}), ...($json.query || {}), ...($json.params || {}), ...($json.body || {}) };\nconst customer = getCustomerByCode(staticData, payload.code);\nif (!customer) {\n  return [{ json: { success: false, error: 'Ungültiger Kunden-Code.' } }];\n}\n\nawait warmupPrices();\n\nconst addonType = String(payload.addonType || '').trim();\nif (!addonType) {\n  return [{\n    json: {\n      success: true,\n      slug: customer.slug,\n      restaurantName: customer.restaurantName,\n      plan: customer.plan || 'starter',\n      msgLimit: Number(customer.msgLimit || 500),\n      weekUsage: weekUsage(customer.msgCount || {}),\n      monthUsage: monthUsage(customer.msgCount || {}),\n      activeAddons: customer.activeAddons || [],\n      priceIds: staticData.priceIds,\n    },\n  }];\n}\n\nconst config = ADDON_CONFIG[addonType];\nif (!config) {\n  return [{ json: { success: false, error: 'Unbekanntes Add-On.' } }];\n}\nif (addonType === 'starter_to_pro' && String(customer.plan || 'starter') === 'pro') {\n  return [{ json: { success: false, error: 'Pro ist bereits aktiv.' } }];\n}\nif ((customer.activeAddons || []).includes(addonType)) {\n  return [{ json: { success: false, error: 'Dieses Add-On ist bereits aktiv.' } }];\n}\n\nconst priceId = await ensureRecurringPrice(addonType, config);\nconst successUrl = 'https://ki.leolan.net/portal/?checkout=success';\nconst cancelUrl = 'https://ki.leolan.net/portal/?checkout=cancel';\nconst session = await stripeRequest('POST', 'checkout/sessions', {\n  mode: 'subscription',\n  success_url: successUrl,\n  cancel_url: cancelUrl,\n  'line_items[0][price]': priceId,\n  'line_items[0][quantity]': '1',\n  customer_email: customer.customerEmail || '',\n  'metadata[purchaseCategory]': 'addon',\n  'metadata[code]': customer.code,\n  'metadata[slug]': customer.slug,\n  'metadata[addonType]': addonType,\n  'metadata[addonLabel]': config.label,\n  'metadata[addonAmount]': String(config.amount / 100),\n  'metadata[restaurantName]': customer.restaurantName || customer.name || '',\n  'subscription_data[metadata][purchaseCategory]': 'addon',\n  'subscription_data[metadata][code]': customer.code,\n  'subscription_data[metadata][slug]': customer.slug,\n  'subscription_data[metadata][addonType]': addonType,\n  'subscription_data[metadata][addonLabel]': config.label,\n  'subscription_data[metadata][addonAmount]': String(config.amount / 100),\n  'subscription_data[metadata][restaurantName]': customer.restaurantName || customer.name || '',\n});\n\nreturn [{\n  json: {\n    success: true,\n    checkoutUrl: session.url,\n    addonType,\n    addonLabel: config.label,\n    plan: customer.plan || 'starter',\n    msgLimit: customer.msgLimit || 500,\n  },\n}];\n"
+      }
+    },
+    {
+      "id": "ug5",
+      "name": "Portal Add-On Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        900,
+        360
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "responseCode": 200,
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "*"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Portal Add-On Webhook": {
+      "main": [
+        [
+          {
+            "node": "Handle Add-On Checkout",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Portal Add-On Status Webhook": {
+      "main": [
+        [
+          {
+            "node": "Handle Add-On Checkout",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Portal Add-On Stripe Legacy": {
+      "main": [
+        [
+          {
+            "node": "Handle Add-On Checkout",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Handle Add-On Checkout": {
+      "main": [
+        [
+          {
+            "node": "Portal Add-On Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "staticData": {
+    "global": {
+      "customers": {
+        "TEST01": {
+          "code": "TEST01",
+          "name": "Test Restaurant",
+          "restaurantName": "Test Restaurant",
+          "slug": "test-restaurant",
+          "plan": "starter",
+          "msgLimit": 500,
+          "msgCount": {
+            "2026-04-01": 32,
+            "2026-04-02": 28,
+            "2026-04-08": 41,
+            "2026-04-10": 53,
+            "2026-04-11": 17
+          },
+          "customerEmail": "restaurant@example.com",
+          "warned80": false,
+          "warned100": false,
+          "activeAddons": []
+        }
+      },
+      "priceIds": {
+        "starter_to_pro": "price_1TL10yLwGb6me8PhqAO81Cc7",
+        "messages_s": "price_1TL10yLwGb6me8Ph0qVtZz8y",
+        "messages_m": "price_1TL10zLwGb6me8Ph5Tl5eU6m",
+        "messages_l": "price_1TL110LwGb6me8Ph2Ic0tmIh",
+        "instagram_autoposts": "price_1TL111LwGb6me8PhThCBXpD9",
+        "facebook_autoposts": "price_1TL111LwGb6me8Ph60g4UnzY",
+        "review_management": "price_1TL112LwGb6me8Php3DnEr3B",
+        "google_business": "price_1TL113LwGb6me8PhEKAqFwar",
+        "dashboard": "price_1TL114LwGb6me8PhxBkCyusB",
+        "email_monitor": "price_1TL114LwGb6me8Phn9crHSmM",
+        "reels_ai_videos": "price_1TL115LwGb6me8PhSukRKwGy"
+      }
+    }
+  }
+}
