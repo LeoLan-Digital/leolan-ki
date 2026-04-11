@@ -113,6 +113,13 @@
     .save-btn { width: 100%; background: var(--orange); color: var(--navy); border: none; border-radius: 14px; padding: 14px; font-size: 15px; font-weight: 900; cursor: pointer; font-family: inherit; margin-top: 4px; }
     .save-btn:disabled { opacity: .5; cursor: not-allowed; }
     .upload-status { text-align: center; font-size: 13px; min-height: 18px; margin-top: 6px; }
+    /* SPRACHE */
+    .lang-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .lang-btn { background: rgba(255,255,255,.05); border: 2px solid transparent; border-radius: 12px; padding: 12px; display: flex; align-items: center; gap: 10px; cursor: pointer; font-family: inherit; color: #fff; font-size: 14px; font-weight: 600; transition: all .2s; width: 100%; }
+    .lang-btn.active { border-color: var(--orange); background: rgba(245,166,35,.1); }
+    .lang-btn .flag { font-size: 22px; line-height: 1; }
+    .lang-btn .lang-name { display: flex; flex-direction: column; text-align: left; }
+    .lang-btn .lang-native { font-size: 11px; color: var(--muted); font-weight: 400; }
   </style>
 </head>
 <body>
@@ -243,22 +250,29 @@
         <div class="upload-status" id="extrasStatus"></div>
       </div>
 
+      <!-- Sprache -->
+      <div class="card settings-section">
+        <h3 id="t-lang-title">🌍 Sprache</h3>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:12px;" id="t-lang-sub">App-Sprache auswählen</div>
+        <div class="lang-grid" id="langGrid"></div>
+      </div>
+
       <!-- Account -->
       <div class="card settings-section">
-        <h3>Account</h3>
+        <h3 id="t-account-title">Account</h3>
         <div style="display:flex;flex-direction:column;gap:10px;">
           <div style="background:rgba(255,255,255,.05);border-radius:12px;padding:14px;">
-            <div style="font-size:12px;color:var(--muted);">Restaurant</div>
+            <div style="font-size:12px;color:var(--muted);" id="t-restaurant-lbl">Restaurant</div>
             <div style="font-weight:700;margin-top:4px;" id="settingsName">—</div>
           </div>
           <div style="background:rgba(255,255,255,.05);border-radius:12px;padding:14px;">
-            <div style="font-size:12px;color:var(--muted);">Kundencode</div>
+            <div style="font-size:12px;color:var(--muted);" id="t-code-lbl">Kundencode</div>
             <div style="font-weight:700;margin-top:4px;" id="settingsCode">—</div>
           </div>
         </div>
       </div>
       <div class="card">
-        <button class="btn" style="background:rgba(255,255,255,.08);color:var(--muted);" onclick="doLogout()">Abmelden</button>
+        <button class="btn" style="background:rgba(255,255,255,.08);color:var(--muted);" onclick="doLogout()" id="t-logout-btn">Abmelden</button>
       </div>
     </div>
   </div>
@@ -267,20 +281,20 @@
   <div class="tab-bar">
     <button class="tab active" onclick="showTab('Dashboard')" id="tab0">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-      Dashboard
+      <span id="t-tab-dashboard">Dashboard</span>
     </button>
     <button class="tab" onclick="showTab('Messages')" id="tab1">
       <div class="tab-badge" id="msgTabBadge" style="display:none">0</div>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      Nachrichten
+      <span id="t-tab-messages">Nachrichten</span>
     </button>
     <button class="tab" onclick="showTab('Reservations')" id="tab2">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-      Buchungen
+      <span id="t-tab-bookings">Buchungen</span>
     </button>
     <button class="tab" onclick="showTab('Settings')" id="tab3">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-      Einstellungen
+      <span id="t-tab-settings">Einstellungen</span>
     </button>
   </div>
 </div>
@@ -288,7 +302,241 @@
 <script>
 const API = 'https://n8n.leolan.net/webhook';
 const ADMIN_KEY = 'LeoLan2026Admin!';
-let state = { code: '', name: '', slug: '', tab: 'Dashboard' };
+let state = { code: '', name: '', slug: '', tab: 'Dashboard', lang: 'de' };
+
+// ─── ÜBERSETZUNGEN ────────────────────────────────────────────────────────────
+const LANGS = [
+  { code: 'de', flag: '🇩🇪', label: 'Deutsch',    native: 'Deutsch' },
+  { code: 'en', flag: '🇬🇧', label: 'English',    native: 'English' },
+  { code: 'tr', flag: '🇹🇷', label: 'Türkçe',     native: 'Türkçe' },
+  { code: 'ar', flag: '🇸🇦', label: 'العربية',    native: 'العربية', rtl: true },
+  { code: 'ru', flag: '🇷🇺', label: 'Русский',    native: 'Русский' },
+  { code: 'fr', flag: '🇫🇷', label: 'Français',   native: 'Français' },
+  { code: 'it', flag: '🇮🇹', label: 'Italiano',   native: 'Italiano' },
+  { code: 'es', flag: '🇪🇸', label: 'Español',    native: 'Español' },
+];
+
+const T = {
+  de: {
+    appSubtitle: 'Betreiber-Dashboard', loginPlaceholder: 'Kundencode (z.B. REST42)', loginBtn: 'Anmelden →', loginError: 'Ungültiger Code. Bitte erneut versuchen.',
+    tabDashboard: 'Dashboard', tabMessages: 'Nachrichten', tabBookings: 'Buchungen', tabSettings: 'Einstellungen',
+    today: 'Heute', reservations: 'Reservierungen', messages: 'Nachrichten', guests: 'Gäste', nextRes: 'Nächste Reservierungen',
+    whatsappMsgs: 'WhatsApp-Nachrichten', allRes: 'Alle Reservierungen',
+    settingsRes: 'Reservierungen', resToggleLabel: 'Reservierungen annehmen', resToggleSub: 'Bot nimmt Buchungen entgegen',
+    seatsLabel: 'Maximale Platzanzahl',
+    menuTitle: 'Speisekarte', menuUploadHint: 'PDF oder Bild hochladen', menuUploadSmall: 'PDF, JPG, PNG · max. 10 MB', menuSaveBtn: 'Speisekarte speichern',
+    photosTitle: 'Speisefotos', photosUploadHint: 'Fotos auswählen', photosUploadSmall: 'JPG, PNG · max. 10 Bilder · je 10 MB', photosSaveBtn: 'Fotos speichern',
+    extrasTitle: '🌸 Extras & Upsells', extrasSub: 'Der KI-Bot fragt Gäste nur nach Extras, die du hier aktiviert hast.',
+    langTitle: '🌍 Sprache', langSub: 'App-Sprache auswählen',
+    accountTitle: 'Account', restaurantLbl: 'Restaurant', codeLbl: 'Kundencode', logoutBtn: 'Abmelden',
+    noBookings: 'Keine Buchungen vorhanden', noMessages: 'Noch keine Nachrichten', saved: 'Gespeichert ✓',
+    resDetail: 'Reservierung', dateTime: 'Datum & Zeit', persons: 'Personen', specialWish: '💬 Besonderer Wunsch', noWish: 'Keine Angabe', bookedExtras: '✓ Gebuchte Extras',
+    confirmBtn: '✓ Bestätigen', declineBtn: '✗ Absagen', confirmDecline: 'Reservierung wirklich absagen?',
+    statusNew: 'Neu', statusConfirmed: 'Bestätigt',
+    extras: { flowers: ['Frische Blumen','Bot fragt ob Blumen am Tisch gewünscht'], candles: ['Kerzen am Tisch','Bot fragt nach Kerzen-Dekoration'], cake: ['Geburtstagstorte','Bot fragt bei Geburtstags-Anlass'], wine: ['Wein vorbestellen','Bot bietet Weinvorbestellung an'], highchair: ['Kinderstuhl','Bot fragt nach Kinderstuhl bei Familien'], window: ['Fensterplatz','Bot fragt nach Sitzplatzwunsch'] },
+    uploadOk: '✓ Speisekarte erfolgreich hochgeladen', uploadFail: 'Fehler beim Upload', uploadConn: 'Verbindungsfehler. Bitte erneut versuchen.',
+    photosOk: (n) => `✓ ${n} Fotos hochgeladen`, uploading: (i,n) => `Wird hochgeladen… (${i}/${n})`,
+  },
+  en: {
+    appSubtitle: 'Operator Dashboard', loginPlaceholder: 'Customer code (e.g. REST42)', loginBtn: 'Sign in →', loginError: 'Invalid code. Please try again.',
+    tabDashboard: 'Dashboard', tabMessages: 'Messages', tabBookings: 'Bookings', tabSettings: 'Settings',
+    today: 'Today', reservations: 'Reservations', messages: 'Messages', guests: 'Guests', nextRes: 'Next Reservations',
+    whatsappMsgs: 'WhatsApp Messages', allRes: 'All Reservations',
+    settingsRes: 'Reservations', resToggleLabel: 'Accept reservations', resToggleSub: 'Bot accepts bookings',
+    seatsLabel: 'Maximum seats',
+    menuTitle: 'Menu', menuUploadHint: 'Upload PDF or image', menuUploadSmall: 'PDF, JPG, PNG · max. 10 MB', menuSaveBtn: 'Save menu',
+    photosTitle: 'Food photos', photosUploadHint: 'Select photos', photosUploadSmall: 'JPG, PNG · max. 10 images · 10 MB each', photosSaveBtn: 'Save photos',
+    extrasTitle: '🌸 Extras & Upsells', extrasSub: 'The AI bot only asks about extras you enable here.',
+    langTitle: '🌍 Language', langSub: 'Select app language',
+    accountTitle: 'Account', restaurantLbl: 'Restaurant', codeLbl: 'Customer code', logoutBtn: 'Sign out',
+    noBookings: 'No bookings yet', noMessages: 'No messages yet', saved: 'Saved ✓',
+    resDetail: 'Reservation', dateTime: 'Date & Time', persons: 'Guests', specialWish: '💬 Special request', noWish: 'None', bookedExtras: '✓ Booked extras',
+    confirmBtn: '✓ Confirm', declineBtn: '✗ Decline', confirmDecline: 'Really decline this reservation?',
+    statusNew: 'New', statusConfirmed: 'Confirmed',
+    extras: { flowers: ['Fresh flowers','Bot asks if flowers are wanted'], candles: ['Candles on table','Bot asks about candle decoration'], cake: ['Birthday cake','Bot asks on birthday occasions'], wine: ['Pre-order wine','Bot offers wine pre-order'], highchair: ['High chair','Bot asks for high chair with families'], window: ['Window seat','Bot asks about seating preference'] },
+    uploadOk: '✓ Menu uploaded successfully', uploadFail: 'Upload error', uploadConn: 'Connection error. Please try again.',
+    photosOk: (n) => `✓ ${n} photos uploaded`, uploading: (i,n) => `Uploading… (${i}/${n})`,
+  },
+  tr: {
+    appSubtitle: 'İşletici Paneli', loginPlaceholder: 'Müşteri kodu (örn. REST42)', loginBtn: 'Giriş yap →', loginError: 'Geçersiz kod. Lütfen tekrar deneyin.',
+    tabDashboard: 'Panel', tabMessages: 'Mesajlar', tabBookings: 'Rezervasyonlar', tabSettings: 'Ayarlar',
+    today: 'Bugün', reservations: 'Rezervasyon', messages: 'Mesaj', guests: 'Misafir', nextRes: 'Sonraki Rezervasyonlar',
+    whatsappMsgs: 'WhatsApp Mesajları', allRes: 'Tüm Rezervasyonlar',
+    settingsRes: 'Rezervasyonlar', resToggleLabel: 'Rezervasyon al', resToggleSub: 'Bot rezervasyon kabul eder',
+    seatsLabel: 'Maksimum kişi sayısı',
+    menuTitle: 'Menü', menuUploadHint: 'PDF veya resim yükle', menuUploadSmall: 'PDF, JPG, PNG · maks. 10 MB', menuSaveBtn: 'Menüyü kaydet',
+    photosTitle: 'Yemek fotoğrafları', photosUploadHint: 'Fotoğraf seç', photosUploadSmall: 'JPG, PNG · maks. 10 resim · her biri 10 MB', photosSaveBtn: 'Fotoğrafları kaydet',
+    extrasTitle: '🌸 Ekstralar', extrasSub: 'Yapay zeka botu yalnızca burada etkinleştirdiğin ekstraları sorar.',
+    langTitle: '🌍 Dil', langSub: 'Uygulama dilini seçin',
+    accountTitle: 'Hesap', restaurantLbl: 'Restoran', codeLbl: 'Müşteri kodu', logoutBtn: 'Çıkış yap',
+    noBookings: 'Rezervasyon yok', noMessages: 'Henüz mesaj yok', saved: 'Kaydedildi ✓',
+    resDetail: 'Rezervasyon', dateTime: 'Tarih & Saat', persons: 'Kişi', specialWish: '💬 Özel istek', noWish: 'Belirtilmedi', bookedExtras: '✓ Seçilen ekstralar',
+    confirmBtn: '✓ Onayla', declineBtn: '✗ Reddet', confirmDecline: 'Rezervasyon gerçekten reddedilsin mi?',
+    statusNew: 'Yeni', statusConfirmed: 'Onaylandı',
+    extras: { flowers: ['Taze çiçekler','Bot çiçek isteyip istemediğini sorar'], candles: ['Masa mumu','Bot mum dekorasyonu sorar'], cake: ['Doğum günü pastası','Bot doğum günü olduğunda sorar'], wine: ['Şarap ön siparişi','Bot şarap ön siparişi sunar'], highchair: ['Çocuk sandalyesi','Bot ailelerden çocuk sandalyesi sorar'], window: ['Pencere kenarı','Bot oturma tercihi sorar'] },
+    uploadOk: '✓ Menü başarıyla yüklendi', uploadFail: 'Yükleme hatası', uploadConn: 'Bağlantı hatası. Lütfen tekrar deneyin.',
+    photosOk: (n) => `✓ ${n} fotoğraf yüklendi`, uploading: (i,n) => `Yükleniyor… (${i}/${n})`,
+  },
+  ar: {
+    appSubtitle: 'لوحة المشغّل', loginPlaceholder: 'رمز العميل (مثال: REST42)', loginBtn: '← تسجيل الدخول', loginError: 'رمز غير صحيح. يرجى المحاولة مجدداً.',
+    tabDashboard: 'الرئيسية', tabMessages: 'الرسائل', tabBookings: 'الحجوزات', tabSettings: 'الإعدادات',
+    today: 'اليوم', reservations: 'حجز', messages: 'رسالة', guests: 'ضيف', nextRes: 'الحجوزات القادمة',
+    whatsappMsgs: 'رسائل واتساب', allRes: 'جميع الحجوزات',
+    settingsRes: 'الحجوزات', resToggleLabel: 'قبول الحجوزات', resToggleSub: 'البوت يستقبل الحجوزات',
+    seatsLabel: 'الحد الأقصى للمقاعد',
+    menuTitle: 'القائمة', menuUploadHint: 'رفع PDF أو صورة', menuUploadSmall: 'PDF, JPG, PNG · حد أقصى 10 MB', menuSaveBtn: 'حفظ القائمة',
+    photosTitle: 'صور الأطباق', photosUploadHint: 'اختر صوراً', photosUploadSmall: 'JPG, PNG · حد 10 صور · 10 MB لكل صورة', photosSaveBtn: 'حفظ الصور',
+    extrasTitle: '🌸 الإضافات', extrasSub: 'البوت يسأل فقط عن الإضافات التي تفعّلها هنا.',
+    langTitle: '🌍 اللغة', langSub: 'اختر لغة التطبيق',
+    accountTitle: 'الحساب', restaurantLbl: 'المطعم', codeLbl: 'رمز العميل', logoutBtn: 'تسجيل الخروج',
+    noBookings: 'لا توجد حجوزات', noMessages: 'لا توجد رسائل بعد', saved: 'تم الحفظ ✓',
+    resDetail: 'تفاصيل الحجز', dateTime: 'التاريخ والوقت', persons: 'أشخاص', specialWish: '💬 طلب خاص', noWish: 'لا يوجد', bookedExtras: '✓ الإضافات المختارة',
+    confirmBtn: '✓ تأكيد', declineBtn: '✗ رفض', confirmDecline: 'هل تريد رفض هذا الحجز؟',
+    statusNew: 'جديد', statusConfirmed: 'مؤكد',
+    extras: { flowers: ['زهور طازجة','البوت يسأل إن أُريدت زهور'], candles: ['شموع على الطاولة','البوت يسأل عن الزخرفة بالشموع'], cake: ['كعكة عيد ميلاد','البوت يسأل في المناسبات'], wine: ['طلب مسبق للنبيذ','البوت يعرض النبيذ'], highchair: ['كرسي أطفال','البوت يسأل العائلات'], window: ['مقعد بجانب النافذة','البوت يسأل عن تفضيل المقعد'] },
+    uploadOk: '✓ تم رفع القائمة بنجاح', uploadFail: 'خطأ في الرفع', uploadConn: 'خطأ في الاتصال. يرجى المحاولة مجدداً.',
+    photosOk: (n) => `✓ تم رفع ${n} صور`, uploading: (i,n) => `جارٍ الرفع… (${i}/${n})`,
+  },
+  ru: {
+    appSubtitle: 'Панель оператора', loginPlaceholder: 'Код клиента (напр. REST42)', loginBtn: 'Войти →', loginError: 'Неверный код. Попробуйте ещё раз.',
+    tabDashboard: 'Главная', tabMessages: 'Сообщения', tabBookings: 'Бронирования', tabSettings: 'Настройки',
+    today: 'Сегодня', reservations: 'Брони', messages: 'Сообщ.', guests: 'Гостей', nextRes: 'Ближайшие бронирования',
+    whatsappMsgs: 'Сообщения WhatsApp', allRes: 'Все бронирования',
+    settingsRes: 'Бронирования', resToggleLabel: 'Принимать бронирования', resToggleSub: 'Бот принимает заявки',
+    seatsLabel: 'Максимальное число мест',
+    menuTitle: 'Меню', menuUploadHint: 'Загрузить PDF или изображение', menuUploadSmall: 'PDF, JPG, PNG · макс. 10 МБ', menuSaveBtn: 'Сохранить меню',
+    photosTitle: 'Фото блюд', photosUploadHint: 'Выбрать фото', photosUploadSmall: 'JPG, PNG · макс. 10 фото · по 10 МБ', photosSaveBtn: 'Сохранить фото',
+    extrasTitle: '🌸 Дополнения', extrasSub: 'ИИ-бот спрашивает только о включённых дополнениях.',
+    langTitle: '🌍 Язык', langSub: 'Выберите язык приложения',
+    accountTitle: 'Аккаунт', restaurantLbl: 'Ресторан', codeLbl: 'Код клиента', logoutBtn: 'Выйти',
+    noBookings: 'Нет бронирований', noMessages: 'Нет сообщений', saved: 'Сохранено ✓',
+    resDetail: 'Бронирование', dateTime: 'Дата и время', persons: 'Гостей', specialWish: '💬 Особое пожелание', noWish: 'Не указано', bookedExtras: '✓ Выбранные дополнения',
+    confirmBtn: '✓ Подтвердить', declineBtn: '✗ Отклонить', confirmDecline: 'Действительно отклонить бронирование?',
+    statusNew: 'Новое', statusConfirmed: 'Подтверждено',
+    extras: { flowers: ['Свежие цветы','Бот спрашивает о цветах'], candles: ['Свечи на столе','Бот спрашивает о декоре'], cake: ['Торт на день рождения','Бот спрашивает по случаю'], wine: ['Предзаказ вина','Бот предлагает вино'], highchair: ['Детский стул','Бот спрашивает у семей'], window: ['Место у окна','Бот уточняет предпочтение'] },
+    uploadOk: '✓ Меню успешно загружено', uploadFail: 'Ошибка загрузки', uploadConn: 'Ошибка соединения. Попробуйте снова.',
+    photosOk: (n) => `✓ Загружено ${n} фото`, uploading: (i,n) => `Загрузка… (${i}/${n})`,
+  },
+  fr: {
+    appSubtitle: 'Tableau de bord', loginPlaceholder: 'Code client (ex. REST42)', loginBtn: 'Se connecter →', loginError: 'Code invalide. Veuillez réessayer.',
+    tabDashboard: 'Accueil', tabMessages: 'Messages', tabBookings: 'Réservations', tabSettings: 'Paramètres',
+    today: "Aujourd'hui", reservations: 'Réservations', messages: 'Messages', guests: 'Clients', nextRes: 'Prochaines réservations',
+    whatsappMsgs: 'Messages WhatsApp', allRes: 'Toutes les réservations',
+    settingsRes: 'Réservations', resToggleLabel: 'Accepter les réservations', resToggleSub: 'Le bot accepte les demandes',
+    seatsLabel: 'Nombre maximum de places',
+    menuTitle: 'Menu', menuUploadHint: 'Télécharger PDF ou image', menuUploadSmall: 'PDF, JPG, PNG · max. 10 Mo', menuSaveBtn: 'Enregistrer le menu',
+    photosTitle: 'Photos des plats', photosUploadHint: 'Sélectionner des photos', photosUploadSmall: 'JPG, PNG · max. 10 images · 10 Mo chacune', photosSaveBtn: 'Enregistrer les photos',
+    extrasTitle: '🌸 Extras', extrasSub: "Le bot ne demande que les extras que vous activez ici.",
+    langTitle: '🌍 Langue', langSub: "Choisir la langue de l'application",
+    accountTitle: 'Compte', restaurantLbl: 'Restaurant', codeLbl: 'Code client', logoutBtn: 'Se déconnecter',
+    noBookings: 'Aucune réservation', noMessages: 'Aucun message', saved: 'Enregistré ✓',
+    resDetail: 'Réservation', dateTime: 'Date et heure', persons: 'Personnes', specialWish: '💬 Demande spéciale', noWish: 'Aucune', bookedExtras: '✓ Extras réservés',
+    confirmBtn: '✓ Confirmer', declineBtn: '✗ Refuser', confirmDecline: 'Vraiment refuser cette réservation ?',
+    statusNew: 'Nouveau', statusConfirmed: 'Confirmé',
+    extras: { flowers: ['Fleurs fraîches','Le bot demande si des fleurs sont souhaitées'], candles: ['Bougies sur table','Le bot demande la décoration bougies'], cake: ['Gâteau anniversaire','Le bot demande lors des anniversaires'], wine: ['Précommande vin','Le bot propose le vin'], highchair: ['Chaise haute','Le bot demande aux familles'], window: ['Place fenêtre','Le bot demande les préférences'] },
+    uploadOk: '✓ Menu téléchargé avec succès', uploadFail: "Erreur d'envoi", uploadConn: 'Erreur de connexion. Réessayez.',
+    photosOk: (n) => `✓ ${n} photos téléchargées`, uploading: (i,n) => `Envoi… (${i}/${n})`,
+  },
+  it: {
+    appSubtitle: 'Pannello operatore', loginPlaceholder: 'Codice cliente (es. REST42)', loginBtn: 'Accedi →', loginError: 'Codice non valido. Riprova.',
+    tabDashboard: 'Dashboard', tabMessages: 'Messaggi', tabBookings: 'Prenotazioni', tabSettings: 'Impostazioni',
+    today: 'Oggi', reservations: 'Prenotazioni', messages: 'Messaggi', guests: 'Ospiti', nextRes: 'Prossime prenotazioni',
+    whatsappMsgs: 'Messaggi WhatsApp', allRes: 'Tutte le prenotazioni',
+    settingsRes: 'Prenotazioni', resToggleLabel: 'Accetta prenotazioni', resToggleSub: 'Il bot accetta le richieste',
+    seatsLabel: 'Numero massimo di posti',
+    menuTitle: 'Menu', menuUploadHint: 'Carica PDF o immagine', menuUploadSmall: 'PDF, JPG, PNG · max. 10 MB', menuSaveBtn: 'Salva menu',
+    photosTitle: 'Foto dei piatti', photosUploadHint: 'Seleziona foto', photosUploadSmall: 'JPG, PNG · max. 10 immagini · 10 MB ciascuna', photosSaveBtn: 'Salva foto',
+    extrasTitle: '🌸 Extra', extrasSub: 'Il bot chiede solo degli extra che attivi qui.',
+    langTitle: '🌍 Lingua', langSub: "Seleziona la lingua dell'app",
+    accountTitle: 'Account', restaurantLbl: 'Ristorante', codeLbl: 'Codice cliente', logoutBtn: 'Disconnetti',
+    noBookings: 'Nessuna prenotazione', noMessages: 'Nessun messaggio', saved: 'Salvato ✓',
+    resDetail: 'Prenotazione', dateTime: 'Data e ora', persons: 'Persone', specialWish: '💬 Richiesta speciale', noWish: 'Nessuna', bookedExtras: '✓ Extra prenotati',
+    confirmBtn: '✓ Conferma', declineBtn: '✗ Rifiuta', confirmDecline: 'Rifiutare davvero questa prenotazione?',
+    statusNew: 'Nuovo', statusConfirmed: 'Confermato',
+    extras: { flowers: ['Fiori freschi','Il bot chiede se si vogliono fiori'], candles: ['Candele al tavolo','Il bot chiede la decorazione'], cake: ['Torta di compleanno','Il bot chiede in occasione del compleanno'], wine: ['Pre-ordine vino','Il bot offre vino'], highchair: ['Seggiolone','Il bot chiede alle famiglie'], window: ['Posto finestra','Il bot chiede la preferenza'] },
+    uploadOk: '✓ Menu caricato con successo', uploadFail: 'Errore di caricamento', uploadConn: 'Errore di connessione. Riprova.',
+    photosOk: (n) => `✓ ${n} foto caricate`, uploading: (i,n) => `Caricamento… (${i}/${n})`,
+  },
+  es: {
+    appSubtitle: 'Panel del operador', loginPlaceholder: 'Código de cliente (ej. REST42)', loginBtn: 'Iniciar sesión →', loginError: 'Código incorrecto. Inténtalo de nuevo.',
+    tabDashboard: 'Inicio', tabMessages: 'Mensajes', tabBookings: 'Reservas', tabSettings: 'Ajustes',
+    today: 'Hoy', reservations: 'Reservas', messages: 'Mensajes', guests: 'Clientes', nextRes: 'Próximas reservas',
+    whatsappMsgs: 'Mensajes de WhatsApp', allRes: 'Todas las reservas',
+    settingsRes: 'Reservas', resToggleLabel: 'Aceptar reservas', resToggleSub: 'El bot acepta solicitudes',
+    seatsLabel: 'Número máximo de plazas',
+    menuTitle: 'Carta', menuUploadHint: 'Subir PDF o imagen', menuUploadSmall: 'PDF, JPG, PNG · máx. 10 MB', menuSaveBtn: 'Guardar carta',
+    photosTitle: 'Fotos de platos', photosUploadHint: 'Seleccionar fotos', photosUploadSmall: 'JPG, PNG · máx. 10 imágenes · 10 MB c/u', photosSaveBtn: 'Guardar fotos',
+    extrasTitle: '🌸 Extras', extrasSub: 'El bot solo pregunta por los extras que actives aquí.',
+    langTitle: '🌍 Idioma', langSub: 'Selecciona el idioma de la app',
+    accountTitle: 'Cuenta', restaurantLbl: 'Restaurante', codeLbl: 'Código de cliente', logoutBtn: 'Cerrar sesión',
+    noBookings: 'Sin reservas', noMessages: 'Sin mensajes aún', saved: 'Guardado ✓',
+    resDetail: 'Reserva', dateTime: 'Fecha y hora', persons: 'Personas', specialWish: '💬 Petición especial', noWish: 'Sin indicar', bookedExtras: '✓ Extras reservados',
+    confirmBtn: '✓ Confirmar', declineBtn: '✗ Rechazar', confirmDecline: '¿Realmente rechazar esta reserva?',
+    statusNew: 'Nuevo', statusConfirmed: 'Confirmado',
+    extras: { flowers: ['Flores frescas','El bot pregunta si se desean flores'], candles: ['Velas en la mesa','El bot pregunta por decoración'], cake: ['Tarta de cumpleaños','El bot pregunta en ocasiones'], wine: ['Pedido anticipado de vino','El bot ofrece vino'], highchair: ['Trona','El bot pregunta a las familias'], window: ['Mesa junto a la ventana','El bot pregunta la preferencia'] },
+    uploadOk: '✓ Carta subida correctamente', uploadFail: 'Error al subir', uploadConn: 'Error de conexión. Inténtalo de nuevo.',
+    photosOk: (n) => `✓ ${n} fotos subidas`, uploading: (i,n) => `Subiendo… (${i}/${n})`,
+  },
+};
+
+function t(key, ...args) {
+  const lang = T[state.lang] || T.de;
+  const val = lang[key] !== undefined ? lang[key] : (T.de[key] || key);
+  return typeof val === 'function' ? val(...args) : val;
+}
+
+function applyTranslations() {
+  const lang = T[state.lang] || T.de;
+  const isRtl = LANGS.find(l => l.code === state.lang)?.rtl || false;
+  document.documentElement.lang = state.lang;
+  document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
+  // Login
+  const ci = document.getElementById('codeInput');
+  if (ci) ci.placeholder = lang.loginPlaceholder;
+  const lb = document.querySelector('#loginScreen .btn');
+  if (lb) lb.textContent = lang.loginBtn;
+  document.querySelector('.logo-wrap p') && (document.querySelector('.logo-wrap p').textContent = lang.appSubtitle);
+  // Tabs
+  setText('t-tab-dashboard', lang.tabDashboard);
+  setText('t-tab-messages', lang.tabMessages);
+  setText('t-tab-bookings', lang.tabBookings);
+  setText('t-tab-settings', lang.tabSettings);
+  // Settings labels
+  setText('t-lang-title', lang.langTitle);
+  setText('t-lang-sub', lang.langSub);
+  setText('t-account-title', lang.accountTitle);
+  setText('t-restaurant-lbl', lang.restaurantLbl);
+  setText('t-code-lbl', lang.codeLbl);
+  setText('t-logout-btn', lang.logoutBtn);
+  // App title
+  const titles = { Dashboard: lang.tabDashboard, Messages: lang.tabMessages, Reservations: lang.tabBookings, Settings: lang.tabSettings };
+  document.getElementById('appTitle').textContent = titles[state.tab] || lang.tabDashboard;
+}
+
+function setText(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = val;
+}
+
+function loadLangGrid() {
+  const saved = localStorage.getItem('ll_lang') || 'de';
+  state.lang = saved;
+  const grid = document.getElementById('langGrid');
+  if (!grid) return;
+  grid.innerHTML = LANGS.map(l => `
+    <button class="lang-btn ${l.code === saved ? 'active' : ''}" onclick="setLang('${l.code}')" id="langbtn_${l.code}">
+      <span class="flag">${l.flag}</span>
+      <span class="lang-name"><span>${l.label}</span><span class="lang-native">${l.native}</span></span>
+    </button>`).join('');
+}
+
+function setLang(code) {
+  state.lang = code;
+  localStorage.setItem('ll_lang', code);
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.id === 'langbtn_' + code));
+  applyTranslations();
+  loadExtras(); // Extras-Labels neu rendern
+}
 
 // LOGIN
 function doLogin() {
@@ -304,11 +552,10 @@ function doLogin() {
         localStorage.setItem('ll_pwa_name', state.name);
         showApp();
       } else {
-        document.getElementById('loginError').textContent = 'Ungültiger Code. Bitte erneut versuchen.';
+        document.getElementById('loginError').textContent = t('loginError');
       }
     })
     .catch(() => {
-      // Fallback: code akzeptieren wenn Offline
       state.code = code; state.name = code;
       localStorage.setItem('ll_pwa_code', code);
       showApp();
@@ -327,6 +574,10 @@ function showApp() {
   document.getElementById('app').style.display = 'flex';
   document.getElementById('settingsName').textContent = state.name;
   document.getElementById('settingsCode').textContent = state.code;
+  const savedLang = localStorage.getItem('ll_lang') || 'de';
+  state.lang = savedLang;
+  applyTranslations();
+  loadLangGrid();
   loadReservationSettings();
   loadExtras();
   loadAll();
@@ -335,11 +586,12 @@ function showApp() {
 // TAB NAVIGATION
 function showTab(tab) {
   state.tab = tab;
-  ['Dashboard','Messages','Reservations','Settings'].forEach((t,i) => {
-    document.getElementById(`screen${t}`).classList.toggle('active', t === tab);
-    document.getElementById(`tab${i}`).classList.toggle('active', t === tab);
+  ['Dashboard','Messages','Reservations','Settings'].forEach((name,i) => {
+    document.getElementById(`screen${name}`).classList.toggle('active', name === tab);
+    document.getElementById(`tab${i}`).classList.toggle('active', name === tab);
   });
-  const titles = { Dashboard: 'Dashboard', Messages: 'Nachrichten', Reservations: 'Buchungen', Settings: 'Einstellungen' };
+  const lang = T[state.lang] || T.de;
+  const titles = { Dashboard: lang.tabDashboard, Messages: lang.tabMessages, Reservations: lang.tabBookings, Settings: lang.tabSettings };
   document.getElementById('appTitle').textContent = titles[tab];
 }
 
@@ -620,6 +872,9 @@ setInterval(() => { if (state.code) loadAll(); }, 60000);
 
 // Auto-Login wenn Code gespeichert
 window.onload = () => {
+  const savedLang = localStorage.getItem('ll_lang') || 'de';
+  state.lang = savedLang;
+  applyTranslations();
   const saved = localStorage.getItem('ll_pwa_code');
   const savedName = localStorage.getItem('ll_pwa_name');
   if (saved) {
