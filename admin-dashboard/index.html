@@ -226,6 +226,7 @@
         <button class="tab-button" data-tab="ideas" type="button">💡 Ideen & Feedback</button>
         <button class="tab-button" data-tab="bot-feedback" type="button">📊 Bot-Feedback</button>
         <button class="tab-button" data-tab="sync" type="button">🔄 Synchronisation</button>
+        <button class="tab-button" data-tab="settings" type="button">⚙️ Einstellungen</button>
       </nav>
 
       <section class="tab-panel active" id="panel-customers">
@@ -408,6 +409,36 @@
 
       <div class="footer-note">LeoLan Digital Admin Panel · Ideas, Feedback & Sync Center</div>
     </div>
+  
+      <!-- SETTINGS TAB -->
+      <section class="tab-content" id="tab-settings">
+        <h2 style="color:#fff;margin-bottom:24px;">⚙️ Einstellungen</h2>
+        
+        <div style="background:#1a2744;border-radius:20px;padding:28px;max-width:480px;border:1px solid rgba(255,255,255,.1);">
+          <h3 style="color:#f5a623;margin:0 0 20px;font-size:16px;">🔒 Passwort ändern</h3>
+          
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <input type="password" id="currentPasswordInput" placeholder="Aktuelles Passwort" 
+              style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:12px 16px;color:#fff;font-size:14px;font-family:inherit;outline:none;width:100%;box-sizing:border-box;">
+            <input type="password" id="newPasswordInput" placeholder="Neues Passwort (min. 8 Zeichen)" 
+              style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:12px 16px;color:#fff;font-size:14px;font-family:inherit;outline:none;width:100%;box-sizing:border-box;">
+            <input type="password" id="confirmPasswordInput" placeholder="Neues Passwort bestätigen" 
+              style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:12px 16px;color:#fff;font-size:14px;font-family:inherit;outline:none;width:100%;box-sizing:border-box;">
+            <button onclick="changeAdminPassword()" 
+              style="background:linear-gradient(135deg,#f5a623,#e8920a);color:#1a2744;border:none;border-radius:12px;padding:13px;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit;">
+              Passwort ändern ✓
+            </button>
+            <div id="passwordChangeMsg" style="font-size:13px;text-align:center;min-height:20px;"></div>
+          </div>
+        </div>
+
+        <div style="background:#1a2744;border-radius:20px;padding:28px;max-width:480px;border:1px solid rgba(255,255,255,.1);margin-top:20px;">
+          <h3 style="color:#f5a623;margin:0 0 12px;font-size:16px;">ℹ️ Account</h3>
+          <p style="color:rgba(255,255,255,.6);font-size:14px;margin:0;">E-Mail: <strong style="color:#fff;">business@leolan.net</strong></p>
+          <p style="color:rgba(255,255,255,.6);font-size:14px;margin:8px 0 0;">Rolle: <strong style="color:#f5a623;">Administrator</strong></p>
+        </div>
+      </section>
+
   </main>
 
   <div class="chat-overlay" id="chatOverlay">
@@ -429,7 +460,7 @@
   </div>
 
   <script>
-    const ADMIN_SECRET = 'LeoLan2026Admin!';
+    const ADMIN_SECRET = localStorage.getItem('leolan_admin_password') || 'LeoLan2026Admin!';
     const STORAGE_KEY = 'leolan-admin-secret';
     const DASHBOARD_API = 'https://n8n.leolan.net/webhook/admin-dashboard';
     const TOGGLE_API = 'https://n8n.leolan.net/webhook/admin-toggle';
@@ -971,6 +1002,43 @@
     } else {
       showLogin();
     }
+  
+    function changeAdminPassword() {
+      const current = document.getElementById('currentPasswordInput').value;
+      const newPw = document.getElementById('newPasswordInput').value;
+      const confirm = document.getElementById('confirmPasswordInput').value;
+      const msg = document.getElementById('passwordChangeMsg');
+      
+      if (current !== ADMIN_SECRET) {
+        msg.style.color = '#e74c3c';
+        msg.textContent = '❌ Aktuelles Passwort falsch.';
+        return;
+      }
+      if (newPw.length < 8) {
+        msg.style.color = '#e74c3c';
+        msg.textContent = '❌ Neues Passwort muss mindestens 8 Zeichen haben.';
+        return;
+      }
+      if (newPw !== confirm) {
+        msg.style.color = '#e74c3c';
+        msg.textContent = '❌ Passwörter stimmen nicht überein.';
+        return;
+      }
+      
+      // Speichere neues Passwort in localStorage
+      localStorage.setItem('leolan_admin_password', newPw);
+      // Update ADMIN_SECRET Variable
+      window.ADMIN_SECRET_OVERRIDE = newPw;
+      
+      msg.style.color = '#2dd881';
+      msg.textContent = '✅ Passwort erfolgreich geändert! Bitte beim nächsten Login das neue Passwort nutzen.';
+      
+      // Felder leeren
+      document.getElementById('currentPasswordInput').value = '';
+      document.getElementById('newPasswordInput').value = '';
+      document.getElementById('confirmPasswordInput').value = '';
+    }
+
   </script>
 </body>
 </html>
