@@ -158,11 +158,11 @@ async function doSubmit(){
     localStorage.setItem('customerCode',data.customerCode);
     localStorage.setItem('token',data.token||data.customerCode);
     // Redirect to Stripe checkout
-    // POST to checkout webhook to get Stripe URL
-var checkoutRes = await fetch('https://n8n.leolan.net/webhook/portal-addon', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:data.customerCode,plan:pkg,email:payload.email,name:payload.name,vatId:payload.vatId||'',companyName:payload.companyName,whatsapp:payload.whatsappNumber,mode:'checkout'})});
+    var checkoutRes = await fetch('https://n8n.leolan.net/webhook/stripe-checkout', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({package:pkg,customerEmail:payload.email,customerCode:data.customerCode,companyName:payload.companyName,vatId:payload.vatId||'',phone:payload.phone,address:payload.address,zipCode:payload.zipCode,city:payload.city,website:payload.website,whatsappNumber:payload.whatsappNumber,name:payload.name})});
+var checkoutText = await checkoutRes.text();
 var checkoutData = {};
-try{checkoutData=await checkoutRes.json();}catch(e){}
-var checkoutUrl = checkoutData.url || checkoutData.checkoutUrl || 'https://ki.leolan.net/danke/?code='+data.customerCode;
+try{checkoutData=JSON.parse(checkoutText);}catch(e){}
+var checkoutUrl = checkoutData.url || checkoutData.checkoutUrl || checkoutData.data?.url || ('https://onboarding.leolan.net/?paket='+pkg+'&code='+data.customerCode+'&v='+Date.now());
     window.location.href=checkoutUrl;
   }catch(e){
     s.className='status err';s.textContent='Fehler: '+e.message;
