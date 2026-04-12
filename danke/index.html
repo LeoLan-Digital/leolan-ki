@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vielen Dank! – LeoLan Digital</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d1117;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px}
+.card{background:#161b22;border:1px solid #30363d;border-radius:20px;padding:48px 36px;max-width:520px;width:100%;text-align:center}
+.icon{font-size:64px;margin-bottom:24px}
+h1{font-size:1.8rem;font-weight:800;color:#f0f6fc;margin-bottom:12px}
+.sub{color:#8b949e;font-size:1rem;line-height:1.6;margin-bottom:32px}
+.code-box{background:#0d1117;border:2px solid #f5a623;border-radius:14px;padding:24px;margin-bottom:32px}
+.code-label{color:#8b949e;font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.code{font-size:2.5rem;font-weight:800;color:#f5a623;letter-spacing:6px}
+.code-hint{color:#8b949e;font-size:.8rem;margin-top:8px}
+.steps{text-align:left;margin-bottom:28px}
+.step-item{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid #21262d}
+.step-item:last-child{border-bottom:none}
+.step-num{width:28px;height:28px;border-radius:50%;background:#f5a623;color:#000;font-weight:800;font-size:.8rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.step-text strong{color:#f0f6fc;display:block;margin-bottom:2px}
+.step-text span{color:#8b949e;font-size:.85rem}
+.btn{display:inline-block;background:#f5a623;color:#000;font-weight:800;font-size:.95rem;padding:14px 28px;border-radius:10px;text-decoration:none;margin-top:4px}
+.footer{color:#484f58;font-size:.75rem;margin-top:24px}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="icon">🎉</div>
+  <h1>Zahlung erfolgreich!</h1>
+  <p class="sub">Willkommen bei LeoLan Digital. Ihr KI-System wird jetzt für Sie eingerichtet.</p>
+
+  <div class="code-box" id="codeBox" style="display:none">
+    <div class="code-label">Ihr Kundencode</div>
+    <div class="code" id="codeDisplay">—</div>
+    <div class="code-hint">Damit melden Sie sich in der LeoLan Manager App an</div>
+  </div>
+
+  <div class="steps">
+    <div class="step-item">
+      <div class="step-num">1</div>
+      <div class="step-text"><strong>Bestätigung per E-Mail</strong><span>Sie erhalten sofort eine E-Mail mit Ihrem Kundencode.</span></div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">2</div>
+      <div class="step-text"><strong>WhatsApp-Kontakt innerhalb 24h</strong><span>Unser Team meldet sich und richtet Ihren KI-Bot ein.</span></div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">3</div>
+      <div class="step-text"><strong>App herunterladen</strong><span>Laden Sie die LeoLan Manager App in TestFlight und loggen Sie sich ein.</span></div>
+    </div>
+  </div>
+
+  <a href="https://ki.leolan.net/" class="btn">→ Zur Website</a>
+</div>
+<div class="footer">© 2026 LeoLan Digital · business@leolan.net</div>
+
+<script>
+// Show customer code if available
+var code = localStorage.getItem('customerCode') || new URLSearchParams(window.location.search).get('code');
+if(code) {
+  document.getElementById('codeDisplay').textContent = code;
+  document.getElementById('codeBox').style.display = 'block';
+}
+</script>
+</body>
+</html>
