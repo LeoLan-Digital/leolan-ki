@@ -235,21 +235,45 @@ async function doCheckout(){
   btn.disabled=true;btn.textContent='Wird verarbeitet...';
   var s=document.getElementById('status');s.className='status';s.textContent='';
   try{
-    var regRes=await fetch('https://n8n.leolan.net/webhook/kunden-register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(fdata)});
-    var reg=await regRes.json();
-    if(!reg.customerCode)throw new Error(reg.error||'Registrierung fehlgeschlagen.');
-    localStorage.setItem('customerCode',reg.customerCode);
-    localStorage.setItem('token',reg.token||reg.customerCode);
+    // Save registration data for after payment
+    localStorage.setItem('pendingReg', JSON.stringify(fdata));
     show(3);
-    var chkRes=await fetch('https://n8n.leolan.net/webhook/stripe-checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({},fdata,{customerCode:reg.customerCode,customerEmail:fdata.email}))});
+    // Go directly to Stripe checkout
+    // Add Stripe price IDs for the package
+var priceMap={'starter':{priceId:'price_1TL0yYLwGb6me8PhNJaI5B0d',amount:199},'pro':{priceId:'price_1TL0z0LwGb6me8PhRKNbQ3Qa',amount:349}};
+var pkgInfo=priceMap[fdata.package]||priceMap.starter;
+var reverseCharge=fdata.vatId&&fdata.vatId.length>4;
+var vatRate=reverseCharge?0:19;
+var vatAmount=reverseCharge?0:Math.round(pkgInfo.amount*0.19*100)/100;
+var chkPayload=Object.assign({},fdata,{
+  customerEmail:fdata.email,
+  priceIds:[pkgInfo.priceId],
+  modules:[{key:fdata.package,name:fdata.package==='starter'?'Starter':'Pro',price:pkgInfo.amount,priceId:pkgInfo.priceId,desc:'LeoLan '+fdata.package}],
+  monthlyNetTotal:pkgInfo.amount,
+  setupFeeAmount:349,
+  netTotal:pkgInfo.amount+349,
+  vatRate:vatRate,
+  vatAmount:vatAmount,
+  grossTotal:pkgInfo.amount+349+(reverseCharge?0:Math.round((pkgInfo.amount+349)*0.19*100)/100),
+  reverseCharge:reverseCharge,
+  selectedPackage:fdata.package,
+  successUrl:'https://ki.leolan.net/danke/',
+  cancelUrl:'https://ki.leolan.net/onboarding/'
+});
+var chkRes=await fetch('https://n8n.leolan.net/webhook/stripe-checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(chkPayload)});
     var chkText=await chkRes.text();
     var chk={};try{chk=JSON.parse(chkText);}catch(e){}
     var url=chk.url||chk.checkoutUrl||(chk.data&&chk.data.url);
     if(url&&url.startsWith('http')){window.location.href=url;}
     else{
+      // Stripe URL not available - register and show code
+      var regRes=await fetch('https://n8n.leolan.net/webhook/kunden-register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(fdata)});
+      var reg=await regRes.json();
+      if(!reg.customerCode)throw new Error('Registrierung fehlgeschlagen.');
+      localStorage.setItem('customerCode',reg.customerCode);
       show(2);
       s.className='status';s.style.display='block';s.style.background='rgba(35,134,54,.15)';s.style.color='#3fb950';
-      s.innerHTML='✓ Konto erstellt! Kundencode: <strong>'+reg.customerCode+'</strong><br>Wir melden uns per WhatsApp für die Einrichtung.';
+      s.innerHTML='✓ Registriert! Kundencode: <strong>'+reg.customerCode+'</strong><br>Wir kontaktieren Sie per WhatsApp für die Einrichtung und Zahlung.';
       btn.textContent='✓ Erledigt';
     }
   }catch(e){
