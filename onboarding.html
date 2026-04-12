@@ -243,7 +243,7 @@ async function doCheckout(){
 var priceMap={'starter':{priceId:'price_1TL0yYLwGb6me8PhNJaI5B0d',amount:199},'pro':{priceId:'price_1TL0z0LwGb6me8PhRKNbQ3Qa',amount:349}};
 var pkgInfo=priceMap[fdata.package]||priceMap.starter;
 var reverseCharge=fdata.vatId&&fdata.vatId.length>4;
-var vatRate=reverseCharge?0:19;
+var vatRate=19; // Stripe handles Reverse Charge via customer tax ID
 var vatAmount=reverseCharge?0:Math.round(pkgInfo.amount*0.19*100)/100;
 var chkPayload=Object.assign({},fdata,{
   customerEmail:fdata.email,
@@ -254,7 +254,7 @@ var chkPayload=Object.assign({},fdata,{
   netTotal:pkgInfo.amount+349,
   vatRate:vatRate,
   vatAmount:vatAmount,
-  grossTotal:pkgInfo.amount+349+(reverseCharge?0:Math.round((pkgInfo.amount+349)*0.19*100)/100),
+  grossTotal:pkgInfo.amount+349+(reverseCharge?0:Math.round((pkgInfo.amount+349)*0.19*100)/100), reverseCharge:false,
   reverseCharge:reverseCharge,
   selectedPackage:fdata.package,
   successUrl:'https://ki.leolan.net/danke/',
