@@ -868,19 +868,23 @@
         return;
       }
 
-      chatCustomerList.innerHTML = items.map(item => `
+      chatCustomerList.innerHTML = items.map(item => {
+        const workflowId = item.workflowId || item.customerCode || '';
+        const customerName = item.customerName || item.restaurantName || workflowId || 'Unbekannt';
+        return `
         <article class="chat-customer-row">
           <div>
-            <div class="chat-customer-name">${escapeHtml(item.customerName || item.restaurantName || item.customerCode)}</div>
-            <div class="chat-customer-meta">Code ${escapeHtml(item.customerCode)}${item.customerEmail ? ` · ${escapeHtml(item.customerEmail)}` : ''} · Letzte Nachricht ${formatDateTime(item.lastTimestamp)}</div>
+            <div class="chat-customer-name">${escapeHtml(customerName)}</div>
+            <div class="chat-customer-meta">Workflow ${escapeHtml(workflowId)}${item.customerEmail ? ` · ${escapeHtml(item.customerEmail)}` : ''} · Letzte Nachricht ${formatDateTime(item.lastTimestamp)}</div>
             <div class="chat-customer-meta" style="margin-top:8px">${escapeHtml(item.lastMessage || '—')}</div>
           </div>
           <div class="unread-badge ${Number(item.unreadCount) ? '' : 'zero'}">${Number(item.unreadCount) ? `${escapeHtml(item.unreadCount)} neu` : 'gelesen'}</div>
-          <button class="chat-button" type="button" data-customer-code="${escapeHtml(item.customerCode)}" data-customer-name="${escapeHtml(item.customerName || item.restaurantName || item.customerCode)}" data-customer-email="${escapeHtml(item.customerEmail || '')}">Öffnen</button>
+          <button class="chat-button" type="button" data-workflow-id="${escapeHtml(workflowId)}" data-customer-name="${escapeHtml(customerName)}" data-customer-email="${escapeHtml(item.customerEmail || '')}">Öffnen</button>
         </article>
-      `).join('');
+      `;
+      }).join('');
 
-      chatCustomerList.querySelectorAll('.chat-button').forEach(button => button.addEventListener('click', () => openChat(button.dataset.customerCode, button.dataset.customerName, button.dataset.customerEmail)));
+      chatCustomerList.querySelectorAll('.chat-button').forEach(button => button.addEventListener('click', () => openChat(button.dataset.workflowId, button.dataset.customerName, button.dataset.customerEmail)));
     }
 
     async function loadChatCustomers() {
@@ -1003,15 +1007,15 @@
       chatBody.scrollTop = chatBody.scrollHeight;
     }
 
-    async function openChat(customerCode, name, email = '') {
-      currentChat = { customerCode, name, email };
+    async function openChat(workflowId, name, email = '') {
+      currentChat = { workflowId, name, email };
       chatTitle.textContent = `Chat · ${name}`;
-      chatSubtitle.textContent = `Kunden-Code: ${customerCode}${email ? ` · ${email}` : ''}`;
+      chatSubtitle.textContent = `Workflow-ID: ${workflowId}${email ? ` · ${email}` : ''}`;
       chatReply.value = '';
       chatStatus.textContent = 'Verlauf wird geladen…';
       chatOverlay.classList.add('open');
       try {
-        const url = `${CHAT_HISTORY_API}?customerCode=${encodeURIComponent(customerCode)}&adminKey=${encodeURIComponent(getStoredSecret())}`;
+        const url = `${CHAT_HISTORY_API}?workflowId=${encodeURIComponent(workflowId)}&adminKey=${encodeURIComponent(getStoredSecret())}`;
         const data = await apiJson(url, { method: 'GET' });
         renderChatMessages(Array.isArray(data.messages) ? data.messages : []);
         chatStatus.textContent = data.customerEmail ? `Antwort geht an ${data.customerEmail}` : 'Keine Kunden-E-Mail hinterlegt.';
@@ -1035,7 +1039,7 @@
         const data = await apiJson(CHAT_API, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: 'admin-reply', adminKey: getStoredSecret(), customerCode: currentChat.customerCode, message })
+          body: JSON.stringify({ action: 'admin-reply', adminKey: getStoredSecret(), workflowId: currentChat.workflowId, message })
         });
         renderChatMessages(Array.isArray(data.messages) ? data.messages : []);
         chatReply.value = '';
