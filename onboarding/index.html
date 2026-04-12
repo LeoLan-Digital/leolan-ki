@@ -85,6 +85,15 @@ body{background:#0d1117;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFo
 
   <!-- STEP 1 -->
   <div id="s1">
+    <!-- Paket -->
+    <div class="card">
+      <h3>📦 Paket wählen</h3>
+      <div class="pkgs">
+        <div class="pkg on" data-pkg="starter" onclick="spkg('starter')"><div class="chk">✓</div><div class="pkg-badge">🔥 Beliebt</div><div class="pkg-name">Starter</div><div class="pkg-price">199€ <span>/ Monat</span></div><div class="pkg-desc">WhatsApp-Bot, Reservierungen, 500 Nachrichten/Monat</div></div>
+        <div class="pkg" data-pkg="pro" onclick="spkg('pro')"><div class="chk">✓</div><div class="pkg-name">Pro</div><div class="pkg-price">349€ <span>/ Monat</span></div><div class="pkg-desc">Alles aus Starter + Social Media, 2.000 Nachrichten/Monat</div></div>
+      </div>
+      <p style="color:#484f58;font-size:.78rem;margin-top:10px">Alle Preise zzgl. MwSt. · 12 Monate Mindestlaufzeit · + 349€ einmalige Setup-Gebühr</p>
+    </div>
     <!-- Konto -->
     <div class="card">
       <h3>👤 Zugangsdaten</h3>
@@ -118,15 +127,6 @@ body{background:#0d1117;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFo
         <div class="hint orange">📱 Pflicht: Über diese Nummer richten wir Ihren KI-Bot ein.</div>
         <div class="err">WhatsApp-Nummer eingeben.</div>
       </div>
-    </div>
-    <!-- Paket -->
-    <div class="card">
-      <h3>📦 Paket wählen</h3>
-      <div class="pkgs">
-        <div class="pkg on" data-pkg="starter" onclick="spkg('starter')"><div class="chk">✓</div><div class="pkg-badge">🔥 Beliebt</div><div class="pkg-name">Starter</div><div class="pkg-price">199€ <span>/ Monat</span></div><div class="pkg-desc">WhatsApp-Bot, Reservierungen, 500 Nachrichten/Monat</div></div>
-        <div class="pkg" data-pkg="pro" onclick="spkg('pro')"><div class="chk">✓</div><div class="pkg-name">Pro</div><div class="pkg-price">349€ <span>/ Monat</span></div><div class="pkg-desc">Alles aus Starter + Social Media, 2.000 Nachrichten/Monat</div></div>
-      </div>
-      <p style="color:#484f58;font-size:.78rem;margin-top:10px">Alle Preise zzgl. MwSt. · 12 Monate Mindestlaufzeit · + 349€ einmalige Setup-Gebühr</p>
     </div>
     <button class="btn btn-primary" onclick="go1()">Weiter: Daten prüfen →</button>
   </div>
