@@ -7,166 +7,239 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#0d1117;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh}
-.hero{background:linear-gradient(135deg,#1a2744 0%,#0d1117 100%);padding:48px 24px 32px;text-align:center}
-.logo{font-size:28px;font-weight:800;color:#f5a623;margin-bottom:8px}
-.hero h1{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;margin-bottom:12px;color:#fff}
-.hero p{color:#8b949e;font-size:1.05rem;max-width:560px;margin:0 auto;line-height:1.6}
-.shell{max-width:700px;margin:0 auto;padding:32px 20px 80px}
-.card{background:#161b22;border:1px solid #30363d;border-radius:16px;padding:28px;margin-bottom:20px}
-.card h2{font-size:1.05rem;font-weight:700;color:#f0f6fc;margin-bottom:20px}
-.field{margin-bottom:16px}
-.field label{display:block;font-size:.875rem;font-weight:600;color:#8b949e;margin-bottom:6px}
-.field input,.field select{width:100%;background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:12px 14px;color:#e6edf3;font-size:1rem;outline:none;transition:border-color .2s}
-.field input:focus,.field select:focus{border-color:#f5a623}
+.hero{background:linear-gradient(135deg,#1a2744 0%,#0d1117 100%);padding:40px 24px 28px;text-align:center;border-bottom:1px solid #21262d}
+.logo{font-size:26px;font-weight:800;color:#f5a623;margin-bottom:6px}
+.hero h1{font-size:clamp(1.4rem,4vw,2rem);font-weight:800;margin-bottom:8px;color:#fff}
+.hero p{color:#8b949e;font-size:.95rem;max-width:500px;margin:0 auto;line-height:1.6}
+.shell{max-width:560px;margin:0 auto;padding:32px 20px 80px}
+/* Steps indicator */
+.steps{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:32px}
+.step-dot{width:32px;height:32px;border-radius:50%;border:2px solid #30363d;background:#0d1117;color:#8b949e;font-weight:700;font-size:.85rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.step-dot.done{background:#238636;border-color:#238636;color:#fff}
+.step-dot.active{background:#f5a623;border-color:#f5a623;color:#000}
+.step-line{flex:1;height:2px;background:#21262d;max-width:60px}
+.step-line.done{background:#238636}
+.step-label{font-size:.75rem;color:#8b949e;text-align:center;margin-top:4px}
+.steps-wrap{display:flex;flex-direction:column;align-items:center;gap:4px}
+.steps-row{display:flex;align-items:center;gap:0}
+.card{background:#161b22;border:1px solid #30363d;border-radius:16px;padding:28px;margin-bottom:16px}
+.card h2{font-size:1rem;font-weight:700;color:#f0f6fc;margin-bottom:6px}
+.card .sub{color:#8b949e;font-size:.85rem;margin-bottom:20px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:.85rem;font-weight:600;color:#8b949e;margin-bottom:5px}
+.field input{width:100%;background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:11px 13px;color:#e6edf3;font-size:.95rem;outline:none;transition:border-color .2s}
+.field input:focus{border-color:#f5a623}
 .field .err{color:#f85149;font-size:.8rem;margin-top:4px;display:none}
 .field.bad .err{display:block}
-.field.bad input,.field.bad select{border-color:#f85149}
-.field .hint{color:#8b949e;font-size:.8rem;margin-top:4px;line-height:1.4}
+.field.bad input{border-color:#f85149}
+.field .hint{color:#8b949e;font-size:.78rem;margin-top:4px;line-height:1.4}
 .field .hint.orange{color:#f5a623;font-weight:600}
 .pw-wrap{position:relative}
-.pw-wrap input{padding-right:80px}
-.pw-toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:#8b949e;cursor:pointer;font-size:.85rem}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media(max-width:520px){.g2{grid-template-columns:1fr}}
-.pkgs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:8px}
-@media(max-width:520px){.pkgs{grid-template-columns:1fr}}
-.pkg{border:2px solid #30363d;border-radius:12px;padding:16px;cursor:pointer;transition:all .2s;background:#0d1117}
+.pw-wrap input{padding-right:70px}
+.pw-toggle{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:#8b949e;cursor:pointer;font-size:.8rem;white-space:nowrap}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:480px){.g2{grid-template-columns:1fr}}
+/* Packages */
+.pkgs{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:480px){.pkgs{grid-template-columns:1fr}}
+.pkg{border:2px solid #30363d;border-radius:12px;padding:16px;cursor:pointer;transition:all .2s;background:#0d1117;position:relative}
 .pkg:hover{border-color:#f5a623}
-.pkg.on{border-color:#f5a623;background:rgba(245,166,35,.08)}
-.pkg-name{font-weight:700;color:#f0f6fc;margin-bottom:4px}
-.pkg-price{font-size:1.4rem;font-weight:800;color:#f5a623}
-.pkg-price span{font-size:.85rem;font-weight:400;color:#8b949e}
-.pkg-desc{font-size:.8rem;color:#8b949e;margin-top:6px}
-.pkg-badge{display:inline-block;background:#f5a623;color:#000;font-size:.7rem;font-weight:800;padding:2px 8px;border-radius:999px;margin-bottom:6px}
-.submit-btn{width:100%;background:#f5a623;color:#000;border:none;border-radius:12px;padding:16px;font-size:1.1rem;font-weight:800;cursor:pointer;margin-top:8px;transition:opacity .2s}
-.submit-btn:disabled{opacity:.6;cursor:not-allowed}
-.status{text-align:center;padding:12px;border-radius:8px;font-size:.9rem;font-weight:600;display:none;margin-top:12px}
+.pkg.on{border-color:#f5a623;background:rgba(245,166,35,.07)}
+.pkg-badge{display:inline-block;background:#f5a623;color:#000;font-size:.7rem;font-weight:800;padding:2px 8px;border-radius:999px;margin-bottom:8px}
+.pkg-name{font-weight:800;color:#f0f6fc;font-size:1.1rem;margin-bottom:4px}
+.pkg-price{font-size:1.5rem;font-weight:800;color:#f5a623}
+.pkg-price span{font-size:.8rem;font-weight:400;color:#8b949e}
+.pkg-desc{font-size:.8rem;color:#8b949e;margin-top:8px;line-height:1.4}
+.check{position:absolute;top:12px;right:12px;width:22px;height:22px;border-radius:50%;background:#f5a623;display:none;align-items:center;justify-content:center;color:#000;font-size:.75rem;font-weight:800}
+.pkg.on .check{display:flex}
+.btn{width:100%;padding:14px;border-radius:10px;border:none;font-size:1rem;font-weight:800;cursor:pointer;transition:opacity .2s;margin-top:4px}
+.btn-primary{background:#f5a623;color:#000}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed}
+.btn-back{background:#21262d;color:#8b949e;margin-bottom:8px}
+.status{text-align:center;padding:10px;border-radius:8px;font-size:.85rem;font-weight:600;display:none;margin-top:8px}
 .status.err{background:rgba(248,81,73,.15);color:#f85149;display:block}
-.note{color:#8b949e;font-size:.8rem;text-align:center;margin-top:12px;line-height:1.5}
+.note{color:#8b949e;font-size:.78rem;text-align:center;margin-top:10px;line-height:1.5}
 </style>
 </head>
 <body>
 <div class="hero">
   <div class="logo">LeoLan Digital</div>
-  <h1>KI-System für Ihr Restaurant einrichten</h1>
-  <p>Füllen Sie das Formular aus und wählen Sie Ihr Paket — nach der Zahlung erhalten Sie Ihren Kundencode und wir richten alles ein.</p>
+  <h1>KI-System für Ihr Restaurant</h1>
+  <p>Drei Schritte — dann richtet unser Team alles für Sie ein.</p>
 </div>
 <div class="shell">
-  <div id="mainForm">
+  <!-- Steps indicator -->
+  <div style="display:flex;justify-content:center;align-items:flex-start;gap:0;margin-bottom:28px">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+      <div class="step-dot active" id="sd1">1</div>
+      <div style="font-size:.7rem;color:#8b949e">Konto</div>
+    </div>
+    <div style="width:60px;height:2px;background:#21262d;margin-top:16px;transition:background .3s" id="sl1"></div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+      <div class="step-dot" id="sd2">2</div>
+      <div style="font-size:.7rem;color:#8b949e">Paket</div>
+    </div>
+    <div style="width:60px;height:2px;background:#21262d;margin-top:16px;transition:background .3s" id="sl2"></div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+      <div class="step-dot" id="sd3">3</div>
+      <div style="font-size:.7rem;color:#8b949e">Daten & Zahlung</div>
+    </div>
+  </div>
 
-    <!-- Konto -->
+  <!-- Step 1: Account -->
+  <div id="step1">
     <div class="card">
-      <h2>👤 Konto erstellen</h2>
+      <h2>Konto erstellen</h2>
+      <div class="sub">Ihre Zugangsdaten für die LeoLan Manager App.</div>
       <div class="g2">
         <div class="field" id="fe-email"><label>E-Mail *</label><input type="email" id="email" placeholder="name@firma.de"><div class="err">Gültige E-Mail eingeben.</div></div>
         <div class="field" id="fe-name"><label>Ihr Name *</label><input type="text" id="name" placeholder="Max Mustermann"><div class="err">Name eingeben.</div></div>
       </div>
       <div class="g2">
         <div class="field" id="fe-pw"><label>Passwort * (min. 8 Zeichen)</label><div class="pw-wrap"><input type="password" id="pw" placeholder="Passwort"><button type="button" class="pw-toggle" onclick="tpw('pw',this)">Zeigen</button></div><div class="err">Mindestens 8 Zeichen.</div></div>
-        <div class="field" id="fe-pw2"><label>Passwort bestätigen *</label><div class="pw-wrap"><input type="password" id="pw2" placeholder="Wiederholen"><button type="button" class="pw-toggle" onclick="tpw('pw2',this)">Zeigen</button></div><div class="err">Passwörter stimmen nicht überein.</div></div>
+        <div class="field" id="fe-pw2"><label>Passwort bestätigen *</label><div class="pw-wrap"><input type="password" id="pw2" placeholder="Wiederholen"><button type="button" class="pw-toggle" onclick="tpw('pw2',this)">Zeigen</button></div><div class="err">Stimmt nicht überein.</div></div>
       </div>
     </div>
+    <button class="btn btn-primary" onclick="go1()">Weiter: Paket wählen →</button>
+  </div>
 
-    <!-- Paket -->
+  <!-- Step 2: Package -->
+  <div id="step2" style="display:none">
     <div class="card">
-      <h2>📦 Paket wählen</h2>
+      <h2>Paket wählen</h2>
+      <div class="sub">Wählen Sie Ihr monatliches Paket. + 349€ Setup-Gebühr (einmalig).</div>
       <div class="pkgs">
-        <div class="pkg on" data-pkg="starter" onclick="spkg('starter')"><div class="pkg-badge">🔥 Beliebt</div><div class="pkg-name">Starter</div><div class="pkg-price">199€ <span>/ Monat</span></div><div class="pkg-desc">WhatsApp-Bot, Reservierungen, 500 Nachrichten/Monat</div></div>
-        <div class="pkg" data-pkg="pro" onclick="spkg('pro')"><div class="pkg-name">Pro</div><div class="pkg-price">349€ <span>/ Monat</span></div><div class="pkg-desc">Alles aus Starter + Social Media, 2.000 Nachrichten/Monat</div></div>
+        <div class="pkg on" data-pkg="starter" onclick="spkg('starter')">
+          <div class="check">✓</div>
+          <div class="pkg-badge">🔥 Beliebt</div>
+          <div class="pkg-name">Starter</div>
+          <div class="pkg-price">199€ <span>/ Monat</span></div>
+          <div class="pkg-desc">WhatsApp-Bot, Reservierungen, 500 Nachrichten/Monat, zzgl. MwSt.</div>
+        </div>
+        <div class="pkg" data-pkg="pro" onclick="spkg('pro')">
+          <div class="check">✓</div>
+          <div class="pkg-name">Pro</div>
+          <div class="pkg-price">349€ <span>/ Monat</span></div>
+          <div class="pkg-desc">Alles aus Starter + Social Media, 2.000 Nachrichten/Monat, zzgl. MwSt.</div>
+        </div>
       </div>
-      <p style="color:#8b949e;font-size:.8rem">+ 349€ einmalige Setup-Gebühr · zzgl. MwSt. · 12 Monate Mindestlaufzeit</p>
     </div>
+    <button class="btn btn-primary" onclick="go2()" style="margin-top:0">Weiter: Ihre Daten →</button>
+    <button class="btn btn-back" onclick="back(1)" style="margin-top:8px">← Zurück</button>
+  </div>
 
-    <!-- Restaurant -->
+  <!-- Step 3: Details + Pay -->
+  <div id="step3" style="display:none">
     <div class="card">
-      <h2>🏢 Ihr Restaurant</h2>
+      <h2>Ihr Restaurant</h2>
+      <div class="sub">Diese Daten werden für Rechnung und Einrichtung benötigt.</div>
       <div class="field" id="fe-company"><label>Restaurantname *</label><input type="text" id="company" placeholder="z. B. Bella Vista"><div class="err">Restaurantname eingeben.</div></div>
       <div class="g2">
-        <div class="field" id="fe-street"><label>Straße & Hausnummer *</label><input type="text" id="street" placeholder="Musterstraße 1"><div class="err">Adresse eingeben.</div></div>
-        <div class="g2" style="gap:10px">
-          <div class="field" id="fe-zip"><label>PLZ *</label><input type="text" id="zip" placeholder="01234" maxlength="5"><div class="err">PLZ eingeben.</div></div>
+        <div class="field" id="fe-street"><label>Straße & Nr. *</label><input type="text" id="street" placeholder="Musterstraße 1"><div class="err">Straße eingeben.</div></div>
+        <div class="g2" style="gap:8px">
+          <div class="field" id="fe-zip"><label>PLZ *</label><input type="text" id="zip" placeholder="01234" maxlength="10"><div class="err">PLZ eingeben.</div></div>
           <div class="field" id="fe-city"><label>Stadt *</label><input type="text" id="city" placeholder="Dresden"><div class="err">Stadt eingeben.</div></div>
         </div>
       </div>
       <div class="g2">
-        <div class="field"><label>USt-ID (optional)</label><input type="text" id="vatId" placeholder="DE123456789"><div class="hint">Bei Angabe: Reverse Charge, 0% MwSt.</div></div>
-        <div class="field"><label>Website (optional)</label><input type="url" id="website" placeholder="https://..."></div>
+        <div class="field"><label>USt-ID <span style="font-weight:400;color:#484f58">(optional)</span></label><input type="text" id="vatId" placeholder="DE123456789"><div class="hint">Mit USt-ID: Reverse Charge, 0% MwSt.</div></div>
+        <div class="field"><label>Website <span style="font-weight:400;color:#484f58">(optional)</span></label><input type="url" id="website" placeholder="https://..."></div>
       </div>
       <div class="field" id="fe-whatsapp">
         <label>WhatsApp-Nummer *</label>
         <input type="tel" id="whatsapp" placeholder="+49 15678 483700">
-        <div class="hint orange">📱 Pflicht: Wir nehmen hierüber Kontakt auf und richten Ihren KI-Bot ein.</div>
+        <div class="hint orange">📱 Pflicht: Hierüber nehmen wir Kontakt auf und richten Ihren KI-Bot ein.</div>
         <div class="err">WhatsApp-Nummer eingeben.</div>
       </div>
     </div>
-
-    <button class="submit-btn" id="submitBtn" onclick="doSubmit()">💳 Weiter zur Zahlung</button>
+    <button class="btn btn-primary" id="payBtn" onclick="doCheckout()">💳 Jetzt bezahlen</button>
     <div class="status" id="status"></div>
     <div class="note">Nach der Zahlung erhalten Sie Ihren Kundencode per E-Mail und können sich in der LeoLan Manager App anmelden.</div>
+    <button class="btn btn-back" onclick="back(2)" style="margin-top:8px">← Zurück</button>
   </div>
 </div>
 <script>
-var pkg='starter';
-function spkg(p){pkg=p;document.querySelectorAll('.pkg').forEach(function(c){c.classList.remove('on')});var el=document.querySelector('[data-pkg="'+p+'"]');if(el)el.classList.add('on');}
+var pkg='starter', regData={};
 function tpw(id,btn){var i=document.getElementById(id);if(i.type==='password'){i.type='text';btn.textContent='Verbergen';}else{i.type='password';btn.textContent='Zeigen';}}
+function spkg(p){pkg=p;document.querySelectorAll('.pkg').forEach(function(c){c.classList.remove('on')});document.querySelector('[data-pkg="'+p+'"]').classList.add('on');}
 function setErr(id,has){var f=document.getElementById('fe-'+id);if(f)f.classList.toggle('bad',has);}
-function validate(){var ok=true;
+function email_ok(e){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);}
+function go1(){
   var email=document.getElementById('email').value.trim();
   var name=document.getElementById('name').value.trim();
   var pw=document.getElementById('pw').value;
   var pw2=document.getElementById('pw2').value;
+  var ok=true;
+  setErr('email',!email_ok(email));if(!email_ok(email))ok=false;
+  setErr('name',!name);if(!name)ok=false;
+  setErr('pw',pw.length<8);if(pw.length<8)ok=false;
+  setErr('pw2',pw!==pw2);if(pw!==pw2)ok=false;
+  if(!ok)return;
+  regData={email:email,name:name,password:pw};
+  show(2);
+}
+function go2(){show(3);}
+function back(n){show(n);}
+function show(n){
+  document.getElementById('step1').style.display=n===1?'block':'none';
+  document.getElementById('step2').style.display=n===2?'block':'none';
+  document.getElementById('step3').style.display=n===3?'block':'none';
+  // Update dots
+  for(var i=1;i<=3;i++){
+    var d=document.getElementById('sd'+i);
+    d.className='step-dot'+(i<n?' done':i===n?' active':'');
+  }
+  if(document.getElementById('sl1'))document.getElementById('sl1').style.background=n>1?'#238636':'#21262d';
+  if(document.getElementById('sl2'))document.getElementById('sl2').style.background=n>2?'#238636':'#21262d';
+}
+async function doCheckout(){
   var company=document.getElementById('company').value.trim();
   var street=document.getElementById('street').value.trim();
   var zip=document.getElementById('zip').value.trim();
   var city=document.getElementById('city').value.trim();
   var wa=document.getElementById('whatsapp').value.trim();
-  var eok=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  setErr('email',!eok);if(!eok)ok=false;
-  setErr('name',!name);if(!name)ok=false;
-  setErr('pw',pw.length<8);if(pw.length<8)ok=false;
-  setErr('pw2',pw!==pw2);if(pw!==pw2)ok=false;
+  var ok=true;
   setErr('company',!company);if(!company)ok=false;
   setErr('street',!street);if(!street)ok=false;
   setErr('zip',!zip);if(!zip)ok=false;
   setErr('city',!city);if(!city)ok=false;
   setErr('whatsapp',!wa);if(!wa)ok=false;
-  return ok;}
-async function doSubmit(){
-  if(!validate())return;
-  var btn=document.getElementById('submitBtn');
+  if(!ok)return;
+  var btn=document.getElementById('payBtn');
   btn.disabled=true;btn.textContent='Wird verarbeitet...';
   var s=document.getElementById('status');s.className='status';s.textContent='';
-  var payload={
-    email:document.getElementById('email').value.trim(),
-    password:document.getElementById('pw').value,
-    name:document.getElementById('name').value.trim(),
-    phone:document.getElementById('whatsapp').value.trim(),
+  var payload=Object.assign({},regData,{
     package:pkg,sector:'restaurant',
-    companyName:document.getElementById('company').value.trim(),
-    address:document.getElementById('street').value.trim()+', '+document.getElementById('zip').value.trim()+' '+document.getElementById('city').value.trim(),
-    street:document.getElementById('street').value.trim(),
-    zipCode:document.getElementById('zip').value.trim(),
-    city:document.getElementById('city').value.trim(),
+    companyName:company,
+    street:street,zipCode:zip,city:city,
+    address:street+', '+zip+' '+city,
     vatId:document.getElementById('vatId').value.trim(),
     website:document.getElementById('website').value.trim(),
-    whatsappNumber:document.getElementById('whatsapp').value.trim()
-  };
+    whatsappNumber:wa,phone:wa
+  });
   try{
-    var res=await fetch('https://n8n.leolan.net/webhook/kunden-register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-    var data=await res.json();
-    if(!data.customerCode)throw new Error(data.error||'Registrierung fehlgeschlagen.');
-    localStorage.setItem('customerCode',data.customerCode);
-    localStorage.setItem('token',data.token||data.customerCode);
-    // Redirect to Stripe checkout
-    var checkoutRes = await fetch('https://n8n.leolan.net/webhook/stripe-checkout', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({package:pkg,customerEmail:payload.email,customerCode:data.customerCode,companyName:payload.companyName,vatId:payload.vatId||'',phone:payload.phone,address:payload.address,zipCode:payload.zipCode,city:payload.city,website:payload.website,whatsappNumber:payload.whatsappNumber,name:payload.name})});
-var checkoutText = await checkoutRes.text();
-var checkoutData = {};
-try{checkoutData=JSON.parse(checkoutText);}catch(e){}
-var checkoutUrl = checkoutData.url || checkoutData.checkoutUrl || checkoutData.data?.url || ('https://onboarding.leolan.net/?paket='+pkg+'&code='+data.customerCode+'&v='+Date.now());
-    window.location.href=checkoutUrl;
+    // Register account
+    var regRes=await fetch('https://n8n.leolan.net/webhook/kunden-register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    var regData2=await regRes.json();
+    if(!regData2.customerCode)throw new Error(regData2.error||'Registrierung fehlgeschlagen.');
+    localStorage.setItem('customerCode',regData2.customerCode);
+    localStorage.setItem('token',regData2.token||regData2.customerCode);
+    // Get Stripe checkout URL
+    var chkRes=await fetch('https://n8n.leolan.net/webhook/stripe-checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({},payload,{customerCode:regData2.customerCode,customerEmail:payload.email}))});
+    var chkText=await chkRes.text();
+    var chkData={};try{chkData=JSON.parse(chkText);}catch(e){}
+    var url=chkData.url||chkData.checkoutUrl||(chkData.data&&chkData.data.url);
+    if(url&&url.startsWith('http')){
+      window.location.href=url;
+    } else {
+      // Fallback: show success with code
+      btn.textContent='✓ Konto erstellt!';
+      s.className='status';s.style.display='block';s.style.background='rgba(35,134,54,.15)';s.style.color='#3fb950';
+      s.textContent='Ihr Kundencode: '+regData2.customerCode+' — Wir melden uns per WhatsApp für die Einrichtung.';
+    }
   }catch(e){
     s.className='status err';s.textContent='Fehler: '+e.message;
-    btn.disabled=false;btn.textContent='💳 Weiter zur Zahlung';
+    btn.disabled=false;btn.textContent='💳 Jetzt bezahlen';
   }
 }
 </script>
