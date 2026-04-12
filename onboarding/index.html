@@ -213,8 +213,8 @@ function go1(){
     '<div class="sum-total">'+
     '<div class="sum-total-row"><span style="color:#8b949e">Monatlich (Paket)</span><span>'+monthly+'€ / Monat</span></div>'+
     '<div class="sum-total-row"><span style="color:#8b949e">Setup-Gebühr (einmalig)</span><span>'+setup+'€</span></div>'+
-    '<div class="sum-total-row"><span style="color:#8b949e">MwSt. '+(reverseCharge?'0% (Reverse Charge)':'19%')+'</span><span>'+vat+'€ / '+(reverseCharge?'0':''+vatSetup)+'€</span></div>'+
-    '<div class="sum-total-row big"><span>Gesamt heute</span><span>'+(monthly+vat+setup+vatSetup)+'€</span></div>'+
+    '<div class="sum-total-row"><span style="color:#8b949e">MwSt. '+(reverseCharge?'0% (Reverse Charge)':'19%')+'</span><span>'+vat.toFixed(2)+'€ / '+(reverseCharge?'0.00':vatSetup.toFixed(2))+'€</span></div>'+
+    '<div class="sum-total-row big"><span>Gesamt heute</span><span>'+(Math.round((monthly+vat+setup+vatSetup)*100)/100).toFixed(2)+'€</span></div>'+
     '</div>';
   show(2);
 }
@@ -254,7 +254,7 @@ var chkPayload=Object.assign({},fdata,{
   netTotal:pkgInfo.amount+349,
   vatRate:vatRate,
   vatAmount:vatAmount,
-  grossTotal:pkgInfo.amount+349+(reverseCharge?0:Math.round((pkgInfo.amount+349)*0.19*100)/100), reverseCharge:false,
+  grossTotal:Math.round((pkgInfo.amount+349+(reverseCharge?0:Math.round((pkgInfo.amount+349)*0.19*100)/100))*100)/100, reverseCharge:false,
   reverseCharge:reverseCharge,
   selectedPackage:fdata.package,
   successUrl:'https://ki.leolan.net/danke/',
