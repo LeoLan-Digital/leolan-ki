@@ -878,7 +878,7 @@
           </div>
           <div class="field full">
             <label for="companyVatId">USt-ID (optional, für Reverse Charge)</label>
-            <input id="companyVatId" type="text" placeholder="DE123456789" oninput="if(typeof updateBookingSummary==='function')updateBookingSummary()" />
+            <input id="companyVatId" type="text" placeholder="DE123456789" oninput="this.value=this.value.toUpperCase();if(typeof updateBookingSummary==='function')updateBookingSummary()" />
           </div>
         <div class="summary-box">
           <h4>Zusammenfassung</h4>
@@ -1235,7 +1235,7 @@
         vatAmount: reverseCharge ? 0 : Math.round(monthlyTotal * 0.19 * 100) / 100,
         paket: 'enterprise',
         priceIds: [STRIPE_PRICE_ID],
-        reverseCharge: false,
+        reverseCharge: (document.getElementById('companyVatId')?.value.trim() || '').length > 3,
         whatsappNumber: billingPhone,
         phone: billingPhone,
         address: billingStreet,
