@@ -842,7 +842,10 @@
               <button class="eye-btn" id="togglePasswordBtn" type="button" aria-label="Passwort anzeigen">👁️</button>
             </div>
           </div>
-          <h4 style="color:#f5a623;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin:16px 0 12px">Rechnungsdaten</h4>
+          
+        </div>
+
+        <h4 style="color:#f5a623;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin:16px 0 12px">Rechnungsdaten</h4>
           <div class="field full">
             <label for="companyName">Firmenname / Restaurant *</label>
             <input id="companyName" type="text" placeholder="Muster Restaurant GmbH" required />
@@ -869,8 +872,6 @@
             <label for="companyVatId">USt-ID (optional, für Reverse Charge)</label>
             <input id="companyVatId" type="text" placeholder="DE123456789" />
           </div>
-        </div>
-
         <div class="summary-box">
           <h4>Zusammenfassung</h4>
           <div class="summary-modules" id="bookingModules"></div>
@@ -893,7 +894,7 @@
           </label>
           <label class="legal-check">
             <input type="checkbox" id="checkAbo" required>
-            <span>Ich stimme dem Abonnement zu (Mindestlaufzeit 12 Monate, monatlich kündbar danach) *</span>
+            <span>Ich stimme dem Abonnement zu (monatlich kündbar) *</span>
           </label>
         </div>
 
