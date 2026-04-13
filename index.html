@@ -1095,7 +1095,7 @@
     msg.className = 'chatbot-message ' + sender;
     // Check if message contains booking intent - add button
     var lc = text.toLowerCase();
-    var isIndividual = lc.includes('individual') || lc.includes('enterprise') || lc.includes('modul') || lc.includes('499') || lc.includes('89') || lc.includes('whatsapp ki-bot') || lc.includes('instagram auto') || lc.includes('einzeln');
+    var isIndividual = lc.includes('individual') || lc.includes('individuell') || lc.includes('enterprise') || lc.includes('modul') || lc.includes('499') || lc.includes('89€') || lc.includes('whatsapp ki-bot') || lc.includes('instagram auto') || lc.includes('einzeln') || lc.includes('einzelne');
     var isPro = lc.includes('349') || lc.includes('pro-paket') || lc.includes('pro paket');
     var isStarter = lc.includes('199') || lc.includes('starter');
     var hasBooking = sender === 'bot' && (lc.includes('buchen') || lc.includes('onboarding') || lc.includes('paket') || lc.includes('199') || lc.includes('349') || lc.includes('499') || lc.includes('ki.leolan.net'));
