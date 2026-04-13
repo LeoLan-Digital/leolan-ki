@@ -96,13 +96,13 @@ h1{font-size:clamp(1.8rem,7vw,2.4rem);line-height:1.05;margin:18px 0 10px;color:
         <small>Nur diesen Monat</small>
       </div>
     </label>
-    <label class="choice-card" id="choiceMonthly">
-      <input type="radio" name="billing" value="monthly" style="display:none">
+    <label class="choice-card" id="choiceYearly">
+      <input type="radio" name="billing" value="yearly" style="display:none">
       <div class="choice-inner">
         <span style="font-size:20px">🔁</span>
-        <strong>Monatlich</strong>
+        <strong>Jährlich</strong>
         <span id="priceMonthly" style="color:#f5a623;font-weight:800;font-size:15px"></span>
-        <small>Automatisch · mind. 3 Monate</small>
+        <small>12× Monate · 15% gespart</small>
       </div>
     </label>
   </div>
@@ -215,7 +215,7 @@ $('buyBtn').addEventListener('click',startCheckout);
 })();
 
 // Billing choice
-const MONTHLY_DISCOUNT = 1.0; // same price, 3 month minimum
+const YEARLY_DISCOUNT = 0.85; // 15% off for yearly (12 months)
 document.querySelectorAll('.choice-card').forEach(card => {
   card.addEventListener('click', () => {
     document.querySelectorAll('.choice-card').forEach(c => c.classList.remove('active'));
@@ -226,10 +226,11 @@ document.querySelectorAll('.choice-card').forEach(card => {
 });
 
 function updateBuyButton() {
-  const isMonthly = document.querySelector('input[name="billing"]:checked')?.value === 'monthly';
+  const isYearly = document.querySelector('input[name="billing"]:checked')?.value === 'yearly';
   const addon = ADDONS[addonId];
   if (!addon) return;
-  const price = isMonthly ? Math.round(addon.price * MONTHLY_DISCOUNT) : addon.price;
+  const isYearly = document.querySelector('input[name="billing"]:checked')?.value === 'yearly';
+  const price = isYearly ? Math.round(addon.price * YEARLY_DISCOUNT * 12) : addon.price;
   document.getElementById('buyBtn').textContent = isMonthly 
     ? `Monatlich abonnieren — ${price}€/Mo`
     : `Einmalig kaufen — ${price}€`;
@@ -242,7 +243,7 @@ window.addEventListener('load', () => {
     const el1 = document.getElementById('priceOnce');
     const el2 = document.getElementById('priceMonthly');
     if (el1) el1.textContent = addon.price + '€';
-    if (el2) el2.textContent = Math.round(addon.price * MONTHLY_DISCOUNT) + '€/Mo';
+    if (el2) el2.textContent = Math.round(addon.price * YEARLY_DISCOUNT * 12) + '€/Jahr';
     updateBuyButton();
   }
 });
