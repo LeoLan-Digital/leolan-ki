@@ -1120,6 +1120,31 @@
     return 'Das ist eine gute Frage! 🤔 Ich leite das an unser Team weiter und Sie bekommen in Kürze eine Antwort. Alternativ: info@leolan.net';
   }
 
+  var chatHistory = [];
+
+  async function getBotReplyAsync(message) {
+    try {
+      var controller = new AbortController();
+      var tid = setTimeout(function(){ controller.abort(); }, 20000);
+      var resp = await fetch('https://n8n.leolan.net/webhook/onboarding-chat', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({message: message, moduleKey: 'website-demo', history: chatHistory}),
+        signal: controller.signal
+      });
+      clearTimeout(tid);
+      var data = await resp.json();
+      var reply = data.reply || data.message || data.text || 'Ich bin gleich für Sie da!';
+      chatHistory.push({role:'user', content: message});
+      chatHistory.push({role:'assistant', content: reply});
+      if (chatHistory.length > 16) chatHistory = chatHistory.slice(-16);
+      return reply;
+    } catch(e) {
+      if (e.name === 'AbortError') return 'Kurze Pause — bitte nochmal senden! 🙏';
+      return 'Entschuldigung, technischer Fehler. Bitte nochmal versuchen!';
+    }
+  }
+
   async function openChatbot() {
     chatbotModal.classList.add('open');
     chatbotModal.setAttribute('aria-hidden', 'false');
