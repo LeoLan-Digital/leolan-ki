@@ -826,20 +826,48 @@
       </div>
       <div class="modal-body">
         <div class="field-grid">
+          <h4 style="color:#f5a623;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin:0 0 12px">Kundenkonto</h4>
           <div class="field full">
-            <label for="customerName">Vorname + Nachname</label>
-            <input id="customerName" type="text" autocomplete="name" placeholder="Max Mustermann" />
+            <label for="customerName">Vorname + Nachname *</label>
+            <input id="customerName" type="text" autocomplete="name" placeholder="Max Mustermann" required />
           </div>
           <div class="field full">
-            <label for="customerEmail">E-Mail</label>
-            <input id="customerEmail" type="email" autocomplete="email" placeholder="name@firma.de" />
+            <label for="customerEmail">E-Mail (für Kundenkonto) *</label>
+            <input id="customerEmail" type="email" autocomplete="email" placeholder="name@firma.de" required />
           </div>
           <div class="field full">
-            <label for="customerPassword">Passwort</label>
+            <label for="customerPassword">Passwort für Manager App *</label>
             <div class="password-wrap">
-              <input id="customerPassword" type="password" autocomplete="new-password" placeholder="Mindestens 8 Zeichen" />
+              <input id="customerPassword" type="password" autocomplete="new-password" placeholder="Mindestens 8 Zeichen" required />
               <button class="eye-btn" id="togglePasswordBtn" type="button" aria-label="Passwort anzeigen">👁️</button>
             </div>
+          </div>
+          <h4 style="color:#f5a623;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin:16px 0 12px">Rechnungsdaten</h4>
+          <div class="field full">
+            <label for="companyName">Firmenname / Restaurant *</label>
+            <input id="companyName" type="text" placeholder="Muster Restaurant GmbH" required />
+          </div>
+          <div class="field full">
+            <label for="companyStreet">Straße + Hausnummer *</label>
+            <input id="companyStreet" type="text" placeholder="Musterstraße 1" required />
+          </div>
+          <div class="field" style="display:grid;grid-template-columns:1fr 2fr;gap:10px">
+            <div>
+              <label for="companyZip">PLZ *</label>
+              <input id="companyZip" type="text" placeholder="01234" required />
+            </div>
+            <div>
+              <label for="companyCity">Stadt *</label>
+              <input id="companyCity" type="text" placeholder="Dresden" required />
+            </div>
+          </div>
+          <div class="field full">
+            <label for="companyPhone">Telefon / WhatsApp *</label>
+            <input id="companyPhone" type="tel" placeholder="+49 151 23456789" required />
+          </div>
+          <div class="field full">
+            <label for="companyVatId">USt-ID (optional, für Reverse Charge)</label>
+            <input id="companyVatId" type="text" placeholder="DE123456789" />
           </div>
         </div>
 
