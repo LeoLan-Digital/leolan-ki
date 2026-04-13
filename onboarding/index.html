@@ -294,27 +294,5 @@ var chkRes=await fetch('https://n8n.leolan.net/webhook/stripe-checkout',{method:
   }
 }
 spkg(pkg);</script>
-<script>
-// Update legal note based on selected package
-document.addEventListener('DOMContentLoaded', function() {
-  function updateLegalNote() {
-    var note = document.getElementById('legalNote');
-    if (!note) return;
-    var proPkg = document.querySelector('[data-pkg="pro"]') || document.querySelector('input[value="pro"]');
-    var proSelected = false;
-    document.querySelectorAll('[data-pkg]').forEach(function(el) {
-      if (el.getAttribute('data-pkg') === 'pro' && (el.classList.contains('active') || el.classList.contains('selected') || el.getAttribute('aria-selected') === 'true')) {
-        proSelected = true;
-      }
-    });
-    if (proSelected) {
-      note.textContent = 'Alle Preise zzgl. MwSt. · Monatlich kündbar · + 349€ einmalige Setup-Gebühr';
-    } else {
-      note.textContent = 'Alle Preise zzgl. MwSt. · 12 Monate Mindestlaufzeit · + 349€ einmalige Setup-Gebühr';
-    }
-  }
-  document.addEventListener('click', updateLegalNote);
-  updateLegalNote();
-});
-</script></body>
+</body>
 </html>
