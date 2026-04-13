@@ -102,7 +102,7 @@ body{background:#0d1117;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFo
         <div class="pkg on" data-pkg="starter" onclick="spkg('starter')"><div class="chk">✓</div><div class="pkg-badge">🔥 Beliebt</div><div class="pkg-name">Starter</div><div class="pkg-price">199€ <span>/ Monat</span></div><div class="pkg-desc">WhatsApp-Bot, Reservierungen, 500 Nachrichten/Monat</div></div>
         <div class="pkg" data-pkg="pro" onclick="spkg('pro')"><div class="chk">✓</div><div class="pkg-name">Pro</div><div class="pkg-price">349€ <span>/ Monat</span></div><div class="pkg-desc">Alles aus Starter + Social Media, 2.000 Nachrichten/Monat</div></div>
       </div>
-      <p style="color:#484f58;font-size:.78rem;margin-top:10px">Alle Preise zzgl. MwSt. · 12 Monate Mindestlaufzeit · + 349€ einmalige Setup-Gebühr</p>
+      <p id="legalNote" style="color:#484f58;font-size:.78rem;margin-top:10px">Alle Preise zzgl. MwSt. · 12 Monate Mindestlaufzeit · + 349€ einmalige Setup-Gebühr</p>
     </div>
     <!-- Konto -->
     <div class="card">
@@ -168,7 +168,7 @@ body{background:#0d1117;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFo
 var urlPkg=new URLSearchParams(window.location.search).get('paket'); var pkg=urlPkg==='pro'?'pro':'starter';
 var fdata={};
 function tpw(id,btn){var i=document.getElementById(id);if(i.type==='password'){i.type='text';btn.textContent='Verbergen';}else{i.type='password';btn.textContent='Zeigen';}}
-function spkg(p){pkg=p;document.querySelectorAll('.pkg').forEach(function(c){c.classList.remove('on')});document.querySelector('[data-pkg="'+p+'"]').classList.add('on');}
+function spkg(p){pkg=p;document.querySelectorAll('.pkg').forEach(function(c){c.classList.remove('on');var note=document.getElementById('legalNote');if(note)note.textContent=p==='pro'?'Alle Preise zzgl. MwSt. · Monatlich kündbar · + 349€ einmalige Setup-Gebühr':'Alle Preise zzgl. MwSt. · 12 Monate Mindestlaufzeit · + 349€ einmalige Setup-Gebühr';});document.querySelector('[data-pkg="'+p+'"]').classList.add('on');}
 function setErr(id,has){var f=document.getElementById('fe-'+id);if(f)f.classList.toggle('bad',has);}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');}
 function go1(){
@@ -293,5 +293,27 @@ var chkRes=await fetch('https://n8n.leolan.net/webhook/stripe-checkout',{method:
   }
 }
 spkg(pkg);</script>
-</body>
+<script>
+// Update legal note based on selected package
+document.addEventListener('DOMContentLoaded', function() {
+  function updateLegalNote() {
+    var note = document.getElementById('legalNote');
+    if (!note) return;
+    var proPkg = document.querySelector('[data-pkg="pro"]') || document.querySelector('input[value="pro"]');
+    var proSelected = false;
+    document.querySelectorAll('[data-pkg]').forEach(function(el) {
+      if (el.getAttribute('data-pkg') === 'pro' && (el.classList.contains('active') || el.classList.contains('selected') || el.getAttribute('aria-selected') === 'true')) {
+        proSelected = true;
+      }
+    });
+    if (proSelected) {
+      note.textContent = 'Alle Preise zzgl. MwSt. · Monatlich kündbar · + 349€ einmalige Setup-Gebühr';
+    } else {
+      note.textContent = 'Alle Preise zzgl. MwSt. · 12 Monate Mindestlaufzeit · + 349€ einmalige Setup-Gebühr';
+    }
+  }
+  document.addEventListener('click', updateLegalNote);
+  updateLegalNote();
+});
+</script></body>
 </html>
