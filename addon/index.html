@@ -84,30 +84,8 @@ h1{font-size:clamp(1.8rem,7vw,2.4rem);line-height:1.05;margin:18px 0 10px;color:
       </div>
 
       <div class="note">Ihre gespeicherten Rechnungsdaten werden verwendet.</div>
-      <div class="billing-choice" id="billingChoice">
-  <p style="color:#8b949e;font-size:13px;margin:0 0 12px;text-transform:uppercase;letter-spacing:1px;font-weight:700">Zahlungsweise wählen:</p>
-  <div style="display:flex;gap:10px;margin-bottom:20px">
-    <label class="choice-card active" id="choiceOnce">
-      <input type="radio" name="billing" value="once" checked style="display:none">
-      <div class="choice-inner">
-        <span style="font-size:20px">1️⃣</span>
-        <strong>Einmalig</strong>
-        <span id="priceOnce" style="color:#f5a623;font-weight:800;font-size:15px"></span>
-        <small>Nur diesen Monat</small>
-      </div>
-    </label>
-    <label class="choice-card" id="choiceYearly">
-      <input type="radio" name="billing" value="yearly" style="display:none">
-      <div class="choice-inner">
-        <span style="font-size:20px">🔁</span>
-        <strong>Jährlich</strong>
-        <span id="priceMonthly" style="color:#f5a623;font-weight:800;font-size:15px"></span>
-        <small>12× Monate · 15% gespart</small>
-      </div>
-    </label>
-  </div>
-</div>
-<button id="buyBtn" class="btn" type="button">Jetzt kaufen</button>
+      
+<button id="buyBtn" class="btn" type="button">Einmalig kaufen</button>
     </div>
 
     <div id="status" class="status"></div>
@@ -214,15 +192,7 @@ $('buyBtn').addEventListener('click',startCheckout);
   catch(error){setLoading(false);showStatus(error&&error.message?error.message:'Seite konnte nicht geladen werden.','error');$('content').classList.add('hidden');}
 })();
 
-// Billing choice
-const YEARLY_DISCOUNT = 0.85; // 15% off for yearly (12 months)
-document.querySelectorAll('.choice-card').forEach(card => {
-  card.addEventListener('click', () => {
-    document.querySelectorAll('.choice-card').forEach(c => c.classList.remove('active'));
-    card.classList.add('active');
-    card.querySelector('input').checked = true;
-    updateBuyButton();
-  });
+
 });
 
 function updateBuyButton() {
