@@ -211,7 +211,7 @@
   .chatbot-modal.open { display: flex; }
   @supports (-webkit-touch-callout: none) { .chatbot-window { max-height: 70vh; } }
   .chatbot-modal.open { display: flex; }
-  .chatbot-window { width: min(390px, 100%); height: min(650px, calc(100vh - 48px)); background: linear-gradient(180deg, #17212b 0%, #0d1117 100%); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; overflow: hidden; box-shadow: 0 30px 90px rgba(0,0,0,0.55); display: flex; flex-direction: column; }
+  .chatbot-window { width: min(390px, 100%); height: min(460px, calc(100vh - 120px)); background: linear-gradient(180deg, #17212b 0%, #0d1117 100%); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; overflow: hidden; box-shadow: 0 30px 90px rgba(0,0,0,0.55); display: flex; flex-direction: column; }
   .chatbot-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 20px; background: rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.08); }
   .chatbot-title { display: flex; align-items: center; gap: 12px; }
   .chatbot-avatar { width: 42px; height: 42px; border-radius: 50%; background: #f5a623; color: #0d1117; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; }
@@ -225,7 +225,7 @@
   .chatbot-message small { display: block; margin-top: 6px; font-size: 11px; color: rgba(255,255,255,0.5); }
   .chatbot-input-wrap { padding: 16px; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(10,14,20,0.9); }
   .chatbot-form { display: flex; gap: 10px; }
-  .chatbot-form input { flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.09); color: #fff; border-radius: 999px; padding: 13px 16px; font-size: 14px; outline: none; }
+  .chatbot-form { gap: 8px; } .chatbot-form input { flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.09); color: #fff; border-radius: 999px; padding: 13px 16px; font-size: 14px; outline: none; }
   .chatbot-form input::placeholder { color: rgba(245,245,247,0.38); }
   .chatbot-form button { background: #f5a623; color: #0d1117; border: none; border-radius: 999px; padding: 0 18px; font-weight: 700; cursor: pointer; }
   .chatbot-hint { margin-top: 10px; font-size: 12px; color: rgba(245,245,247,0.5); text-align: center; }
