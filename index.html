@@ -1120,12 +1120,13 @@
     return 'Das ist eine gute Frage! 🤔 Ich leite das an unser Team weiter und Sie bekommen in Kürze eine Antwort. Alternativ: info@leolan.net';
   }
 
-  function openChatbot() {
+  async function openChatbot() {
     chatbotModal.classList.add('open');
     chatbotModal.setAttribute('aria-hidden', 'false');
     if (!chatbotSeeded) {
-      appendChatMessage('Hallo! Ich bin der LeoLan KI-Assistent. Wie kann ich helfen?', 'bot');
       chatbotSeeded = true;
+      var greeting = await getBotReplyAsync('__start__');
+      appendChatMessage(greeting, 'bot');
     }
     setTimeout(function(){ chatbotInput.focus(); }, 80);
   }
@@ -1141,13 +1142,25 @@
     chatbotModal.addEventListener('click', function(e) {
       if (e.target === chatbotModal) closeChatbot();
     });
-    chatbotForm.addEventListener('submit', function(e) {
+    chatbotForm.addEventListener('submit', async function(e) {
       e.preventDefault();
       var value = chatbotInput.value.trim();
       if (!value) return;
       appendChatMessage(value.replace(/</g, '&lt;').replace(/>/g, '&gt;'), 'user');
       chatbotInput.value = '';
-      setTimeout(function(){ appendChatMessage(getBotReply(value), 'bot'); }, 450);
+      chatbotInput.disabled = true;
+      var typing = document.createElement('div');
+      typing.className = 'chatbot-message bot';
+      typing.id = 'typing-indicator';
+      typing.innerHTML = '<em>tippt...</em>';
+      chatbotMessages.appendChild(typing);
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+      var reply = await getBotReplyAsync(value);
+      var el = document.getElementById('typing-indicator');
+      if (el) el.remove();
+      appendChatMessage(reply, 'bot');
+      chatbotInput.disabled = false;
+      chatbotInput.focus();
     });
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape' && chatbotModal.classList.contains('open')) closeChatbot();
