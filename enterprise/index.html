@@ -153,6 +153,12 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSy
       </div>
       <div class="grid-2">
         <div class="field" id="field-email"><label>E-Mail*</label><input id="email" type="email" placeholder="kontakt@firma.de"></div>
+<div class="field"><label>Passwort für Manager App *</label>
+<div style="position:relative"><input id="password" type="password" placeholder="Min. 8 Zeichen" required minlength="8" style="padding-right:40px;width:100%">
+<span onclick="var i=document.getElementById('password');i.type=i.type=='password'?'text':'password'" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:16px">👁</span></div></div>
+<div class="field"><label>Passwort bestätigen *</label>
+<div style="position:relative"><input id="passwordConfirm" type="password" placeholder="Wiederholen" required minlength="8" style="padding-right:40px;width:100%">
+<span onclick="var i=document.getElementById('passwordConfirm');i.type=i.type=='password'?'text':'password'" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:16px">👁</span></div></div>
         <div class="field" id="field-whatsappNumber"><label>Telefon / WhatsApp*</label><input id="whatsappNumber" type="tel" placeholder="+49 151 23456789"></div>
       </div>
       <div class="grid-2">
