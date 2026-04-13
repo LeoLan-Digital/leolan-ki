@@ -1087,7 +1087,7 @@
     var msg = document.createElement('div');
     msg.className = 'chatbot-message ' + sender;
     // Check if message contains booking intent - add button
-    var hasBooking = sender === 'bot' && (text.toLowerCase().includes('buchen') || text.toLowerCase().includes('onboarding') || text.toLowerCase().includes('enterprise') || text.toLowerCase().includes('starter') || text.toLowerCase().includes('ki.leolan.net'));
+    var hasBooking = sender === 'bot' && (text.toLowerCase().includes('buchen') || text.toLowerCase().includes('onboarding') || text.toLowerCase().includes('enterprise') || text.toLowerCase().includes('starter') || text.toLowerCase().includes('ki.leolan.net') || text.toLowerCase().includes('paket') || text.toLowerCase().includes('buchungsprozess') || text.toLowerCase().includes('199') || text.toLowerCase().includes('349'));
     var btnHtml = hasBooking ? '<div style="margin-top:10px"><a href="https://ki.leolan.net/onboarding/" target="_blank" style="display:inline-block;background:#f5a623;color:#000;font-weight:800;font-size:13px;padding:10px 18px;border-radius:10px;text-decoration:none;">🚀 Jetzt buchen →</a></div>' : '';
     msg.innerHTML = text + btnHtml + '<small>' + chatbotTime() + '</small>';
     chatbotMessages.appendChild(msg);
