@@ -1093,16 +1093,31 @@
 
   function getBotReply(message) {
     var lower = message.toLowerCase();
-    if (lower.includes('reserv') || lower.includes('tisch') || lower.includes('buchen')) {
-      return 'Natürlich! Ich kann Ihnen gerne einen Tisch reservieren. Nennen Sie mir einfach Datum, Uhrzeit und Personenzahl.';
+    if (lower.includes('hi') || lower.includes('hallo') || lower.includes('hey') || lower.includes('guten') || lower.includes('servus') || lower.includes('merhaba') || lower.includes('salut') || lower === '') {
+      return 'Hallo! 👋 Schön dass Sie da sind. Ich bin der LeoLan KI-Assistent. Wie kann ich Ihnen helfen? Fragen Sie mich zum Beispiel nach Reservierungen, Öffnungszeiten oder Preisen!';
     }
-    if (lower.includes('öffnung') || lower.includes('offen') || lower.includes('uhrzeit')) {
-      return 'Wir haben täglich von 11:00 bis 22:00 Uhr geöffnet. Wenn Sie möchten, kann ich direkt eine Reservierung für Sie vorbereiten.';
+    if (lower.includes('danke') || lower.includes('thanks') || lower.includes('teşekkür')) {
+      return 'Gerne! 😊 Ich helfe Ihnen jederzeit weiter.';
     }
-    if (lower.includes('preis') || lower.includes('kosten') || lower.includes('gericht') || lower.includes('menü')) {
-      return 'Unsere Hauptgerichte beginnen ab 12,90€. Gerne sende ich Ihnen auch Empfehlungen oder die passende Speisekarte.';
+    if (lower.includes('wie') && (lower.includes('geht') || lower.includes('bist'))) {
+      return 'Mir geht es bestens, danke! 😄 Ich bin bereit Ihnen zu helfen. Was kann ich für Sie tun?';
     }
-    return 'Das frage ich kurz nach und melde mich gleich bei Ihnen!';
+    if (lower.includes('reserv') || lower.includes('tisch') || lower.includes('buchen') || lower.includes('termin')) {
+      return 'Natürlich! Ich kann Ihnen gerne einen Tisch reservieren. Nennen Sie mir einfach Datum, Uhrzeit und Personenzahl — ich kümmere mich darum! 📅';
+    }
+    if (lower.includes('öffnung') || lower.includes('offen') || lower.includes('uhrzeit') || lower.includes('wann')) {
+      return 'Wir haben täglich von 11:00 bis 22:00 Uhr geöffnet. 🕐 Möchten Sie direkt einen Tisch reservieren?';
+    }
+    if (lower.includes('preis') || lower.includes('kosten') || lower.includes('gericht') || lower.includes('menü') || lower.includes('essen')) {
+      return 'Unsere Hauptgerichte beginnen ab 12,90€. 🍽️ Soll ich Ihnen unsere aktuellen Empfehlungen nennen?';
+    }
+    if (lower.includes('whatsapp') || lower.includes('kontakt') || lower.includes('anruf') || lower.includes('telefon')) {
+      return 'Sie können uns jederzeit per WhatsApp erreichen: +49 15678 483700 💬 oder per E-Mail an business@leolan.net';
+    }
+    if (lower.includes('demo') || lower.includes('test') || lower.includes('wie funktioniert')) {
+      return 'Das ist eine Demo unseres KI-Assistenten! In Ihrem Restaurant würde der Bot echte Reservierungen annehmen und Gäste betreuen. Mehr Info unter ki.leolan.net/onboarding 🚀';
+    }
+    return 'Das ist eine gute Frage! 🤔 Ich leite das an unser Team weiter und Sie bekommen in Kürze eine Antwort. Alternativ: business@leolan.net';
   }
 
   function openChatbot() {
