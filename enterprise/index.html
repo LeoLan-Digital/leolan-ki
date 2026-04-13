@@ -652,6 +652,44 @@
     .error { color: var(--danger); }
     .success-message { color: var(--success); }
 
+    .legal-checks {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .legal-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .legal-check input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      accent-color: #f5a623;
+      margin-top: 2px;
+      cursor: pointer;
+    }
+
+    .legal-check span {
+      color: #8b949e;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .legal-check a {
+      color: #f5a623;
+      text-decoration: none;
+    }
+
+    .legal-check a:hover {
+      text-decoration: underline;
+    }
+
     .loading {
       opacity: .7;
       pointer-events: none;
@@ -805,9 +843,24 @@
           </div>
         </div>
 
+        <div class="legal-checks">
+          <label class="legal-check">
+            <input type="checkbox" id="checkAgb" required>
+            <span>Ich akzeptiere die <a href="https://ki.leolan.net/agb/" target="_blank">AGB</a> *</span>
+          </label>
+          <label class="legal-check">
+            <input type="checkbox" id="checkDatenschutz" required>
+            <span>Ich habe die <a href="https://ki.leolan.net/datenschutz/" target="_blank">Datenschutzerklärung</a> gelesen und akzeptiere sie *</span>
+          </label>
+          <label class="legal-check">
+            <input type="checkbox" id="checkAbo" required>
+            <span>Ich stimme dem Abonnement zu (Mindestlaufzeit 12 Monate, monatlich kündbar danach) *</span>
+          </label>
+        </div>
+
         <div class="error" id="bookingError"></div>
         <div class="success-message" id="bookingSuccess"></div>
-        <button class="submit-btn" id="submitBookingBtn" type="button">Jetzt kostenpflichtig bestellen</button>
+        <button class="submit-btn" id="submitBookingBtn" type="button" disabled>Jetzt kostenpflichtig bestellen</button>
       </div>
     </div>
   </div>
@@ -860,6 +913,7 @@
     const customerEmail = document.getElementById('customerEmail');
     const customerPassword = document.getElementById('customerPassword');
     const togglePasswordBtn = document.getElementById('togglePasswordBtn');
+    const legalCheckboxIds = ['checkAgb', 'checkDatenschutz', 'checkAbo'];
 
     const formatCurrency = (value) => `${new Intl.NumberFormat('de-DE', {minimumFractionDigits: 0, maximumFractionDigits: 2}).format(Number(value || 0))}€`;
     const escapeHtml = (value) => String(value ?? '')
@@ -872,6 +926,11 @@
     const getSelectedModuleObjects = () => MODULES.filter((module) => selectedModules.has(module.id));
     const getMonthlyTotal = () => getSelectedModuleObjects().reduce((sum, module) => sum + module.price, 0);
     const generateCustomerCode = () => `K${Math.floor(100000 + Math.random() * 900000)}`;
+    const legalChecksAccepted = () => legalCheckboxIds.every((id) => document.getElementById(id)?.checked);
+
+    function updateBookingButtonState() {
+      submitBookingBtn.disabled = bookingLoading || !legalChecksAccepted();
+    }
 
     function renderModules() {
       modulesGrid.innerHTML = MODULES.map((module) => `
@@ -1044,6 +1103,7 @@
       if (selectedModules.size === 0) return;
       bookingError.textContent = '';
       bookingSuccess.textContent = '';
+      updateBookingButtonState();
       refreshBookingSummary();
       openModal(bookingModal);
       setTimeout(() => customerName.focus(), 60);
@@ -1078,6 +1138,7 @@
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return 'Bitte eine gültige E-Mail eingeben.';
       if (password.length < 8) return 'Bitte ein Passwort mit mindestens 8 Zeichen eingeben.';
       if (selectedModules.size === 0) return 'Bitte zuerst mindestens ein Modul auswählen.';
+      if (!legalChecksAccepted()) return 'Bitte akzeptieren Sie alle Bedingungen';
       return '';
     }
 
@@ -1112,7 +1173,7 @@
       };
 
       bookingLoading = true;
-      submitBookingBtn.disabled = true;
+      updateBookingButtonState();
       bookingModal.querySelector('.modal').classList.add('loading');
       bookingSuccess.textContent = 'Checkout wird vorbereitet...';
 
@@ -1140,7 +1201,7 @@
         bookingError.textContent = 'Checkout konnte gerade nicht erstellt werden. Bitte erneut versuchen.';
       } finally {
         bookingLoading = false;
-        submitBookingBtn.disabled = false;
+        updateBookingButtonState();
         bookingModal.querySelector('.modal').classList.remove('loading');
       }
     }
@@ -1172,6 +1233,16 @@
       const visible = customerPassword.type === 'text';
       customerPassword.type = visible ? 'password' : 'text';
       togglePasswordBtn.textContent = visible ? '👁️' : '🙈';
+    });
+
+    legalCheckboxIds.forEach((id) => {
+      const checkbox = document.getElementById(id);
+      checkbox?.addEventListener('change', () => {
+        if (legalChecksAccepted() && bookingError.textContent === 'Bitte akzeptieren Sie alle Bedingungen') {
+          bookingError.textContent = '';
+        }
+        updateBookingButtonState();
+      });
     });
 
     chatInput.addEventListener('input', () => {
@@ -1206,6 +1277,7 @@
 
     renderModules();
     refreshModuleSelectionState();
+    updateBookingButtonState();
   </script>
 </body>
 </html>
