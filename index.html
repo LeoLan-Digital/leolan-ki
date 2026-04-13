@@ -1148,6 +1148,7 @@
   async function openChatbot() {
     chatbotModal.classList.add('open');
     chatbotModal.setAttribute('aria-hidden', 'false');
+    if (chatbotToggle) chatbotToggle.style.display = 'none';
     if (!chatbotSeeded) {
       chatbotSeeded = true;
       var greeting = await getBotReplyAsync('__start__');
