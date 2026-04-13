@@ -842,6 +842,13 @@
               <button class="eye-btn" id="togglePasswordBtn" type="button" aria-label="Passwort anzeigen">👁️</button>
             </div>
           </div>
+          <div class="field full">
+            <label for="customerPasswordConfirm">Passwort bestätigen *</label>
+            <div class="password-wrap">
+              <input id="customerPasswordConfirm" type="password" autocomplete="new-password" placeholder="Passwort wiederholen" required />
+              <button class="eye-btn" type="button" onclick="var i=document.getElementById('customerPasswordConfirm');i.type=i.type==='password'?'text':'password'" aria-label="Passwort anzeigen">👁️</button>
+            </div>
+          </div>
           
         </div>
 
@@ -1175,6 +1182,10 @@
       const password = customerPassword.value;
 
       if (!name) return 'Bitte Vorname und Nachname eingeben.';
+      const pw = document.getElementById('customerPassword')?.value || '';
+      const pwc = document.getElementById('customerPasswordConfirm')?.value || '';
+      if (pw.length < 8) return 'Passwort muss mindestens 8 Zeichen haben.';
+      if (pw !== pwc) return 'Passwörter stimmen nicht überein.';
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return 'Bitte eine gültige E-Mail eingeben.';
       if (password.length < 8) return 'Bitte ein Passwort mit mindestens 8 Zeichen eingeben.';
       if (selectedModules.size === 0) return 'Bitte zuerst mindestens ein Modul auswählen.';
