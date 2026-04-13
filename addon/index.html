@@ -43,6 +43,11 @@ h1{font-size:clamp(1.8rem,7vw,2.4rem);line-height:1.05;margin:18px 0 10px;color:
 .hidden{display:none!important}
 .footer{color:#484f58;font-size:.75rem;text-align:center;margin-top:22px}
 @keyframes spin{to{transform:rotate(360deg)}}
+  .choice-card { flex: 1; background: #0d1117; border: 2px solid #30363d; border-radius: 14px; padding: 14px; cursor: pointer; transition: border-color 0.2s; }
+  .choice-card.active { border-color: #f5a623; }
+  .choice-card .choice-inner { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
+  .choice-card strong { color: #f0f6fc; font-size: 14px; }
+  .choice-card small { color: #8b949e; font-size: 11px; }
 </style>
 </head>
 <body>
@@ -79,7 +84,30 @@ h1{font-size:clamp(1.8rem,7vw,2.4rem);line-height:1.05;margin:18px 0 10px;color:
       </div>
 
       <div class="note">Ihre gespeicherten Rechnungsdaten werden verwendet.</div>
-      <button id="buyBtn" class="btn" type="button">Jetzt kaufen</button>
+      <div class="billing-choice" id="billingChoice">
+  <p style="color:#8b949e;font-size:13px;margin:0 0 12px;text-transform:uppercase;letter-spacing:1px;font-weight:700">Zahlungsweise wählen:</p>
+  <div style="display:flex;gap:10px;margin-bottom:20px">
+    <label class="choice-card active" id="choiceOnce">
+      <input type="radio" name="billing" value="once" checked style="display:none">
+      <div class="choice-inner">
+        <span style="font-size:20px">1️⃣</span>
+        <strong>Einmalig</strong>
+        <span id="priceOnce" style="color:#f5a623;font-weight:800;font-size:15px"></span>
+        <small>Nur diesen Monat</small>
+      </div>
+    </label>
+    <label class="choice-card" id="choiceMonthly">
+      <input type="radio" name="billing" value="monthly" style="display:none">
+      <div class="choice-inner">
+        <span style="font-size:20px">🔁</span>
+        <strong>Monatlich</strong>
+        <span id="priceMonthly" style="color:#f5a623;font-weight:800;font-size:15px"></span>
+        <small>Automatisch · jederzeit kündbar</small>
+      </div>
+    </label>
+  </div>
+</div>
+<button id="buyBtn" class="btn" type="button">Jetzt kaufen</button>
     </div>
 
     <div id="status" class="status"></div>
@@ -185,6 +213,39 @@ $('buyBtn').addEventListener('click',startCheckout);
   try{await loadCustomer();}
   catch(error){setLoading(false);showStatus(error&&error.message?error.message:'Seite konnte nicht geladen werden.','error');$('content').classList.add('hidden');}
 })();
+
+// Billing choice
+const MONTHLY_DISCOUNT = 0.85; // 15% cheaper for monthly
+document.querySelectorAll('.choice-card').forEach(card => {
+  card.addEventListener('click', () => {
+    document.querySelectorAll('.choice-card').forEach(c => c.classList.remove('active'));
+    card.classList.add('active');
+    card.querySelector('input').checked = true;
+    updateBuyButton();
+  });
+});
+
+function updateBuyButton() {
+  const isMonthly = document.querySelector('input[name="billing"]:checked')?.value === 'monthly';
+  const addon = ADDONS[addonId];
+  if (!addon) return;
+  const price = isMonthly ? Math.round(addon.price * MONTHLY_DISCOUNT) : addon.price;
+  document.getElementById('buyBtn').textContent = isMonthly 
+    ? `Monatlich abonnieren — ${price}€/Mo`
+    : `Einmalig kaufen — ${price}€`;
+}
+
+// Set prices in choice cards
+window.addEventListener('load', () => {
+  const addon = ADDONS[addonId];
+  if (addon) {
+    const el1 = document.getElementById('priceOnce');
+    const el2 = document.getElementById('priceMonthly');
+    if (el1) el1.textContent = addon.price + '€';
+    if (el2) el2.textContent = Math.round(addon.price * MONTHLY_DISCOUNT) + '€/Mo';
+    updateBuyButton();
+  }
+});
 </script>
 </body>
 </html>
