@@ -1200,15 +1200,37 @@
       const subtotal = monthlyTotal + SETUP_FEE;
       const grossTotal = subtotal + (reverseCharge ? 0 : Math.round(subtotal * 0.19 * 100) / 100);
 
+      const billingName = document.getElementById('companyName')?.value.trim() || customerName.value.trim();
+      const billingStreet = document.getElementById('companyStreet')?.value.trim() || '';
+      const billingZip = document.getElementById('companyZip')?.value.trim() || '';
+      const billingCity = document.getElementById('companyCity')?.value.trim() || '';
+      const billingPhone = document.getElementById('companyPhone')?.value.trim() || '';
+      const billingVatId = document.getElementById('companyVatId')?.value.trim() || '';
+
       const payload = {
         customerCode,
         email: customerEmail.value.trim(),
+        customerEmail: customerEmail.value.trim(),
         password: customerPassword.value,
-        companyName: customerName.value.trim(),
-        modules: selectedIds.join(','),
+        companyName: billingName,
+        name: customerName.value.trim(),
+        modules: modules.map(m => ({id: m.id, name: m.name, price: m.price})),
+        moduleNames: modules.map(m => m.name).join(', '),
         grossTotal,
+        monthlyNetTotal: monthlyTotal,
+        setupFeeAmount: SETUP_FEE,
+        vatAmount: reverseCharge ? 0 : Math.round(monthlyTotal * 0.19 * 100) / 100,
         paket: 'enterprise',
-        priceId: STRIPE_PRICE_ID
+        priceIds: [STRIPE_PRICE_ID],
+        reverseCharge: false,
+        whatsappNumber: billingPhone,
+        phone: billingPhone,
+        address: billingStreet,
+        zipCode: billingZip,
+        city: billingCity,
+        vatId: billingVatId,
+        successUrl: 'https://ki.leolan.net/danke/?code=' + customerCode,
+        cancelUrl: 'https://ki.leolan.net/enterprise/'
       };
 
       bookingLoading = true;
