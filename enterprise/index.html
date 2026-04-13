@@ -878,7 +878,7 @@
           </div>
           <div class="field full">
             <label for="companyVatId">USt-ID (optional, für Reverse Charge)</label>
-            <input id="companyVatId" type="text" placeholder="DE123456789" />
+            <input id="companyVatId" type="text" placeholder="DE123456789" oninput="if(typeof updateBookingSummary==='function')updateBookingSummary()" />
           </div>
         <div class="summary-box">
           <h4>Zusammenfassung</h4>
@@ -1160,7 +1160,7 @@
     function refreshBookingSummary() {
       const modules = getSelectedModuleObjects();
       const monthlyTotal = getMonthlyTotal();
-      const reverseCharge = false;
+      const reverseCharge = (document.getElementById('companyVatId')?.value.trim() || '').length > 3;
       const subtotal = monthlyTotal + SETUP_FEE;
       const vat = reverseCharge ? 0 : Math.round(subtotal * VAT_RATE * 100) / 100;
       const grossTotal = subtotal + vat;
@@ -1208,7 +1208,7 @@
       const modules = getSelectedModuleObjects();
       const selectedIds = modules.map((module) => module.id);
       const monthlyTotal = getMonthlyTotal();
-      const reverseCharge = false;
+      const reverseCharge = (document.getElementById('companyVatId')?.value.trim() || '').length > 3;
       const customerCode = generateCustomerCode();
       const subtotal = monthlyTotal + SETUP_FEE;
       const grossTotal = subtotal + (reverseCharge ? 0 : Math.round(subtotal * 0.19 * 100) / 100);
