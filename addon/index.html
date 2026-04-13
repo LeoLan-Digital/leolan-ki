@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>LeoLan Digital – Add-on kaufen</title>
+<style>
+:root{--bg:#0d1117;--surface:#161b22;--surface-2:#11161d;--border:#30363d;--text:#e6edf3;--muted:#8b949e;--orange:#f5a623;--orange-2:#ffbe55;--danger:#f85149;--success:#3fb950}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:radial-gradient(circle at top,rgba(245,166,35,.10),transparent 28%),var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh}
+.header{background:#0d1117;border-bottom:1px solid #21262d;position:sticky;top:0;z-index:20;padding:12px 20px;text-align:center}
+.header a{display:inline-block}
+.header img{width:56px;height:56px;border-radius:16px;border:0}
+.shell{max-width:560px;margin:0 auto;padding:28px 16px 72px}
+.card{background:linear-gradient(180deg,var(--surface),var(--surface-2));border:1px solid var(--border);border-radius:22px;padding:28px 20px;box-shadow:0 24px 60px rgba(0,0,0,.28)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(245,166,35,.10);border:1px solid rgba(245,166,35,.22);border-radius:999px;padding:8px 12px;color:#ffd48a;font-size:.78rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--orange)}
+h1{font-size:clamp(1.8rem,7vw,2.4rem);line-height:1.05;margin:18px 0 10px;color:#fff}
+.sub{color:var(--muted);font-size:.98rem;line-height:1.6;margin-bottom:24px}
+.box{background:#0d1117;border:1px solid #21262d;border-radius:18px;padding:16px;margin-bottom:14px}
+.label{color:var(--muted);font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.customer{display:flex;flex-direction:column;gap:4px}
+.customer-name{font-size:1.2rem;font-weight:800;color:#f0f6fc}
+.customer-company{color:var(--muted);font-size:.95rem}
+.addon-name{font-size:1.15rem;font-weight:800;color:#fff}
+.addon-desc{color:var(--muted);font-size:.94rem;line-height:1.5;margin-top:6px}
+.row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #21262d;font-size:.94rem}
+.row:last-child{border-bottom:none;padding-bottom:0}
+.row:first-child{padding-top:0}
+.row .k{color:var(--muted)}
+.row .v{color:#fff;font-weight:700;text-align:right}
+.note{color:var(--muted);font-size:.84rem;line-height:1.5;text-align:center;margin:16px 0 18px}
+.btn{width:100%;border:0;border-radius:14px;padding:17px 18px;background:linear-gradient(135deg,var(--orange),var(--orange-2));color:#111;font-size:1.03rem;font-weight:900;cursor:pointer;box-shadow:0 16px 28px rgba(245,166,35,.22);transition:transform .18s ease,opacity .18s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.status{margin-top:14px;padding:12px 14px;border-radius:12px;font-size:.9rem;line-height:1.45;display:none}
+.status.show{display:block}.status.error{background:rgba(248,81,73,.12);color:var(--danger);border:1px solid rgba(248,81,73,.18)}.status.ok{background:rgba(63,185,80,.12);color:var(--success);border:1px solid rgba(63,185,80,.18)}
+.loader{display:inline-flex;align-items:center;gap:10px;color:var(--muted);font-size:.92rem;margin-bottom:18px}
+.spinner{width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,.16);border-top-color:var(--orange);animation:spin .8s linear infinite}
+.hidden{display:none!important}
+.footer{color:#484f58;font-size:.75rem;text-align:center;margin-top:22px}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="header">
+  <a href="https://ki.leolan.net/"><img src="https://ki.leolan.net/leolan-logo.png" alt="LeoLan"></a>
+</div>
+
+<div class="shell">
+  <div class="card">
+    <div class="eyebrow"><span class="dot"></span> LeoLan Add-on Checkout</div>
+    <h1>Bestätigen &amp; Bezahlen</h1>
+    <p class="sub">Ihr Add-on ist bereits Ihrem Kundenkonto zugeordnet. Es sind keine weiteren Eingaben nötig.</p>
+
+    <div id="loading" class="loader"><span class="spinner"></span><span>Kundendaten werden geladen…</span></div>
+
+    <div id="content" class="hidden">
+      <div class="box">
+        <div class="label">Kundenkonto</div>
+        <div class="customer">
+          <div class="customer-name" id="customerName">—</div>
+          <div class="customer-company" id="customerCompany">—</div>
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="label">Gewähltes Add-on</div>
+        <div class="addon-name" id="addonName">—</div>
+        <div class="addon-desc" id="addonDesc">—</div>
+        <div style="margin-top:14px">
+          <div class="row"><span class="k">Preis netto</span><span class="v" id="priceNet">—</span></div>
+          <div class="row"><span class="k">MwSt.</span><span class="v" id="priceVat">—</span></div>
+          <div class="row"><span class="k">Gesamt</span><span class="v" id="priceGross">—</span></div>
+        </div>
+      </div>
+
+      <div class="note">Ihre gespeicherten Rechnungsdaten werden verwendet.</div>
+      <button id="buyBtn" class="btn" type="button">Jetzt kaufen</button>
+    </div>
+
+    <div id="status" class="status"></div>
+  </div>
+  <div class="footer">© 2026 LeoLan Digital · business@leolan.net</div>
+</div>
+
+<script>
+const ADDONS={
+  msg_1000:{name:'1.000 Nachrichten',price:29,desc:'+1.000 WhatsApp-Nachrichten für diesen Monat'},
+  msg_2000:{name:'2.000 Nachrichten',price:49,desc:'+2.000 WhatsApp-Nachrichten für diesen Monat'},
+  msg_20000:{name:'20.000 Nachrichten',price:299,desc:'+20.000 WhatsApp-Nachrichten — ideal für Stoßzeiten'}
+};
+const DASHBOARD_URL='https://n8n.leolan.net/webhook/kunden-dashboard';
+const CHECKOUT_URL='https://n8n.leolan.net/webhook/stripe-checkout';
+const STRIPE_PRICE_ID='price_1TL0yYLwGb6me8PhNJaI5B0d';
+
+const qs=new URLSearchParams(window.location.search);
+const customerCode=(qs.get('code')||'').trim();
+const addonId=(qs.get('addon')||'').trim();
+const addon=ADDONS[addonId];
+let customerData=null;
+
+const $=id=>document.getElementById(id);
+const fmt=(value)=>new Intl.NumberFormat('de-DE',{minimumFractionDigits:0,maximumFractionDigits:2}).format(Number(value||0))+'€';
+function showStatus(message,type){const el=$('status');el.textContent=message;el.className='status show '+(type||'error');}
+function setLoading(on){$('loading').classList.toggle('hidden',!on);$('content').classList.toggle('hidden',on);}
+function pick(obj,keys){for(const key of keys){const value=obj&&obj[key];if(value!==undefined&&value!==null&&String(value).trim()!=='')return String(value).trim();}return '';}
+function readCustomer(payload){
+  const root=(payload&&typeof payload==='object')?payload:{};
+  const source=root.customer||root.data||root.kunde||root.result||root;
+  const name=pick(source,['name','customerName','fullName','ansprechpartner','contactName'])||pick(root,['name','customerName']);
+  const company=pick(source,['companyName','company','firma','restaurantName','restaurant','businessName'])||pick(root,['companyName','company','firma']);
+  const email=pick(source,['email','customerEmail','mail'])||pick(root,['email','customerEmail']);
+  const vatId=pick(source,['vatId','ustId','uid','taxId'])||pick(root,['vatId','ustId','uid','taxId']);
+  return {name:name||'LeoLan Kunde',company:company||'Unternehmen',email,vatId};
+}
+function render(){
+  const reverseCharge=!!(customerData.vatId&&customerData.vatId.length>3);
+  const vat=reverseCharge?0:Math.round(addon.price*0.19*100)/100;
+  const gross=Math.round((addon.price+vat)*100)/100;
+  $('customerName').textContent=customerData.name;
+  $('customerCompany').textContent=customerData.company;
+  $('addonName').textContent=addon.name;
+  $('addonDesc').textContent=addon.desc;
+  $('priceNet').textContent=fmt(addon.price);
+  $('priceVat').textContent=reverseCharge?'0€ (Reverse Charge)':fmt(vat);
+  $('priceGross').textContent=fmt(gross);
+  $('buyBtn').textContent='Jetzt kaufen - '+fmt(addon.price);
+}
+async function loadCustomer(){
+  if(!customerCode) throw new Error('Kein Kundencode übergeben.');
+  if(!addon) throw new Error('Ungültiges Add-on.');
+  const response=await fetch(DASHBOARD_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({customerCode})});
+  if(!response.ok) throw new Error('Kundendaten konnten nicht geladen werden.');
+  const payload=await response.json();
+  customerData=readCustomer(payload);
+  if(!customerData.email) throw new Error('Keine E-Mail im Kundenkonto gefunden.');
+  render();
+  setLoading(false);
+}
+async function startCheckout(){
+  const btn=$('buyBtn');
+  const reverseCharge=!!(customerData.vatId&&customerData.vatId.length>3);
+  const grossTotal=reverseCharge?addon.price:Math.round(addon.price*1.19*100)/100;
+  btn.disabled=true;
+  btn.textContent='Checkout wird vorbereitet…';
+  showStatus('Stripe Checkout wird vorbereitet…','ok');
+  try{
+    const payload={
+      customerCode,
+      email:customerData.email,
+      customerEmail:customerData.email,
+      companyName:customerData.company,
+      name:customerData.name,
+      paket:'addon',
+      addon:addonId,
+      modules:addon.name,
+      addonName:addon.name,
+      addonPrice:addon.price,
+      grossTotal:grossTotal,
+      reverseCharge:reverseCharge,
+      vatId:customerData.vatId||'',
+      priceId:STRIPE_PRICE_ID,
+      successUrl:'https://ki.leolan.net/danke/?code='+encodeURIComponent(customerCode),
+      cancelUrl:'https://ki.leolan.net/addon/?code='+encodeURIComponent(customerCode)+'&addon='+encodeURIComponent(addonId)
+    };
+    const response=await fetch(CHECKOUT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    if(!response.ok) throw new Error('Checkout konnte nicht erstellt werden.');
+    const contentType=response.headers.get('content-type')||'';
+    const result=contentType.includes('application/json')?await response.json():{url:(await response.text()).trim()};
+    const redirectUrl=result.url||result.checkoutUrl||result.data&&result.data.url||result.redirectUrl;
+    if(!redirectUrl||!/^https?:\/\//.test(redirectUrl)) throw new Error('Keine gültige Stripe-URL erhalten.');
+    window.location.href=redirectUrl;
+  }catch(error){
+    btn.disabled=false;
+    btn.textContent='Jetzt kaufen - '+fmt(addon.price);
+    showStatus('Checkout konnte gerade nicht erstellt werden. Bitte erneut versuchen.','error');
+  }
+}
+$('buyBtn').addEventListener('click',startCheckout);
+(async function init(){
+  try{await loadCustomer();}
+  catch(error){setLoading(false);showStatus(error&&error.message?error.message:'Seite konnte nicht geladen werden.','error');$('content').classList.add('hidden');}
+})();
+</script>
+</body>
+</html>
