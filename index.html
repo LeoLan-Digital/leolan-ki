@@ -1134,6 +1134,7 @@
   function closeChatbot() {
     chatbotModal.classList.remove('open');
     chatbotModal.setAttribute('aria-hidden', 'true');
+    if (chatbotToggle) chatbotToggle.style.display = '';
   }
 
   if (chatbotToggle && chatbotModal && chatbotForm && chatbotInput && chatbotMessages) {
