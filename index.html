@@ -181,27 +181,57 @@
   .stars { font-size: 20px; margin-bottom: 24px; letter-spacing: 2px; }
 
   /* PRICING */
-  .pricing { padding: 100px 24px; border-top: 1px solid rgba(255,255,255,0.07); }
-  .pricing-grid { max-width: 940px; margin: 56px auto 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; overflow: hidden; }
+  .pricing { padding: 100px 24px; border-top: 1px solid rgba(255,255,255,0.07); background: linear-gradient(180deg, #0d1117 0%, #111827 100%); }
+  .pricing-grid { max-width: 940px; margin: 56px auto 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
   @media (max-width: 720px) { .pricing-grid { grid-template-columns: 1fr; } }
-  .price-card { background: var(--gray-1); padding: 44px 32px; display: flex; flex-direction: column; }
-  .price-card.featured { background: var(--accent); }
-  .price-badge { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; background: rgba(255,255,255,0.15); border-radius: 6px; padding: 4px 10px; margin-bottom: 16px; color: rgba(255,255,255,0.9); }
-  .price-tier { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 8px; }
-  .price-card.featured .price-tier { color: rgba(255,255,255,0.7); }
-  .price-amount { font-size: 44px; font-weight: 700; letter-spacing: -0.03em; margin: 4px 0; }
-  .price-period { font-size: 13px; color: var(--text-secondary); margin-bottom: 28px; }
-  .price-card.featured .price-period { color: rgba(255,255,255,0.6); }
+  .price-card { background: linear-gradient(180deg, rgba(26,39,68,0.96) 0%, rgba(13,17,23,0.98) 100%); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 44px 32px; display: flex; flex-direction: column; box-shadow: 0 24px 70px rgba(0,0,0,0.35); }
+  .price-card.featured { background: linear-gradient(180deg, rgba(245,166,35,0.22) 0%, rgba(26,39,68,0.98) 38%, rgba(13,17,23,1) 100%); border-color: rgba(245,166,35,0.5); box-shadow: 0 30px 80px rgba(0,0,0,0.45); }
+  .price-badge { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; background: rgba(255,255,255,0.1); border-radius: 999px; padding: 6px 12px; margin-bottom: 16px; color: rgba(255,255,255,0.92); }
+  .price-tier { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(245,245,247,0.72); margin-bottom: 8px; }
+  .price-card.featured .price-tier { color: rgba(245,245,247,0.88); }
+  .price-amount { font-size: 44px; font-weight: 700; letter-spacing: -0.03em; margin: 4px 0; color: #fff; }
+  .price-period { font-size: 13px; color: rgba(245,245,247,0.68); margin-bottom: 28px; }
+  .price-card.featured .price-period { color: rgba(245,245,247,0.76); }
   .price-features { list-style: none; flex: 1; display: flex; flex-direction: column; gap: 10px; }
-  .price-features li { font-size: 14px; color: var(--text-secondary); display: flex; gap: 10px; align-items: flex-start; line-height: 1.4; }
-  .price-card.featured .price-features li { color: rgba(255,255,255,0.85); }
-  .price-features li::before { content: '—'; color: var(--text-tertiary); flex-shrink: 0; font-size: 13px; }
-  .price-card.featured .price-features li::before { color: rgba(255,255,255,0.4); }
-  .price-btn { display: block; text-align: center; margin-top: 28px; padding: 13px 24px; border-radius: 980px; font-size: 15px; font-weight: 500; text-decoration: none; transition: opacity 0.2s; }
-  .price-btn-outline { border: 1px solid rgba(255,255,255,0.2); color: var(--accent-light); }
-  .price-btn-outline:hover { background: rgba(255,255,255,0.05); }
-  .price-btn-white { background: #fff; color: var(--accent); }
-  .price-btn-white:hover { opacity: 0.9; }
+  .price-features li { font-size: 14px; color: rgba(245,245,247,0.82); display: flex; gap: 10px; align-items: flex-start; line-height: 1.4; }
+  .price-card.featured .price-features li { color: rgba(255,255,255,0.9); }
+  .price-features li::before { content: '✓'; color: #f5a623; flex-shrink: 0; font-size: 13px; font-weight: 700; }
+  .price-card.featured .price-features li::before { color: #ffd27a; }
+  .price-btn { display: block; text-align: center; margin-top: 28px; padding: 13px 24px; border-radius: 980px; font-size: 15px; font-weight: 600; text-decoration: none; transition: opacity 0.2s, transform 0.2s, background 0.2s; }
+  .price-btn:hover { transform: translateY(-1px); }
+  .price-btn-outline { border: 1px solid rgba(255,255,255,0.18); color: #fff; background: rgba(255,255,255,0.03); }
+  .price-btn-outline:hover { background: rgba(255,255,255,0.08); }
+  .price-btn-white { background: #f5a623; color: #0d1117; }
+  .price-btn-white:hover { opacity: 0.95; }
+
+  /* CHATBOT DEMO */
+  .chatbot-toggle { position: fixed; right: 24px; bottom: 24px; z-index: 1200; background: #f5a623; color: #0d1117; border: none; border-radius: 999px; padding: 16px 22px; font-size: 15px; font-weight: 700; font-family: var(--font); cursor: pointer; box-shadow: 0 18px 40px rgba(245,166,35,0.35); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+  .chatbot-toggle:hover { transform: translateY(-2px); box-shadow: 0 24px 48px rgba(245,166,35,0.42); }
+  .chatbot-modal { position: fixed; inset: 0; display: none; align-items: flex-end; justify-content: flex-end; padding: 24px; background: rgba(0,0,0,0.55); backdrop-filter: blur(8px); z-index: 1199; }
+  .chatbot-modal.open { display: flex; }
+  .chatbot-window { width: min(390px, 100%); height: min(650px, calc(100vh - 48px)); background: linear-gradient(180deg, #17212b 0%, #0d1117 100%); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; overflow: hidden; box-shadow: 0 30px 90px rgba(0,0,0,0.55); display: flex; flex-direction: column; }
+  .chatbot-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 20px; background: rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .chatbot-title { display: flex; align-items: center; gap: 12px; }
+  .chatbot-avatar { width: 42px; height: 42px; border-radius: 50%; background: #f5a623; color: #0d1117; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; }
+  .chatbot-header strong { display: block; font-size: 15px; }
+  .chatbot-header span { display: block; font-size: 12px; color: rgba(245,245,247,0.6); margin-top: 2px; }
+  .chatbot-close { background: transparent; border: none; color: rgba(245,245,247,0.8); font-size: 24px; line-height: 1; cursor: pointer; }
+  .chatbot-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 18px 18px; }
+  .chatbot-message { max-width: 84%; padding: 12px 14px; border-radius: 18px; font-size: 14px; line-height: 1.5; }
+  .chatbot-message.bot { align-self: flex-start; background: #223243; color: rgba(255,255,255,0.92); border-bottom-left-radius: 6px; }
+  .chatbot-message.user { align-self: flex-end; background: #2b5278; color: #fff; border-bottom-right-radius: 6px; }
+  .chatbot-message small { display: block; margin-top: 6px; font-size: 11px; color: rgba(255,255,255,0.5); }
+  .chatbot-input-wrap { padding: 16px; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(10,14,20,0.9); }
+  .chatbot-form { display: flex; gap: 10px; }
+  .chatbot-form input { flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.09); color: #fff; border-radius: 999px; padding: 13px 16px; font-size: 14px; outline: none; }
+  .chatbot-form input::placeholder { color: rgba(245,245,247,0.38); }
+  .chatbot-form button { background: #f5a623; color: #0d1117; border: none; border-radius: 999px; padding: 0 18px; font-weight: 700; cursor: pointer; }
+  .chatbot-hint { margin-top: 10px; font-size: 12px; color: rgba(245,245,247,0.5); text-align: center; }
+  @media (max-width: 640px) {
+    .chatbot-modal { padding: 12px; }
+    .chatbot-window { width: 100%; height: min(78vh, 640px); border-radius: 20px; }
+    .chatbot-toggle { right: 16px; bottom: 16px; padding: 14px 18px; }
+  }
 
   /* FAQ */
   .faq { padding: 100px 24px; background: var(--gray-1); border-top: 1px solid rgba(255,255,255,0.07); }
@@ -303,42 +333,50 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Was kostet ein WhatsApp Bot für Restaurants?",
+      "name": "Was kostet LeoLan Digital?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Die LeoLan Pakete für Restaurants starten ab 199€ pro Monat. Die einmalige Setup-Gebühr beträgt 349€. Innerhalb von 48 Stunden ist Ihr System einsatzbereit."
+        "text": "Starter 199€/Monat, Pro 349€/Monat, jeweils zzgl. 349€ Setup."
       }
     },
     {
       "@type": "Question",
-      "name": "Was kann ein WhatsApp Bot für mein Restaurant tun?",
+      "name": "Wie schnell kann ich starten?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Der Bot übernimmt Reservierungen, beantwortet Fragen zur Speisekarte, empfiehlt Gerichte, verwaltet ein digitales Stammkundenprogramm und beantwortet automatisch Google-Bewertungen – rund um die Uhr."
+        "text": "Nach Ihrer Zahlung kontaktieren wir Sie innerhalb von 48 Stunden."
       }
     },
     {
       "@type": "Question",
-      "name": "Brauche ich technische Kenntnisse für den WhatsApp Bot?",
+      "name": "Welche Sprachen unterstützt der Bot?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Nein. LeoLan Digital richtet alles für Sie ein. Sie brauchen nur Ihre WhatsApp-Nummer und Ihre Speisekarte – den Rest übernehmen wir."
+        "text": "Deutsch, Englisch, Türkisch und weitere."
       }
     },
     {
       "@type": "Question",
-      "name": "Wie lange dauert die Einrichtung?",
+      "name": "Brauche ich technische Kenntnisse?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Die technische Einrichtung dauert 24 bis 48 Stunden nach Ihrer Bestellung. Danach ist Ihr WhatsApp Bot sofort einsatzbereit."
+        "text": "Nein, wir richten alles für Sie ein."
       }
     },
     {
       "@type": "Question",
-      "name": "Funktioniert der Bot auch für Hotels?",
+      "name": "Gibt es einen Testmonat?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Ja. LeoLan Digital bietet spezielle Hotel-WhatsApp-Bots für Zimmerservice, Buchungen, Defekt-Meldungen und digitales Check-out. Mehr Informationen unter hotel.leolan.net."
+        "text": "Nein, aber eine kostenlose Demo auf dieser Seite."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Funktioniert es mit meiner bestehenden WhatsApp-Nummer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja, wir migrieren Ihre Nummer."
       }
     }
   ]
@@ -736,23 +774,23 @@
 <section class="pricing" id="preise">
   <div style="text-align:center">
     <p class="section-tag reveal">Preise</p>
-    <h2 class="section-title reveal reveal-delay-1">Einfach. Transparent. Kündbar.</h2>
-    <p class="section-sub reveal reveal-delay-2" style="margin-bottom:0">Keine versteckten Kosten. Kein langer Vertrag. Monatlich kündbar.</p>
+    <h2 class="section-title reveal reveal-delay-1">Einfach. Transparent. Bereit für den Start.</h2>
+    <p class="section-sub reveal reveal-delay-2" style="margin-bottom:0; color:rgba(245,245,247,0.72);">Dunkles Design, klare Pakete, volle Transparenz — passend zum Rest der Seite.</p>
   </div>
   <div class="pricing-grid">
     <div class="price-card reveal">
       <div class="price-tier">Starter</div>
-      <div class="price-badge" style="background:#e74c3c;font-size:10px;">🔥 Limitiert</div>
+      <div class="price-badge" style="background:rgba(245,166,35,0.18); color:#ffd27a; font-size:10px;">🔥 Beliebt zum Einstieg</div>
       <div class="price-amount">199 €</div>
       <div class="price-period">pro Monat, zzgl. MwSt.</div>
-      <div class="price-period" style="color:var(--text-secondary);font-size:12px;margin-top:-20px;margin-bottom:8px;">+ 349 € Setup-Gebühr (einmalig)</div>
-      <div class="price-period" style="color:#e74c3c;font-size:12px;font-weight:700;margin-bottom:8px;">⏳ 12 Monate Mindestlaufzeit</div>
-      <div class="price-period" style="color:var(--text-secondary);font-size:11px;margin-bottom:20px;">Inkl. 500 Nachrichten/Monat</div>
+      <div class="price-period" style="font-size:12px;margin-top:-20px;margin-bottom:8px;">+ 349 € Setup-Gebühr (einmalig)</div>
+      <div class="price-period" style="color:#ffd27a;font-size:12px;font-weight:700;margin-bottom:8px;">⏳ 12 Monate Mindestlaufzeit</div>
+      <div class="price-period" style="font-size:11px;margin-bottom:20px;">Inkl. 500 Nachrichten/Monat</div>
       <ul class="price-features">
         <li>Digitale Speisekarte (QR-Code)</li>
         <li>WhatsApp-Assistent 24/7</li>
         <li>Reservierungsmanagement</li>
-        <li>FAQ-Bot (Öffnungszeiten, Anfahrt)</li>
+        <li>FAQ-Bot für Standardfragen</li>
         <li>Dashboard & Benachrichtigungen</li>
         <li>E-Mail-Support</li>
       </ul>
@@ -763,14 +801,14 @@
       <div class="price-tier">Pro</div>
       <div class="price-amount">349 €</div>
       <div class="price-period">pro Monat, zzgl. MwSt.</div>
-      <div class="price-period" style="color:var(--text-secondary);font-size:12px;margin-top:-20px;margin-bottom:8px;">+ 349 € Setup-Gebühr (einmalig)</div>
-      <div class="price-period" style="color:var(--text-secondary);font-size:11px;margin-bottom:20px;">Inkl. 2.000 Nachrichten/Monat</div>
+      <div class="price-period" style="font-size:12px;margin-top:-20px;margin-bottom:8px;">+ 349 € Setup-Gebühr (einmalig)</div>
+      <div class="price-period" style="font-size:11px;margin-bottom:20px;">Inkl. 2.000 Nachrichten/Monat</div>
       <ul class="price-features">
         <li>Alles aus Starter</li>
         <li>KI Social Media (täglich)</li>
         <li>Instagram & Facebook automatisch</li>
         <li>Google Business Automatisierung</li>
-        <li>Bewertungsmanagement (KI-Antworten)</li>
+        <li>Bewertungsmanagement mit KI-Antworten</li>
         <li>Telefonischer Support</li>
       </ul>
       <a href="https://ki.leolan.net/onboarding/?paket=pro" class="price-btn price-btn-white">Jetzt buchen →</a>
@@ -787,7 +825,7 @@
         <li>Dedicated Account Manager</li>
         <li>SLA & Priority Support</li>
       </ul>
-      <a href="https://ki.leolan.net/onboarding/" class="price-btn price-btn-outline">Jetzt buchen →</a>
+      <a href="#kontakt" class="price-btn price-btn-outline">Individuell anfragen →</a>
     </div>
   </div>
 </section>
@@ -865,28 +903,28 @@
   </div>
   <div class="faq-list">
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)">Brauche ich technisches Vorwissen? <span>+</span></button>
-      <div class="faq-a"><p>Nein. Du schickst uns deine Speisekarte und ein paar Infos — wir machen den Rest. Kein Code, kein Technikwissen nötig.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)">Was kostet LeoLan Digital? <span>+</span></button>
+      <div class="faq-a"><p>Starter 199€/Monat, Pro 349€/Monat, jeweils zzgl. 349€ Setup.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)">Wie schnell bin ich live? <span>+</span></button>
-      <div class="faq-a"><p>In der Regel innerhalb von 5 Werktagen nach dem Erstgespräch. Bei Pro etwas länger für die Social-Media-Einrichtung — maximal 10 Werktage.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)">Wie schnell kann ich starten? <span>+</span></button>
+      <div class="faq-a"><p>Nach Ihrer Zahlung kontaktieren wir Sie innerhalb von 48 Stunden.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)">Kann ich monatlich kündigen? <span>+</span></button>
-      <div class="faq-a"><p>Ja. Alle Pakete sind monatlich kündbar mit 30 Tagen Frist. Kein langer Vertrag, kein Risiko.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)">Welche Sprachen unterstützt der Bot? <span>+</span></button>
+      <div class="faq-a"><p>Deutsch, Englisch, Türkisch und weitere.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)">Was passiert wenn ich die Speisekarte ändern will? <span>+</span></button>
-      <div class="faq-a"><p>Schick uns einfach eine WhatsApp oder E-Mail mit den Änderungen. Wir setzen sie innerhalb von 24 Stunden um — inklusive in allen Paketen.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)">Brauche ich technische Kenntnisse? <span>+</span></button>
+      <div class="faq-a"><p>Nein, wir richten alles für Sie ein.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)">Funktioniert das auch für kleine Restaurants? <span>+</span></button>
-      <div class="faq-a"><p>Gerade für kleine Betriebe macht es am meisten Sinn — weil du keine eigene Marketing-Abteilung hast. Ob 30 oder 300 Plätze: unsere Lösungen skalieren mit dir.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)">Gibt es einen Testmonat? <span>+</span></button>
+      <div class="faq-a"><p>Nein, aber eine kostenlose Demo auf dieser Seite.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)">Was kostet der WhatsApp-Assistent extra? <span>+</span></button>
-      <div class="faq-a"><p>Der WhatsApp-Assistent ist in allen Paketen inklusive. Es fallen lediglich geringe Kosten für die WhatsApp Business API an (~5 €/Monat), die transparent ausgewiesen werden.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)">Funktioniert es mit meiner bestehenden WhatsApp-Nummer? <span>+</span></button>
+      <div class="faq-a"><p>Ja, wir migrieren Ihre Nummer.</p></div>
     </div>
   </div>
 </section>
@@ -919,6 +957,32 @@
   </form>
   <div class="form-success" id="formSuccess">✅ Danke! Wir melden uns innerhalb von 24 Stunden bei dir.</div>
 </section>
+
+
+<!-- CHATBOT DEMO WIDGET -->
+<button class="chatbot-toggle" id="chatbotToggle" type="button">💬 Bot testen</button>
+<div class="chatbot-modal" id="chatbotModal" aria-hidden="true">
+  <div class="chatbot-window" role="dialog" aria-modal="true" aria-labelledby="chatbotTitle">
+    <div class="chatbot-header">
+      <div class="chatbot-title">
+        <div class="chatbot-avatar">💬</div>
+        <div>
+          <strong id="chatbotTitle">LeoLan KI-Assistent</strong>
+          <span>Live-Demo · antwortet sofort</span>
+        </div>
+      </div>
+      <button class="chatbot-close" id="chatbotClose" type="button" aria-label="Chat schließen">×</button>
+    </div>
+    <div class="chatbot-messages" id="chatbotMessages"></div>
+    <div class="chatbot-input-wrap">
+      <form class="chatbot-form" id="chatbotForm">
+        <input type="text" id="chatbotInput" placeholder="Schreiben Sie z. B. Reservierung, Öffnungszeiten oder Preise …" autocomplete="off">
+        <button type="submit">Senden</button>
+      </form>
+      <div class="chatbot-hint">Demo im WhatsApp-Stil – testen Sie typische Gästeanfragen direkt hier.</div>
+    </div>
+  </div>
+</div>
 
 <!-- FOOTER -->
 <!-- CROSSLINK: HOTEL -->
@@ -1005,6 +1069,75 @@
   document.querySelectorAll('.hero .reveal').forEach(function(el) {
     setTimeout(function(){ el.classList.add('visible'); }, 100);
   });
+
+  // Chatbot demo
+  var chatbotToggle = document.getElementById('chatbotToggle');
+  var chatbotModal = document.getElementById('chatbotModal');
+  var chatbotClose = document.getElementById('chatbotClose');
+  var chatbotForm = document.getElementById('chatbotForm');
+  var chatbotInput = document.getElementById('chatbotInput');
+  var chatbotMessages = document.getElementById('chatbotMessages');
+  var chatbotSeeded = false;
+
+  function chatbotTime() {
+    return new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  function appendChatMessage(text, sender) {
+    var msg = document.createElement('div');
+    msg.className = 'chatbot-message ' + sender;
+    msg.innerHTML = text + '<small>' + chatbotTime() + '</small>';
+    chatbotMessages.appendChild(msg);
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+  }
+
+  function getBotReply(message) {
+    var lower = message.toLowerCase();
+    if (lower.includes('reserv') || lower.includes('tisch') || lower.includes('buchen')) {
+      return 'Natürlich! Ich kann Ihnen gerne einen Tisch reservieren. Nennen Sie mir einfach Datum, Uhrzeit und Personenzahl.';
+    }
+    if (lower.includes('öffnung') || lower.includes('offen') || lower.includes('uhrzeit')) {
+      return 'Wir haben täglich von 11:00 bis 22:00 Uhr geöffnet. Wenn Sie möchten, kann ich direkt eine Reservierung für Sie vorbereiten.';
+    }
+    if (lower.includes('preis') || lower.includes('kosten') || lower.includes('gericht') || lower.includes('menü')) {
+      return 'Unsere Hauptgerichte beginnen ab 12,90€. Gerne sende ich Ihnen auch Empfehlungen oder die passende Speisekarte.';
+    }
+    return 'Das frage ich kurz nach und melde mich gleich bei Ihnen!';
+  }
+
+  function openChatbot() {
+    chatbotModal.classList.add('open');
+    chatbotModal.setAttribute('aria-hidden', 'false');
+    if (!chatbotSeeded) {
+      appendChatMessage('Hallo! Ich bin der LeoLan KI-Assistent. Wie kann ich helfen?', 'bot');
+      chatbotSeeded = true;
+    }
+    setTimeout(function(){ chatbotInput.focus(); }, 80);
+  }
+
+  function closeChatbot() {
+    chatbotModal.classList.remove('open');
+    chatbotModal.setAttribute('aria-hidden', 'true');
+  }
+
+  if (chatbotToggle && chatbotModal && chatbotForm && chatbotInput && chatbotMessages) {
+    chatbotToggle.addEventListener('click', openChatbot);
+    chatbotClose.addEventListener('click', closeChatbot);
+    chatbotModal.addEventListener('click', function(e) {
+      if (e.target === chatbotModal) closeChatbot();
+    });
+    chatbotForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var value = chatbotInput.value.trim();
+      if (!value) return;
+      appendChatMessage(value.replace(/</g, '&lt;').replace(/>/g, '&gt;'), 'user');
+      chatbotInput.value = '';
+      setTimeout(function(){ appendChatMessage(getBotReply(value), 'bot'); }, 450);
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && chatbotModal.classList.contains('open')) closeChatbot();
+    });
+  }
 </script>
 
 </body>
