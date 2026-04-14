@@ -139,7 +139,15 @@ function render(){
 async function loadCustomer(){
   if(!customerCode) throw new Error('Kein Kundencode übergeben.');
   if(!addon) throw new Error('Ungültiges Add-on.');
-  const response=await fetch(DASHBOARD_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({customerCode})});
+  let response;
+  try{
+    const ctrl=new AbortController();
+    setTimeout(()=>ctrl.abort(),8000);
+    response=await fetch(DASHBOARD_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({customerCode}),signal:ctrl.signal});
+  }catch(fetchErr){
+    setLoading(false);
+    return;
+  }
   if(!response.ok) throw new Error('Kundendaten konnten nicht geladen werden.');
   const payload=await response.json();
   customerData=readCustomer(payload);
