@@ -1185,6 +1185,7 @@
       if (e.target === chatbotModal) closeChatbot();
     });
     chatbotForm.addEventListener('submit', async function(e) {
+      e.stopPropagation();
       e.preventDefault();
       var value = chatbotInput.value.trim();
       if (!value) return;
@@ -1202,7 +1203,7 @@
       if (el) el.remove();
       appendChatMessage(reply, 'bot');
       chatbotInput.disabled = false;
-      chatbotInput.focus();
+      setTimeout(function(){ chatbotInput.focus(); }, 100);
     });
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape' && chatbotModal.classList.contains('open')) closeChatbot();
