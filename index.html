@@ -1145,7 +1145,7 @@
     try {
       var controller = new AbortController();
       var tid = setTimeout(function(){ controller.abort(); }, 20000);
-      var resp = await fetch('https://n8n.leolan.net/webhook/onboarding-chat', {
+      var resp = await fetch('https://n8n.leolan.net/webhook/restaurant-chat', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({message: message, moduleKey: 'website-demo', history: chatHistory}),
