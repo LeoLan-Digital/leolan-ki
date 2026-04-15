@@ -142,9 +142,11 @@ async function loadCustomer(){
   let response;
   try{
     const ctrl=new AbortController();
-    setTimeout(()=>ctrl.abort(),8000);
+    setTimeout(()=>ctrl.abort(),20000);
     response=await fetch(DASHBOARD_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({customerCode}),signal:ctrl.signal});
   }catch(fetchErr){
+    console.error('Fetch error:', fetchErr);
+    showError('Verbindung fehlgeschlagen. Bitte prüfen Sie Ihre Internetverbindung.');
     setLoading(false);
     return;
   }
