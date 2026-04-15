@@ -90,15 +90,12 @@ async function loadCustomer(){
     const response=await fetch(DASHBOARD_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({customerCode}),signal:ctrl.signal});
     if(!response.ok) throw new Error('HTTP '+response.status);
     const payload=await response.json();
-    const account=payload.account||payload;
-    customerData={
-      email:account.email||'',
-      name:account.name||account.companyName||customerCode,
-      company:account.companyName||account.restaurantName||'',
-      vatId:account.vatId||'',
-      customerCode
-    };
-    if(!customerData.email) throw new Error('Keine E-Mail gefunden.');
+    const account=payload.account||payload.data||payload;
+    const email=account.email||account.customerEmail||payload.email||'';
+    const name=account.name||account.companyName||account.restaurantName||customerCode;
+    const company=account.companyName||account.restaurantName||account.company||'';
+    customerData={email,name,company,vatId:account.vatId||'',customerCode};
+    // Email optional - continue even without it
     
     // Reverse charge für EU-Ausland
     const reverseCharge=!!(customerData.vatId&&customerData.vatId.length>4);
