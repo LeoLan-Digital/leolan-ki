@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Upgrade — LeoLan Digital</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,sans-serif;background:#0e1621;color:#e8eaed;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.card{background:#17212b;border-radius:16px;padding:24px;max-width:440px;width:100%}
+.logo{color:#5e81f4;font-weight:800;font-size:18px;margin-bottom:20px}
+h1{font-size:22px;font-weight:800;margin-bottom:6px}
+.sub{color:#8a9bb8;font-size:14px;margin-bottom:20px}
+.customer-box{background:#0e1621;border-radius:10px;padding:14px;margin-bottom:20px;border:1px solid #2a3a4a}
+.customer-box .label{color:#8a9bb8;font-size:12px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px}
+.customer-box .value{color:#e8eaed;font-size:15px;font-weight:600}
+.plan-box{background:#0e1621;border-radius:10px;padding:16px;margin-bottom:20px;border:1px solid #2a3a4a}
+.plan-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #1a2a3a}
+.plan-row:last-child{border-bottom:none;padding-top:10px;font-weight:700;font-size:16px}
+.plan-label{color:#8a9bb8;font-size:14px}
+.plan-value{color:#e8eaed;font-size:14px}
+.plan-row:last-child .plan-label{color:#e8eaed}
+.badge{display:inline-block;background:#5e81f420;color:#5e81f4;border:1px solid #5e81f4;border-radius:6px;padding:2px 8px;font-size:12px;font-weight:700;margin-bottom:12px}
+.badge-pro{background:#4cd97b20;color:#4cd97b;border-color:#4cd97b}
+.btn{display:block;width:100%;background:#4cd97b;color:#fff;border:none;border-radius:12px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;margin-top:4px}
+.btn:disabled{opacity:0.5;cursor:not-allowed}
+.loading{text-align:center;color:#8a9bb8;padding:40px 0}
+.error-msg{background:#ef444420;border:1px solid #ef4444;border-radius:10px;padding:12px;color:#ef4444;font-size:14px;margin-bottom:16px;display:none}
+.success-msg{background:#4cd97b20;border:1px solid #4cd97b;border-radius:10px;padding:12px;color:#4cd97b;font-size:14px;margin-bottom:16px;display:none;text-align:center}
+.legal{color:#8a9bb8;font-size:12px;text-align:center;margin-top:16px;line-height:1.6}
+.legal a{color:#5e81f4}
+.spinner{display:inline-block;width:20px;height:20px;border:2px solid #ffffff40;border-top-color:#fff;border-radius:50%;animation:spin 0.8s linear infinite;vertical-align:middle;margin-right:8px}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">🗂️ LeoLan Digital</div>
+  
+  <div id="loadingView" class="loading">
+    <div class="spinner" style="width:32px;height:32px;border-width:3px;margin:0 auto 12px;display:block"></div>
+    <p>Kundendaten werden geladen...</p>
+  </div>
+
+  <div id="mainView" style="display:none">
+    <div class="badge">STARTER → <span class="badge-pro">PRO</span></div>
+    <h1>Upgrade auf Pro</h1>
+    <p class="sub">Mehr Nachrichten, mehr Automatisierung, priorisierter Support.</p>
+
+    <div class="customer-box">
+      <div class="label">Ihr Konto</div>
+      <div class="value" id="customerName">—</div>
+      <div style="color:#8a9bb8;font-size:13px;margin-top:4px" id="customerEmail">—</div>
+    </div>
+
+    <div class="plan-box">
+      <div class="plan-row"><span class="plan-label">Aktuelles Paket</span><span class="plan-value" id="currentPlan">Starter — 199€/Mo</span></div>
+      <div class="plan-row"><span class="plan-label">Neues Paket</span><span class="plan-value">Pro — 349€/Mo</span></div>
+      <div class="plan-row"><span class="plan-label">Einrichtungsgebühr</span><span class="plan-value">0€ <small style="color:#4cd97b">(bereits bezahlt)</small></span></div>
+      <div class="plan-row"><span class="plan-label">Netto</span><span class="plan-value">349,00€</span></div>
+      <div class="plan-row"><span class="plan-label">MwSt. (19%)</span><span class="plan-value" id="vatAmount">66,31€</span></div>
+      <div class="plan-row"><span class="plan-label">Gesamt / Monat</span><span class="plan-value" id="totalAmount">415,31€</span></div>
+    </div>
+
+    <div id="errorMsg" class="error-msg"></div>
+    <div id="successMsg" class="success-msg"></div>
+
+    <button class="btn" id="buyBtn" onclick="startCheckout()">⬆️ Jetzt upgraden — 415,31€/Mo</button>
+    
+    <p class="legal">Mit dem Kauf stimmen Sie den <a href="/agb.html">AGB</a> und der <a href="/datenschutz.html">Datenschutzerklärung</a> zu. Das Abonnement verlängert sich monatlich automatisch und kann jederzeit gekündigt werden.</p>
+  </div>
+</div>
+
+<script>
+const qs=new URLSearchParams(location.search);
+const customerCode=(qs.get('code')||'').trim();
+const DASHBOARD_URL='https://n8n.leolan.net/webhook/kunden-dashboard';
+const CHECKOUT_URL='https://n8n.leolan.net/webhook/stripe-checkout';
+let customerData={};
+
+function $(id){return document.getElementById(id)}
+function showError(msg){const el=$('errorMsg');el.style.display='block';el.textContent=msg}
+function setLoading(v){$('loadingView').style.display=v?'block':'none';$('mainView').style.display=v?'none':'block'}
+
+async function loadCustomer(){
+  if(!customerCode){showError('Kein Kundencode übergeben.');setLoading(false);return;}
+  try{
+    const ctrl=new AbortController();
+    setTimeout(()=>ctrl.abort(),20000);
+    const response=await fetch(DASHBOARD_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({customerCode}),signal:ctrl.signal});
+    if(!response.ok) throw new Error('HTTP '+response.status);
+    const payload=await response.json();
+    const account=payload.account||payload;
+    customerData={
+      email:account.email||'',
+      name:account.name||account.companyName||customerCode,
+      company:account.companyName||account.restaurantName||'',
+      vatId:account.vatId||'',
+      customerCode
+    };
+    if(!customerData.email) throw new Error('Keine E-Mail gefunden.');
+    
+    // Reverse charge für EU-Ausland
+    const reverseCharge=!!(customerData.vatId&&customerData.vatId.length>4);
+    const vat=reverseCharge?0:Math.round(349*0.19*100)/100;
+    const gross=Math.round((349+vat)*100)/100;
+    
+    $('customerName').textContent=customerData.name+(customerData.company&&customerData.company!==customerData.name?' — '+customerData.company:'');
+    $('customerEmail').textContent=customerData.email;
+    $('vatAmount').textContent=reverseCharge?'0€ (Reverse Charge)':(vat.toFixed(2)+'€');
+    $('totalAmount').textContent=gross.toFixed(2)+'€/Mo';
+    $('buyBtn').textContent='⬆️ Jetzt upgraden — '+gross.toFixed(2)+'€/Mo';
+    setLoading(false);
+  }catch(e){
+    showError('Verbindung fehlgeschlagen: '+e.message);
+    setLoading(false);
+  }
+}
+
+async function startCheckout(){
+  const btn=$('buyBtn');
+  btn.disabled=true;
+  btn.innerHTML='<span class="spinner"></span>Weiterleitung...';
+  try{
+    const reverseCharge=!!(customerData.vatId&&customerData.vatId.length>4);
+    const resp=await fetch(CHECKOUT_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        paket:'pro',
+        purchaseType:'upgrade',
+        customerCode,
+        customerEmail:customerData.email,
+        companyName:customerData.company||customerData.name,
+        vatId:customerData.vatId||'',
+        noSetupFee:true
+      })
+    });
+    const data=await resp.json();
+    if(data.url){
+      window.location.href=data.url;
+    }else{
+      throw new Error(data.error||'Checkout fehlgeschlagen');
+    }
+  }catch(e){
+    showError('Fehler: '+e.message);
+    btn.disabled=false;
+    btn.innerHTML='⬆️ Jetzt upgraden';
+  }
+}
+
+loadCustomer();
+</script>
+</body>
+</html>
