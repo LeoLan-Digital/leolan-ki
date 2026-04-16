@@ -22,12 +22,10 @@ body{font-family:-apple-system,sans-serif;background:#0e1621;color:#e8eaed;min-h
 .row-value{font-weight:600;color:#e8eaed}
 .badge{background:#5e81f420;color:#5e81f4;border:1px solid #5e81f4;border-radius:6px;padding:2px 8px;font-size:12px;font-weight:700}
 .progress-bar{background:#0e1621;border-radius:6px;height:8px;margin-top:8px;overflow:hidden}
-.progress-fill{height:100%;border-radius:6px;background:#4cd97b;transition:width 0.3s}
+.progress-fill{height:100%;border-radius:6px;background:#4cd97b}
 .progress-fill.yellow{background:#f4a527}
 .progress-fill.red{background:#e8647c}
-.credit-row{display:flex;justify-content:space-between;margin-bottom:6px}
-.credit-label{color:#8a9bb8;font-size:13px}
-.credit-value{font-size:13px;font-weight:600}
+.credit-row{display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px}
 .btn{display:block;background:#5e81f4;color:#fff;border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;text-align:center;text-decoration:none;margin-top:6px}
 .btn.orange{background:#f4a527}
 .loading{text-align:center;padding:60px 20px;color:#8a9bb8}
@@ -38,61 +36,48 @@ body{font-family:-apple-system,sans-serif;background:#0e1621;color:#e8eaed;min-h
 <div id="main" style="display:none">
   <div class="header">
     <div class="header-logo">
-      <img src="https://ki.leolan.net/leolan-logo.svg" alt="LeoLan" onerror="this.style.display='none'">
+      <img src="https://ki.leolan.net/leolan-logo.png" alt="LeoLan" onerror="this.style.display='none'">
       <span>Mein Konto</span>
     </div>
     <div>
       <span class="header-code" id="headerCode"></span>
-      <button class="logout" onclick="logout()">Logout</button>
+      <button class="logout" onclick="window.location.href='/portal/'">Abmelden</button>
     </div>
   </div>
   <div class="content">
-    <!-- Plan -->
     <div class="card">
       <div class="card-title">Ihr Paket</div>
       <div class="row"><span class="row-label">Paket</span><span id="planName" class="badge">—</span></div>
-      <div class="row"><span class="row-label">Bereich</span><span class="row-value" id="planBereich">—</span></div>
+      <div class="row"><span class="row-label">Bereich</span><span class="row-value" id="planSector">—</span></div>
       <div class="row"><span class="row-label">Status</span><span class="row-value" style="color:#4cd97b">Aktiv ✓</span></div>
     </div>
-    <!-- Credits -->
     <div class="card">
       <div class="card-title">Nachricht-Credits</div>
-      <div class="credit-row">
-        <span class="credit-label">Verwendet</span>
-        <span class="credit-value" id="creditsVerwendet">—</span>
-      </div>
-      <div class="credit-row">
-        <span class="credit-label">Limit</span>
-        <span class="credit-value" id="creditsLimit">—</span>
-      </div>
-      <div class="progress-bar">
-        <div class="progress-fill" id="creditBar" style="width:0%"></div>
-      </div>
+      <div class="credit-row"><span style="color:#8a9bb8">Verwendet</span><span id="creditsUsed">—</span></div>
+      <div class="credit-row"><span style="color:#8a9bb8">Limit</span><span id="creditsLimit">—</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="creditBar" style="width:0%"></div></div>
     </div>
-    <!-- Billing -->
     <div class="card">
       <div class="card-title">Rechnungsdaten</div>
       <div class="row"><span class="row-label">Name</span><span class="row-value" id="billName">—</span></div>
-      <div class="row"><span class="row-label">Email</span><span class="row-value" id="billEmail">—</span></div>
-      <div class="row"><span class="row-label">Company</span><span class="row-value" id="billCompany">—</span></div>
+      <div class="row"><span class="row-label">E-Mail</span><span class="row-value" id="billEmail">—</span></div>
+      <div class="row"><span class="row-label">Firma</span><span class="row-value" id="billCompany">—</span></div>
       <div class="row"><span class="row-label">Mitglied seit</span><span class="row-value" id="billSince">—</span></div>
+      <button onclick="toggleEdit()" style="margin-top:12px;background:transparent;border:1px solid #2a3a4a;color:#5e81f4;border-radius:8px;padding:8px 16px;font-size:13px;cursor:pointer;width:100%">✏️ Rechnungsdaten bearbeiten</button>
     </div>
-    <!-- Actions -->
+    <div class="card" id="invoiceCard">
+      <div class="card-title">Rechnungen</div>
+      <div id="invoiceList"><p style="color:#8a9bb8;font-size:14px">Noch keine Rechnungen.</p></div>
+    </div>
     <div class="card">
       <div class="card-title">Upgrade / Add-ons</div>
-      <a class="btn orange" id="upgradeBtn" href="#">Credits kaufen oder Upgrade →</a>
+      <a class="btn orange" id="upgradeBtn" href="/addon/">Credits kaufen oder Upgrade →</a>
     </div>
   </div>
 </div>
-
 <script>
 var customerCode = (new URLSearchParams(window.location.search)).get('code') || '';
 if (!customerCode) { window.location.href = '/portal/'; }
-
-function logout() {
-  window.location.href = '/portal/';
-}
-
 var xhr = new XMLHttpRequest();
 xhr.open('POST', 'https://n8n.leolan.net/webhook/kunden-dashboard', true);
 xhr.setRequestHeader('Content-Type', 'application/json');
@@ -101,17 +86,15 @@ xhr.onload = function() {
   try { data = JSON.parse(xhr.responseText); } catch(e) {}
   document.getElementById('loading').style.display = 'none';
   document.getElementById('main').style.display = 'block';
-
   var acc = data.account || {};
   var usage = data.usageStats || {};
-  var used = usage.messagesVerwendet || 0;
+  var used = usage.messagesUsed || 0;
   var limit = usage.messagesLimit || usage.messageLimit || 500;
   var ratio = limit > 0 ? Math.min(used / limit, 1) : 0;
-
   document.getElementById('headerCode').textContent = customerCode;
   document.getElementById('planName').textContent = (acc.paket || 'starter').toUpperCase();
-  document.getElementById('planBereich').textContent = acc.sector || 'hotel';
-  document.getElementById('creditsVerwendet').textContent = used;
+  document.getElementById('planSector').textContent = acc.sector || 'restaurant';
+  document.getElementById('creditsUsed').textContent = used;
   document.getElementById('creditsLimit').textContent = limit;
   document.getElementById('creditBar').style.width = Math.round(ratio * 100) + '%';
   var bar = document.getElementById('creditBar');
@@ -122,11 +105,34 @@ xhr.onload = function() {
   document.getElementById('billCompany').textContent = acc.companyName || '—';
   document.getElementById('billSince').textContent = (acc.createdAt || '').substring(0, 10) || '—';
   document.getElementById('upgradeBtn').href = '/addon/?code=' + encodeURIComponent(customerCode);
+  var invoices = acc.invoices || [];
+  var invList = document.getElementById('invoiceList');
+  if (invoices.length > 0) {
+    var html = '';
+    for (var i = 0; i < invoices.length; i++) {
+      var inv = invoices[i];
+      html += '<div style="padding:10px 0;border-bottom:1px solid #1a2a3a">';
+      html += '<div style="display:flex;justify-content:space-between">';
+      html += '<div><div style="font-size:14px;font-weight:600">' + (inv.description || 'Rechnung') + '</div>';
+      html += '<div style="font-size:12px;color:#8a9bb8">' + (inv.id || '') + ' · ' + (inv.date || '').substring(0,10) + '</div></div>';
+      html += '<div style="text-align:right"><div style="font-size:15px;font-weight:700;color:#4cd97b">' + (inv.amount || '—') + '</div>';
+      var dlUrl = inv.pdfUrl || ('https://n8n.leolan.net/webhook/download-invoice?code=' + encodeURIComponent(customerCode) + '&id=' + encodeURIComponent(inv.id||'') + '&sector=restaurant');
+      html += '<a href="javascript:void(0)" onclick="resendInvoice(\'' + (inv.id||'') + '\')" style="font-size:11px;color:#5e81f4">📧 Rechnung senden</a></div>';
+      html += '</div></div>';
+    }
+    invList.innerHTML = html;
+  }
 };
-xhr.onerror = function() {
-  document.getElementById('loading').textContent = 'Verbindungsfehler.';
-};
+xhr.onerror = function() { document.getElementById('loading').textContent = 'Verbindungsfehler.'; };
 xhr.send(JSON.stringify({customerCode: customerCode}));
+function resendInvoice(invoiceId) {
+  var xhr2 = new XMLHttpRequest();
+  xhr2.open('POST', 'https://n8n.leolan.net/webhook/resend-invoice', true);
+  xhr2.setRequestHeader('Content-Type', 'application/json');
+  xhr2.onload = function() { alert('Rechnung wurde an Ihre E-Mail gesendet!'); };
+  xhr2.send(JSON.stringify({customerCode: customerCode, invoiceId: invoiceId, sector: 'restaurant'}));
+}
+function toggleEdit() { alert('Rechnungsdaten bearbeiten — kommt bald!'); }
 </script>
 </body>
 </html>

@@ -1,707 +1,89 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kunden-Portal | LeoLan Digital</title>
-  <meta name="robots" content="noindex,nofollow" />
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body {
-      min-height: 100%;
-      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-      background: #0e1621;
-      color: #e8eaed;
-    }
-    a { color: #5e81f4; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    /* ── SCREEN MANAGEMENT ── */
-    .screen { display: none; }
-    .screen.active { display: block; }
-
-    /* ── LOGIN SCREEN ── */
-    #login-screen {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
-    .login-card {
-      background: #17212b;
-      border-radius: 16px;
-      padding: 48px 40px;
-      width: 100%;
-      max-width: 420px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-    }
-    .login-logo {
-      text-align: center;
-      margin-bottom: 32px;
-    }
-    .login-logo svg {
-      width: 48px;
-      height: 48px;
-      margin-bottom: 12px;
-    }
-    .login-logo h1 {
-      font-size: 20px;
-      font-weight: 600;
-      color: #e8eaed;
-      line-height: 1.3;
-    }
-    .login-logo p {
-      font-size: 14px;
-      color: #8a9bb8;
-      margin-top: 4px;
-    }
-    .form-group {
-      margin-bottom: 20px;
-    }
-    .form-group label {
-      display: block;
-      font-size: 13px;
-      font-weight: 500;
-      color: #8a9bb8;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .form-group input {
-      width: 100%;
-      padding: 12px 16px;
-      background: #0e1621;
-      border: 1px solid #2a3a4d;
-      border-radius: 8px;
-      color: #e8eaed;
-      font-size: 15px;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .form-group input:focus {
-      border-color: #5e81f4;
-    }
-    .form-group input::placeholder {
-      color: #4a5a6e;
-    }
-    .btn {
-      display: block;
-      width: 100%;
-      padding: 14px 24px;
-      background: #5e81f4;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s, opacity 0.2s;
-      text-align: center;
-    }
-    .btn:hover { background: #4a6de0; }
-    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
-    .btn-secondary {
-      background: transparent;
-      border: 1px solid #2a3a4d;
-      color: #8a9bb8;
-    }
-    .btn-secondary:hover { background: #17212b; border-color: #5e81f4; color: #5e81f4; }
-    .btn-danger {
-      background: transparent;
-      border: 1px solid #e8647c;
-      color: #e8647c;
-      font-size: 13px;
-      padding: 8px 16px;
-      width: auto;
-    }
-    .btn-danger:hover { background: rgba(232,100,124,0.1); }
-    .error-msg {
-      background: rgba(232,100,124,0.15);
-      border: 1px solid rgba(232,100,124,0.4);
-      color: #e8647c;
-      border-radius: 8px;
-      padding: 12px 16px;
-      font-size: 14px;
-      margin-bottom: 20px;
-      display: none;
-    }
-    .error-msg.visible { display: block; }
-
-    /* ── DASHBOARD SCREEN ── */
-    #dashboard-screen {
-      min-height: 100vh;
-      padding: 0;
-    }
-    .topbar {
-      background: #17212b;
-      border-bottom: 1px solid #1e2d3d;
-      padding: 0 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 60px;
-    }
-    .topbar-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .topbar-brand svg {
-      width: 28px;
-      height: 28px;
-    }
-    .topbar-brand span {
-      font-size: 15px;
-      font-weight: 600;
-      color: #e8eaed;
-    }
-    .topbar-right {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .topbar-user {
-      font-size: 13px;
-      color: #8a9bb8;
-    }
-    .dashboard-content {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 32px 24px;
-    }
-    .dashboard-greeting {
-      font-size: 22px;
-      font-weight: 600;
-      color: #e8eaed;
-      margin-bottom: 8px;
-    }
-    .dashboard-subtitle {
-      font-size: 14px;
-      color: #8a9bb8;
-      margin-bottom: 32px;
-    }
-    .cards-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-    .card {
-      background: #17212b;
-      border-radius: 12px;
-      padding: 24px;
-      border: 1px solid #1e2d3d;
-    }
-    .card-full {
-      grid-column: 1 / -1;
-    }
-    .card-title {
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: #8a9bb8;
-      margin-bottom: 16px;
-    }
-    .plan-name {
-      font-size: 22px;
-      font-weight: 700;
-      color: #e8eaed;
-      margin-bottom: 6px;
-    }
-    .plan-meta {
-      font-size: 13px;
-      color: #8a9bb8;
-      margin-bottom: 4px;
-    }
-    .status-badge {
-      display: inline-block;
-      padding: 3px 10px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 600;
-      margin-top: 8px;
-    }
-    .status-active { background: rgba(76,217,123,0.15); color: #4cd97b; }
-    .status-inactive { background: rgba(232,100,124,0.15); color: #e8647c; }
-    .status-trial { background: rgba(244,165,39,0.15); color: #f4a527; }
-
-    /* Progress bar */
-    .progress-label {
-      display: flex;
-      justify-content: space-between;
-      font-size: 13px;
-      color: #8a9bb8;
-      margin-bottom: 10px;
-    }
-    .progress-label strong {
-      color: #e8eaed;
-    }
-    .progress-bar-wrap {
-      background: #0e1621;
-      border-radius: 6px;
-      height: 10px;
-      overflow: hidden;
-      margin-bottom: 8px;
-    }
-    .progress-bar-fill {
-      height: 100%;
-      border-radius: 6px;
-      transition: width 0.6s;
-    }
-    .progress-green { background: #4cd97b; }
-    .progress-orange { background: #f4a527; }
-    .progress-red { background: #e8647c; }
-    .progress-pct {
-      font-size: 12px;
-      color: #8a9bb8;
-      text-align: right;
-    }
-
-    /* Billing */
-    .billing-row {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .billing-item {
-      font-size: 14px;
-      color: #e8eaed;
-    }
-    .billing-item .label {
-      color: #8a9bb8;
-      font-size: 12px;
-    }
-
-    /* Invoices */
-    .invoice-list { list-style: none; }
-    .invoice-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 0;
-      border-bottom: 1px solid #1e2d3d;
-      font-size: 14px;
-    }
-    .invoice-item:last-child { border-bottom: none; }
-    .invoice-item .inv-date { color: #8a9bb8; font-size: 12px; }
-    .invoice-item .inv-amount { color: #4cd97b; font-weight: 600; }
-    .invoice-item .inv-status {
-      font-size: 11px;
-      padding: 2px 8px;
-      border-radius: 10px;
-      background: rgba(76,217,123,0.12);
-      color: #4cd97b;
-    }
-    .no-invoices {
-      font-size: 14px;
-      color: #8a9bb8;
-      text-align: center;
-      padding: 16px 0;
-    }
-
-    /* Upgrade card */
-    .upgrade-card {
-      background: linear-gradient(135deg, #1a2540 0%, #17212b 100%);
-      border: 1px solid #5e81f4;
-    }
-    .upgrade-title {
-      font-size: 16px;
-      font-weight: 600;
-      color: #e8eaed;
-      margin-bottom: 6px;
-    }
-    .upgrade-desc {
-      font-size: 13px;
-      color: #8a9bb8;
-      margin-bottom: 16px;
-    }
-    .btn-upgrade {
-      display: inline-block;
-      padding: 10px 24px;
-      background: #5e81f4;
-      color: #fff;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-    .btn-upgrade:hover { background: #4a6de0; text-decoration: none; }
-
-    /* Loading */
-    .loading-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(14,22,33,0.85);
-      z-index: 100;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .loading-overlay.visible {
-      display: flex;
-    }
-    .spinner {
-      width: 40px;
-      height: 40px;
-      border: 3px solid #1e2d3d;
-      border-top-color: #5e81f4;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
-    .loading-text {
-      font-size: 14px;
-      color: #8a9bb8;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* Responsive */
-    @media (max-width: 640px) {
-      .cards-grid { grid-template-columns: 1fr; }
-      .login-card { padding: 32px 24px; }
-      .topbar-user { display: none; }
-      .dashboard-content { padding: 20px 16px; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kunden-Portal — LeoLan Digital</title>
+<style>
+body{margin:0;padding:20px;font-family:-apple-system,sans-serif;background:#0e1621;color:#e8eaed;min-height:100vh}
+.card{background:#17212b;border-radius:16px;padding:28px;max-width:420px;margin:40px auto}
+.logo{text-align:center;margin-bottom:24px}
+.logo img{width:64px;height:64px;object-fit:contain}
+h1{font-size:20px;font-weight:700;text-align:center;margin:0 0 4px}
+p.sub{color:#8a9bb8;font-size:14px;text-align:center;margin:0 0 24px}
+label{display:block;color:#8a9bb8;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px}
+input{width:100%;background:#0e1621;color:#e8eaed;border:1px solid #2a3a4a;border-radius:10px;padding:12px;font-size:15px;box-sizing:border-box;margin-bottom:14px}
+button{width:100%;background:#5e81f4;color:#fff;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:700;cursor:pointer}
+button:disabled{opacity:0.5;cursor:not-allowed}
+.err{background:#ef444420;border:1px solid #ef4444;border-radius:8px;padding:10px;color:#ef4444;font-size:13px;margin-bottom:14px;display:none}
+.link{text-align:center;margin-top:16px;font-size:13px;color:#8a9bb8}
+.link a{color:#5e81f4}
+</style>
 </head>
 <body>
-
-<!-- Lade-Overlay -->
-<div class="loading-overlay" id="loading-overlay">
-  <div class="spinner"></div>
-  <div class="loading-text">Wird geladen...</div>
-</div>
-
-<!-- ══ LOGIN-SCREEN ══ -->
-<div class="screen active" id="login-screen">
-  <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;">
-    <div class="login-card">
-      <div class="login-logo">
-        <!-- LeoLan Logo -->
-        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="48" height="48" rx="12" fill="#5e81f4"/>
-          <text x="50%" y="56%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Inter,Arial,sans-serif" font-size="20" font-weight="700">LL</text>
-        </svg>
-        <h1>Kunden-Portal</h1>
-        <p>LeoLan Digital &mdash; Zugang zum Kundenkonto</p>
-      </div>
-
-      <div class="error-msg" id="login-error">Ungültige Zugangsdaten. Bitte versuche es erneut.</div>
-
-      <div class="form-group">
-        <label for="login-code">Kundennummer oder E-Mail</label>
-        <input type="text" id="login-code" placeholder="K-12345 oder name@beispiel.de" autocomplete="username" />
-      </div>
-      <div class="form-group">
-        <label for="login-password">Passwort</label>
-        <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password" />
-      </div>
-      <button class="btn" id="login-btn" onclick="doLogin()">Anmelden</button>
-
-      <p style="text-align:center;font-size:13px;color:#8a9bb8;margin-top:20px;">
-        Noch kein Konto? <a href="/onboarding/" style="color:#5e81f4;font-weight:600">Jetzt registrieren →</a> &nbsp;|&nbsp; <a href="mailto:support@leolan.net">Support kontaktieren</a>
-      </p>
-    </div>
+<div class="card">
+  <div class="logo">
+    <img src="https://ki.leolan.net/leolan-logo.png" alt="LeoLan" onerror="this.style.display='none'">
+    <h1>Kunden-Portal</h1>
+    <p class="sub">LeoLan Digital</p>
   </div>
-</div>
-
-<!-- ══ DASHBOARD-SCREEN ══ -->
-<div class="screen" id="dashboard-screen">
-  <div class="topbar">
-    <div class="topbar-brand">
-      <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="28" height="28" rx="7" fill="#5e81f4"/>
-        <text x="50%" y="56%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700">LL</text>
-      </svg>
-      <span>Kunden-Portal</span>
-    </div>
-    <div class="topbar-right">
-      <span class="topbar-user" id="topbar-code"></span>
-      <button class="btn btn-danger" onclick="doLogout()">Abmelden</button>
-    </div>
-  </div>
-
-  <div class="dashboard-content">
-    <div class="dashboard-greeting" id="dash-greeting">Willkommen!</div>
-    <div class="dashboard-subtitle" id="dash-subtitle">Hier ist deine Kontoübersicht.</div>
-
-    <div class="cards-grid">
-
-      <!-- Paket-Info -->
-      <div class="card">
-        <div class="card-title">Paket &amp; Plan</div>
-        <div class="plan-name" id="dash-plan">—</div>
-        <div class="plan-meta">Bereich: <span id="dash-sector">—</span></div>
-        <div class="plan-meta">Kundennummer: <span id="dash-code">—</span></div>
-        <div><span class="status-badge status-active" id="dash-status">Aktiv</span></div>
-      </div>
-
-      <!-- Nutzung / Credits -->
-      <div class="card">
-        <div class="card-title">Nachrichten-Nutzung</div>
-        <div class="progress-label">
-          <span>Verwendet</span>
-          <strong id="usage-numbers">— / —</strong>
-        </div>
-        <div class="progress-bar-wrap">
-          <div class="progress-bar-fill progress-green" id="usage-bar" style="width:0%;"></div>
-        </div>
-        <div class="progress-pct" id="usage-pct">0%</div>
-      </div>
-
-      <!-- Rechnungsdaten -->
-      <div class="card">
-        <div class="card-title">Rechnungsdaten</div>
-        <div class="billing-row">
-          <div class="billing-item"><div class="label">Unternehmen</div><span id="dash-company">—</span></div>
-          <div class="billing-item"><div class="label">E-Mail</div><span id="dash-email">—</span></div>
-          <div class="billing-item"><div class="label">Ansprechpartner</div><span id="dash-name">—</span></div>
-          <div class="billing-item"><div class="label">Kunde seit</div><span id="dash-since">—</span></div>
-        </div>
-      </div>
-
-      <!-- Rechnungen -->
-      <div class="card">
-        <div class="card-title">Rechnungen</div>
-        <ul class="invoice-list" id="invoice-list">
-          <li class="no-invoices">Keine Rechnungen vorhanden.</li>
-        </ul>
-      </div>
-
-      <!-- Upgrade / Add-on -->
-      <div class="card card-full upgrade-card">
-        <div class="upgrade-title">Upgrade oder Erweiterung buchen</div>
-        <div class="upgrade-desc">Mehr Nachrichten oder zusätzliche Funktionen? Erweitere deinen Plan mit einem Klick.</div>
-        <a class="btn-upgrade" id="upgrade-link" href="/addon/">Upgrade / Add-on buchen</a>
-      </div>
-
-    </div>
+  <div class="err" id="err"></div>
+  <label>E-Mail oder Kundencode</label>
+  <input type="text" id="identifier" placeholder="K100001 oder ihre@email.de">
+  <label>Passwort</label>
+  <input type="password" id="pw" placeholder="••••••••">
+  <button id="btn" onclick="login()">Einloggen</button>
+  <div class="link">
+    Noch kein Konto? <a href="/onboarding/">Jetzt registrieren →</a><br>
+    <a href="javascript:void(0)" onclick="forgotPw()" style="margin-top:8px;display:inline-block">Passwort vergessen?</a>
   </div>
 </div>
 
 <script>
-  // State
-  var currentCustomerCode = "";
-
-  // Hilfsfunktionen
-  function showScreen(id) {
-    var screens = document.querySelectorAll(".screen");
-    for (var i = 0; i < screens.length; i++) {
-      screens[i].classList.remove("active");
-    }
-    document.getElementById(id).classList.add("active");
-  }
-
-  function showLoading(visible) {
-    var el = document.getElementById("loading-overlay");
-    if (visible) {
-      el.classList.add("visible");
-    } else {
-      el.classList.remove("visible");
-    }
-  }
-
-  function showLoginError(msg) {
-    var el = document.getElementById("login-error");
-    el.textContent = msg || "Ungültige Zugangsdaten. Bitte versuche es erneut.";
-    el.classList.add("visible");
-  }
-
-  function hideLoginError() {
-    document.getElementById("login-error").classList.remove("visible");
-  }
-
-  function setLoginBusy(busy) {
-    var btn = document.getElementById("login-btn");
-    btn.disabled = busy;
-    btn.textContent = busy ? "Wird angemeldet..." : "Anmelden";
-  }
-
-  function formatDate(str) {
-    if (!str) return "—";
-    var d = new Date(str);
-    if (isNaN(d.getTime())) return str;
-    var months = ["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"];
-    return d.getDate() + ". " + months[d.getMonth()] + " " + d.getFullYear();
-  }
-
-  // Login
-  function doLogin() {
-    hideLoginError();
-    var customerCode = document.getElementById("login-code").value.trim();
-    var password = document.getElementById("login-password").value;
-
-    if (!customerCode || !password) {
-      showLoginError("Bitte Kundennummer/E-Mail und Passwort eingeben.");
-      return;
-    }
-
-    setLoginBusy(true);
-    showLoading(true);
-
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://n8n.leolan.net/webhook/kunden-login", true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState !== 4) return;
-      showLoading(false);
-      setLoginBusy(false);
-      if (xhr.status >= 200 && xhr.status < 300) {
-        var data;
-        try { data = JSON.parse(xhr.responseText); } catch(e) { data = {}; }
-        if (data.success && data.customerCode) {
-          currentCustomerCode = data.customerCode;
-          loadDashboard(data.customerCode);
-        } else {
-          showLoginError(data.message || "Ungültige Zugangsdaten. Bitte versuche es erneut.");
-        }
+function login() {
+  var id = document.getElementById('identifier').value.trim();
+  var pw = document.getElementById('pw').value;
+  var btn = document.getElementById('btn');
+  var err = document.getElementById('err');
+  err.style.display = 'none';
+  if (!id || !pw) { err.textContent = 'Bitte alle Felder ausfüllen.'; err.style.display = 'block'; return; }
+  btn.disabled = true;
+  btn.textContent = 'Wird angemeldet...';
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'https://n8n.leolan.net/webhook/kunden-login', true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.onload = function() {
+    btn.disabled = false;
+    btn.textContent = 'Einloggen';
+    var data = {};
+    try { data = JSON.parse(xhr.responseText); } catch(e) {}
+    if (data.success && data.customerCode) {
+      if (data.sectorMismatch) {
+        err.textContent = data.error || 'Falscher Login-Bereich.';
+        err.style.display = 'block';
       } else {
-        showLoginError("Verbindungsfehler. Bitte versuche es erneut.");
+        window.location.href = '/portal/dashboard.html?code=' + encodeURIComponent(data.customerCode);
       }
-    };
-    xhr.onerror = function() {
-      showLoading(false);
-      setLoginBusy(false);
-      showLoginError("Verbindungsfehler. Bitte Internetverbindung prüfen.");
-    };
-    xhr.send(JSON.stringify({ customerCode: customerCode, password: password }));
-  }
-
-  // Dashboard laden
-  function loadDashboard(customerCode) {
-    showLoading(true);
-
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://n8n.leolan.net/webhook/kunden-dashboard", true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState !== 4) return;
-      showLoading(false);
-      if (xhr.status >= 200 && xhr.status < 300) {
-        var data;
-        try { data = JSON.parse(xhr.responseText); } catch(e) { data = {}; }
-        if (data.success) {
-          renderDashboard(data);
-          showScreen("dashboard-screen");
-        } else {
-          showLoginError("Kontodaten konnten nicht geladen werden. Bitte versuche es erneut.");
-        }
-      } else {
-        showLoginError("Kontodaten konnten nicht geladen werden. Bitte versuche es erneut.");
-      }
-    };
-    xhr.onerror = function() {
-      showLoading(false);
-      showLoginError("Verbindungsfehler. Bitte versuche es erneut.");
-    };
-    xhr.send(JSON.stringify({ customerCode: customerCode }));
-  }
-
-  function renderDashboard(data) {
-    var acc = data.account || {};
-    var usage = data.usageStats || {};
-
-    // Begrüßung
-    var name = acc.name || acc.companyName || "";
-    if (name) {
-      document.getElementById("dash-greeting").textContent = "Willkommen, " + name + "!";
+    } else if (data.blocked) {
+      err.textContent = 'Zu viele Versuche. Bitte 15 Minuten warten.';
+      err.style.display = 'block';
     } else {
-      document.getElementById("dash-greeting").textContent = "Willkommen!";
+      err.textContent = data.error || 'Ungültige Anmeldedaten.';
+      err.style.display = 'block';
     }
-    document.getElementById("dash-subtitle").textContent = "Hier ist deine LeoLan-Kontoübersicht.";
-
-    // Topbar
-    document.getElementById("topbar-code").textContent = acc.customerCode || acc.email || "";
-
-    // Paket-Info
-    document.getElementById("dash-plan").textContent = acc.paket || "Standard";
-    document.getElementById("dash-sector").textContent = data.sector || "—";
-    document.getElementById("dash-code").textContent = acc.customerCode || "—";
-
-    // Status-Badge
-    var statusBadge = document.getElementById("dash-status");
-    statusBadge.textContent = "Aktiv";
-    statusBadge.className = "status-badge status-active";
-
-    // Nutzung
-    var used = parseInt(usage.messagesUsed, 10) || 0;
-    var limit = parseInt(usage.messagesLimit, 10) || 0;
-    var pct = limit > 0 ? Math.min(100, Math.round((used / limit) * 100)) : 0;
-
-    document.getElementById("usage-numbers").textContent = used + " / " + limit;
-    document.getElementById("usage-pct").textContent = pct + "% genutzt";
-
-    var bar = document.getElementById("usage-bar");
-    bar.style.width = pct + "%";
-    bar.className = "progress-bar-fill";
-    if (pct >= 90) {
-      bar.className = "progress-bar-fill progress-red";
-    } else if (pct >= 70) {
-      bar.className = "progress-bar-fill progress-orange";
-    } else {
-      bar.className = "progress-bar-fill progress-green";
-    }
-
-    // Rechnungsdaten
-    document.getElementById("dash-company").textContent = acc.companyName || "—";
-    document.getElementById("dash-email").textContent = acc.email || "—";
-    document.getElementById("dash-name").textContent = acc.name || "—";
-    document.getElementById("dash-since").textContent = formatDate(acc.createdAt);
-
-    // Rechnungen
-    var invoiceList = document.getElementById("invoice-list");
-    invoiceList.innerHTML = "";
-    var invoices = acc.invoices || data.invoices || [];
-    if (invoices.length === 0) {
-      invoiceList.innerHTML = '<li class="no-invoices">Keine Rechnungen vorhanden.</li>';
-    } else {
-      for (var i = 0; i < invoices.length; i++) {
-        var inv = invoices[i];
-        var li = document.createElement("li");
-        li.className = "invoice-item";
-        li.innerHTML =
-          '<span>' +
-            '<div style="font-weight:500;">' + (inv.id || inv.number || "Rechnung #" + (i + 1)) + '</div>' +
-            '<div class="inv-date">' + formatDate(inv.date || inv.createdAt) + '</div>' +
-          '</span>' +
-          '<span style="display:flex;align-items:center;gap:10px;">' +
-            '<span class="inv-amount">' + (inv.amount || "—") + '</span>' +
-            '<span class="inv-status">' + (inv.status || "Bezahlt") + '</span>' +
-          '</span>';
-        invoiceList.appendChild(li);
-      }
-    }
-
-    // Upgrade-Link
-    var code = acc.customerCode || "";
-    var upgradeUrl = "/addon/?code=" + encodeURIComponent(code);
-    if (acc.email) upgradeUrl += "&email=" + encodeURIComponent(acc.email);
-    if (acc.companyName) upgradeUrl += "&company=" + encodeURIComponent(acc.companyName);
-    document.getElementById("upgrade-link").href = upgradeUrl;
-  }
-
-  function doLogout() {
-    currentCustomerCode = "";
-    document.getElementById("login-code").value = "";
-    document.getElementById("login-password").value = "";
-    hideLoginError();
-    showScreen("login-screen");
-  }
-
-  // Enter-Taste
-  document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("login-password").addEventListener("keydown", function(e) {
-      if ((e.key || "") === "Enter" || e.keyCode === 13) { doLogin(); }
-    });
-    document.getElementById("login-code").addEventListener("keydown", function(e) {
-      if ((e.key || "") === "Enter" || e.keyCode === 13) {
-        document.getElementById("login-password").focus();
-      }
-    });
-  });
+  };
+  xhr.onerror = function() { btn.disabled = false; btn.textContent = 'Einloggen'; err.textContent = 'Verbindungsfehler.'; err.style.display = 'block'; };
+  xhr.send(JSON.stringify({customerCode: id, email: id, password: pw}));
+}
+function forgotPw() {
+  var email = prompt('E-Mail-Adresse eingeben:');
+  if (!email) return;
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'https://n8n.leolan.net/webhook/kunden-dashboard', true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.onload = function() { alert('Falls ein Konto existiert, wurde eine E-Mail gesendet.'); };
+  xhr.send(JSON.stringify({action: 'forgot-password', email: email}));
+}
 </script>
 </body>
 </html>
