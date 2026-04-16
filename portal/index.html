@@ -6,882 +6,702 @@
   <title>Kunden-Portal | LeoLan Digital</title>
   <meta name="robots" content="noindex,nofollow" />
   <style>
-    :root {
-      --bg: #07111f;
-      --bg-2: #0d1b31;
-      --panel: rgba(12, 21, 39, 0.92);
-      --panel-2: rgba(18, 31, 56, 0.96);
-      --border: rgba(255,255,255,0.09);
-      --text: #f6f8ff;
-      --muted: rgba(246,248,255,0.68);
-      --accent: #f5a623;
-      --accent-2: #ffbf4d;
-      --success: #35d48f;
-      --danger: #ff6b76;
-      --shadow: 0 30px 90px rgba(0,0,0,0.42);
-      --radius: 24px;
-      --font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      min-height: 100%;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      background: #0e1621;
+      color: #e8eaed;
+    }
+    a { color: #5e81f4; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── SCREEN MANAGEMENT ── */
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    /* ── LOGIN SCREEN ── */
+    #login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .login-card {
+      background: #17212b;
+      border-radius: 16px;
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .login-logo {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .login-logo svg {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 12px;
+    }
+    .login-logo h1 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #e8eaed;
+      line-height: 1.3;
+    }
+    .login-logo p {
+      font-size: 14px;
+      color: #8a9bb8;
+      margin-top: 4px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: #8a9bb8;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 12px 16px;
+      background: #0e1621;
+      border: 1px solid #2a3a4d;
+      border-radius: 8px;
+      color: #e8eaed;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus {
+      border-color: #5e81f4;
+    }
+    .form-group input::placeholder {
+      color: #4a5a6e;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 14px 24px;
+      background: #5e81f4;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, opacity 0.2s;
+      text-align: center;
+    }
+    .btn:hover { background: #4a6de0; }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid #2a3a4d;
+      color: #8a9bb8;
+    }
+    .btn-secondary:hover { background: #17212b; border-color: #5e81f4; color: #5e81f4; }
+    .btn-danger {
+      background: transparent;
+      border: 1px solid #e8647c;
+      color: #e8647c;
+      font-size: 13px;
+      padding: 8px 16px;
+      width: auto;
+    }
+    .btn-danger:hover { background: rgba(232,100,124,0.1); }
+    .error-msg {
+      background: rgba(232,100,124,0.15);
+      border: 1px solid rgba(232,100,124,0.4);
+      color: #e8647c;
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 14px;
+      margin-bottom: 20px;
+      display: none;
+    }
+    .error-msg.visible { display: block; }
+
+    /* ── DASHBOARD SCREEN ── */
+    #dashboard-screen {
+      min-height: 100vh;
+      padding: 0;
+    }
+    .topbar {
+      background: #17212b;
+      border-bottom: 1px solid #1e2d3d;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+    .topbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .topbar-brand svg {
+      width: 28px;
+      height: 28px;
+    }
+    .topbar-brand span {
+      font-size: 15px;
+      font-weight: 600;
+      color: #e8eaed;
+    }
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .topbar-user {
+      font-size: 13px;
+      color: #8a9bb8;
+    }
+    .dashboard-content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px 24px;
+    }
+    .dashboard-greeting {
+      font-size: 22px;
+      font-weight: 600;
+      color: #e8eaed;
+      margin-bottom: 8px;
+    }
+    .dashboard-subtitle {
+      font-size: 14px;
+      color: #8a9bb8;
+      margin-bottom: 32px;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .card {
+      background: #17212b;
+      border-radius: 12px;
+      padding: 24px;
+      border: 1px solid #1e2d3d;
+    }
+    .card-full {
+      grid-column: 1 / -1;
+    }
+    .card-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #8a9bb8;
+      margin-bottom: 16px;
+    }
+    .plan-name {
+      font-size: 22px;
+      font-weight: 700;
+      color: #e8eaed;
+      margin-bottom: 6px;
+    }
+    .plan-meta {
+      font-size: 13px;
+      color: #8a9bb8;
+      margin-bottom: 4px;
+    }
+    .status-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+    .status-active { background: rgba(76,217,123,0.15); color: #4cd97b; }
+    .status-inactive { background: rgba(232,100,124,0.15); color: #e8647c; }
+    .status-trial { background: rgba(244,165,39,0.15); color: #f4a527; }
+
+    /* Progress bar */
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: #8a9bb8;
+      margin-bottom: 10px;
+    }
+    .progress-label strong {
+      color: #e8eaed;
+    }
+    .progress-bar-wrap {
+      background: #0e1621;
+      border-radius: 6px;
+      height: 10px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 6px;
+      transition: width 0.6s;
+    }
+    .progress-green { background: #4cd97b; }
+    .progress-orange { background: #f4a527; }
+    .progress-red { background: #e8647c; }
+    .progress-pct {
+      font-size: 12px;
+      color: #8a9bb8;
+      text-align: right;
     }
 
-    * { box-sizing: border-box; }
-    html, body { margin: 0; min-height: 100%; }
-    body {
-      font-family: var(--font);
-      color: var(--text);
-      background:
-        radial-gradient(circle at top left, rgba(245,166,35,0.16), transparent 28%),
-        radial-gradient(circle at top right, rgba(255,255,255,0.05), transparent 22%),
-        linear-gradient(180deg, #050a14 0%, #08111f 44%, #07111f 100%);
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
+    /* Billing */
+    .billing-row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .billing-item {
+      font-size: 14px;
+      color: #e8eaed;
+    }
+    .billing-item .label {
+      color: #8a9bb8;
+      font-size: 12px;
     }
 
-    .shell { width: min(1180px, calc(100% - 24px)); margin: 0 auto; padding: 22px 0 60px; }
-    .card, .hero, .login-card, .chat-panel {
-      background: linear-gradient(180deg, var(--panel), var(--panel-2));
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(16px);
+    /* Invoices */
+    .invoice-list { list-style: none; }
+    .invoice-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #1e2d3d;
+      font-size: 14px;
+    }
+    .invoice-item:last-child { border-bottom: none; }
+    .invoice-item .inv-date { color: #8a9bb8; font-size: 12px; }
+    .invoice-item .inv-amount { color: #4cd97b; font-weight: 600; }
+    .invoice-item .inv-status {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      background: rgba(76,217,123,0.12);
+      color: #4cd97b;
+    }
+    .no-invoices {
+      font-size: 14px;
+      color: #8a9bb8;
+      text-align: center;
+      padding: 16px 0;
     }
 
-    .login-screen { min-height: 100vh; display: grid; place-items: center; padding: 20px; }
-    .login-card { width: min(460px, 100%); padding: 30px; border-radius: 28px; }
-    .badge {
-      display: inline-flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 999px;
-      background: rgba(245,166,35,0.12); border: 1px solid rgba(245,166,35,0.22); color: #ffd48a;
-      font-size: .84rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase;
+    /* Upgrade card */
+    .upgrade-card {
+      background: linear-gradient(135deg, #1a2540 0%, #17212b 100%);
+      border: 1px solid #5e81f4;
     }
-    .badge-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 6px rgba(245,166,35,0.14); }
-    h1,h2,h3,p { margin: 0; }
-    .login-card h1 { font-size: clamp(1.9rem, 4vw, 2.6rem); margin: 18px 0 10px; }
-    .login-card p { color: var(--muted); line-height: 1.65; margin-bottom: 20px; }
-    .stack { display: grid; gap: 14px; }
-    .row { display: flex; gap: 14px; flex-wrap: wrap; }
-    .input, .button, .ghost, .textarea, .select {
-      width: 100%; font: inherit; border-radius: 16px; transition: .2s ease; outline: none;
+    .upgrade-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #e8eaed;
+      margin-bottom: 6px;
     }
-    .input, .textarea, .select {
-      border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: var(--text);
-      padding: 15px 16px;
+    .upgrade-desc {
+      font-size: 13px;
+      color: #8a9bb8;
+      margin-bottom: 16px;
     }
-    .textarea { min-height: 120px; resize: vertical; }
-    .input:focus, .textarea:focus, .select:focus {
-      border-color: rgba(245,166,35,0.78); box-shadow: 0 0 0 4px rgba(245,166,35,0.12);
+    .btn-upgrade {
+      display: inline-block;
+      padding: 10px 24px;
+      background: #5e81f4;
+      color: #fff;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
     }
-    .button, .ghost {
-      border: none; cursor: pointer; font-weight: 800; padding: 15px 18px;
-    }
-    .button { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #1e1300; }
-    .ghost { background: rgba(255,255,255,0.06); color: var(--text); border: 1px solid rgba(255,255,255,0.09); }
-    .button:hover, .ghost:hover { transform: translateY(-1px); }
-    .button:disabled, .ghost:disabled { opacity: .6; cursor: wait; }
-    .hint, .status, .error { font-size: .94rem; min-height: 20px; }
-    .hint, .status { color: var(--muted); }
-    .error { color: var(--danger); }
-    .success { color: var(--success); }
+    .btn-upgrade:hover { background: #4a6de0; text-decoration: none; }
 
-    .app { display: none; }
-    .app.visible { display: block; }
-    .hero {
-      border-radius: 30px; padding: 28px; display: flex; justify-content: space-between; gap: 20px; align-items: center; margin-bottom: 18px;
-      background: linear-gradient(135deg, rgba(245,166,35,0.14), rgba(13,27,49,0.94) 40%, rgba(7,17,31,0.98) 100%);
+    /* Loading */
+    .loading-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(14,22,33,0.85);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 16px;
     }
-    .hero p { color: var(--muted); line-height: 1.7; margin-top: 10px; max-width: 760px; }
-    .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
-    .pill {
-      display: inline-flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 999px;
-      background: rgba(255,255,255,0.05); color: var(--muted); border: 1px solid rgba(255,255,255,0.08);
+    .loading-overlay.visible {
+      display: flex;
     }
-    .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--success); }
-    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 18px; }
-    .span-4 { grid-column: span 4; }
-    .span-6 { grid-column: span 6; }
-    .span-8 { grid-column: span 8; }
-    .span-12 { grid-column: span 12; }
-    .card { border-radius: var(--radius); padding: 22px; overflow: hidden; }
-    .card h2 { font-size: 1.15rem; margin-bottom: 6px; }
-    .card .sub { color: var(--muted); line-height: 1.65; margin-bottom: 18px; }
-    .metric { font-size: 2rem; font-weight: 900; color: var(--accent-2); }
-    .label { color: var(--muted); margin-top: 8px; }
-    .dropzone {
-      border: 1.5px dashed rgba(245,166,35,0.34); border-radius: 20px; padding: 22px; background: rgba(245,166,35,0.05);
-      text-align: center; color: var(--muted);
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid #1e2d3d;
+      border-top-color: #5e81f4;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
     }
-    .dropzone.dragover { background: rgba(245,166,35,0.1); border-color: rgba(245,166,35,0.7); color: var(--text); }
-    .file-list { display: grid; gap: 10px; margin-top: 14px; }
-    .file-item {
-      padding: 12px 14px; border-radius: 14px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.06);
-      color: var(--muted); font-size: .93rem;
+    .loading-text {
+      font-size: 14px;
+      color: #8a9bb8;
     }
-    .hours-grid { display: grid; grid-template-columns: 120px 1fr 1fr; gap: 10px; }
-    .day-pill { align-self: center; font-weight: 700; color: var(--text); }
-    .card-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
-    .section-kicker {
-      display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px;
-      background: rgba(245,166,35,0.11); border: 1px solid rgba(245,166,35,0.18); color: #ffd48a;
-      font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 14px;
-    }
-    .plan-overview { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 14px; }
-    .plan-stat {
-      padding: 18px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.06);
-      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
-    }
-    .plan-stat.highlight {
-      background: linear-gradient(135deg, rgba(245,166,35,0.18), rgba(245,166,35,0.05));
-      border-color: rgba(245,166,35,0.2);
-    }
-    .plan-stat .eyebrow { color: var(--muted); font-size: .83rem; margin-bottom: 8px; }
-    .plan-stat .value { font-size: 1.75rem; font-weight: 900; color: var(--text); }
-    .plan-stat .detail { margin-top: 8px; color: var(--muted); font-size: .92rem; line-height: 1.55; }
-    .addons-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; margin-top: 18px; }
-    .addon-card {
-      position: relative; padding: 20px; border-radius: 22px; overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.07);
-      background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.02));
-    }
-    .addon-card.featured { border-color: rgba(245,166,35,0.24); box-shadow: inset 0 0 0 1px rgba(245,166,35,0.08); }
-    .addon-card-header { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom: 14px; }
-    .addon-icon {
-      width: 52px; height: 52px; border-radius: 16px; display:grid; place-items:center; font-size: 1.4rem;
-      background: rgba(245,166,35,0.12); border: 1px solid rgba(245,166,35,0.18);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
-    }
-    .addon-tag {
-      display:inline-flex; align-items:center; gap:6px; padding: 6px 10px; border-radius: 999px;
-      background: rgba(255,255,255,0.05); color: var(--muted); font-size:.76rem; font-weight:700;
-      border: 1px solid rgba(255,255,255,0.06);
-    }
-    .addon-title { font-size: 1.08rem; font-weight: 800; margin-bottom: 6px; }
-    .addon-price { font-size: 1.55rem; font-weight: 900; color: var(--accent-2); margin-bottom: 10px; }
-    .addon-card p { color: var(--muted); line-height: 1.6; min-height: 48px; margin-bottom: 16px; }
-    .addon-meta { font-size: .84rem; color: rgba(255,255,255,0.56); margin-bottom: 14px; }
-    .addon-card .button { margin-top: auto; }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-    .chat-widget { position: fixed; right: 18px; bottom: 18px; z-index: 30; }
-    .chat-toggle {
-      width: 62px; height: 62px; border-radius: 999px; border: none; cursor: pointer; color: #201400;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow: 0 20px 45px rgba(245,166,35,0.32); font-size: 24px; font-weight: 900;
-    }
-    .chat-panel {
-      position: absolute; right: 0; bottom: 78px; width: min(390px, calc(100vw - 24px)); border-radius: 24px; overflow: hidden; display: none;
-    }
-    .chat-panel.open { display: block; }
-    .chat-head {
-      padding: 16px 18px; display: flex; justify-content: space-between; gap: 12px; align-items: center; border-bottom: 1px solid var(--border);
-      background: rgba(255,255,255,0.03);
-    }
-    .chat-head small { color: var(--muted); display: block; margin-top: 4px; }
-    .chat-body { max-height: 360px; overflow: auto; padding: 16px; display: grid; gap: 12px; }
-    .chat-empty { color: var(--muted); font-size: .94rem; line-height: 1.6; }
-    .bubble {
-      max-width: 85%; padding: 12px 14px; border-radius: 18px; line-height: 1.5; font-size: .95rem; white-space: pre-wrap; word-break: break-word;
-      border: 1px solid rgba(255,255,255,0.06);
-    }
-    .bubble.customer { margin-left: auto; background: rgba(245,166,35,0.16); color: #fff3dd; border-color: rgba(245,166,35,0.2); }
-    .bubble.admin { background: rgba(255,255,255,0.06); color: var(--text); }
-    .bubble-meta { margin-top: 6px; font-size: .76rem; color: rgba(255,255,255,0.52); }
-    .chat-compose { padding: 16px; border-top: 1px solid var(--border); display: grid; gap: 10px; }
-
-    @media (max-width: 980px) {
-      .span-4, .span-6, .span-8 { grid-column: span 12; }
-      .plan-overview { grid-template-columns: repeat(2, minmax(0,1fr)); }
-      .addons-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
-    }
-    @media (max-width: 760px) {
-      .shell { width: min(100% - 18px, 1180px); }
-      .hero { flex-direction: column; align-items: stretch; }
-      .hero-actions > * { width: 100%; }
-      .hours-grid { grid-template-columns: 1fr; }
-      .card-actions .button, .card-actions .ghost { width: 100%; }
-      .chat-panel { width: min(100vw - 18px, 390px); }
-      .plan-overview, .addons-grid { grid-template-columns: 1fr; }
+    /* Responsive */
+    @media (max-width: 640px) {
+      .cards-grid { grid-template-columns: 1fr; }
+      .login-card { padding: 32px 24px; }
+      .topbar-user { display: none; }
+      .dashboard-content { padding: 20px 16px; }
     }
   </style>
 </head>
 <body>
-  <section class="login-screen" id="loginScreen">
+
+<!-- Lade-Overlay -->
+<div class="loading-overlay" id="loading-overlay">
+  <div class="spinner"></div>
+  <div class="loading-text">Wird geladen...</div>
+</div>
+
+<!-- ══ LOGIN-SCREEN ══ -->
+<div class="screen active" id="login-screen">
+  <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;">
     <div class="login-card">
-      <div class="badge"><span class="badge-dot"></span> LeoLan Digital · Kunden-Portal</div>
-      <h1>Ihre Inhalte selbst aktualisieren</h1>
-      <p>Speisekarte, Fotos, Öffnungszeiten und Nachrichten direkt ins System schicken — ohne Leo anzuschreiben.</p>
-      <div class="stack">
-        <input class="input" id="codeInput" type="text" placeholder="Kunden-Code, z. B. TEST01" maxlength="12" autocomplete="one-time-code" />
-        <button class="button" id="loginButton" type="button">Einloggen</button>
-        <div class="hint">Der Code wird nach dem Onboarding vergeben.</div>
-        <div class="error" id="loginError"></div>
+      <div class="login-logo">
+        <!-- LeoLan Logo -->
+        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="48" height="48" rx="12" fill="#5e81f4"/>
+          <text x="50%" y="56%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Inter,Arial,sans-serif" font-size="20" font-weight="700">LL</text>
+        </svg>
+        <h1>Kunden-Portal</h1>
+        <p>LeoLan Digital &mdash; Zugang zum Kundenkonto</p>
       </div>
+
+      <div class="error-msg" id="login-error">Ungültige Zugangsdaten. Bitte versuche es erneut.</div>
+
+      <div class="form-group">
+        <label for="login-code">Kundennummer oder E-Mail</label>
+        <input type="text" id="login-code" placeholder="K-12345 oder name@beispiel.de" autocomplete="username" />
+      </div>
+      <div class="form-group">
+        <label for="login-password">Passwort</label>
+        <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password" />
+      </div>
+      <button class="btn" id="login-btn" onclick="doLogin()">Anmelden</button>
+
+      <p style="text-align:center;font-size:13px;color:#8a9bb8;margin-top:20px;">
+        Kein Zugang? <a href="mailto:support@leolan.net">Support kontaktieren</a>
+      </p>
     </div>
-  </section>
+  </div>
+</div>
 
-  <main class="app" id="app">
-    <div class="shell">
-      <section class="hero">
-        <div>
-          <div class="badge"><span class="badge-dot"></span> Self-Service Portal</div>
-          <h1 id="welcomeTitle" style="margin-top:16px;font-size:clamp(1.9rem,4vw,3rem)">Willkommen</h1>
-          <p>Hier können Sie Ihre aktuellen Restaurantdaten hochladen. Änderungen landen direkt im LeoLan-System und werden an das Team gemeldet.</p>
-        </div>
-        <div class="hero-actions">
-          <div class="pill"><span class="dot"></span><span id="authStatus">Angemeldet</span></div>
-          <button class="ghost" id="logoutButton" type="button">Logout</button>
-        </div>
-      </section>
-
-      <section class="grid">
-        <article class="card span-4">
-          <h2>Konto</h2>
-          <p class="sub">Aktive Portal-Zuordnung.</p>
-          <div class="metric" id="restaurantName">—</div>
-          <div class="label">Slug: <span id="restaurantSlug">—</span></div>
-        </article>
-
-        <article class="card span-4">
-          <h2>Uploads</h2>
-          <p class="sub">Status Ihrer letzten Aktionen.</p>
-          <div class="metric" id="uploadMetric">0</div>
-          <div class="label">Uploads in dieser Sitzung</div>
-        </article>
-
-        <article class="card span-4">
-          <h2>Support-Chat</h2>
-          <p class="sub">Unten rechts schreiben. Der Verlauf bleibt lokal im Browser sichtbar.</p>
-          <div class="metric" id="chatMetric">0</div>
-          <div class="label">Nachrichten lokal gespeichert</div>
-        </article>
-
-        <article class="card span-12" id="upgradeSection">
-          <div class="section-kicker">⚡ Direkt im Portal buchbar</div>
-          <h2>Plan, Upgrades & Restaurant Add-Ons</h2>
-          <p class="sub">Ihr aktueller Tarif, Verbrauch und alle buchbaren Add-Ons auf einen Blick. Mit einem Klick öffnet sich Stripe Checkout.</p>
-          <div class="plan-overview">
-            <div class="plan-stat highlight">
-              <div class="eyebrow">Aktueller Plan</div>
-              <div class="value" id="planMetric">—</div>
-              <div class="detail" id="planDetail">Ihr Basis-Tarif im Portal.</div>
-            </div>
-            <div class="plan-stat">
-              <div class="eyebrow">Verbrauch diese Woche</div>
-              <div class="value" id="weekUsageMetric">—</div>
-              <div class="detail">Nachrichten in den letzten 7 Tagen.</div>
-            </div>
-            <div class="plan-stat">
-              <div class="eyebrow">Verbrauch diesen Monat</div>
-              <div class="value" id="monthUsageMetric">—</div>
-              <div class="detail">Aktueller Stand vs. Kontingent.</div>
-            </div>
-            <div class="plan-stat">
-              <div class="eyebrow">Aktive Add-Ons</div>
-              <div class="value" id="activeAddonsMetric">0</div>
-              <div class="detail" id="activeAddonsDetail">Noch keine Zusatzmodule gebucht.</div>
-            </div>
-          </div>
-          <div class="addons-grid" id="upgradeCards"></div>
-          <div class="status" id="upgradeStatus"></div>
-        </article>
-
-        <article class="card span-6">
-          <h2>Speisekarte hochladen</h2>
-          <p class="sub">PDF oder Foto, maximal 10 MB.</p>
-          <div class="stack">
-            <div class="dropzone" id="menuDropzone">
-              Datei hier hineinziehen oder unten auswählen.
-              <div style="margin-top:12px"><input class="input" id="menuFile" type="file" accept=".pdf,image/*" /></div>
-            </div>
-            <div class="file-list" id="menuPreview"></div>
-            <div class="card-actions">
-              <button class="button" id="menuUploadButton" type="button">Speisekarte senden</button>
-            </div>
-            <div class="status" id="menuStatus"></div>
-          </div>
-        </article>
-
-        <article class="card span-6">
-          <h2>Speisefotos hochladen</h2>
-          <p class="sub">Bis zu 10 Fotos. Drag & Drop funktioniert auch am Handy über Dateiauswahl.</p>
-          <div class="stack">
-            <div class="dropzone" id="photosDropzone">
-              Bis zu 10 Bilder hier hineinziehen.
-              <div style="margin-top:12px"><input class="input" id="photosFile" type="file" accept="image/*" multiple /></div>
-            </div>
-            <div class="file-list" id="photosPreview"></div>
-            <div class="card-actions">
-              <button class="button" id="photosUploadButton" type="button">Fotos senden</button>
-            </div>
-            <div class="status" id="photosStatus"></div>
-          </div>
-        </article>
-
-        <article class="card span-12">
-          <h2>Öffnungszeiten</h2>
-          <p class="sub">Einfach eintragen und als JSON ans System senden.</p>
-          <div class="stack" id="hoursForm"></div>
-          <div class="card-actions">
-            <button class="button" id="hoursSaveButton" type="button">Öffnungszeiten speichern</button>
-          </div>
-          <div class="status" id="hoursStatus"></div>
-        </article>
-      </section>
+<!-- ══ DASHBOARD-SCREEN ══ -->
+<div class="screen" id="dashboard-screen">
+  <div class="topbar">
+    <div class="topbar-brand">
+      <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="28" height="28" rx="7" fill="#5e81f4"/>
+        <text x="50%" y="56%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700">LL</text>
+      </svg>
+      <span>Kunden-Portal</span>
     </div>
-  </main>
-
-  <div class="chat-widget">
-    <button class="chat-toggle" id="chatToggle" type="button">💬</button>
-    <section class="chat-panel" id="chatPanel">
-      <div class="chat-head">
-        <div>
-          <strong>Nachrichten an LeoLan</strong>
-          <small>Einfach gehalten, aber praktisch.</small>
-        </div>
-        <button class="ghost" id="chatClose" type="button" style="width:auto;padding:10px 12px">✕</button>
-      </div>
-      <div class="chat-body" id="chatBody"></div>
-      <div class="chat-compose">
-        <input class="input" id="chatEmail" type="email" placeholder="Ihre E-Mail für Antworten" />
-        <textarea class="textarea" id="chatMessage" placeholder="Ihre Nachricht an LeoLan Digital"></textarea>
-        <button class="button" id="chatSend" type="button">Nachricht senden</button>
-        <div class="status" id="chatStatus"></div>
-      </div>
-    </section>
+    <div class="topbar-right">
+      <span class="topbar-user" id="topbar-code"></span>
+      <button class="btn btn-danger" onclick="doLogout()">Abmelden</button>
+    </div>
   </div>
 
-  <script>
-    const AUTH_URL = 'https://n8n.leolan.net/webhook/portal-auth';
-    const UPLOAD_URL = 'https://n8n.leolan.net/webhook/portal-upload';
-    const CHAT_URL = 'https://n8n.leolan.net/webhook/b2b-chat';
-    const CHAT_HISTORY_URL = 'https://n8n.leolan.net/webhook/b2b-chat/history';
-    const ADDON_URL = 'https://n8n.leolan.net/webhook/portal-addon';
-    const ADDON_STATUS_URL = 'https://n8n.leolan.net/webhook/portal-addon-status';
-    const AUTH_KEY = 'leolan-portal-auth-v1';
-    const CHAT_CACHE_PREFIX = 'leolan-portal-chat-';
-    const HOURS_DAYS = ['Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag','Sonntag'];
+  <div class="dashboard-content">
+    <div class="dashboard-greeting" id="dash-greeting">Willkommen!</div>
+    <div class="dashboard-subtitle" id="dash-subtitle">Hier ist deine Kontoübersicht.</div>
 
-    const loginScreen = document.getElementById('loginScreen');
-    const app = document.getElementById('app');
-    const codeInput = document.getElementById('codeInput');
-    const loginButton = document.getElementById('loginButton');
-    const loginError = document.getElementById('loginError');
-    const logoutButton = document.getElementById('logoutButton');
-    const welcomeTitle = document.getElementById('welcomeTitle');
-    const restaurantName = document.getElementById('restaurantName');
-    const restaurantSlug = document.getElementById('restaurantSlug');
-    const authStatus = document.getElementById('authStatus');
-    const uploadMetric = document.getElementById('uploadMetric');
-    const chatMetric = document.getElementById('chatMetric');
-    const planMetric = document.getElementById('planMetric');
-    const weekUsageMetric = document.getElementById('weekUsageMetric');
-    const monthUsageMetric = document.getElementById('monthUsageMetric');
-    const upgradeCards = document.getElementById('upgradeCards');
-    const upgradeStatus = document.getElementById('upgradeStatus');
-    const planDetail = document.getElementById('planDetail');
-    const activeAddonsMetric = document.getElementById('activeAddonsMetric');
-    const activeAddonsDetail = document.getElementById('activeAddonsDetail');
+    <div class="cards-grid">
 
-    const menuFile = document.getElementById('menuFile');
-    const photosFile = document.getElementById('photosFile');
-    const menuPreview = document.getElementById('menuPreview');
-    const photosPreview = document.getElementById('photosPreview');
-    const menuUploadButton = document.getElementById('menuUploadButton');
-    const photosUploadButton = document.getElementById('photosUploadButton');
-    const menuStatus = document.getElementById('menuStatus');
-    const photosStatus = document.getElementById('photosStatus');
-    const hoursForm = document.getElementById('hoursForm');
-    const hoursSaveButton = document.getElementById('hoursSaveButton');
-    const hoursStatus = document.getElementById('hoursStatus');
+      <!-- Paket-Info -->
+      <div class="card">
+        <div class="card-title">Paket &amp; Plan</div>
+        <div class="plan-name" id="dash-plan">—</div>
+        <div class="plan-meta">Bereich: <span id="dash-sector">—</span></div>
+        <div class="plan-meta">Kundennummer: <span id="dash-code">—</span></div>
+        <div><span class="status-badge status-active" id="dash-status">Aktiv</span></div>
+      </div>
 
-    const chatToggle = document.getElementById('chatToggle');
-    const chatPanel = document.getElementById('chatPanel');
-    const chatClose = document.getElementById('chatClose');
-    const chatBody = document.getElementById('chatBody');
-    const chatEmail = document.getElementById('chatEmail');
-    const chatMessage = document.getElementById('chatMessage');
-    const chatSend = document.getElementById('chatSend');
-    const chatStatus = document.getElementById('chatStatus');
-
-    const ADDON_CATALOG = [
-      { key: 'starter_to_pro', icon: '🚀', badge: 'Pro-Upgrade', title: 'Starter → Pro', price: '149€/Mo', description: 'Mehr Leistung für Starter-Kunden, mehr Reserven und Pro-Funktionen.', featured: true },
-      { key: 'messages_s', icon: '💬', badge: 'Nachrichten', title: 'Nachrichten S', price: '499€/Mo', description: '1.000 Nachrichten pro Monat.', featured: true },
-      { key: 'messages_m', icon: '📨', badge: 'Nachrichten', title: 'Nachrichten M', price: '599€/Mo', description: '2.000 Nachrichten pro Monat.' },
-      { key: 'messages_l', icon: '📈', badge: 'Nachrichten', title: 'Nachrichten L', price: '699€/Mo', description: 'Bis zu 20.000 Nachrichten pro Monat.' },
-      { key: 'instagram_autoposts', icon: '📸', badge: 'Social Media', title: 'Instagram Auto-Posts', price: '89€/Mo', description: 'Täglich KI-Posts für Ihr Instagram-Profil.' },
-      { key: 'facebook_autoposts', icon: '👍', badge: 'Social Media', title: 'Facebook Auto-Posts', price: '59€/Mo', description: 'Täglich KI-Posts für Ihre Facebook-Seite.' },
-      { key: 'review_management', icon: '⭐', badge: 'Reputation', title: 'Bewertungsmanagement', price: '89€/Mo', description: 'KI antwortet automatisch auf Reviews.' },
-      { key: 'google_business', icon: '📍', badge: 'Sichtbarkeit', title: 'Google Business', price: '79€/Mo', description: 'Profil automatisch aktuell halten.' },
-      { key: 'dashboard', icon: '📊', badge: 'Insights', title: 'Dashboard', price: '39€/Mo', description: 'Statistiken und Leistungsübersicht.' },
-      { key: 'email_monitor', icon: '📧', badge: 'Monitoring', title: 'E-Mail Monitor', price: '59€/Mo', description: 'Wichtige E-Mails automatisch erkennen.' },
-      { key: 'reels_ai_videos', icon: '🎬', badge: 'Content', title: 'Reels KI-Videos', price: '149€/Mo', description: 'Automatische Reels für mehr Reichweite.' },
-    ];
-
-    let auth = null;
-    let sessionUploads = 0;
-    let selectedMenu = null;
-    let selectedPhotos = [];
-
-    function escapeHtml(value) {
-      return String(value ?? '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-    }
-
-    function getStoredAuth() {
-      try { return JSON.parse(localStorage.getItem(AUTH_KEY) || 'null'); } catch { return null; }
-    }
-
-    function setStoredAuth(value) {
-      localStorage.setItem(AUTH_KEY, JSON.stringify(value));
-    }
-
-    function clearStoredAuth() {
-      localStorage.removeItem(AUTH_KEY);
-    }
-
-    function getChatCacheKey() {
-      return auth?.slug ? `${CHAT_CACHE_PREFIX}${auth.slug}` : null;
-    }
-
-    function getLocalMessages() {
-      const key = getChatCacheKey();
-      if (!key) return [];
-      try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch { return []; }
-    }
-
-    function setLocalMessages(messages) {
-      const key = getChatCacheKey();
-      if (!key) return;
-      localStorage.setItem(key, JSON.stringify(messages));
-      updateMetrics();
-    }
-
-    function addLocalMessage(message) {
-      const all = getLocalMessages();
-      all.push(message);
-      setLocalMessages(all);
-      renderChat();
-    }
-
-    function updateMetrics() {
-      uploadMetric.textContent = String(sessionUploads);
-      chatMetric.textContent = String(getLocalMessages().length);
-    }
-
-    function showApp() {
-      loginScreen.style.display = 'none';
-      app.classList.add('visible');
-    }
-
-    function showLogin() {
-      app.classList.remove('visible');
-      loginScreen.style.display = 'grid';
-      codeInput.focus();
-    }
-
-    function setStatus(element, text, type = 'muted') {
-      element.className = 'status';
-      if (type === 'success') element.classList.add('success');
-      if (type === 'error') element.classList.add('error');
-      element.textContent = text;
-    }
-
-    function formatBytes(bytes) {
-      if (bytes < 1024) return `${bytes} B`;
-      if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-      return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-    }
-
-    function renderFileList(target, files) {
-      target.innerHTML = files.length
-        ? files.map(file => `<div class="file-item">${escapeHtml(file.name)} · ${formatBytes(file.size)}</div>`).join('')
-        : '<div class="file-item">Noch keine Datei ausgewählt.</div>';
-    }
-
-    function buildHoursForm() {
-      hoursForm.innerHTML = HOURS_DAYS.map((day, index) => `
-        <div class="hours-grid">
-          <div class="day-pill">${escapeHtml(day)}</div>
-          <input class="input" type="text" data-hours-open="${index}" placeholder="z. B. 11:00" />
-          <input class="input" type="text" data-hours-close="${index}" placeholder="z. B. 22:00 oder geschlossen" />
+      <!-- Nutzung / Credits -->
+      <div class="card">
+        <div class="card-title">Nachrichten-Nutzung</div>
+        <div class="progress-label">
+          <span>Verwendet</span>
+          <strong id="usage-numbers">— / —</strong>
         </div>
-      `).join('');
-    }
-
-    function getHoursPayload() {
-      return HOURS_DAYS.reduce((acc, day, index) => {
-        acc[day] = {
-          open: document.querySelector(`[data-hours-open="${index}"]`)?.value.trim() || '',
-          close: document.querySelector(`[data-hours-close="${index}"]`)?.value.trim() || ''
-        };
-        return acc;
-      }, {});
-    }
-
-    async function fileToDataUrl(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(String(reader.result || ''));
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
-    }
-
-    function validateSingleFile(file, allowedTypes) {
-      if (!file) throw new Error('Bitte zuerst eine Datei auswählen.');
-      if (file.size > 10 * 1024 * 1024) throw new Error('Datei ist größer als 10 MB.');
-      if (allowedTypes === 'menu') {
-        const ok = file.type.startsWith('image/') || file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
-        if (!ok) throw new Error('Nur PDF oder Bilddateien sind erlaubt.');
-      }
-      if (allowedTypes === 'photo' && !file.type.startsWith('image/')) {
-        throw new Error('Für Speisefotos sind nur Bilder erlaubt.');
-      }
-    }
-
-    function validatePhotos(files) {
-      if (!files.length) throw new Error('Bitte mindestens ein Foto auswählen.');
-      if (files.length > 10) throw new Error('Maximal 10 Fotos erlaubt.');
-      files.forEach(file => validateSingleFile(file, 'photo'));
-    }
-
-    async function apiJson(url, options = {}) {
-      const response = await fetch(url, options);
-      const data = await response.json().catch(() => ({}));
-      if (!response.ok || data.success === false) {
-        throw new Error(data.error || `HTTP ${response.status}`);
-      }
-      return data;
-    }
-
-    async function login() {
-      const code = codeInput.value.trim().toUpperCase();
-      loginError.textContent = '';
-      if (!code) {
-        loginError.textContent = 'Bitte Kunden-Code eingeben.';
-        return;
-      }
-      loginButton.disabled = true;
-      try {
-        const data = await apiJson(AUTH_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ code })
-        });
-        auth = {
-          code,
-          token: data.token || code,
-          restaurantName: data.restaurantName,
-          slug: data.slug,
-          name: data.name || data.restaurantName,
-          customerEmail: data.customerEmail || ''
-        };
-        setStoredAuth(auth);
-        hydrateApp();
-        showApp();
-        await Promise.all([syncChatHistory(), loadUpgradeStatus()]);
-      } catch (error) {
-        loginError.textContent = error.message || 'Login fehlgeschlagen.';
-      } finally {
-        loginButton.disabled = false;
-      }
-    }
-
-    function hydrateApp() {
-      welcomeTitle.textContent = `Willkommen ${auth.restaurantName}`;
-      restaurantName.textContent = auth.restaurantName;
-      restaurantSlug.textContent = auth.slug;
-      authStatus.textContent = `Angemeldet als ${auth.code}`;
-      chatEmail.value = auth.customerEmail || '';
-      updateMetrics();
-      renderChat();
-      loadUpgradeStatus();
-    }
-
-    function logout() {
-      auth = null;
-      sessionUploads = 0;
-      selectedMenu = null;
-      selectedPhotos = [];
-      menuFile.value = '';
-      photosFile.value = '';
-      renderFileList(menuPreview, []);
-      renderFileList(photosPreview, []);
-      setStatus(menuStatus, '');
-      setStatus(photosStatus, '');
-      setStatus(hoursStatus, '');
-      setStatus(chatStatus, '');
-      clearStoredAuth();
-      updateMetrics();
-      showLogin();
-    }
-
-    async function loadUpgradeStatus() {
-      if (!auth) return;
-      try {
-        const url = `${ADDON_STATUS_URL}?code=${encodeURIComponent(auth.code)}`;
-        const data = await apiJson(url, { method: 'GET' });
-        const currentPlan = String(data.plan || 'starter');
-        const activeAddons = Array.isArray(data.activeAddons) ? data.activeAddons : [];
-        planMetric.textContent = currentPlan === 'pro' ? 'PRO' : 'STARTER';
-        planDetail.textContent = currentPlan === 'pro'
-          ? 'Pro-Tarif aktiv. Weitere Add-Ons können jederzeit dazugebucht werden.'
-          : 'Starter-Tarif aktiv. Pro-Upgrade und Add-Ons stehen bereit.';
-        weekUsageMetric.textContent = `${data.weekUsage || 0}`;
-        monthUsageMetric.textContent = `${data.monthUsage || 0} / ${data.msgLimit || 0}`;
-        activeAddonsMetric.textContent = String(activeAddons.length);
-        activeAddonsDetail.textContent = activeAddons.length
-          ? activeAddons.map(key => ADDON_CATALOG.find(item => item.key === key)?.title || key).join(' · ')
-          : 'Noch keine Zusatzmodule gebucht.';
-
-        const cards = ADDON_CATALOG.filter(card => !(currentPlan === 'pro' && card.key === 'starter_to_pro'));
-        upgradeCards.innerHTML = cards.map(card => {
-          const active = activeAddons.includes(card.key);
-          return `
-            <article class="addon-card ${card.featured ? 'featured' : ''}">
-              <div class="addon-card-header">
-                <div class="addon-icon">${card.icon}</div>
-                <div class="addon-tag">${active ? 'Bereits aktiv' : escapeHtml(card.badge)}</div>
-              </div>
-              <div class="addon-title">${escapeHtml(card.title)}</div>
-              <div class="addon-price">${escapeHtml(card.price)}</div>
-              <p>${escapeHtml(card.description)}</p>
-              <div class="addon-meta">${active ? 'Dieses Modul ist bereits im Kundenkonto hinterlegt.' : 'Monatlich kündbar über Stripe bzw. Vertragslogik.'}</div>
-              <button class="button" type="button" data-upgrade="${escapeHtml(card.key)}" ${active ? 'disabled' : ''}>${active ? 'Bereits gebucht' : 'Jetzt buchen'}</button>
-            </article>
-          `;
-        }).join('');
-        upgradeCards.querySelectorAll('[data-upgrade]').forEach(button => {
-          button.addEventListener('click', () => startUpgrade(button.dataset.upgrade, button));
-        });
-      } catch (error) {
-        setStatus(upgradeStatus, error.message || 'Upgrade-Status konnte nicht geladen werden.', 'error');
-      }
-    }
-
-    async function startUpgrade(upgradeType, button) {
-      const original = button.textContent;
-      button.disabled = true;
-      try {
-        setStatus(upgradeStatus, 'Stripe Checkout wird vorbereitet…');
-        const data = await apiJson(ADDON_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ code: auth.code, addonType: upgradeType })
-        });
-        if (!data.checkoutUrl) throw new Error('Keine Checkout-URL erhalten.');
-        window.location.href = data.checkoutUrl;
-      } catch (error) {
-        button.disabled = false;
-        button.textContent = original;
-        setStatus(upgradeStatus, error.message || 'Upgrade konnte nicht gestartet werden.', 'error');
-      }
-    }
-
-    async function uploadMenu() {
-      try {
-        validateSingleFile(selectedMenu, 'menu');
-        menuUploadButton.disabled = true;
-        setStatus(menuStatus, 'Speisekarte wird hochgeladen…');
-        const data = await fileToDataUrl(selectedMenu);
-        await apiJson(UPLOAD_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            code: auth.code,
-            token: auth.token,
-            type: 'menu',
-            filename: selectedMenu.name,
-            data
-          })
-        });
-        sessionUploads += 1;
-        updateMetrics();
-        setStatus(menuStatus, 'Speisekarte erfolgreich gesendet.', 'success');
-      } catch (error) {
-        setStatus(menuStatus, error.message || 'Upload fehlgeschlagen.', 'error');
-      } finally {
-        menuUploadButton.disabled = false;
-      }
-    }
-
-    async function uploadPhotos() {
-      try {
-        validatePhotos(selectedPhotos);
-        photosUploadButton.disabled = true;
-        setStatus(photosStatus, 'Fotos werden hochgeladen…');
-        const files = await Promise.all(selectedPhotos.map(async file => ({
-          filename: file.name,
-          data: await fileToDataUrl(file)
-        })));
-        await apiJson(UPLOAD_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            code: auth.code,
-            token: auth.token,
-            type: 'photos',
-            files
-          })
-        });
-        sessionUploads += selectedPhotos.length;
-        updateMetrics();
-        setStatus(photosStatus, `${selectedPhotos.length} Foto(s) erfolgreich gesendet.`, 'success');
-      } catch (error) {
-        setStatus(photosStatus, error.message || 'Foto-Upload fehlgeschlagen.', 'error');
-      } finally {
-        photosUploadButton.disabled = false;
-      }
-    }
-
-    async function saveHours() {
-      hoursSaveButton.disabled = true;
-      try {
-        setStatus(hoursStatus, 'Öffnungszeiten werden gespeichert…');
-        await apiJson(UPLOAD_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            code: auth.code,
-            token: auth.token,
-            type: 'hours',
-            hours: getHoursPayload()
-          })
-        });
-        sessionUploads += 1;
-        updateMetrics();
-        setStatus(hoursStatus, 'Öffnungszeiten erfolgreich gespeichert.', 'success');
-      } catch (error) {
-        setStatus(hoursStatus, error.message || 'Speichern fehlgeschlagen.', 'error');
-      } finally {
-        hoursSaveButton.disabled = false;
-      }
-    }
-
-    function renderChat() {
-      const messages = getLocalMessages();
-      if (!messages.length) {
-        chatBody.innerHTML = '<div class="chat-empty">Noch keine Nachrichten. Schreiben Sie uns direkt hier.</div>';
-        return;
-      }
-      chatBody.innerHTML = messages.map(item => `
-        <div class="bubble ${item.from === 'customer' ? 'customer' : 'admin'}">
-          ${escapeHtml(item.message)}
-          <div class="bubble-meta">${item.from === 'customer' ? 'Sie' : 'LeoLan'} · ${new Date(item.timestamp).toLocaleString('de-DE')}</div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill progress-green" id="usage-bar" style="width:0%;"></div>
         </div>
-      `).join('');
-      chatBody.scrollTop = chatBody.scrollHeight;
+        <div class="progress-pct" id="usage-pct">0%</div>
+      </div>
+
+      <!-- Rechnungsdaten -->
+      <div class="card">
+        <div class="card-title">Rechnungsdaten</div>
+        <div class="billing-row">
+          <div class="billing-item"><div class="label">Unternehmen</div><span id="dash-company">—</span></div>
+          <div class="billing-item"><div class="label">E-Mail</div><span id="dash-email">—</span></div>
+          <div class="billing-item"><div class="label">Ansprechpartner</div><span id="dash-name">—</span></div>
+          <div class="billing-item"><div class="label">Kunde seit</div><span id="dash-since">—</span></div>
+        </div>
+      </div>
+
+      <!-- Rechnungen -->
+      <div class="card">
+        <div class="card-title">Rechnungen</div>
+        <ul class="invoice-list" id="invoice-list">
+          <li class="no-invoices">Keine Rechnungen vorhanden.</li>
+        </ul>
+      </div>
+
+      <!-- Upgrade / Add-on -->
+      <div class="card card-full upgrade-card">
+        <div class="upgrade-title">Upgrade oder Erweiterung buchen</div>
+        <div class="upgrade-desc">Mehr Nachrichten oder zusätzliche Funktionen? Erweitere deinen Plan mit einem Klick.</div>
+        <a class="btn-upgrade" id="upgrade-link" href="/addon/">Upgrade / Add-on buchen</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // State
+  var currentCustomerCode = "";
+
+  // Hilfsfunktionen
+  function showScreen(id) {
+    var screens = document.querySelectorAll(".screen");
+    for (var i = 0; i < screens.length; i++) {
+      screens[i].classList.remove("active");
     }
+    document.getElementById(id).classList.add("active");
+  }
 
-    async function syncChatHistory() {
-      if (!auth) return;
-      try {
-        const url = `${CHAT_HISTORY_URL}?customerCode=${encodeURIComponent(auth.code)}`;
-        const data = await apiJson(url, { method: 'GET' });
-        if (Array.isArray(data.messages)) {
-          const normalized = data.messages.map(item => ({
-            from: item.from === 'admin' ? 'admin' : 'customer',
-            message: item.message,
-            timestamp: item.timestamp || new Date().toISOString()
-          }));
-          setLocalMessages(normalized);
-          renderChat();
-        }
-      } catch (error) {
-        console.error('chat history sync failed', error);
-      }
-    }
-
-    async function sendChatMessage() {
-      const message = chatMessage.value.trim();
-      const email = chatEmail.value.trim();
-      if (!message) {
-        setStatus(chatStatus, 'Bitte Nachricht eingeben.', 'error');
-        return;
-      }
-      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        setStatus(chatStatus, 'Bitte gültige E-Mail eintragen.', 'error');
-        return;
-      }
-      chatSend.disabled = true;
-      try {
-        setStatus(chatStatus, 'Nachricht wird gesendet…');
-        await apiJson(CHAT_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            action: 'send',
-            customerCode: auth.code,
-            message,
-            customerEmail: email,
-            customerName: auth.restaurantName || auth.name,
-            restaurantName: auth.restaurantName,
-            slug: auth.slug
-          })
-        });
-        addLocalMessage({ from: 'customer', message, timestamp: new Date().toISOString() });
-        chatMessage.value = '';
-        auth.customerEmail = email;
-        setStoredAuth(auth);
-        setStatus(chatStatus, 'Nachricht gesendet.', 'success');
-      } catch (error) {
-        setStatus(chatStatus, error.message || 'Nachricht konnte nicht gesendet werden.', 'error');
-      } finally {
-        chatSend.disabled = false;
-      }
-    }
-
-    function bindDropzone(zone, input, onFiles) {
-      ['dragenter','dragover'].forEach(evt => zone.addEventListener(evt, event => {
-        event.preventDefault();
-        zone.classList.add('dragover');
-      }));
-      ['dragleave','drop'].forEach(evt => zone.addEventListener(evt, event => {
-        event.preventDefault();
-        zone.classList.remove('dragover');
-      }));
-      zone.addEventListener('drop', event => {
-        const files = [...event.dataTransfer.files];
-        onFiles(files);
-      });
-      input.addEventListener('change', () => onFiles([...input.files]));
-    }
-
-    loginButton.addEventListener('click', login);
-    codeInput.addEventListener('keydown', event => { if (event.key === 'Enter') login(); });
-    logoutButton.addEventListener('click', logout);
-
-    menuUploadButton.addEventListener('click', uploadMenu);
-    photosUploadButton.addEventListener('click', uploadPhotos);
-    hoursSaveButton.addEventListener('click', saveHours);
-
-    bindDropzone(document.getElementById('menuDropzone'), menuFile, files => {
-      selectedMenu = files[0] || null;
-      renderFileList(menuPreview, selectedMenu ? [selectedMenu] : []);
-    });
-    bindDropzone(document.getElementById('photosDropzone'), photosFile, files => {
-      selectedPhotos = files.slice(0, 10);
-      renderFileList(photosPreview, selectedPhotos);
-    });
-
-    chatToggle.addEventListener('click', async () => {
-      chatPanel.classList.toggle('open');
-      if (chatPanel.classList.contains('open')) await syncChatHistory();
-    });
-    chatClose.addEventListener('click', () => chatPanel.classList.remove('open'));
-    chatSend.addEventListener('click', sendChatMessage);
-
-    buildHoursForm();
-    renderFileList(menuPreview, []);
-    renderFileList(photosPreview, []);
-
-    const storedAuth = getStoredAuth();
-    if (storedAuth?.code && storedAuth?.slug) {
-      auth = storedAuth;
-      hydrateApp();
-      showApp();
-      Promise.all([syncChatHistory(), loadUpgradeStatus()]);
+  function showLoading(visible) {
+    var el = document.getElementById("loading-overlay");
+    if (visible) {
+      el.classList.add("visible");
     } else {
-      showLogin();
+      el.classList.remove("visible");
     }
-  </script>
+  }
+
+  function showLoginError(msg) {
+    var el = document.getElementById("login-error");
+    el.textContent = msg || "Ungültige Zugangsdaten. Bitte versuche es erneut.";
+    el.classList.add("visible");
+  }
+
+  function hideLoginError() {
+    document.getElementById("login-error").classList.remove("visible");
+  }
+
+  function setLoginBusy(busy) {
+    var btn = document.getElementById("login-btn");
+    btn.disabled = busy;
+    btn.textContent = busy ? "Wird angemeldet..." : "Anmelden";
+  }
+
+  function formatDate(str) {
+    if (!str) return "—";
+    var d = new Date(str);
+    if (isNaN(d.getTime())) return str;
+    var months = ["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"];
+    return d.getDate() + ". " + months[d.getMonth()] + " " + d.getFullYear();
+  }
+
+  // Login
+  function doLogin() {
+    hideLoginError();
+    var customerCode = document.getElementById("login-code").value.trim();
+    var password = document.getElementById("login-password").value;
+
+    if (!customerCode || !password) {
+      showLoginError("Bitte Kundennummer/E-Mail und Passwort eingeben.");
+      return;
+    }
+
+    setLoginBusy(true);
+    showLoading(true);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "https://n8n.leolan.net/webhook/kunden-login", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState !== 4) return;
+      showLoading(false);
+      setLoginBusy(false);
+      if (xhr.status >= 200 && xhr.status < 300) {
+        var data;
+        try { data = JSON.parse(xhr.responseText); } catch(e) { data = {}; }
+        if (data.success && data.customerCode) {
+          currentCustomerCode = data.customerCode;
+          loadDashboard(data.customerCode);
+        } else {
+          showLoginError(data.message || "Ungültige Zugangsdaten. Bitte versuche es erneut.");
+        }
+      } else {
+        showLoginError("Verbindungsfehler. Bitte versuche es erneut.");
+      }
+    };
+    xhr.onerror = function() {
+      showLoading(false);
+      setLoginBusy(false);
+      showLoginError("Verbindungsfehler. Bitte Internetverbindung prüfen.");
+    };
+    xhr.send(JSON.stringify({ customerCode: customerCode, password: password }));
+  }
+
+  // Dashboard laden
+  function loadDashboard(customerCode) {
+    showLoading(true);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "https://n8n.leolan.net/webhook/kunden-dashboard", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState !== 4) return;
+      showLoading(false);
+      if (xhr.status >= 200 && xhr.status < 300) {
+        var data;
+        try { data = JSON.parse(xhr.responseText); } catch(e) { data = {}; }
+        if (data.success) {
+          renderDashboard(data);
+          showScreen("dashboard-screen");
+        } else {
+          showLoginError("Kontodaten konnten nicht geladen werden. Bitte versuche es erneut.");
+        }
+      } else {
+        showLoginError("Kontodaten konnten nicht geladen werden. Bitte versuche es erneut.");
+      }
+    };
+    xhr.onerror = function() {
+      showLoading(false);
+      showLoginError("Verbindungsfehler. Bitte versuche es erneut.");
+    };
+    xhr.send(JSON.stringify({ customerCode: customerCode }));
+  }
+
+  function renderDashboard(data) {
+    var acc = data.account || {};
+    var usage = data.usageStats || {};
+
+    // Begrüßung
+    var name = acc.name || acc.companyName || "";
+    if (name) {
+      document.getElementById("dash-greeting").textContent = "Willkommen, " + name + "!";
+    } else {
+      document.getElementById("dash-greeting").textContent = "Willkommen!";
+    }
+    document.getElementById("dash-subtitle").textContent = "Hier ist deine LeoLan-Kontoübersicht.";
+
+    // Topbar
+    document.getElementById("topbar-code").textContent = acc.customerCode || acc.email || "";
+
+    // Paket-Info
+    document.getElementById("dash-plan").textContent = acc.paket || "Standard";
+    document.getElementById("dash-sector").textContent = data.sector || "—";
+    document.getElementById("dash-code").textContent = acc.customerCode || "—";
+
+    // Status-Badge
+    var statusBadge = document.getElementById("dash-status");
+    statusBadge.textContent = "Aktiv";
+    statusBadge.className = "status-badge status-active";
+
+    // Nutzung
+    var used = parseInt(usage.messagesUsed, 10) || 0;
+    var limit = parseInt(usage.messagesLimit, 10) || 0;
+    var pct = limit > 0 ? Math.min(100, Math.round((used / limit) * 100)) : 0;
+
+    document.getElementById("usage-numbers").textContent = used + " / " + limit;
+    document.getElementById("usage-pct").textContent = pct + "% genutzt";
+
+    var bar = document.getElementById("usage-bar");
+    bar.style.width = pct + "%";
+    bar.className = "progress-bar-fill";
+    if (pct >= 90) {
+      bar.className = "progress-bar-fill progress-red";
+    } else if (pct >= 70) {
+      bar.className = "progress-bar-fill progress-orange";
+    } else {
+      bar.className = "progress-bar-fill progress-green";
+    }
+
+    // Rechnungsdaten
+    document.getElementById("dash-company").textContent = acc.companyName || "—";
+    document.getElementById("dash-email").textContent = acc.email || "—";
+    document.getElementById("dash-name").textContent = acc.name || "—";
+    document.getElementById("dash-since").textContent = formatDate(acc.createdAt);
+
+    // Rechnungen
+    var invoiceList = document.getElementById("invoice-list");
+    invoiceList.innerHTML = "";
+    var invoices = acc.invoices || data.invoices || [];
+    if (invoices.length === 0) {
+      invoiceList.innerHTML = '<li class="no-invoices">Keine Rechnungen vorhanden.</li>';
+    } else {
+      for (var i = 0; i < invoices.length; i++) {
+        var inv = invoices[i];
+        var li = document.createElement("li");
+        li.className = "invoice-item";
+        li.innerHTML =
+          '<span>' +
+            '<div style="font-weight:500;">' + (inv.id || inv.number || "Rechnung #" + (i + 1)) + '</div>' +
+            '<div class="inv-date">' + formatDate(inv.date || inv.createdAt) + '</div>' +
+          '</span>' +
+          '<span style="display:flex;align-items:center;gap:10px;">' +
+            '<span class="inv-amount">' + (inv.amount || "—") + '</span>' +
+            '<span class="inv-status">' + (inv.status || "Bezahlt") + '</span>' +
+          '</span>';
+        invoiceList.appendChild(li);
+      }
+    }
+
+    // Upgrade-Link
+    var code = acc.customerCode || "";
+    var upgradeUrl = "/addon/?code=" + encodeURIComponent(code);
+    if (acc.email) upgradeUrl += "&email=" + encodeURIComponent(acc.email);
+    if (acc.companyName) upgradeUrl += "&company=" + encodeURIComponent(acc.companyName);
+    document.getElementById("upgrade-link").href = upgradeUrl;
+  }
+
+  function doLogout() {
+    currentCustomerCode = "";
+    document.getElementById("login-code").value = "";
+    document.getElementById("login-password").value = "";
+    hideLoginError();
+    showScreen("login-screen");
+  }
+
+  // Enter-Taste
+  document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("login-password").addEventListener("keydown", function(e) {
+      if (e.key === "Enter" || e.keyCode === 13) { doLogin(); }
+    });
+    document.getElementById("login-code").addEventListener("keydown", function(e) {
+      if (e.key === "Enter" || e.keyCode === 13) {
+        document.getElementById("login-password").focus();
+      }
+    });
+  });
+</script>
 </body>
 </html>
