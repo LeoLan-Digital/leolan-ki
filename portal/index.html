@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kunden-Portal — LeoLan Digital</title>
+<title>Hotel Portal — LeoLan Digital</title>
 <style>
 body{margin:0;padding:20px;font-family:-apple-system,sans-serif;background:#0e1621;color:#e8eaed;min-height:100vh}
 .card{background:#17212b;border-radius:16px;padding:28px;max-width:420px;margin:40px auto}
@@ -23,66 +23,65 @@ button:disabled{opacity:0.5;cursor:not-allowed}
 <body>
 <div class="card">
   <div class="logo">
-    <img src="https://ki.leolan.net/leolan-logo.png" alt="LeoLan" onerror="this.style.display='none'">
+    <img src="https://ki.leolan.net/leolan-logo.svg" alt="LeoLan" onerror="this.style.display='none'">
     <h1>Kunden-Portal</h1>
     <p class="sub">LeoLan Digital</p>
   </div>
   <div class="err" id="err"></div>
-  <label>E-Mail oder Kundencode</label>
-  <input type="text" id="identifier" placeholder="K100001 oder ihre@email.de">
+  <label>Email</label>
+  <input type="email" id="email" placeholder="K100001 oder ihre@email.de">
   <label>Passwort</label>
   <input type="password" id="pw" placeholder="••••••••">
   <button id="btn" onclick="login()">Einloggen</button>
-  <div class="link">
-    Noch kein Konto? <a href="/onboarding/">Jetzt registrieren →</a><br>
-    <a href="javascript:void(0)" onclick="forgotPw()" style="margin-top:8px;display:inline-block">Passwort vergessen?</a>
-  </div>
+  <div class="link">No account? <a href="/onboarding/enterprise/">Jetzt registrieren →</a></div>
 </div>
 
 <script>
 function login() {
-  var id = document.getElementById('identifier').value.trim();
+  var email = document.getElementById('email').value.trim();
   var pw = document.getElementById('pw').value;
   var btn = document.getElementById('btn');
   var err = document.getElementById('err');
+  
   err.style.display = 'none';
-  if (!id || !pw) { err.textContent = 'Bitte alle Felder ausfüllen.'; err.style.display = 'block'; return; }
+  
+  if (!email || !pw) {
+    err.textContent = 'Please enter email and password.';
+    err.style.display = 'block';
+    return;
+  }
+  
   btn.disabled = true;
   btn.textContent = 'Wird angemeldet...';
+  
   var xhr = new XMLHttpRequest();
   xhr.open('POST', 'https://n8n.leolan.net/webhook/kunden-login', true);
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.onload = function() {
     btn.disabled = false;
     btn.textContent = 'Einloggen';
+    var raw = xhr.responseText;
+    err.textContent = 'Response: ' + raw.substring(0,200);
+    err.style.display = 'block';
     var data = {};
-    try { data = JSON.parse(xhr.responseText); } catch(e) {}
+    try { data = JSON.parse(raw); } catch(e) { return; }
     if (data.success && data.customerCode) {
-      if (data.sectorMismatch) {
-        err.textContent = data.error || 'Falscher Login-Bereich.';
-        err.style.display = 'block';
-      } else {
-        window.location.href = '/portal/dashboard.html?code=' + encodeURIComponent(data.customerCode);
-      }
+      window.location.href = '/portal/dashboard.html?code=' + encodeURIComponent(data.customerCode);
     } else if (data.blocked) {
-      err.textContent = 'Zu viele Versuche. Bitte 15 Minuten warten.';
+      err.textContent = 'Zu viele Versuche. 15 Minuten warten.';
       err.style.display = 'block';
     } else {
       err.textContent = data.error || 'Ungültige Anmeldedaten.';
       err.style.display = 'block';
     }
   };
-  xhr.onerror = function() { btn.disabled = false; btn.textContent = 'Einloggen'; err.textContent = 'Verbindungsfehler.'; err.style.display = 'block'; };
-  xhr.send(JSON.stringify({customerCode: id, email: id, password: pw}));
-}
-function forgotPw() {
-  var email = prompt('E-Mail-Adresse eingeben:');
-  if (!email) return;
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', 'https://n8n.leolan.net/webhook/kunden-dashboard', true);
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.onload = function() { alert('Falls ein Konto existiert, wurde eine E-Mail gesendet.'); };
-  xhr.send(JSON.stringify({action: 'forgot-password', email: email}));
+  xhr.onerror = function() {
+    btn.disabled = false;
+    btn.textContent = 'Einloggen';
+    err.textContent = 'Connection error. Please try again.';
+    err.style.display = 'block';
+  };
+  xhr.send(JSON.stringify({email: email, password: pw}));
 }
 </script>
 </body>
