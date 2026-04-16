@@ -126,11 +126,14 @@ async function startCheckout(){
       body:JSON.stringify({
         paket:'pro',
         purchaseType:'upgrade',
+        sector:'restaurant',
         customerCode,
         customerEmail:customerData.email,
         companyName:customerData.company||customerData.name,
         vatId:customerData.vatId||'',
-        noSetupFee:true
+        reverseCharge:!!(customerData.reverseCharge),
+        noSetupFee:true,
+        modules:[{name:'Pro Upgrade',price:349}]
       })
     });
     const data=await resp.json();
