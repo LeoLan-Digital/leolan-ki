@@ -57,12 +57,42 @@ h1{font-size:1.8rem;font-weight:800;color:#f0f6fc;margin-bottom:12px}
 <div class="footer">© 2026 LeoLan Digital · business@leolan.net</div>
 
 <script>
-// Show customer code if available
-var code = localStorage.getItem('customerCode') || new URLSearchParams(window.location.search).get('code');
-if(code) {
-  document.getElementById('codeDisplay').textContent = code;
-  document.getElementById('codeBox').style.display = 'block';
-}
+(async function() {
+  // 1. Check if code already known (e.g. from URL param)
+  var code = new URLSearchParams(window.location.search).get('code') || localStorage.getItem('customerCode');
+  if (code) {
+    document.getElementById('codeDisplay').textContent = code;
+    document.getElementById('codeBox').style.display = 'block';
+    return;
+  }
+
+  // 2. Get email from pending registration stored in localStorage
+  var pendingReg = null;
+  try { pendingReg = JSON.parse(localStorage.getItem('pendingReg') || 'null'); } catch(e) {}
+  if (!pendingReg || !pendingReg.email) return;
+
+  var email = String(pendingReg.email).toLowerCase().trim();
+
+  // 3. Poll kunden-register up to 6 times (Stripe webhook may fire with slight delay)
+  for (var attempt = 0; attempt < 6; attempt++) {
+    try {
+      var resp = await fetch('https://n8n.leolan.net/webhook/kunden-register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'lookup-by-email', adminKey: 'LeoLan2026Admin!', email: email })
+      });
+      var data = await resp.json();
+      if (data && data.customerCode) {
+        localStorage.setItem('customerCode', data.customerCode);
+        document.getElementById('codeDisplay').textContent = data.customerCode;
+        document.getElementById('codeBox').style.display = 'block';
+        return;
+      }
+    } catch(e) {}
+    // Wait 3s before next attempt
+    if (attempt < 5) await new Promise(function(r) { setTimeout(r, 3000); });
+  }
+})();
 </script>
 </body>
 </html>

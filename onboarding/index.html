@@ -129,14 +129,14 @@ body{background:#0d1117;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFo
         </div>
       </div>
       <div class="g2">
-        <div class="field"><label>USt-ID <span style="color:#484f58;font-weight:400">(optional)</span></label><input type="text" id="vatId" placeholder="DE123456789"><div class="hint">Mit USt-ID → 0% MwSt. (Reverse Charge)</div></div>
+        <div class="field" id="fe-vatId"><label>USt-ID <span style="color:#484f58;font-weight:400">(optional)</span></label><input type="text" id="vatId" placeholder="DE123456789"><div class="hint">Mit USt-ID → 0% MwSt. (Reverse Charge)</div><div class="err">Ungültiges Format. Beispiel: DE123456789 (2 Großbuchstaben + mind. 5 Zeichen)</div></div>
         <div class="field"><label>Website <span style="color:#484f58;font-weight:400">(optional)</span></label><input type="url" id="website" placeholder="https://..."></div>
       </div>
       <div class="field" id="fe-whatsapp">
         <label>WhatsApp-Nummer *</label>
         <input type="tel" id="whatsapp" placeholder="+49 15678 483700">
         <div class="hint orange">📱 Pflicht: Über diese Nummer richten wir Ihren KI-Bot ein.</div>
-        <div class="err">WhatsApp-Nummer eingeben.</div>
+        <div class="err">Bitte gültige Nummer mit + und Ländervorwahl eingeben (z. B. +49 15678 483700).</div>
       </div>
     </div>
     <button class="btn btn-primary" onclick="go1()">Weiter: Daten prüfen →</button>
@@ -192,7 +192,10 @@ function go1(){
   setErr('street',!street);if(!street)ok=false;
   setErr('zip',!zip);if(!zip)ok=false;
   setErr('city',!city);if(!city)ok=false;
-  setErr('whatsapp',!wa);if(!wa)ok=false;
+  var waClean=wa.replace(/\s/g,'');var waOk=waClean.length>=10&&waClean.startsWith('+')&&/^\+[0-9]{9,}$/.test(waClean);
+  setErr('whatsapp',!waOk);if(!waOk)ok=false;
+  var vatIdVal=document.getElementById('vatId').value.trim();var vatOk=!vatIdVal||/^[A-Z]{2}[0-9][0-9A-Z]{4,14}$/.test(vatIdVal);
+  setErr('vatId',!vatOk);if(!vatOk)ok=false;
   if(!ok){window.scrollTo({top:0,behavior:'smooth'});return;}
   fdata={
     email:email,name:name,password:pw,
