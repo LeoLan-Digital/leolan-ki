@@ -202,32 +202,6 @@ $('buyBtn').addEventListener('click',startCheckout);
   try{await loadCustomer();}
   catch(error){setLoading(false);showStatus(error&&error.message?error.message:'Seite konnte nicht geladen werden.','error');$('content').classList.add('hidden');}
 })();
-
-
-});
-
-function updateBuyButton() {
-  const isYearly = document.querySelector('input[name="billing"]:checked')?.value === 'yearly';
-  const addon = ADDONS[addonId];
-  if (!addon) return;
-  const isYearly = document.querySelector('input[name="billing"]:checked')?.value === 'yearly';
-  const price = isYearly ? Math.round(addon.price * YEARLY_DISCOUNT * 12) : addon.price;
-  document.getElementById('buyBtn').textContent = isMonthly 
-    ? `Monatlich abonnieren — ${price}€/Mo`
-    : `Einmalig kaufen — ${price}€`;
-}
-
-// Set prices in choice cards
-window.addEventListener('load', () => {
-  const addon = ADDONS[addonId];
-  if (addon) {
-    const el1 = document.getElementById('priceOnce');
-    const el2 = document.getElementById('priceMonthly');
-    if (el1) el1.textContent = addon.price + '€';
-    if (el2) el2.textContent = Math.round(addon.price * YEARLY_DISCOUNT * 12) + '€/Jahr';
-    updateBuyButton();
-  }
-});
 </script>
 </body>
 </html>
