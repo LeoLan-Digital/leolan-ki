@@ -83,6 +83,12 @@ h1{font-size:clamp(1.8rem,7vw,2.4rem);line-height:1.05;margin:18px 0 10px;color:
         </div>
       </div>
 
+      <div id="emailBox" class="box hidden">
+        <div class="label">E-Mail-Adresse</div>
+        <input type="email" id="emailInput" placeholder="ihre@email.de" style="width:100%;background:#0d1117;color:#e6edf3;border:1px solid #30363d;border-radius:10px;padding:12px;font-size:15px;margin-top:6px;box-sizing:border-box;">
+        <div style="color:#8b949e;font-size:12px;margin-top:6px;">Für die Zahlungsbestätigung benötigt.</div>
+      </div>
+
       <div class="note">Ihre gespeicherten Rechnungsdaten werden verwendet.</div>
       
 <button id="buyBtn" class="btn" type="button">Einmalig kaufen</button>
@@ -135,6 +141,10 @@ function render(){
   $('priceVat').textContent=reverseCharge?'0€ (Reverse Charge)':fmt(vat);
   $('priceGross').textContent=fmt(gross);
   $('buyBtn').textContent='Jetzt kaufen - '+fmt(addon.price);
+  // Show email input if no email found
+  if(!customerData.email){
+    $('emailBox').classList.remove('hidden');
+  }
 }
 async function loadCustomer(){
   if(!customerCode) throw new Error('Kein Kundencode übergeben.');
@@ -159,6 +169,14 @@ async function loadCustomer(){
 }
 async function startCheckout(){
   const btn=$('buyBtn');
+  // Resolve email: from account or from manual input
+  const resolvedEmail = customerData.email || ($('emailInput') && $('emailInput').value.trim()) || '';
+  if(!resolvedEmail){
+    showStatus('Bitte geben Sie Ihre E-Mail-Adresse ein.','error');
+    $('emailBox').classList.remove('hidden');
+    $('emailInput').focus();
+    return;
+  }
   const reverseCharge=!!(customerData.vatId&&customerData.vatId.length>3);
   const grossTotal=reverseCharge?addon.price:Math.round(addon.price*1.19*100)/100;
   btn.disabled=true;
@@ -167,8 +185,8 @@ async function startCheckout(){
   try{
     const payload={
       customerCode,
-      email:customerData.email,
-      customerEmail:customerData.email,
+      email:resolvedEmail,
+      customerEmail:resolvedEmail,
       companyName:customerData.company,
       name:customerData.name,
       paket:'addon',
