@@ -31,9 +31,6 @@ body{background:#0d1117;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFo
 .field.bad input{border-color:#f85149}
 .field .hint{color:#8b949e;font-size:.78rem;margin-top:3px;line-height:1.4}
 .field .hint.orange{color:#f5a623;font-weight:600}
-.pw-wrap{position:relative}
-.pw-wrap input{padding-right:70px}
-.pw-toggle{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:#8b949e;cursor:pointer;font-size:.8rem;white-space:nowrap}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
 @media(max-width:480px){.g2,.g3{grid-template-columns:1fr}}
@@ -112,10 +109,6 @@ body{background:#0d1117;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFo
         <div class="field" id="fe-email"><label>E-Mail *</label><input type="email" id="email" placeholder="name@firma.de" autocomplete="email"><div class="err">Gültige E-Mail eingeben.</div></div>
         <div class="field" id="fe-name"><label>Ihr Name *</label><input type="text" id="name" placeholder="Max Mustermann" autocomplete="name"><div class="err">Name eingeben.</div></div>
       </div>
-      <div class="g2">
-        <div class="field" id="fe-pw"><label>Passwort * (min. 8 Zeichen)</label><div class="pw-wrap"><input type="password" id="pw" placeholder="Passwort" autocomplete="new-password"><button type="button" class="pw-toggle" onclick="tpw('pw',this)">Zeigen</button></div><div class="err">Mindestens 8 Zeichen.</div></div>
-        <div class="field" id="fe-pw2"><label>Passwort bestätigen *</label><div class="pw-wrap"><input type="password" id="pw2" placeholder="Wiederholen" autocomplete="new-password"><button type="button" class="pw-toggle" onclick="tpw('pw2',this)">Zeigen</button></div><div class="err">Stimmt nicht überein.</div></div>
-      </div>
     </div>
     <!-- Kundendaten -->
     <div class="card">
@@ -168,15 +161,12 @@ body{background:#0d1117;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFo
 <script>
 var urlPkg=new URLSearchParams(window.location.search).get('paket'); var pkg=urlPkg==='pro'?'pro':'starter';document.addEventListener('DOMContentLoaded',function(){var note=document.getElementById('legalNote');if(note)note.textContent=pkg==='pro'?'Alle Preise zzgl. MwSt. · + 349€ einmalige Setup-Gebühr':'Alle Preise zzgl. MwSt. · 12 Monate Mindestlaufzeit · + 349€ einmalige Setup-Gebühr';});
 var fdata={};
-function tpw(id,btn){var i=document.getElementById(id);if(i.type==='password'){i.type='text';btn.textContent='Verbergen';}else{i.type='password';btn.textContent='Zeigen';}}
 function spkg(p){pkg=p;document.querySelectorAll('.pkg').forEach(function(c){c.classList.remove('on');var note=document.getElementById('legalNote');if(note){note.textContent=p==='pro'?'Alle Preise zzgl. MwSt. · + 349€ einmalige Setup-Gebühr':'Alle Preise zzgl. MwSt. · 12 Monate Mindestlaufzeit · + 349€ einmalige Setup-Gebühr';}});document.querySelector('[data-pkg="'+p+'"]').classList.add('on');}
 function setErr(id,has){var f=document.getElementById('fe-'+id);if(f)f.classList.toggle('bad',has);}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');}
 function go1(){
   var email=document.getElementById('email').value.trim();
   var name=document.getElementById('name').value.trim();
-  var pw=document.getElementById('pw').value;
-  var pw2=document.getElementById('pw2').value;
   var company=document.getElementById('company').value.trim();
   var street=document.getElementById('street').value.trim();
   var zip=document.getElementById('zip').value.trim();
@@ -186,8 +176,6 @@ function go1(){
   var emailOk=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   setErr('email',!emailOk);if(!emailOk)ok=false;
   setErr('name',!name);if(!name)ok=false;
-  setErr('pw',pw.length<8);if(pw.length<8)ok=false;
-  setErr('pw2',pw!==pw2);if(pw!==pw2)ok=false;
   setErr('company',!company);if(!company)ok=false;
   setErr('street',!street);if(!street)ok=false;
   setErr('zip',!zip);if(!zip)ok=false;
@@ -198,7 +186,7 @@ function go1(){
   setErr('vatId',!vatOk);if(!vatOk)ok=false;
   if(!ok){window.scrollTo({top:0,behavior:'smooth'});return;}
   fdata={
-    email:email,name:name,password:pw,
+    email:email,name:name,
     package:pkg,sector:'restaurant',
     companyName:company,street:street,zipCode:zip,city:city,
     address:street+', '+zip+' '+city,

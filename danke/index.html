@@ -32,9 +32,10 @@ h1{font-size:1.8rem;font-weight:800;color:#f0f6fc;margin-bottom:12px}
   <p class="sub">Willkommen bei LeoLan Digital. Ihr KI-System wird jetzt für Sie eingerichtet.</p>
 
   <div class="code-box" id="codeBox" style="display:none">
-    <div class="code-label">Ihr Kundencode</div>
+    <div class="code-label">Dein Kundencode</div>
+    <div style="color:#f0f6fc;font-size:1.15rem;font-weight:700;margin-bottom:10px">Dein Kundencode: <strong id="codeInline">—</strong></div>
     <div class="code" id="codeDisplay">—</div>
-    <div class="code-hint">Damit melden Sie sich in der LeoLan Manager App an</div>
+    <div class="code-hint">Notiere ihn dir — du brauchst ihn für die App.</div>
   </div>
 
   <div class="steps">
@@ -62,6 +63,7 @@ h1{font-size:1.8rem;font-weight:800;color:#f0f6fc;margin-bottom:12px}
   var code = new URLSearchParams(window.location.search).get('code') || localStorage.getItem('customerCode');
   if (code) {
     document.getElementById('codeDisplay').textContent = code;
+    document.getElementById('codeInline').textContent = code;
     document.getElementById('codeBox').style.display = 'block';
     return;
   }
@@ -85,6 +87,7 @@ h1{font-size:1.8rem;font-weight:800;color:#f0f6fc;margin-bottom:12px}
       if (data && data.customerCode) {
         localStorage.setItem('customerCode', data.customerCode);
         document.getElementById('codeDisplay').textContent = data.customerCode;
+        document.getElementById('codeInline').textContent = data.customerCode;
         document.getElementById('codeBox').style.display = 'block';
         return;
       }
