@@ -1209,9 +1209,14 @@
       if (el) el.remove();
       appendChatMessage(reply, 'bot');
       chatbotInput.disabled = false;
-      var dummy = document.getElementById('chatbotDummy');
-      if (dummy) { dummy.removeAttribute('readonly'); dummy.focus(); dummy.setAttribute('readonly',''); }
-      setTimeout(function(){ chatbotInput.focus(); chatbotInput.click(); }, 50);
+      // iOS keyboard fix — keep keyboard open
+      setTimeout(function(){
+        chatbotInput.setAttribute('readonly', false);
+        chatbotInput.removeAttribute('readonly');
+        chatbotInput.focus();
+        chatbotInput.click();
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+      }, 100);
     });
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape' && chatbotModal.classList.contains('open')) closeChatbot();
