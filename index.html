@@ -1197,7 +1197,8 @@
       if (!value) return;
       appendChatMessage(value.replace(/</g, '&lt;').replace(/>/g, '&gt;'), 'user');
       chatbotInput.value = '';
-      chatbotInput.disabled = true;
+      // Do NOT disable — causes iOS keyboard to disappear
+      // chatbotInput.disabled = true;
       var typing = document.createElement('div');
       typing.className = 'chatbot-message bot';
       typing.id = 'typing-indicator';
@@ -1208,15 +1209,8 @@
       var el = document.getElementById('typing-indicator');
       if (el) el.remove();
       appendChatMessage(reply, 'bot');
-      chatbotInput.disabled = false;
-      // iOS keyboard fix — keep keyboard open
-      setTimeout(function(){
-        chatbotInput.setAttribute('readonly', false);
-        chatbotInput.removeAttribute('readonly');
-        chatbotInput.focus();
-        chatbotInput.click();
-        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-      }, 100);
+      // Input was never disabled, keyboard stays open
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
     });
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape' && chatbotModal.classList.contains('open')) closeChatbot();
