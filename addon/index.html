@@ -111,6 +111,14 @@ h1{font-size:clamp(1.8rem,7vw,2.4rem);line-height:1.05;margin:18px 0 10px;color:
               <span class="choice-badge">Abo</span>
             </div>
           </div>
+          <div class="choice-card" id="choiceYearly" onclick="selectMode('yearly')">
+            <div class="choice-inner">
+              <div class="choice-icon">📅</div>
+              <strong>Jährlich</strong>
+              <small id="priceYearlyLabel">—</small>
+              <span class="choice-badge" style="background:rgba(245,166,35,0.15);color:#f5a623;border-color:rgba(245,166,35,0.3);">2 Monate gratis</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -125,17 +133,20 @@ h1{font-size:clamp(1.8rem,7vw,2.4rem);line-height:1.05;margin:18px 0 10px;color:
 </div>
 
 <script>
-let selectedMode='once'; // 'once' or 'monthly'
+let selectedMode='once'; // 'once', 'monthly', 'yearly'
 function selectMode(mode){
   selectedMode=mode;
   $('choiceOnce').classList.toggle('active', mode==='once');
   $('choiceMonthly').classList.toggle('active', mode==='monthly');
+  $('choiceYearly').classList.toggle('active', mode==='yearly');
   updateBuyBtn();
 }
 function updateBuyBtn(){
   if(!window._gross) return;
-  const label = selectedMode==='monthly' ? 'Monatlich abonnieren - '+fmt(window._gross)+'/Mo' : 'Einmalig kaufen - '+fmt(window._gross);
-  $('buyBtn').textContent=label;
+  const yearlyGross = Math.round(window._gross * 10 * 100) / 100;
+  if(selectedMode==='monthly') $('buyBtn').textContent='Monatlich abonnieren - '+fmt(window._gross)+'/Mo';
+  else if(selectedMode==='yearly') $('buyBtn').textContent='Jährlich abonnieren - '+fmt(yearlyGross)+'/Jahr';
+  else $('buyBtn').textContent='Einmalig kaufen - '+fmt(window._gross);
 }
 const ADDONS={
   msg_1000:{name:'1.000 Nachrichten',price:29,desc:'+1.000 WhatsApp-Nachrichten für diesen Monat'},
@@ -179,8 +190,10 @@ function render(){
   $('priceNet').textContent=fmt(addon.price);
   $('priceVat').textContent=reverseCharge?'0€ (Reverse Charge)':fmt(vat);
   $('priceGross').textContent=fmt(gross);
+  const yearlyGross = Math.round(gross * 10 * 100) / 100;
   $('priceOnceLabel').textContent=fmt(gross)+' einmalig';
   $('priceMonthlyLabel').textContent=fmt(gross)+'/Monat';
+  $('priceYearlyLabel').textContent=fmt(yearlyGross)+'/Jahr';
   updateBuyBtn();
   // Show email input if no email found
   if(!customerData.email){
@@ -225,20 +238,27 @@ async function startCheckout(){
   showStatus('Stripe Checkout wird vorbereitet…','ok');
   try{
     const isMonthly = selectedMode === 'monthly';
+    const isYearly = selectedMode === 'yearly';
+    const isSubscription = isMonthly || isYearly;
+    const yearlyGross = Math.round(grossTotal * 10 * 100) / 100;
+    const finalGross = isYearly ? yearlyGross : grossTotal;
+    const finalNetPrice = isYearly ? Math.round(addon.price * 10 * 100) / 100 : addon.price;
+    const modeLabel = isYearly ? ' (jährlich, 2 Monate gratis)' : isMonthly ? ' (monatlich)' : ' (einmalig)';
     const payload={
       customerCode,
       email:resolvedEmail,
       customerEmail:resolvedEmail,
       companyName:customerData.company,
       name:customerData.name,
-      paket: isMonthly ? 'addon-monthly' : 'addon',
+      paket: isSubscription ? 'addon-subscription' : 'addon',
       addon:addonId,
       addonMode: selectedMode,
-      modules:[{name:addon.name + (isMonthly ? ' (monatlich)' : ' (einmalig)'), price:addon.price}],
+      modules:[{name:addon.name + modeLabel, price:finalNetPrice}],
       addonName:addon.name,
-      addonPrice:addon.price,
+      addonPrice:finalNetPrice,
+      billingInterval: isYearly ? 'year' : 'month',
       sector:'restaurant',
-      grossTotal:grossTotal,
+      grossTotal:finalGross,
       reverseCharge:reverseCharge,
       vatId:customerData.vatId||'',
       priceId:STRIPE_PRICE_ID,
