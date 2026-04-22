@@ -177,7 +177,9 @@ function readCustomer(payload){
   return {name:name||'LeoLan Kunde',company:company||'Unternehmen',email,vatId};
 }
 function render(){
-  const reverseCharge=!!(customerData.vatId&&customerData.vatId.length>3);
+  // Reverse Charge nur für EU-Ausland (nicht DE)
+  const vatIdClean=(customerData.vatId||"").trim().toUpperCase();
+  const reverseCharge=!!(vatIdClean&&vatIdClean.length>3&&!vatIdClean.startsWith("DE"));
   const vat=reverseCharge?0:Math.round(addon.price*0.19*100)/100;
   const gross=Math.round((addon.price+vat)*100)/100;
   $('customerName').textContent=customerData.name;
@@ -234,7 +236,8 @@ async function startCheckout(){
     $('emailInput').focus();
     return;
   }
-  const reverseCharge=!!(customerData.vatId&&customerData.vatId.length>3);
+  const vatIdClean2=(customerData.vatId||"").trim().toUpperCase();
+  const reverseCharge=!!(vatIdClean2&&vatIdClean2.length>3&&!vatIdClean2.startsWith("DE"));
   const grossTotal=reverseCharge?addon.price:Math.round(addon.price*1.19*100)/100;
   btn.disabled=true;
   btn.textContent='Checkout wird vorbereitet…';

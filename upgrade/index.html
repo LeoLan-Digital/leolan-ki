@@ -98,7 +98,8 @@ async function loadCustomer(){
     // Email optional - continue even without it
     
     // Reverse charge für EU-Ausland
-    const reverseCharge=!!(customerData.vatId&&customerData.vatId.length>4);
+    const _vatIdU1=(customerData.vatId||"").trim().toUpperCase();
+    const reverseCharge=!!(_vatIdU1&&_vatIdU1.length>4&&!_vatIdU1.startsWith("DE"));
     const vat=reverseCharge?0:Math.round(349*0.19*100)/100;
     const gross=Math.round((349+vat)*100)/100;
     
@@ -119,7 +120,8 @@ async function startCheckout(){
   btn.disabled=true;
   btn.innerHTML='<span class="spinner"></span>Weiterleitung...';
   try{
-    const reverseCharge=!!(customerData.vatId&&customerData.vatId.length>4);
+    const _vatIdU2=(customerData.vatId||"").trim().toUpperCase();
+    const reverseCharge=!!(_vatIdU2&&_vatIdU2.length>4&&!_vatIdU2.startsWith("DE"));
     const resp=await fetch(CHECKOUT_URL,{
       method:'POST',
       headers:{'Content-Type':'application/json'},
