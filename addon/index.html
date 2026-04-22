@@ -140,7 +140,7 @@ function render(){
   $('priceNet').textContent=fmt(addon.price);
   $('priceVat').textContent=reverseCharge?'0€ (Reverse Charge)':fmt(vat);
   $('priceGross').textContent=fmt(gross);
-  $('buyBtn').textContent='Jetzt kaufen - '+fmt(addon.price);
+  $('buyBtn').textContent='Jetzt kaufen - '+fmt(gross);
   // Show email input if no email found
   if(!customerData.email){
     $('emailBox').classList.remove('hidden');
@@ -211,7 +211,9 @@ async function startCheckout(){
     window.location.href=redirectUrl;
   }catch(error){
     btn.disabled=false;
-    btn.textContent='Jetzt kaufen - '+fmt(addon.price);
+    const _vat2=reverseCharge?0:Math.round(addon.price*0.19*100)/100;
+    const _gross2=Math.round((addon.price+_vat2)*100)/100;
+    btn.textContent='Jetzt kaufen - '+fmt(_gross2);
     showStatus('Checkout konnte gerade nicht erstellt werden. Bitte erneut versuchen.','error');
   }
 }
