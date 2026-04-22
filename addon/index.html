@@ -43,15 +43,15 @@ h1{font-size:clamp(1.8rem,7vw,2.4rem);line-height:1.05;margin:18px 0 10px;color:
 .hidden{display:none!important}
 .footer{color:#484f58;font-size:.75rem;text-align:center;margin-top:22px}
 @keyframes spin{to{transform:rotate(360deg)}}
-  .choice-wrap { display: flex; gap: 10px; margin-bottom: 14px; }
-  .choice-card { flex: 1; background: #0d1117; border: 2px solid #30363d; border-radius: 14px; padding: 14px; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+  .choice-wrap { display: flex; gap: 8px; margin-bottom: 14px; }
+  .choice-card { flex: 1; background: #0d1117; border: 2px solid #30363d; border-radius: 12px; padding: 10px 6px; cursor: pointer; transition: border-color 0.2s, background 0.2s; min-width: 0; }
   .choice-card:hover { border-color: #f5a623aa; }
   .choice-card.active { border-color: #f5a623; background: rgba(245,166,35,0.07); }
-  .choice-card .choice-inner { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
-  .choice-card strong { color: #f0f6fc; font-size: 14px; }
-  .choice-card small { color: #8b949e; font-size: 11px; }
-  .choice-card .choice-icon { font-size: 22px; margin-bottom: 4px; }
-  .choice-badge { display: inline-block; background: rgba(63,185,80,0.15); color: #3fb950; border: 1px solid rgba(63,185,80,0.3); border-radius: 999px; padding: 2px 8px; font-size: 10px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; margin-top: 4px; }
+  .choice-card .choice-inner { display: flex; flex-direction: column; align-items: center; gap: 3px; text-align: center; }
+  .choice-card strong { color: #f0f6fc; font-size: 12px; font-weight: 800; }
+  .choice-card small { color: #8b949e; font-size: 10px; word-break: break-word; }
+  .choice-card .choice-icon { font-size: 18px; margin-bottom: 2px; }
+  .choice-badge { display: inline-block; background: rgba(63,185,80,0.15); color: #3fb950; border: 1px solid rgba(63,185,80,0.3); border-radius: 999px; padding: 1px 6px; font-size: 9px; font-weight: 800; letter-spacing: 0.03em; text-transform: uppercase; margin-top: 3px; }
 </style>
 </head>
 <body>
@@ -143,9 +143,8 @@ function selectMode(mode){
 }
 function updateBuyBtn(){
   if(!window._gross) return;
-  const yearlyGross = Math.round(window._gross * 10 * 100) / 100;
   if(selectedMode==='monthly') $('buyBtn').textContent='Monatlich abonnieren - '+fmt(window._gross)+'/Mo';
-  else if(selectedMode==='yearly') $('buyBtn').textContent='Jährlich abonnieren - '+fmt(yearlyGross)+'/Jahr';
+  else if(selectedMode==='yearly') $('buyBtn').textContent='Jährlich abonnieren - '+fmt(window._yearlyGross)+'/Jahr';
   else $('buyBtn').textContent='Einmalig kaufen - '+fmt(window._gross);
 }
 const ADDONS={
@@ -185,14 +184,18 @@ function render(){
   $('customerCompany').textContent=customerData.company;
   $('addonName').textContent=addon.name;
   $('addonDesc').textContent=addon.desc;
+  // Yearly = Netto × 10 Monate + MwSt. (2 Monate gratis)
+  const yearlyNet = Math.round(addon.price * 10 * 100) / 100;
+  const yearlyVat = reverseCharge ? 0 : Math.round(yearlyNet * 0.19 * 100) / 100;
+  const yearlyGross = Math.round((yearlyNet + yearlyVat) * 100) / 100;
   window._gross = gross;
+  window._yearlyGross = yearlyGross;
   window._reverseCharge = reverseCharge;
   $('priceNet').textContent=fmt(addon.price);
   $('priceVat').textContent=reverseCharge?'0€ (Reverse Charge)':fmt(vat);
   $('priceGross').textContent=fmt(gross);
-  const yearlyGross = Math.round(gross * 10 * 100) / 100;
   $('priceOnceLabel').textContent=fmt(gross)+' einmalig';
-  $('priceMonthlyLabel').textContent=fmt(gross)+'/Monat';
+  $('priceMonthlyLabel').textContent=fmt(gross)+'/Mo';
   $('priceYearlyLabel').textContent=fmt(yearlyGross)+'/Jahr';
   updateBuyBtn();
   // Show email input if no email found
@@ -240,9 +243,12 @@ async function startCheckout(){
     const isMonthly = selectedMode === 'monthly';
     const isYearly = selectedMode === 'yearly';
     const isSubscription = isMonthly || isYearly;
-    const yearlyGross = Math.round(grossTotal * 10 * 100) / 100;
+    // Yearly = 10 months net + VAT (2 months free)
+    const yearlyNet = Math.round(addon.price * 10 * 100) / 100;
+    const yearlyVatAmt = reverseCharge ? 0 : Math.round(yearlyNet * 0.19 * 100) / 100;
+    const yearlyGross = Math.round((yearlyNet + yearlyVatAmt) * 100) / 100;
     const finalGross = isYearly ? yearlyGross : grossTotal;
-    const finalNetPrice = isYearly ? Math.round(addon.price * 10 * 100) / 100 : addon.price;
+    const finalNetPrice = isYearly ? yearlyNet : addon.price;
     const modeLabel = isYearly ? ' (jährlich, 2 Monate gratis)' : isMonthly ? ' (monatlich)' : ' (einmalig)';
     const payload={
       customerCode,
@@ -274,9 +280,7 @@ async function startCheckout(){
     window.location.href=redirectUrl;
   }catch(error){
     btn.disabled=false;
-    const _vat2=reverseCharge?0:Math.round(addon.price*0.19*100)/100;
-    const _gross2=Math.round((addon.price+_vat2)*100)/100;
-    btn.textContent='Jetzt kaufen - '+fmt(_gross2);
+    updateBuyBtn();
     showStatus('Checkout konnte gerade nicht erstellt werden. Bitte erneut versuchen.','error');
   }
 }
