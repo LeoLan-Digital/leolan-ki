@@ -43,11 +43,15 @@ h1{font-size:clamp(1.8rem,7vw,2.4rem);line-height:1.05;margin:18px 0 10px;color:
 .hidden{display:none!important}
 .footer{color:#484f58;font-size:.75rem;text-align:center;margin-top:22px}
 @keyframes spin{to{transform:rotate(360deg)}}
-  .choice-card { flex: 1; background: #0d1117; border: 2px solid #30363d; border-radius: 14px; padding: 14px; cursor: pointer; transition: border-color 0.2s; }
-  .choice-card.active { border-color: #f5a623; }
+  .choice-wrap { display: flex; gap: 10px; margin-bottom: 14px; }
+  .choice-card { flex: 1; background: #0d1117; border: 2px solid #30363d; border-radius: 14px; padding: 14px; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+  .choice-card:hover { border-color: #f5a623aa; }
+  .choice-card.active { border-color: #f5a623; background: rgba(245,166,35,0.07); }
   .choice-card .choice-inner { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
   .choice-card strong { color: #f0f6fc; font-size: 14px; }
   .choice-card small { color: #8b949e; font-size: 11px; }
+  .choice-card .choice-icon { font-size: 22px; margin-bottom: 4px; }
+  .choice-badge { display: inline-block; background: rgba(63,185,80,0.15); color: #3fb950; border: 1px solid rgba(63,185,80,0.3); border-radius: 999px; padding: 2px 8px; font-size: 10px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; margin-top: 4px; }
 </style>
 </head>
 <body>
@@ -89,9 +93,30 @@ h1{font-size:clamp(1.8rem,7vw,2.4rem);line-height:1.05;margin:18px 0 10px;color:
         <div style="color:#8b949e;font-size:12px;margin-top:6px;">Für die Zahlungsbestätigung benötigt.</div>
       </div>
 
+      <div class="box">
+        <div class="label">Zahlungsweise wählen</div>
+        <div class="choice-wrap">
+          <div class="choice-card active" id="choiceOnce" onclick="selectMode('once')">
+            <div class="choice-inner">
+              <div class="choice-icon">⚡</div>
+              <strong>Einmalig</strong>
+              <small id="priceOnceLabel">—</small>
+            </div>
+          </div>
+          <div class="choice-card" id="choiceMonthly" onclick="selectMode('monthly')">
+            <div class="choice-inner">
+              <div class="choice-icon">🔄</div>
+              <strong>Monatlich</strong>
+              <small id="priceMonthlyLabel">—</small>
+              <span class="choice-badge">Abo</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="note">Ihre gespeicherten Rechnungsdaten werden verwendet.</div>
       
-<button id="buyBtn" class="btn" type="button">Einmalig kaufen</button>
+<button id="buyBtn" class="btn" type="button">Jetzt kaufen</button>
     </div>
 
     <div id="status" class="status"></div>
@@ -100,6 +125,18 @@ h1{font-size:clamp(1.8rem,7vw,2.4rem);line-height:1.05;margin:18px 0 10px;color:
 </div>
 
 <script>
+let selectedMode='once'; // 'once' or 'monthly'
+function selectMode(mode){
+  selectedMode=mode;
+  $('choiceOnce').classList.toggle('active', mode==='once');
+  $('choiceMonthly').classList.toggle('active', mode==='monthly');
+  updateBuyBtn();
+}
+function updateBuyBtn(){
+  if(!window._gross) return;
+  const label = selectedMode==='monthly' ? 'Monatlich abonnieren - '+fmt(window._gross)+'/Mo' : 'Einmalig kaufen - '+fmt(window._gross);
+  $('buyBtn').textContent=label;
+}
 const ADDONS={
   msg_1000:{name:'1.000 Nachrichten',price:29,desc:'+1.000 WhatsApp-Nachrichten für diesen Monat'},
   msg_2000:{name:'2.000 Nachrichten',price:49,desc:'+2.000 WhatsApp-Nachrichten für diesen Monat'},
@@ -137,10 +174,14 @@ function render(){
   $('customerCompany').textContent=customerData.company;
   $('addonName').textContent=addon.name;
   $('addonDesc').textContent=addon.desc;
+  window._gross = gross;
+  window._reverseCharge = reverseCharge;
   $('priceNet').textContent=fmt(addon.price);
   $('priceVat').textContent=reverseCharge?'0€ (Reverse Charge)':fmt(vat);
   $('priceGross').textContent=fmt(gross);
-  $('buyBtn').textContent='Jetzt kaufen - '+fmt(gross);
+  $('priceOnceLabel').textContent=fmt(gross)+' einmalig';
+  $('priceMonthlyLabel').textContent=fmt(gross)+'/Monat';
+  updateBuyBtn();
   // Show email input if no email found
   if(!customerData.email){
     $('emailBox').classList.remove('hidden');
@@ -183,15 +224,17 @@ async function startCheckout(){
   btn.textContent='Checkout wird vorbereitet…';
   showStatus('Stripe Checkout wird vorbereitet…','ok');
   try{
+    const isMonthly = selectedMode === 'monthly';
     const payload={
       customerCode,
       email:resolvedEmail,
       customerEmail:resolvedEmail,
       companyName:customerData.company,
       name:customerData.name,
-      paket:'addon',
+      paket: isMonthly ? 'addon-monthly' : 'addon',
       addon:addonId,
-      modules:[{name:addon.name,price:addon.price}],
+      addonMode: selectedMode,
+      modules:[{name:addon.name + (isMonthly ? ' (monatlich)' : ' (einmalig)'), price:addon.price}],
       addonName:addon.name,
       addonPrice:addon.price,
       sector:'restaurant',
