@@ -102,6 +102,35 @@ body{background:#0d1117;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFo
       </div>
       <p id="legalNote" style="color:#484f58;font-size:.78rem;margin-top:10px">Alle Preise zzgl. MwSt. · 12 Monate Mindestlaufzeit · + 349€ einmalige Setup-Gebühr</p>
     </div>
+
+    <!-- SEO Add-on -->
+    <div class="card">
+      <h3>🔍 SEO & Online-Sichtbarkeit <span style="font-size:.75rem;font-weight:400;color:#8b949e">(optional)</span></h3>
+      <p style="color:#8b949e;font-size:.84rem;margin-bottom:12px">Werden Sie bei Google, ChatGPT und co. gefunden — von Gästen die aktiv nach Restaurants suchen.</p>
+      <div class="pkgs">
+        <div class="pkg" id="seo-none" onclick="sseo('none')" style="border-color:#f5a623;background:rgba(245,166,35,.07)">
+          <div class="chk" style="display:flex">✓</div>
+          <div class="pkg-name">Kein SEO</div>
+          <div class="pkg-price" style="font-size:1rem">0€</div>
+          <div class="pkg-desc">Nur KI-Automatisierung</div>
+        </div>
+        <div class="pkg" id="seo-basic" onclick="sseo('basic')">
+          <div class="chk">✓</div>
+          <div class="pkg-badge" style="background:#3fb950;color:#000">NEU</div>
+          <div class="pkg-name">SEO Basic</div>
+          <div class="pkg-price">+99€ <span>/ Monat</span></div>
+          <div class="pkg-desc">Google Business, Local SEO, monatlicher Report</div>
+        </div>
+        <div class="pkg" id="seo-pro" onclick="sseo('pro')">
+          <div class="chk">✓</div>
+          <div class="pkg-badge" style="background:#5e81f4;color:#fff">EMPFOHLEN</div>
+          <div class="pkg-name">SEO Pro</div>
+          <div class="pkg-price">+199€ <span>/ Monat</span></div>
+          <div class="pkg-desc">Local SEO + KI-Suche (ChatGPT, Gemini) + Backlinks</div>
+        </div>
+      </div>
+    </div>
+
     <!-- Konto -->
     <div class="card">
       <h3>👤 Zugangsdaten</h3>
@@ -161,6 +190,16 @@ body{background:#0d1117;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFo
 <script>
 var urlPkg=new URLSearchParams(window.location.search).get('paket'); var pkg=urlPkg==='pro'?'pro':'starter';document.addEventListener('DOMContentLoaded',function(){var note=document.getElementById('legalNote');if(note)note.textContent=pkg==='pro'?'Alle Preise zzgl. MwSt. · + 349€ einmalige Setup-Gebühr':'Alle Preise zzgl. MwSt. · 12 Monate Mindestlaufzeit · + 349€ einmalige Setup-Gebühr';});
 var fdata={};
+var seo='none';
+function sseo(s){
+  seo=s;
+  ['seo-none','seo-basic','seo-pro'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el){el.classList.remove('on');el.style.borderColor='#30363d';el.style.background='#0d1117';var chk=el.querySelector('.chk');if(chk)chk.style.display='none';}
+  });
+  var sel=document.getElementById('seo-'+s);
+  if(sel){sel.classList.add('on');sel.style.borderColor='#f5a623';sel.style.background='rgba(245,166,35,.07)';var chk=sel.querySelector('.chk');if(chk)chk.style.display='flex';}
+}
 function spkg(p){pkg=p;document.querySelectorAll('.pkg').forEach(function(c){c.classList.remove('on');var note=document.getElementById('legalNote');if(note){note.textContent=p==='pro'?'Alle Preise zzgl. MwSt. · + 349€ einmalige Setup-Gebühr':'Alle Preise zzgl. MwSt. · 12 Monate Mindestlaufzeit · + 349€ einmalige Setup-Gebühr';}});document.querySelector('[data-pkg="'+p+'"]').classList.add('on');}
 function setErr(id,has){var f=document.getElementById('fe-'+id);if(f)f.classList.toggle('bad',has);}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');}
@@ -187,7 +226,7 @@ function go1(){
   if(!ok){window.scrollTo({top:0,behavior:'smooth'});return;}
   fdata={
     email:email,name:name,
-    package:pkg,sector:'restaurant',
+    package:pkg,sector:'restaurant',seoPackage:seo,
     companyName:company,street:street,zipCode:zip,city:city,
     address:street+', '+zip+' '+city,
     vatId:document.getElementById('vatId').value.trim(),
@@ -208,7 +247,8 @@ function go1(){
     ['USt-ID',fdata.vatId||'Keine Angabe'],
     ['Website',fdata.website||'—'],
     ['WhatsApp',fdata.whatsappNumber],
-    ['Paket',(pkg==='starter'?'Starter':'Pro')]
+    ['Paket',(pkg==='starter'?'Starter':'Pro')],
+    ['SEO',seo==='none'?'Kein SEO':seo==='basic'?'SEO Basic (+99€/Mo)':'SEO Pro (+199€/Mo)']
   ];
   document.getElementById('sumDetails').innerHTML=rows.map(function(r){return '<div class="sum-row"><span class="sum-label">'+esc(r[0])+'</span><span class="sum-value">'+esc(r[1])+'</span></div>';}).join('');
   document.getElementById('sumPrice').innerHTML=
