@@ -1099,6 +1099,46 @@
     <a href="#kontakt" style="display: inline-block; background: var(--accent); color: #fff; padding: 16px 36px; border-radius: 980px; font-size: 16px; font-weight: 600; text-decoration: none;">Jetzt starten — kostenlos & unverbindlich →</a>
   </div>
 </section>
+
+<!-- ROI RECHNER -->
+<section style="padding:80px 24px;border-top:1px solid rgba(255,255,255,0.07);text-align:center;">
+  <div style="max-width:640px;margin:0 auto;">
+    <p class="section-tag reveal">Kostenloser Rechner</p>
+    <h2 class="section-title reveal reveal-delay-1">Wie viel verlierst du täglich?</h2>
+    <p class="section-sub reveal reveal-delay-2">Gib ein wie viele Anfragen dein Restaurant täglich bekommt — und sieh sofort deinen Umsatzverlust.</p>
+    <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(0,113,227,0.25);border-radius:20px;padding:32px;margin-top:32px;" class="reveal">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px;">
+        <div>
+          <label style="display:block;font-size:13px;color:rgba(245,245,247,0.6);margin-bottom:8px;">Anfragen pro Tag</label>
+          <input type="number" id="roiAnfragen" value="10" min="1" max="200" oninput="berechneROI()" style="width:100%;padding:12px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:#fff;font-size:18px;font-weight:700;text-align:center;box-sizing:border-box;">
+        </div>
+        <div>
+          <label style="display:block;font-size:13px;color:rgba(245,245,247,0.6);margin-bottom:8px;">Umsatz pro Tisch (€)</label>
+          <input type="number" id="roiUmsatz" value="80" min="10" max="500" oninput="berechneROI()" style="width:100%;padding:12px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:#fff;font-size:18px;font-weight:700;text-align:center;box-sizing:border-box;">
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:24px;">
+        <div style="background:rgba(255,59,48,0.1);border:1px solid rgba(255,59,48,0.25);border-radius:14px;padding:16px;">
+          <div style="font-size:11px;color:rgba(245,245,247,0.5);margin-bottom:6px;">TÄGLICH</div>
+          <div id="roiDaily" style="font-size:24px;font-weight:800;color:#ff6b6b;">€240</div>
+        </div>
+        <div style="background:rgba(255,214,0,0.08);border:1px solid rgba(255,214,0,0.25);border-radius:14px;padding:16px;">
+          <div style="font-size:11px;color:rgba(245,245,247,0.5);margin-bottom:6px;">PRO MONAT</div>
+          <div id="roiMonthly" style="font-size:24px;font-weight:800;color:#ffd60a;">€7.200</div>
+        </div>
+        <div style="background:rgba(52,199,89,0.08);border:1px solid rgba(52,199,89,0.25);border-radius:14px;padding:16px;">
+          <div style="font-size:11px;color:rgba(245,245,247,0.5);margin-bottom:6px;">ROI LEOLAN</div>
+          <div id="roiReturn" style="font-size:24px;font-weight:800;color:#34c759;">36×</div>
+        </div>
+      </div>
+      <p id="roiText" style="font-size:14px;color:rgba(245,245,247,0.65);margin-bottom:20px;">Du verlierst <strong style="color:#ff6b6b;">€7.200 pro Monat</strong>. LeoLan kostet 199€ — und holt dir das zurück.</p>
+      <a href="#kontakt" style="display:inline-block;background:var(--accent);color:#fff;padding:14px 32px;border-radius:980px;font-size:16px;font-weight:600;text-decoration:none;">Verluste stoppen — Demo →</a>
+    </div>
+  </div>
+</section>
+<script>
+function berechneROI(){var a=parseInt(document.getElementById("roiAnfragen").value)||10;var u=parseInt(document.getElementById("roiUmsatz").value)||80;var d=Math.round(a*0.3*u);var m=d*30;var r=Math.round(m/199);document.getElementById("roiDaily").textContent="€"+d.toLocaleString("de-DE");document.getElementById("roiMonthly").textContent="€"+m.toLocaleString("de-DE");document.getElementById("roiReturn").textContent=r+"×";document.getElementById("roiText").innerHTML="Du verlierst <strong style='color:#ff6b6b;'>€"+m.toLocaleString("de-DE")+" pro Monat</strong> durch verpasste Anfragen. LeoLan kostet 199€ — und holt dir das zurück.";}berechneROI();
+</script>
 <!-- PRICING -->
 <section class="pricing" id="preise">
   <div style="text-align:center">
