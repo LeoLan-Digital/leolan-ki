@@ -509,6 +509,49 @@
   </script>
   <!-- ContentSquare / Hotjar Tracking -->
   <script src="https://t.contentsquare.net/uxa/5b3e797417378.js" async></script>
+
+<script>
+  // A/B Test: Hero Headline
+  (function() {
+    var variant = localStorage.getItem('ab_hero');
+    if (!variant) {
+      variant = Math.random() < 0.5 ? 'A' : 'B';
+      localStorage.setItem('ab_hero', variant);
+    }
+    
+    var headlines = {
+      A: 'Du verlierst täglich Gäste —<br>weil niemand schnell genug antwortet.',
+      B: 'Mehr Reservierungen.<br>Weniger Stress. Vollautomatisch.'
+    };
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      var h1 = document.querySelector('.hero h1 .gradient');
+      if (h1 && variant === 'B') {
+        h1.innerHTML = headlines[variant];
+      }
+      
+      // GA4 Event für Variant
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'ab_test_impression', {
+          'test_name': 'hero_headline',
+          'variant': variant
+        });
+      }
+      
+      // CTA Click tracking
+      document.querySelectorAll('.hero-btns a').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          if (typeof gtag !== 'undefined') {
+            gtag('event', 'ab_test_conversion', {
+              'test_name': 'hero_headline',
+              'variant': variant
+            });
+          }
+        });
+      });
+    });
+  })();
+</script>
 </head>
 <body>
 
