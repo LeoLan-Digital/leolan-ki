@@ -104,6 +104,18 @@
   .hero-img-wrap img { width: 100%; height: 480px; object-fit: cover; display: block; filter: brightness(0.8); }
   @media (max-width: 768px) { .hero-img-wrap img { height: 240px; } }
   @media (max-width: 600px) { .ideal-grid { grid-template-columns: 1fr !important; } }
+  @media (max-width: 640px) {
+    .ergebnis-grid { grid-template-columns: 1fr !important; }
+    .ideal-grid { grid-template-columns: 1fr !important; }
+    .stats-inner { grid-template-columns: 1fr 1fr !important; }
+    .compare-grid { grid-template-columns: 1fr !important; }
+    .cards-grid { grid-template-columns: 1fr !important; }
+    .steps-grid { grid-template-columns: 1fr !important; }
+    .pain-grid { grid-template-columns: 1fr !important; }
+    [style*="grid-template-columns: repeat(3"] { grid-template-columns: 1fr !important; }
+    [style*="grid-template-columns: repeat(4"] { grid-template-columns: 1fr 1fr !important; }
+    [style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+  }
   @media (max-width: 700px) {
     .demo-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
   }
@@ -702,7 +714,7 @@
 <section style="padding: 60px 24px; border-top: 1px solid rgba(255,255,255,0.07);">
   <div style="max-width: 800px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 16px; text-align: left;">
     <h2 style="font-size: clamp(24px, 3vw, 36px); font-weight: 700; text-align: center; margin-bottom: 8px;" class="reveal">Ideal für dich, wenn…</h2>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;" class="reveal">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;" class="reveal ideal-grid">
       <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(0,113,227,0.2); border-radius: 16px; padding: 24px;">
         <p style="font-size: 13px; font-weight: 700; color: var(--accent-light); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px;">✓ Passt für dich</p>
         <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0;">
@@ -732,7 +744,7 @@
   <div style="max-width: 860px; margin: 0 auto;">
     <p class="section-tag reveal">Das Ergebnis</p>
     <h2 class="section-title reveal reveal-delay-1">Was du dadurch gewinnst</h2>
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 40px; padding: 2px;" class="reveal">
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 40px; padding: 2px;" class="reveal ergebnis-grid">
       <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(0,113,227,0.25); border-radius: 20px; padding: 28px 24px;">
         <div style="font-size: 40px; font-weight: 700; color: var(--accent-light); margin-bottom: 12px;">+30%</div>
         <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">Mehr Reservierungen</h3>
