@@ -1333,7 +1333,7 @@
     }
   }
 
-  async function opendigitaler Mitarbeiter() {
+  async function openChatbot() {
     chatbotModal.classList.add('open');
     chatbotModal.setAttribute('aria-hidden', 'false');
     if (chatbotToggle) chatbotToggle.style.display = 'none';
@@ -1345,17 +1345,17 @@
     setTimeout(function(){ chatbotInput.focus(); chatbotMessages.scrollTop = chatbotMessages.scrollHeight; }, 80);
   }
 
-  function closedigitaler Mitarbeiter() {
+  function closeChatbot() {
     chatbotModal.classList.remove('open');
     chatbotModal.setAttribute('aria-hidden', 'true');
     if (chatbotToggle) chatbotToggle.style.display = '';
   }
 
   if (chatbotToggle && chatbotModal && chatbotForm && chatbotInput && chatbotMessages) {
-    chatbotToggle.addEventListener('click', opendigitaler Mitarbeiter);
-    chatbotClose.addEventListener('click', closedigitaler Mitarbeiter);
+    chatbotToggle.addEventListener('click', openChatbot);
+    chatbotClose.addEventListener('click', closeChatbot);
     chatbotModal.addEventListener('click', function(e) {
-      if (e.target === chatbotModal) closedigitaler Mitarbeiter();
+      if (e.target === chatbotModal) closeChatbot();
     });
     chatbotForm.addEventListener('submit', async function(e) {
       e.stopPropagation();
@@ -1380,7 +1380,7 @@
       chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
     });
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && chatbotModal.classList.contains('open')) closedigitaler Mitarbeiter();
+      if (e.key === 'Escape' && chatbotModal.classList.contains('open')) closeChatbot();
     });
   }
 </script>
