@@ -109,9 +109,9 @@
   .section-tag { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 16px; }
   .section-title { font-size: clamp(30px, 4vw, 52px); font-weight: 700; line-height: 1.1; letter-spacing: -0.025em; margin-bottom: 16px; }
   .section-sub { font-size: 18px; color: var(--text-secondary); line-height: 1.6; max-width: 600px; margin: 0 auto 56px; }
-  .pain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; border: 1px solid rgba(255,255,255,0.07); border-radius: 20px; overflow: hidden; }
+  .pain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; border-radius: 20px; overflow: hidden; }
   @media (max-width: 700px) { .pain-grid { grid-template-columns: 1fr; } }
-  .pain-item { background: var(--gray-1); padding: 36px 28px; text-align: left; }
+  .pain-item { background: var(--gray-1); padding: 36px 28px; text-align: left; border: 1px solid rgba(0,113,227,0.25); }
   .pain-icon { font-size: 28px; margin-bottom: 16px; }
   .pain-item h3 { font-size: 17px; font-weight: 600; margin-bottom: 10px; color: var(--text-primary); }
   .pain-item p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
@@ -127,7 +127,7 @@
   /* BEFORE/AFTER */
   .compare { padding: 100px 24px; }
   .compare-inner { max-width: 960px; margin: 0 auto; }
-  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; border: 1px solid rgba(255,255,255,0.07); border-radius: 20px; overflow: hidden; margin-top: 56px; }
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; border-radius: 20px; overflow: hidden; margin-top: 56px; }
   @media (max-width: 640px) { .compare-grid { grid-template-columns: 1fr; } }
   .compare-col { padding: 44px 36px; }
   .compare-col.before { background: var(--gray-1); }
@@ -165,7 +165,7 @@
   .cards-header { text-align: center; max-width: 700px; margin: 0 auto 56px; }
   .card-grid { max-width: 1060px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
   @media (max-width: 860px) { .card-grid { grid-template-columns: 1fr; } }
-  .card { background: var(--black); padding: 40px 32px; transition: background 0.2s; }
+  .card { background: var(--gray-1); padding: 40px 32px; transition: background 0.2s; border: 1px solid rgba(0,113,227,0.22); border-radius: 16px; }
   .card:hover { background: #0d0d0d; }
   .card-icon { font-size: 32px; margin-bottom: 16px; }
   .card h3 { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 10px; }
@@ -176,7 +176,7 @@
   .process { padding: 100px 24px; text-align: center; border-top: 1px solid rgba(255,255,255,0.07); }
   .process-steps { max-width: 900px; margin: 56px auto 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
   @media (max-width: 640px) { .process-steps { grid-template-columns: 1fr; } }
-  .step { padding: 44px 32px; background: var(--gray-1); text-align: left; }
+  .step { padding: 44px 32px; background: var(--gray-1); text-align: left; border: 1px solid rgba(0,113,227,0.22); }
   .step-num { font-size: 48px; font-weight: 700; color: rgba(255,255,255,0.08); letter-spacing: -0.03em; margin-bottom: 20px; line-height: 1; }
   .step h3 { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
   .step p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
@@ -246,7 +246,7 @@
   /* FAQ */
   .faq { padding: 100px 24px; background: var(--gray-1); border-top: 1px solid rgba(255,255,255,0.07); }
   .faq-list { max-width: 760px; margin: 56px auto 0; display: flex; flex-direction: column; gap: 2px; }
-  .faq-item { background: var(--black); border-radius: 0; overflow: hidden; }
+  .faq-item { background: var(--gray-1); border-radius: 0; overflow: hidden; border-left: 2px solid rgba(0,113,227,0.35); }
   .faq-item:first-child { border-radius: 14px 14px 0 0; }
   .faq-item:last-child { border-radius: 0 0 14px 14px; }
   .faq-q { width: 100%; background: none; border: none; padding: 22px 24px; text-align: left; font-size: 16px; font-weight: 600; color: var(--text-primary); cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; font-family: var(--font); }
