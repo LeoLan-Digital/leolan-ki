@@ -246,7 +246,11 @@
       h2 { font-size: 1.32rem; }
       p, li { font-size: 0.97rem; }
     }
-  </style>
+    .social-links { display: flex; justify-content: center; gap: 16px; margin-bottom: 24px; }
+  .social-links a { display: flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 14px; text-decoration: none; transition: transform 0.2s, opacity 0.2s; overflow: hidden; }
+  .social-links a:hover { transform: scale(1.1); opacity: 0.9; }
+  .social-links a svg { width: 56px; height: 56px; display: block; }
+</style>
 </head>
 <body>
   <div class="wrap hero">
