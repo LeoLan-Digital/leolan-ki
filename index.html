@@ -1512,5 +1512,30 @@
   }
 </script>
 
+
+<!-- EXIT INTENT POPUP -->
+<div id="exitPopup" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.75);backdrop-filter:blur(4px);align-items:center;justify-content:center;">
+  <div style="background:linear-gradient(180deg,#0d1117 0%,#111827 100%);border:1px solid rgba(0,113,227,0.3);border-radius:24px;padding:40px 36px;max-width:480px;width:90%;text-align:center;position:relative;">
+    <button onclick="document.getElementById('exitPopup').style.display='none'" style="position:absolute;top:16px;right:16px;background:rgba(255,255,255,0.08);border:none;color:#fff;width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:16px;">✕</button>
+    <div style="font-size:36px;margin-bottom:12px;">⚡</div>
+    <h3 style="font-size:22px;font-weight:700;color:#fff;margin-bottom:10px;">Warte kurz — bevor du gehst</h3>
+    <p style="font-size:15px;color:rgba(245,245,247,0.7);margin-bottom:8px;">Jeder Tag ohne System kostet dich durchschnittlich</p>
+    <p style="font-size:32px;font-weight:800;color:var(--accent-light);margin-bottom:20px;">130 € Umsatz</p>
+    <p style="font-size:14px;color:rgba(245,245,247,0.55);margin-bottom:24px;">Kostenlose Demo in 15 Minuten — kein Vertrag, keine Kosten.</p>
+    <a href="#kontakt" onclick="document.getElementById('exitPopup').style.display='none'" style="display:block;background:var(--accent);color:#fff;padding:14px 28px;border-radius:980px;font-size:15px;font-weight:600;text-decoration:none;margin-bottom:12px;">Jetzt Demo sichern →</a>
+    <button onclick="document.getElementById('exitPopup').style.display='none'" style="background:none;border:none;color:rgba(245,245,247,0.4);font-size:13px;cursor:pointer;">Nein danke, ich verliere lieber Gäste</button>
+  </div>
+</div>
+
+<script>
+  var exitShown = false;
+  document.addEventListener('mouseleave', function(e) {
+    if (e.clientY <= 0 && !exitShown && !sessionStorage.getItem('exitSeen')) {
+      exitShown = true;
+      sessionStorage.setItem('exitSeen', '1');
+      document.getElementById('exitPopup').style.display = 'flex';
+    }
+  });
+</script>
 </body>
 </html>
