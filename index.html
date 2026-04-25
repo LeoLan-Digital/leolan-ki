@@ -109,7 +109,7 @@
   .section-tag { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 16px; }
   .section-title { font-size: clamp(30px, 4vw, 52px); font-weight: 700; line-height: 1.1; letter-spacing: -0.025em; margin-bottom: 16px; }
   .section-sub { font-size: 18px; color: var(--text-secondary); line-height: 1.6; max-width: 600px; margin: 0 auto 56px; }
-  .pain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; border-radius: 24px; overflow: hidden; }
+  .pain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
   @media (max-width: 700px) { .pain-grid { grid-template-columns: 1fr; } }
   .pain-item { background: var(--gray-1); padding: 36px 28px; text-align: left; border: 1px solid rgba(0,113,227,0.25); border-radius: 20px; }
   .pain-icon { font-size: 28px; margin-bottom: 16px; }
@@ -127,9 +127,9 @@
   /* BEFORE/AFTER */
   .compare { padding: 100px 24px; }
   .compare-inner { max-width: 960px; margin: 0 auto; }
-  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; border-radius: 24px; overflow: hidden; margin-top: 56px; }
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 56px; }
   @media (max-width: 640px) { .compare-grid { grid-template-columns: 1fr; } }
-  .compare-col { padding: 44px 36px; }
+  .compare-col { padding: 44px 36px; border-radius: 24px; }
   .compare-col.before { background: var(--gray-1); }
   .compare-col.after { background: var(--gray-1); border: 1px solid rgba(0,113,227,0.35); border-radius: 24px; }
   .compare-label { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px; }
