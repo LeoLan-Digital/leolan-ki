@@ -1137,7 +1137,22 @@
   </div>
 </section>
 <script>
-function berechneROI(){var a=parseInt(document.getElementById("roiAnfragen").value)||10;var u=parseInt(document.getElementById("roiUmsatz").value)||80;var d=Math.round(a*0.3*u);var m=d*30;var r=Math.round(m/199);document.getElementById("roiDaily").textContent="€"+d.toLocaleString("de-DE");document.getElementById("roiMonthly").textContent="€"+m.toLocaleString("de-DE");document.getElementById("roiReturn").textContent=r+"×";document.getElementById("roiText").innerHTML="Du verlierst <strong style='color:#ff6b6b;'>€"+m.toLocaleString("de-DE")+" pro Monat</strong> durch verpasste Anfragen. LeoLan kostet 199€ — und holt dir das zurück.";}berechneROI();
+function berechneROI(){var a=parseInt(document.getElementById("roiAnfragen").value)||10;var u=parseInt(document.getElementById("roiUmsatz").value)||80;var d=Math.round(a*0.3*u);var m=d*30;var r=Math.round(m/199);document.getElementById("roiDaily").textContent="€"+d.toLocaleString("de-DE");document.getElementById("roiMonthly").textContent="€"+m.toLocaleString("de-DE");document.getElementById("roiReturn").textContent=r+"×";document.getElementById("roiText").innerHTML="Du verlierst <strong style=\'color:#ff6b6b;\'>€"+m.toLocaleString("de-DE")+" pro Monat</strong> durch verpasste Anfragen. LeoLan kostet 199€ — und holt dir das zurück.";}
+async function sendeROIReport(){
+  var email=document.getElementById("roiEmail").value;
+  var anfragen=document.getElementById("roiAnfragen").value;
+  var umsatz=document.getElementById("roiUmsatz").value;
+  var daily=document.getElementById("roiDaily").textContent;
+  var monthly=document.getElementById("roiMonthly").textContent;
+  if(!email||!email.includes("@")){alert("Bitte gültige E-Mail eingeben.");return;}
+  try{
+    await fetch("https://n8n.leolan.net/webhook/roi-report",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:email,anfragen:anfragen,umsatz:umsatz,daily:daily,monthly:monthly})});
+  }catch(e){}
+  document.getElementById("roiSuccess").style.display="block";
+  document.getElementById("roiEmail").value="";
+  if(typeof gtag!=="undefined"){gtag("event","lead_magnet_roi",{email:email});}
+}
+berechneROI();
 </script>
 <!-- PRICING -->
 <section class="pricing" id="preise">
