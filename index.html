@@ -1367,33 +1367,72 @@
     chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
   }
 
+  function detectLang(text) {
+    var t = text.toLowerCase();
+    if (t.includes('merhaba') || t.includes('teşekkür') || t.includes('rezerv') || t.includes('evet') || t.includes('tamam') || t.includes('masa') || t.includes('kaç kişi')) return 'tr';
+    if (t.includes('bonjour') || t.includes('merci') || t.includes('réservation') || t.includes('table') || t.includes('salut')) return 'fr';
+    if (t.includes('hola') || t.includes('gracias') || t.includes('reserva') || t.includes('mesa')) return 'es';
+    if (t.includes('hello') || t.includes('hi ') || t.includes('thanks') || t.includes('reservation') || t.includes('table') || t.includes('open')) return 'en';
+    return 'de';
+  }
+
   function getBotReply(message) {
     var lower = message.toLowerCase();
-    if (lower.includes('hi') || lower.includes('hallo') || lower.includes('hey') || lower.includes('guten') || lower.includes('servus') || lower.includes('merhaba') || lower.includes('salut') || lower === '') {
-      return 'Hallo! 👋 Schön dass Sie da sind. Ich bin der LeoLan digitaler Assistent. Wie kann ich Ihnen helfen? Fragen Sie mich zum Beispiel nach Reservierungen, Öffnungszeiten oder Preisen!';
-    }
-    if (lower.includes('danke') || lower.includes('thanks') || lower.includes('teşekkür')) {
-      return 'Gerne! 😊 Ich helfe Ihnen jederzeit weiter.';
-    }
-    if (lower.includes('wie') && (lower.includes('geht') || lower.includes('bist'))) {
-      return 'Mir geht es bestens, danke! 😄 Ich bin bereit Ihnen zu helfen. Was kann ich für Sie tun?';
-    }
-    if (lower.includes('reserv') || lower.includes('tisch') || lower.includes('buchen') || lower.includes('termin')) {
-      return 'Natürlich! Ich kann Ihnen gerne einen Tisch reservieren. Nennen Sie mir einfach Datum, Uhrzeit und Personenzahl — ich kümmere mich darum! 📅';
-    }
-    if (lower.includes('öffnung') || lower.includes('offen') || lower.includes('uhrzeit') || lower.includes('wann')) {
-      return 'Wir haben täglich von 11:00 bis 22:00 Uhr geöffnet. 🕐 Möchten Sie direkt einen Tisch reservieren?';
-    }
-    if (lower.includes('preis') || lower.includes('kosten') || lower.includes('gericht') || lower.includes('menü') || lower.includes('essen')) {
-      return 'Unsere Hauptgerichte beginnen ab 12,90€. 🍽️ Soll ich Ihnen unsere aktuellen Empfehlungen nennen?';
-    }
-    if (lower.includes('whatsapp') || lower.includes('kontakt') || lower.includes('anruf') || lower.includes('telefon')) {
-      return 'Sie können uns jederzeit per WhatsApp erreichen: +49 15678 483700 💬 oder per E-Mail an info@leolan.net';
-    }
-    if (lower.includes('demo') || lower.includes('test') || lower.includes('wie funktioniert')) {
-      return 'Das ist eine Demo unseres digitaler Assistenten! In Ihrem Restaurant würde der Bot echte Reservierungen annehmen und Gäste betreuen. Mehr Info unter ki.leolan.net/onboarding 🚀';
-    }
-    return 'Das ist eine gute Frage! 🤔 Ich leite das an unser Team weiter und Sie bekommen in Kürze eine Antwort. Alternativ: info@leolan.net';
+    var lang = detectLang(lower);
+
+    var replies = {
+      greeting: {
+        de: 'Hallo! 👋 Ich bin der LeoLan Assistent. Wie kann ich helfen? (Reservierungen, Öffnungszeiten, Preise)',
+        en: 'Hello! 👋 I'm the LeoLan assistant. How can I help? (Reservations, opening hours, prices)',
+        tr: 'Merhaba! 👋 LeoLan asistanıyım. Nasıl yardımcı olabilirim? (Rezervasyon, açılış saatleri, fiyatlar)',
+        fr: 'Bonjour! 👋 Je suis l'assistant LeoLan. Comment puis-je vous aider?',
+        es: '¡Hola! 👋 Soy el asistente LeoLan. ¿Cómo puedo ayudarle?'
+      },
+      reserv: {
+        de: 'Gerne! Nennen Sie mir Datum, Uhrzeit und Personenzahl — ich reserviere sofort! 📅',
+        en: 'Sure! Just tell me the date, time and number of guests — I'll reserve right away! 📅',
+        tr: 'Tabii! Tarih, saat ve kişi sayısını söyleyin — hemen rezervasyon yapayım! 📅',
+        fr: 'Bien sûr! Dites-moi la date, l'heure et le nombre de personnes — je réserve tout de suite! 📅',
+        es: '¡Claro! Dígame la fecha, hora y número de personas — ¡reservo enseguida! 📅'
+      },
+      hours: {
+        de: 'Wir haben täglich von 11:00–22:00 Uhr geöffnet. 🕐 Tisch reservieren?',
+        en: 'We're open daily from 11:00–22:00. 🕐 Would you like to book a table?',
+        tr: 'Her gün 11:00–22:00 açığız. 🕐 Masa rezervasyonu yapalım mı?',
+        fr: 'Nous sommes ouverts tous les jours de 11h à 22h. 🕐 Réserver une table?',
+        es: 'Abrimos todos los días de 11:00 a 22:00. 🕐 ¿Reservar una mesa?'
+      },
+      thanks: {
+        de: 'Gerne! 😊 Jederzeit für Sie da.',
+        en: 'You're welcome! 😊 Happy to help anytime.',
+        tr: 'Rica ederim! 😊 Her zaman yardımcı olmaktan mutluluk duyarım.',
+        fr: 'De rien! 😊 Je suis toujours là pour vous aider.',
+        es: '¡De nada! 😊 Siempre aquí para ayudar.'
+      },
+      contact: {
+        de: 'WhatsApp: +49 15678 483700 💬 | E-Mail: info@leolan.net',
+        en: 'WhatsApp: +49 15678 483700 💬 | Email: info@leolan.net',
+        tr: 'WhatsApp: +49 15678 483700 💬 | E-posta: info@leolan.net',
+        fr: 'WhatsApp: +49 15678 483700 💬 | Email: info@leolan.net',
+        es: 'WhatsApp: +49 15678 483700 💬 | Email: info@leolan.net'
+      },
+      fallback: {
+        de: 'Gute Frage! 🤔 Für mehr Details: info@leolan.net oder WhatsApp +49 15678 483700',
+        en: 'Good question! 🤔 For more details: info@leolan.net or WhatsApp +49 15678 483700',
+        tr: 'İyi soru! 🤔 Daha fazla bilgi için: info@leolan.net veya WhatsApp +49 15678 483700',
+        fr: 'Bonne question! 🤔 Pour plus d'infos: info@leolan.net ou WhatsApp +49 15678 483700',
+        es: '¡Buena pregunta! 🤔 Para más detalles: info@leolan.net o WhatsApp +49 15678 483700'
+      }
+    };
+
+    var r = function(key) { return replies[key][lang] || replies[key]['de']; };
+
+    if (lower.includes('hi') || lower.includes('hallo') || lower.includes('hey') || lower.includes('merhaba') || lower.includes('bonjour') || lower.includes('hello') || lower.includes('hola') || lower === '') return r('greeting');
+    if (lower.includes('danke') || lower.includes('thanks') || lower.includes('teşekkür') || lower.includes('merci') || lower.includes('gracias')) return r('thanks');
+    if (lower.includes('reserv') || lower.includes('tisch') || lower.includes('buchen') || lower.includes('table') || lower.includes('masa') || lower.includes('book')) return r('reserv');
+    if (lower.includes('öffnung') || lower.includes('open') || lower.includes('uhrzeit') || lower.includes('wann') || lower.includes('when') || lower.includes('saat')) return r('hours');
+    if (lower.includes('whatsapp') || lower.includes('kontakt') || lower.includes('contact') || lower.includes('iletişim')) return r('contact');
+    return r('fallback');
   }
 
   var chatHistory = [];
