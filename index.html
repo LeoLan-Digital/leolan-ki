@@ -96,6 +96,7 @@
   .btn-primary { display: inline-block; background: var(--accent); color: #fff; padding: 15px 32px; border-radius: 980px; font-size: 17px; font-weight: 500; text-decoration: none; transition: background 0.2s, transform 0.15s; }
   .btn-primary:hover { background: #0077ed; transform: scale(1.02); }
   .btn-secondary { display: inline-block; color: var(--accent-light); padding: 15px 32px; border-radius: 980px; font-size: 17px; font-weight: 500; text-decoration: none; }
+  .hero-money { font-size: 16px; color: rgba(245,245,247,0.75); margin-bottom: 32px; background: rgba(255,214,0,0.08); border: 1px solid rgba(255,214,0,0.2); padding: 12px 20px; border-radius: 12px; display: inline-block; }
   .hero-pain-pills { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-bottom: 32px; }
   .hero-pain-pills span { background: rgba(255,59,48,0.12); border: 1px solid rgba(255,59,48,0.3); color: rgba(245,245,247,0.85); padding: 8px 16px; border-radius: 999px; font-size: 14px; font-weight: 500; }
   .hero-trust { font-size: 13px; color: var(--text-tertiary); margin-bottom: 60px; }
@@ -551,6 +552,7 @@
     <span>💬 Nachrichten unbeantwortet</span>
     <span>🚶 Gäste gehen weiter</span>
   </div>
+  <p class="hero-money reveal reveal-delay-3">💰 Ein verpasster Anruf kostet dich <strong>50–150 € Umsatz</strong> — pro Tisch.</p>
   <div class="hero-btns reveal reveal-delay-3">
     <a href="#kontakt" class="btn-primary">Kostenloses Erstgespräch →</a>
     <a href="#leistungen" class="btn-secondary">Was wir machen ›</a>
@@ -602,6 +604,66 @@
   </div>
 </section>
 
+
+<!-- WHATSAPP DEMO PROOF -->
+<section style="padding: 80px 24px; text-align: center; border-top: 1px solid rgba(255,255,255,0.07);">
+  <div style="max-width: 900px; margin: 0 auto;">
+    <p class="section-tag reveal">So funktioniert es in der Praxis</p>
+    <h2 class="section-title reveal reveal-delay-1">Dein Bot antwortet — während du kochst.</h2>
+    <p class="section-sub reveal reveal-delay-2">Echtes Beispiel: So reagiert dein WhatsApp-Assistent auf eine Reservierungsanfrage um 22:47 Uhr.</p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 48px; text-align: left;" class="reveal">
+      <!-- WhatsApp Mockup -->
+      <div style="background: #0a0f1a; border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; overflow: hidden;">
+        <div style="background: #075E54; padding: 14px 20px; display: flex; align-items: center; gap: 12px;">
+          <div style="width: 38px; height: 38px; background: #128C7E; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px;">🍽️</div>
+          <div>
+            <div style="color: #fff; font-weight: 600; font-size: 15px;">Restaurant Assistent</div>
+            <div style="color: rgba(255,255,255,0.7); font-size: 12px;">● Online · antwortet sofort</div>
+          </div>
+        </div>
+        <div style="padding: 20px; display: flex; flex-direction: column; gap: 12px;">
+          <div style="align-self: flex-end; background: #DCF8C6; color: #000; padding: 10px 14px; border-radius: 12px 12px 0 12px; font-size: 14px; max-width: 80%;">
+            Hallo, kann ich für morgen Abend einen Tisch für 4 reservieren? 19 Uhr?
+            <div style="font-size: 11px; color: rgba(0,0,0,0.4); text-align: right; margin-top: 4px;">22:47 ✓✓</div>
+          </div>
+          <div style="align-self: flex-start; background: #fff; color: #000; padding: 10px 14px; border-radius: 12px 12px 12px 0; font-size: 14px; max-width: 85%;">
+            Hallo! 😊 Ja, morgen Abend um 19:00 Uhr haben wir noch einen Tisch für 4 Personen verfügbar.<br><br>
+            Darf ich noch Ihren Namen für die Reservierung notieren?
+            <div style="font-size: 11px; color: rgba(0,0,0,0.4); text-align: right; margin-top: 4px;">22:47 · KI-Assistent</div>
+          </div>
+          <div style="align-self: flex-end; background: #DCF8C6; color: #000; padding: 10px 14px; border-radius: 12px 12px 0 12px; font-size: 14px; max-width: 80%;">
+            Müller, Johann
+            <div style="font-size: 11px; color: rgba(0,0,0,0.4); text-align: right; margin-top: 4px;">22:48 ✓✓</div>
+          </div>
+          <div style="align-self: flex-start; background: #fff; color: #000; padding: 10px 14px; border-radius: 12px 12px 12px 0; font-size: 14px; max-width: 85%;">
+            ✅ Perfekt! Reservierung bestätigt:<br>
+            📅 Morgen, 19:00 Uhr<br>
+            👥 4 Personen<br>
+            📝 Name: Müller, Johann<br><br>
+            Wir freuen uns auf Sie! Sie erhalten morgen um 17 Uhr eine Erinnerung. 🍷
+            <div style="font-size: 11px; color: rgba(0,0,0,0.4); text-align: right; margin-top: 4px;">22:48 · KI-Assistent</div>
+          </div>
+        </div>
+      </div>
+      <!-- Results -->
+      <div style="display: flex; flex-direction: column; justify-content: center; gap: 24px;">
+        <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(0,113,227,0.25); border-radius: 16px; padding: 24px;">
+          <div style="font-size: 36px; font-weight: 700; color: var(--accent-light);">22:47</div>
+          <div style="color: rgba(245,245,247,0.7); font-size: 14px; margin-top: 4px;">Anfrage kam rein — nachts, während du schläfst</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(52,199,89,0.35); border-radius: 16px; padding: 24px;">
+          <div style="font-size: 36px; font-weight: 700; color: #34c759;">< 3 Sek.</div>
+          <div style="color: rgba(245,245,247,0.7); font-size: 14px; margin-top: 4px;">Antwortzeit des Assistenten — automatisch</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,214,0,0.25); border-radius: 16px; padding: 24px;">
+          <div style="font-size: 36px; font-weight: 700; color: #ffd60a;">+1 Tisch</div>
+          <div style="color: rgba(245,245,247,0.7); font-size: 14px; margin-top: 4px;">Reservierung gesichert — ohne dein Zutun</div>
+        </div>
+      </div>
+    </div>
+    <p style="margin-top: 32px; font-size: 14px; color: rgba(245,245,247,0.4);">@media: Auf Mobile als Vollbild · Ohne dieses System wäre diese Anfrage verloren gegangen.</p>
+  </div>
+</section>
 <!-- STATS -->
 <section class="stats">
   <div class="stats-inner">
