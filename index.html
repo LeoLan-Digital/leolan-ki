@@ -193,7 +193,7 @@
   .pricing-grid { max-width: 940px; margin: 56px auto 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
   @media (max-width: 720px) { .pricing-grid { grid-template-columns: 1fr; } }
   .price-card { background: linear-gradient(180deg, rgba(26,39,68,0.96) 0%, rgba(13,17,23,0.98) 100%); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 44px 32px; display: flex; flex-direction: column; box-shadow: 0 24px 70px rgba(0,0,0,0.35); }
-  .price-card.featured { background: linear-gradient(180deg, rgba(245,166,35,0.22) 0%, rgba(26,39,68,0.98) 38%, rgba(13,17,23,1) 100%); border-color: rgba(245,166,35,0.5); box-shadow: 0 30px 80px rgba(0,0,0,0.45); }
+  .price-card.featured { background: linear-gradient(180deg, rgba(0,113,227,0.18) 0%, rgba(10,20,40,0.98) 38%, rgba(5,5,15,1) 100%); border-color: rgba(0,113,227,0.5); box-shadow: 0 30px 80px rgba(0,0,0,0.45); }
   .price-badge { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; background: rgba(255,255,255,0.1); border-radius: 999px; padding: 6px 12px; margin-bottom: 16px; color: rgba(255,255,255,0.92); }
   .price-tier { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(245,245,247,0.72); margin-bottom: 8px; }
   .price-card.featured .price-tier { color: rgba(245,245,247,0.88); }
@@ -203,13 +203,13 @@
   .price-features { list-style: none; flex: 1; display: flex; flex-direction: column; gap: 10px; }
   .price-features li { font-size: 14px; color: rgba(245,245,247,0.82); display: flex; gap: 10px; align-items: flex-start; line-height: 1.4; }
   .price-card.featured .price-features li { color: rgba(255,255,255,0.9); }
-  .price-features li::before { content: '✓'; color: #f5a623; flex-shrink: 0; font-size: 13px; font-weight: 700; }
-  .price-card.featured .price-features li::before { color: #ffd27a; }
+  .price-features li::before { content: '✓'; color: var(--accent-light); flex-shrink: 0; font-size: 13px; font-weight: 700; }
+  .price-card.featured .price-features li::before { color: #60aeff; }
   .price-btn { display: block; text-align: center; margin-top: 28px; padding: 13px 24px; border-radius: 980px; font-size: 15px; font-weight: 600; text-decoration: none; transition: opacity 0.2s, transform 0.2s, background 0.2s; }
   .price-btn:hover { transform: translateY(-1px); }
   .price-btn-outline { border: 1px solid rgba(255,255,255,0.18); color: #fff; background: rgba(255,255,255,0.03); }
   .price-btn-outline:hover { background: rgba(255,255,255,0.08); }
-  .price-btn-white { background: #f5a623; color: #0d1117; }
+  .price-btn-white { background: var(--accent); color: #fff; }
   .price-btn-white:hover { opacity: 0.95; }
 
   /* CHATBOT DEMO */
@@ -222,7 +222,7 @@
   .chatbot-window { width: min(390px, 100%); height: min(520px, calc(100dvh - 60px)); background: linear-gradient(180deg, #17212b 0%, #0d1117 100%); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; overflow: hidden; box-shadow: 0 30px 90px rgba(0,0,0,0.55); display: flex; flex-direction: column; }
   .chatbot-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 20px; background: rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.08); }
   .chatbot-title { display: flex; align-items: center; gap: 12px; }
-  .chatbot-avatar { width: 42px; height: 42px; border-radius: 50%; background: #f5a623; color: #0d1117; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; }
+  .chatbot-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; }
   .chatbot-header strong { display: block; font-size: 15px; }
   .chatbot-header span { display: block; font-size: 12px; color: rgba(245,245,247,0.6); margin-top: 2px; }
   .chatbot-close { background: transparent; border: none; color: rgba(245,245,247,0.8); font-size: 24px; line-height: 1; cursor: pointer; }
@@ -857,7 +857,7 @@
   <div class="pricing-grid">
     <div class="price-card reveal">
       <div class="price-tier">Starter</div>
-      <div style="display:flex;gap:6px;margin-bottom:8px"><div class="price-badge" style="background:rgba(245,166,35,0.18); color:#ffd27a; font-size:10px;">🔥 Beliebt zum Einstieg</div><div class="price-badge" style="background:rgba(239,68,68,0.15); color:#f87171; font-size:10px; border:1px solid rgba(239,68,68,0.3);">⚡ Limitiert</div></div>
+      <div style="display:flex;gap:6px;margin-bottom:8px"><div class="price-badge" style="background:rgba(0,113,227,0.18); color:#60aeff; font-size:10px;">🔥 Beliebt zum Einstieg</div><div class="price-badge" style="background:rgba(239,68,68,0.15); color:#f87171; font-size:10px; border:1px solid rgba(239,68,68,0.3);">⚡ Limitiert</div></div>
       <div class="price-amount">199 €</div>
       <div class="price-period">pro Monat, zzgl. MwSt.</div>
       <div class="price-period" style="font-size:12px;margin-top:-20px;margin-bottom:8px;">+ 349 € Setup-Gebühr (einmalig)</div>
@@ -1169,7 +1169,7 @@
     var isStarter = lc.includes('199') || lc.includes('starter');
     var hasBooking = sender === 'bot' && (lc.includes('buchen') || lc.includes('onboarding') || lc.includes('paket') || lc.includes('199') || lc.includes('349') || lc.includes('499') || lc.includes('ki.leolan.net'));
     var bookUrl = isIndividual ? 'https://ki.leolan.net/enterprise/' : isPro ? 'https://ki.leolan.net/onboarding/?paket=pro' : 'https://ki.leolan.net/onboarding/?paket=starter';
-    var btnHtml = hasBooking ? '<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><a href="https://ki.leolan.net/onboarding/?paket=starter" target="_blank" style="display:inline-block;background:#f5a623;color:#000;font-weight:800;font-size:12px;padding:9px 14px;border-radius:10px;text-decoration:none;">📦 Pakete</a><a href="https://ki.leolan.net/enterprise/" target="_blank" style="display:inline-block;background:#5e81f4;color:#fff;font-weight:800;font-size:12px;padding:9px 14px;border-radius:10px;text-decoration:none;">🔧 Einzelmodul</a></div>' : '';
+    var btnHtml = hasBooking ? '<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><a href="https://ki.leolan.net/onboarding/?paket=starter" target="_blank" style="display:inline-block;background:#0071e3;color:#fff;font-weight:800;font-size:12px;padding:9px 14px;border-radius:10px;text-decoration:none;">📦 Pakete</a><a href="https://ki.leolan.net/enterprise/" target="_blank" style="display:inline-block;background:#5e81f4;color:#fff;font-weight:800;font-size:12px;padding:9px 14px;border-radius:10px;text-decoration:none;">🔧 Einzelmodul</a></div>' : '';
     msg.innerHTML = text + btnHtml + '<small>' + chatbotTime() + '</small>';
     chatbotMessages.appendChild(msg);
     chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
