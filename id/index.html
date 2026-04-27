@@ -1,0 +1,1784 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<base href="https://ki.leolan.net/">
+<script>
+(function() {
+  // Bereits auf einer Sprachunterseite? Nicht nochmal umleiten
+  if (window.location.pathname.match(/^\/(en|tr|ru|id)\//)) return;
+  // Schon umgeleitet? (verhindert Loop)
+  if (sessionStorage.getItem('lang_redirected')) return;
+
+  var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+  var country = '';
+
+  // Sprach-Mapping
+  var map = {
+    'tr': '/tr/', 'az': '/tr/',           // Türkisch / Aserbaidschanisch
+    'ru': '/ru/', 'uk': '/ru/', 'be': '/ru/', 'kk': '/ru/', // Russisch + CIS
+    'id': '/id/', 'ms': '/id/',            // Indonesisch / Malaiisch (Bali!)
+    'en': '/en/', 'en-us': '/en/', 'en-gb': '/en/', 'en-au': '/en/',
+  };
+
+  var target = map[lang] || map[lang.split('-')[0]] || null;
+
+  if (target) {
+    sessionStorage.setItem('lang_redirected', '1');
+    window.location.replace(target);
+  }
+})();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KI dan WhatsApp Bot untuk Restoran | LeoLan Digital</title>
+  <meta name="description" content="LeoLan Manager App: digitaler Assistent für Gastronomen. WhatsApp Bot, Reservierungen, Live-Dasbor & Push-Benachrichtigungen. Jetzt im App Store. Kostenlos testen auf ki.leolan.net">
+  <meta name="keywords" content="KI Restaurant, WhatsApp Bot Restaurant, mehr Reservierungen Gastronomie, Restaurant App, Reservierungen App, Restaurant Manager App, LeoLan Manager, Restaurant digitaler Mitarbeiter Deutschland, KI Gastronomie App, App Store Restaurant">
+  <meta name="robots" content="index, follow">
+  <meta name="description-ai" content="LeoLan Manager is a professional iOS app for restaurant operators in Germany. Features: WhatsApp bot automation, reservation management, capacity tracking, push notifications, live dashboard. Available on Apple App Store. Developed by LeoLan Digital, Dresden, Germany.">
+  <meta name="application-name" content="LeoLan Manager">
+  <meta name="apple-itunes-app" content="app-id=676205147">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="LeoLan Digital">
+  <meta property="og:title" content="KI dan WhatsApp Bot untuk Restoran | LeoLan Digital">
+  <meta property="og:description" content="Lebih banyak reservasi, lebih sedikit administrasi: otomatisasi restoran KI dengan WhatsApp Bot, manajemen ulasan, media sosial, dan menu digital.">
+  <meta property="og:url" content="https://ki.leolan.net/">
+  <meta property="og:image" content="https://ki.leolan.net/og-preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="de_DE">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="KI Restaurant & WhatsApp Bot für Restaurants | LeoLan Digital">
+  <meta name="twitter:description" content="mehr Reservierungen für Gastronomie: WhatsApp Bot Restaurant, Social Media, Manajemen Ulasan und digitale Speisekarte.">
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/LeoLan-Digital/leolan-ki/main/logo_extract2/leolan%20logo-01.png">
+  <link rel="canonical" href="https://ki.leolan.net/id/">
+  <link rel="alternate" hreflang="de" href="https://ki.leolan.net/">
+  <link rel="alternate" hreflang="en" href="https://ki.leolan.net/en/">
+  <link rel="alternate" hreflang="tr" href="https://ki.leolan.net/tr/">
+  <link rel="alternate" hreflang="ru" href="https://ki.leolan.net/ru/">
+  <link rel="alternate" hreflang="id" href="https://ki.leolan.net/id/">
+  <link rel="alternate" hreflang="x-default" href="https://ki.leolan.net/">
+
+  <link rel="alternate" hreflang="de" href="https://ki.leolan.net/">
+  <link rel="alternate" hreflang="en" href="https://ki.leolan.net/en/">
+  <link rel="alternate" hreflang="tr" href="https://ki.leolan.net/tr/">
+  <link rel="alternate" hreflang="ru" href="https://ki.leolan.net/ru/">
+  <link rel="alternate" hreflang="id" href="https://ki.leolan.net/id/">
+  <link rel="alternate" hreflang="x-default" href="https://ki.leolan.net/">
+
+  <meta http-equiv="Cache-Control" content="max-age=86400, public">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+      <link rel="icon" type="image/png" sizes="32x32" href="/favicon-new.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-new.png">
+  <link rel="shortcut icon" href="/favicon-new.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon-new.png">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "LeoLan Digital",
+      "url": "https://ki.leolan.net/",
+      "image": "https://raw.githubusercontent.com/LeoLan-Digital/leolan-ki/main/logo_extract2/leolan%20logo-01.png",
+      "description": "LeoLan Digital bietet KI Restaurant Lösungen, WhatsApp Bots für Restaurants, mehr Reservierungen für Gastronomie, Manajemen Ulasan und digitale Speisekarten.",
+      "telephone": "+49 3521 788680",
+      "email": "info@leolan.net",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Reickerstr. 132",
+        "addressLocality": "Dresden",
+        "postalCode": "01237",
+        "addressCountry": "DE"
+      },
+      "areaServed": "Deutschland",
+      "sameAs": [
+        "https://instagram.com/leolan_digital",
+        "https://www.facebook.com/profile.php?id=100083189805774"
+      ],
+      "serviceType": [
+        "KI Restaurant",
+        "WhatsApp Bot Restaurant",
+        "mehr Reservierungen Gastronomie",
+        "Restaurant WhatsApp Bot Deutschland"
+      ]
+    }
+  </script>
+<style>
+  :root {
+    --black: #000000;
+    --gray-1: rgba(255,255,255,0.04);
+    --gray-2: rgba(255,255,255,0.06);
+    --gray-3: #3a3a3c;
+    --text-primary: #f5f5f7;
+    --text-secondary: rgba(245,245,247,0.6);
+    --text-tertiary: rgba(245,245,247,0.35);
+    --accent: #0071e3;
+    --accent-light: #2997ff;
+    --font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Arial, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font); background: var(--black); color: var(--text-primary); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: 52px; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; background: rgba(0,0,0,0.75); backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .nav-logo img { width: 120px; height: auto; display: block;  }
+  .nav-logo { text-decoration: none; }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a { font-size: 13px; color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text-primary); }
+  .nav-cta { font-size: 13px; color: var(--accent-light); text-decoration: none; font-weight: 500; }
+  @media (max-width: 768px) { .nav-links { display: none; } }
+
+  /* HERO */
+  .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 100px 24px 60px; background: radial-gradient(ellipse 100% 60% at 50% 0%, rgba(0,113,227,0.15), transparent 70%); }
+  .hero-eyebrow { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 20px; }
+  .hero h1 { font-size: clamp(44px, 8vw, 92px); font-weight: 700; line-height: 1.04; letter-spacing: -0.03em; max-width: 900px; margin-bottom: 24px; }
+  .hero h1 .gradient { background: linear-gradient(180deg, #f5f5f7 50%, rgba(245,245,247,0.25)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero-sub { font-size: clamp(18px, 2.5vw, 22px); color: var(--text-secondary); max-width: 580px; line-height: 1.6; margin-bottom: 48px; }
+  .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+  .btn-primary { display: inline-block; background: var(--accent); color: #fff; padding: 15px 32px; border-radius: 980px; font-size: 17px; font-weight: 500; text-decoration: none; transition: background 0.2s, transform 0.15s; }
+  .btn-primary:hover { background: #0077ed; transform: scale(1.02); }
+  .btn-secondary { display: inline-block; color: var(--accent-light); padding: 15px 32px; border-radius: 980px; font-size: 17px; font-weight: 500; text-decoration: none; }
+  .hero-money { font-size: 16px; color: rgba(245,245,247,0.75); margin-bottom: 32px; background: rgba(255,214,0,0.08); border: 1px solid rgba(255,214,0,0.2); padding: 12px 20px; border-radius: 12px; display: inline-block; }
+  .hero-pain-pills { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-bottom: 32px; }
+  .hero-pain-pills span { background: rgba(0,113,227,0.1); border: 1px solid rgba(0,113,227,0.3); color: rgba(245,245,247,0.85); padding: 8px 16px; border-radius: 999px; font-size: 14px; font-weight: 500; }
+  .hero-trust { font-size: 13px; color: var(--text-tertiary); margin-bottom: 60px; }
+  .hero-img-wrap { width: 100%; max-width: 1100px; border-radius: 20px; overflow: hidden; box-shadow: 0 50px 140px rgba(0,0,0,0.85); }
+  .hero-img-wrap img { width: 100%; height: 480px; object-fit: cover; display: block; filter: brightness(0.8); }
+  @media (max-width: 768px) { .hero-img-wrap img { height: 240px; } }
+  @media (max-width: 768px) { .hero { min-height: unset !important; padding-top: 80px !important; padding-bottom: 24px !important; justify-content: flex-start !important; } }
+  @media (max-width: 768px) { #urgencyBar, .urgency-bar { display: none !important; } }
+  @media (max-width: 900px) { .hero-img-wrap { display: none !important; } }
+  @media (max-width: 600px) { .ideal-grid { grid-template-columns: 1fr !important; } }
+  @media (max-width: 640px) {
+    .ergebnis-grid { grid-template-columns: 1fr !important; }
+    .ideal-grid { grid-template-columns: 1fr !important; }
+    .stats-inner { grid-template-columns: 1fr 1fr !important; }
+    .compare-grid { grid-template-columns: 1fr !important; }
+    .cards-grid { grid-template-columns: 1fr !important; }
+    .steps-grid { grid-template-columns: 1fr !important; }
+    .pain-grid { grid-template-columns: 1fr !important; }
+    [style*="grid-template-columns: repeat(3"] { grid-template-columns: 1fr !important; }
+    [style*="grid-template-columns: repeat(4"] { grid-template-columns: 1fr 1fr !important; }
+    [style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+  }
+  @media (max-width: 700px) {
+    .demo-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+  }
+  @media (max-width: 768px) {
+    .hero { text-align: center !important; }
+    .hero * { text-align: center !important; }
+    .hero-eyebrow { text-align: center !important; display: block !important; }
+    .hero h1 { text-align: center !important; }
+    .hero-sub { text-align: center !important; margin-left: auto !important; margin-right: auto !important; }
+    .hero-pain-pills { justify-content: center !important; }
+    .hero-money { text-align: center !important; display: block !important; margin: 0 auto 28px auto !important; }
+    .hero-btns { justify-content: center !important; }
+    .hero-trust { text-align: center !important; }
+  }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: rgba(255,255,255,0.07); }
+
+  /* PAIN SECTION */
+  .pain { padding: 100px 24px; text-align: center; }
+  .pain-inner { max-width: 960px; margin: 0 auto; }
+  .section-tag { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 16px; }
+  .section-title { font-size: clamp(30px, 4vw, 52px); font-weight: 700; line-height: 1.1; letter-spacing: -0.025em; margin-bottom: 16px; }
+  .section-sub { font-size: 18px; color: var(--text-secondary); line-height: 1.6; max-width: 600px; margin: 0 auto 56px; }
+  .pain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 2px; }
+  @media (max-width: 700px) { .pain-grid { grid-template-columns: 1fr; } }
+  .pain-item { background: var(--gray-1); padding: 36px 28px; text-align: left; border: 1px solid rgba(0,113,227,0.25); border-radius: 20px; }
+  .pain-icon { font-size: 28px; margin-bottom: 16px; }
+  .pain-item h3 { font-size: 17px; font-weight: 600; margin-bottom: 10px; color: var(--text-primary); }
+  .pain-item p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+
+  /* STATS */
+  .stats { padding: 80px 24px; background: var(--gray-1); }
+  .stats-inner { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: center; }
+  @media (max-width: 700px) { .stats-inner { grid-template-columns: repeat(2, 1fr); } }
+  .stat-num { font-size: clamp(36px, 5vw, 58px); font-weight: 700; letter-spacing: -0.03em; }
+  .stat-num span { color: var(--accent-light); }
+  .stat-label { font-size: 13px; color: var(--text-secondary); margin-top: 8px; line-height: 1.4; }
+
+  /* BEFORE/AFTER */
+  .compare { padding: 100px 24px; }
+  .compare-inner { max-width: 960px; margin: 0 auto; }
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 56px; }
+  @media (max-width: 640px) { .compare-grid { grid-template-columns: 1fr; } }
+  .compare-col { padding: 44px 36px; border-radius: 24px; }
+  .compare-col.before { background: var(--gray-1); }
+  .compare-col.after { background: var(--gray-1); border: 1px solid rgba(0,113,227,0.35); border-radius: 24px; }
+  .compare-label { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px; }
+  .compare-col.before .compare-label { color: rgba(245,245,247,0.4); }
+  .compare-col.after .compare-label { color: var(--accent-light); }
+  .compare-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .compare-list li { font-size: 15px; color: var(--text-secondary); display: flex; gap: 12px; align-items: flex-start; line-height: 1.5; }
+  .compare-col.before .compare-list li::before { content: '✗'; color: rgba(255,80,80,0.7); font-weight: 700; flex-shrink: 0; }
+  .compare-col.after .compare-list li::before { content: '✓'; color: #34c759; font-weight: 700; flex-shrink: 0; }
+  .compare-col.after .compare-list li { color: rgba(245,245,247,0.85); }
+
+  /* FEATURES */
+  .feature { padding: 100px 24px; border-top: 1px solid rgba(255,255,255,0.07); }
+  .feature-inner { max-width: 1060px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .feature-inner.reverse { direction: rtl; }
+  .feature-inner.reverse > * { direction: ltr; }
+  @media (max-width: 860px) { .feature-inner, .feature-inner.reverse { grid-template-columns: 1fr; direction: ltr; gap: 44px; } }
+  .feature-tag { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 16px; }
+  .feature h2 { font-size: clamp(28px, 3.5vw, 44px); font-weight: 700; line-height: 1.1; letter-spacing: -0.025em; margin-bottom: 16px; }
+  .feature p { font-size: 17px; line-height: 1.65; color: var(--text-secondary); margin-bottom: 28px; }
+  .feature-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .feature-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: var(--text-secondary); line-height: 1.5; }
+  .feature-list li::before { content: '✓'; color: var(--accent-light); font-weight: 700; font-size: 13px; margin-top: 2px; flex-shrink: 0; }
+  .feature-img { border-radius: 18px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.7); }
+  .feature-img img { width: 100%; height: 380px; object-fit: cover; display: block; filter: brightness(0.8); transition: transform 0.6s, filter 0.4s; }
+  .feature-img:hover img { transform: scale(1.03); filter: brightness(0.9); }
+  .feature-stat { margin-top: 32px; display: inline-flex; align-items: center; gap: 16px; background: var(--gray-1); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 16px 20px; }
+  .feature-stat-num { font-size: 32px; font-weight: 700; color: var(--accent-light); letter-spacing: -0.02em; }
+  .feature-stat-label { font-size: 13px; color: var(--text-secondary); line-height: 1.4; }
+
+  /* CARDS */
+  .cards-section { padding: 100px 24px; background: var(--gray-1); }
+  .cards-header { text-align: center; max-width: 700px; margin: 0 auto 56px; }
+  .card-grid { max-width: 1060px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  @media (max-width: 860px) { .card-grid { grid-template-columns: 1fr; } }
+  .card { background: var(--gray-1); padding: 40px 32px; transition: background 0.2s; border: 1px solid rgba(0,113,227,0.22); border-radius: 24px; }
+  .card:hover { background: #0d0d0d; }
+  .card-icon { font-size: 32px; margin-bottom: 16px; }
+  .card h3 { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 10px; }
+  .card p { font-size: 14px; color: var(--text-secondary); line-height: 1.65; }
+  .card-fact { font-size: 12px; color: var(--accent-light); margin-top: 14px; font-weight: 500; }
+
+  /* PROCESS */
+  .process { padding: 100px 24px; text-align: center; border-top: 1px solid rgba(255,255,255,0.07); }
+  .process-steps { max-width: 900px; margin: 56px auto 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  @media (max-width: 640px) { .process-steps { grid-template-columns: 1fr; } }
+  .step { padding: 44px 32px; background: var(--gray-1); text-align: left; border: 1px solid rgba(0,113,227,0.22); border-radius: 24px; }
+  .step-num { font-size: 48px; font-weight: 700; color: rgba(255,255,255,0.08); letter-spacing: -0.03em; margin-bottom: 20px; line-height: 1; }
+  .step h3 { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+  .step p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+
+  /* TESTIMONIAL */
+  .testimonial { padding: 100px 24px; background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(0,113,227,0.1), transparent); text-align: center; border-top: 1px solid rgba(255,255,255,0.07); }
+  .testimonial blockquote { font-size: clamp(22px, 3vw, 36px); font-weight: 600; line-height: 1.3; letter-spacing: -0.02em; max-width: 780px; margin: 0 auto 32px; color: var(--text-primary); }
+  .testimonial cite { font-style: normal; font-size: 15px; color: var(--text-secondary); }
+  .testimonial cite strong { color: var(--text-primary); font-weight: 600; }
+  .stars { font-size: 20px; margin-bottom: 24px; letter-spacing: 2px; }
+
+  /* PRICING */
+  .pricing { padding: 100px 24px; border-top: 1px solid rgba(255,255,255,0.07); background: linear-gradient(180deg, #0d1117 0%, #111827 100%); }
+  .pricing-grid { max-width: 940px; margin: 56px auto 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 720px) { .pricing-grid { grid-template-columns: 1fr; } }
+  .price-card { background: linear-gradient(180deg, rgba(26,39,68,0.96) 0%, rgba(13,17,23,0.98) 100%); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 44px 32px; display: flex; flex-direction: column; box-shadow: 0 24px 70px rgba(0,0,0,0.35); }
+  .price-card.featured { background: linear-gradient(180deg, rgba(0,113,227,0.18) 0%, rgba(10,20,40,0.98) 38%, rgba(5,5,15,1) 100%); border-color: rgba(0,113,227,0.5); box-shadow: 0 30px 80px rgba(0,0,0,0.45); }
+  .price-badge { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; background: rgba(255,255,255,0.1); border-radius: 999px; padding: 6px 12px; margin-bottom: 16px; color: rgba(255,255,255,0.92); }
+  .price-tier { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(245,245,247,0.72); margin-bottom: 8px; }
+  .price-card.featured .price-tier { color: rgba(245,245,247,0.88); }
+  .price-amount { font-size: 44px; font-weight: 700; letter-spacing: -0.03em; margin: 4px 0; color: #fff; }
+  .price-period { font-size: 13px; color: rgba(245,245,247,0.68); margin-bottom: 28px; }
+  .price-card.featured .price-period { color: rgba(245,245,247,0.76); }
+  .price-features { list-style: none; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+  .price-features li { font-size: 14px; color: rgba(245,245,247,0.82); display: flex; gap: 10px; align-items: flex-start; line-height: 1.4; }
+  .price-card.featured .price-features li { color: rgba(255,255,255,0.9); }
+  .price-features li::before { content: '✓'; color: var(--accent-light); flex-shrink: 0; font-size: 13px; font-weight: 700; }
+  .price-card.featured .price-features li::before { color: #60aeff; }
+  .price-btn { display: block; text-align: center; margin-top: 28px; padding: 13px 24px; border-radius: 980px; font-size: 15px; font-weight: 600; text-decoration: none; transition: opacity 0.2s, transform 0.2s, background 0.2s; }
+  .price-btn:hover { transform: translateY(-1px); }
+  .price-btn-outline { border: 1px solid rgba(255,255,255,0.18); color: #fff; background: rgba(255,255,255,0.03); }
+  .price-btn-outline:hover { background: rgba(255,255,255,0.08); }
+  .price-btn-white { background: var(--accent); color: #fff; }
+  .price-btn-white:hover { opacity: 0.95; }
+
+  /* CHATBOT DEMO */
+  .chatbot-toggle { position: fixed; right: 24px; bottom: 24px; z-index: 1200; background: rgba(0,0,0,0.85); color: #fff; border: 1.5px solid rgba(0,113,227,0.7); border-radius: 999px; padding: 14px 22px; font-size: 15px; font-weight: 600; font-family: var(--font); cursor: pointer; box-shadow: 0 8px 32px rgba(0,113,227,0.25); backdrop-filter: blur(12px); transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; }
+  .chatbot-toggle:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,113,227,0.4); border-color: rgba(0,113,227,1); }
+  .chatbot-modal { position: fixed; inset: 0; display: none; align-items: flex-end; justify-content: flex-end; padding: 4px 8px 4px 8px; background: rgba(0,0,0,0.55); backdrop-filter: blur(8px); z-index: 1199; }
+  .chatbot-modal.open { display: flex; }
+  @supports (-webkit-touch-callout: none) { .chatbot-window { max-height: 85vh; } }
+  .chatbot-modal.open { display: flex; }
+  .chatbot-window { width: min(390px, 100%); height: min(520px, calc(100dvh - 60px)); background: linear-gradient(180deg, #17212b 0%, #0d1117 100%); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; overflow: hidden; box-shadow: 0 30px 90px rgba(0,0,0,0.55); display: flex; flex-direction: column; }
+  .chatbot-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 20px; background: rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .chatbot-title { display: flex; align-items: center; gap: 12px; }
+  .chatbot-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; }
+  .chatbot-header strong { display: block; font-size: 15px; }
+  .chatbot-header span { display: block; font-size: 12px; color: rgba(245,245,247,0.6); margin-top: 2px; }
+  .chatbot-close { background: transparent; border: none; color: rgba(245,245,247,0.8); font-size: 24px; line-height: 1; cursor: pointer; }
+  .chatbot-messages { flex: 1; padding: 12px 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; scroll-behavior: smooth; background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 18px 18px; }
+  .chatbot-message { max-width: 84%; padding: 12px 14px; border-radius: 18px; font-size: 14px; line-height: 1.5; }
+  .chatbot-message.bot { align-self: flex-start; background: #223243; color: rgba(255,255,255,0.92); border-bottom-left-radius: 6px; }
+  .chatbot-message.user { align-self: flex-end; background: #2b5278; color: #fff; border-bottom-right-radius: 6px; }
+  .chatbot-message small { display: block; margin-top: 6px; font-size: 11px; color: rgba(255,255,255,0.5); }
+  .chatbot-input-wrap { padding: 8px 12px 12px; background: #17212b; }
+   
+  .chatbot-form input::placeholder { color: rgba(245,245,247,0.38); }
+  
+  
+  .chatbot-hint { margin-top: 10px; font-size: 12px; color: rgba(245,245,247,0.5); text-align: center; }
+  @media (max-width: 640px) {
+    .chatbot-modal { padding: 12px; }
+    .chatbot-window { width: 100%; height: min(78vh, 640px); border-radius: 20px; }
+    .chatbot-toggle { right: 16px; bottom: 16px; padding: 14px 18px; }
+  }
+
+  /* FAQ */
+  .faq { padding: 100px 24px; background: var(--gray-1); border-top: 1px solid rgba(255,255,255,0.07); }
+  .faq-list { max-width: 760px; margin: 56px auto 0; display: flex; flex-direction: column; gap: 2px; }
+  .faq-item { background: var(--gray-1); border-radius: 16px; overflow: hidden; border: 1px solid rgba(0,113,227,0.25); margin-bottom: 8px; }
+  
+  .faq-item:last-child { border-radius: 0 0 14px 14px; }
+  .faq-q { width: 100%; background: none; border: none; padding: 22px 24px; text-align: left; font-size: 16px; font-weight: 600; color: var(--text-primary); cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; font-family: var(--font); }
+  .faq-q span { font-size: 20px; color: var(--accent-light); flex-shrink: 0; transition: transform 0.3s; }
+  .faq-q.open span { transform: rotate(45deg); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s; }
+  .faq-a.open { max-height: 300px; }
+  .faq-a p { padding: 0 24px 22px; font-size: 15px; color: var(--text-secondary); line-height: 1.65; }
+
+  /* CTA */
+  .cta-section { padding: 140px 24px; text-align: center; background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0,113,227,0.12), transparent 70%); border-top: 1px solid rgba(255,255,255,0.07); }
+  .cta-section h2 { font-size: clamp(36px, 5.5vw, 68px); font-weight: 700; line-height: 1.05; letter-spacing: -0.03em; max-width: 700px; margin: 0 auto 20px; }
+  .cta-section p { font-size: 18px; color: var(--text-secondary); max-width: 480px; margin: 0 auto 40px; line-height: 1.55; }
+  .contact-info-strip { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; margin-bottom: 48px; }
+  .contact-info-strip a { display: flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; font-size: 15px; transition: color 0.2s; }
+  .contact-info-strip a:hover { color: var(--text-primary); }
+
+  /* FORM */
+  .contact-form { max-width: 560px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; text-align: left; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 560px) { .form-row { grid-template-columns: 1fr; } }
+  .contact-form input, .contact-form textarea, .contact-form select { width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 14px 18px; font-size: 15px; color: var(--text-primary); font-family: var(--font); outline: none; transition: border-color 0.2s, background 0.2s; -webkit-appearance: none; }
+  .contact-form input::placeholder, .contact-form textarea::placeholder { color: var(--text-tertiary); }
+  .contact-form input:focus, .contact-form textarea:focus, .contact-form select:focus { border-color: var(--accent-light); background: rgba(255,255,255,0.1); }
+  .contact-form textarea { resize: vertical; min-height: 110px; }
+  .contact-form select option { background: #1c1c1e; color: #f5f5f7; }
+  .form-submit { width: 100%; background: var(--accent); color: #fff; border: none; border-radius: 980px; padding: 17px 32px; font-size: 17px; font-weight: 500; font-family: var(--font); cursor: pointer; transition: background 0.2s, transform 0.15s; letter-spacing: -0.01em; }
+  .form-submit:hover { background: #0077ed; transform: scale(1.02); }
+  .form-success { display: none; text-align: center; padding: 32px; font-size: 18px; color: var(--accent-light); }
+
+  /* FOOTER */
+  footer { padding: 28px 24px 20px; border-top: 1px solid rgba(255,255,255,0.08); text-align: center; }
+  .footer-logo { margin-bottom: 24px; }
+  .footer-logo img { width: 300px; max-width: 80vw; height: auto;  opacity: 1; }
+  .social-links { display: flex; justify-content: center; gap: 16px; margin-bottom: 24px; }
+  .social-links a { display: flex; align-items: center; justify-content: center; width: 64px; height: 64px; border-radius: 18px; text-decoration: none; transition: transform 0.2s, opacity 0.2s; overflow: hidden; }
+  .social-links a:hover { transform: scale(1.1); opacity: 0.9; }
+  .social-links a svg { width: 64px; height: 64px; display: block; }
+  footer p { font-size: 12px; color: var(--text-tertiary); line-height: 1.9; }
+  footer a { color: var(--text-tertiary); text-decoration: none; }
+  footer a:hover { color: var(--text-secondary); }
+
+  @media (max-width: 700px) {
+    .founder-grid { grid-template-columns: 1fr !important; gap: 36px !important; }
+  }
+
+
+  /* MOBILE NAV */
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 10px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; }
+  .hamburger span { display: block; width: 20px; height: 2px; background: #f5f5f7; border-radius: 2px; transition: all 0.3s; }
+  @media (max-width: 768px) {
+    .hamburger { display: flex; }
+    .mobile-menu { display: none; position: fixed; top: 52px; left: 0; right: 0; background: rgba(0,0,0,0.97); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 16px 0; z-index: 999; flex-direction: column; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { padding: 14px 24px; font-size: 16px; color: rgba(245,245,247,0.8); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .mobile-menu a:last-child { border-bottom: none; }
+  }
+
+  /* SCROLL REVEAL */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.75s ease, transform 0.75s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+  /* Telegram-style chat input */
+  .chatbot-form { display: flex; align-items: center; gap: 8px; }
+  .chatbot-form input { flex: 1; background: #2b3847; border: none; color: #fff; border-radius: 22px; padding: 10px 16px; font-size: 16px; outline: none; height: 44px; }
+  .chatbot-form input::placeholder { color: rgba(255,255,255,0.4); }
+  .chatbot-form button { background: #2695d3; color: #fff; border: none; border-radius: 50%; width: 44px; height: 44px; min-width: 44px; cursor: pointer; display: flex !important; align-items: center; justify-content: center; flex-shrink: 0; }
+  .chatbot-form button:active { opacity: 0.8; }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "LeoLan Digital",
+  "url": "https://ki.leolan.net",
+  "logo": "https://raw.githubusercontent.com/LeoLan-Digital/leolan-ki/main/logo_extract2/leolan%20logo-01.png",
+  "description": "mehr Reservierungenslösungen für Gastronomie und Hotellerie – WhatsApp Bots, Social Media, Manajemen Ulasan",
+  "email": "info@leolan.net",
+  "telephone": "+4917681055729",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Reickersstraße 132",
+    "addressLocality": "Dresden",
+    "postalCode": "01237",
+    "addressCountry": "DE"
+  },
+  "sameAs": [
+    "https://www.instagram.com/leolan_digital",
+    "https://www.facebook.com/profile.php?id=100083189805774"
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Was kostet LeoLan Digital?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Starter 199€/Monat, Pro 349€/Monat, jeweils zzgl. 349€ Setup."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie schnell kann ich starten?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nach Ihrer Zahlung kontaktieren wir Sie innerhalb von 48 Stunden."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Welche Sprachen unterstützt der Bot?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Indonesia, Inggris, Jerman, dan lainnya."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Brauche ich technische Kenntnisse?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nein, wir richten alles für Sie ein."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Gibt es einen Testmonat?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nein, aber eine kostenlose Demo auf dieser Seite."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Funktioniert es mit meiner bestehenden WhatsApp-Nummer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja, wir migrieren Ihre Nummer."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Was ist LeoLan Manager?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "LeoLan Manager ist eine iOS-App für Gastronomiebetreiber. Sie automatisiert WhatsApp-Kommunikation, verwaltet Reservierungen und zeigt ein Live-Dasbor mit allen wichtigen Kennzahlen."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Welche KI-Tools gibt es für Restaurants in Deutschland?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "LeoLan Digital bietet mehr Reservierungen für Restaurants: WhatsApp-Bot für Gästekommunikation, automatische Reservierungsannahme, Push-Benachrichtigungen und ein Live-Dasbor. Die LeoLan Manager App ist kostenlos im App Store verfügbar."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie funktioniert der WhatsApp Bot für Restaurants?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Der LeoLan WhatsApp Bot antwortet automatisch auf Gästenachrichten, nimmt Reservierungen entgegen und sendet Bestätigungen - 24/7 ohne manuellen Aufwand."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wo kann ich die LeoLan Manager App herunterladen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Die LeoLan Manager App ist im Apple App Store verfügbar. Einfach nach LeoLan Manager suchen oder ki.leolan.net besuchen."
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareCompany",
+  "name": "LeoLan Digital",
+  "url": "https://ki.leolan.net",
+  "logo": "https://ki.leolan.net/leolan-logo.png",
+  "description": "mehr Reservierungen für Restaurants und Gastronomie: WhatsApp Bot, Manajemen Ulasan, Social Media und digitale Speisekarte.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Reicker Str. 132",
+    "addressLocality": "Dresden",
+    "postalCode": "01237",
+    "addressCountry": "DE"
+  },
+  "telephone": "+49-351-21788680",
+  "email": "info@leolan.net",
+  "areaServed": "DE",
+  "serviceType": ["WhatsApp Bot", "mehr Reservierungen", "Manajemen Ulasan", "Social Media Automatisierung"]
+}
+</script>
+  <link rel="apple-touch-icon" href="/favicon-new.png">
+
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MobileApplication",
+    "name": "LeoLan Manager",
+    "operatingSystem": "iOS",
+    "applicationCategory": "BusinessApplication",
+    "description": "digitaler Assistent für Gastronomen: Reservierungen, WhatsApp-Bot, Live-Dasbor und Push-Benachrichtigungen in einer App.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "EUR"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "LeoLan Digital",
+      "url": "https://ki.leolan.net"
+    },
+    "url": "https://apps.apple.com/app/id676205147",
+    "screenshot": "https://ki.leolan.net/manager-app.jpg"
+  }
+  </script>
+  <!-- ContentSquare / Hotjar Tracking -->
+  <script src="https://t.contentsquare.net/uxa/5b3e797417378.js" async></script>
+
+<script>
+  // A/B Test: Hero Headline
+  (function() {
+    var variant = localStorage.getItem('ab_hero');
+    if (!variant) {
+      variant = Math.random() < 0.5 ? 'A' : 'B';
+      localStorage.setItem('ab_hero', variant);
+    }
+    
+    var headlines = {
+      A: 'Du verlierst täglich Gäste —<br>weil niemand schnell genug antwortet.',
+      B: 'Lebih Banyak Reservasi.<br>Lebih Sedikit Stres. Sepenuhnya Otomatis.'
+    };
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      var h1 = document.querySelector('.hero h1 .gradient');
+      if (h1 && variant === 'B') {
+        h1.innerHTML = headlines[variant];
+      }
+      
+      // GA4 Event für Variant
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'ab_test_impression', {
+          'test_name': 'hero_headline',
+          'variant': variant
+        });
+      }
+      
+      // CTA Click tracking
+      document.querySelectorAll('.hero-btns a').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          if (typeof gtag !== 'undefined') {
+            gtag('event', 'ab_test_conversion', {
+              'test_name': 'hero_headline',
+              'variant': variant
+            });
+          }
+        });
+      });
+    });
+  })();
+</script>
+</head>
+<body>
+
+<!-- COOKIE BANNER -->
+<div id="cookieBanner" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:9999; background:#1c1c1e; border-top:1px solid rgba(255,255,255,0.1); padding:20px 24px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px;">
+  <p style="font-size:13px; color:rgba(245,245,247,0.7); max-width:680px; line-height:1.5; margin:0;">Wir verwenden Cookies (Google Analytics, Meta Pixel) zur Verbesserung unserer Website und für relevante Werbung. <a href="/datenschutz.html" style="color:#2997ff;">Mehr erfahren</a></p>
+  <div style="display:flex; gap:10px; flex-shrink:0;">
+    <button onclick="rejectCookies()" style="padding:10px 20px; border-radius:980px; border:1px solid rgba(255,255,255,0.2); background:transparent; color:rgba(245,245,247,0.7); font-size:13px; cursor:pointer; font-family:inherit;">Ablehnen</button>
+    <button onclick="acceptCookies()" style="padding:10px 20px; border-radius:980px; border:none; background:#0071e3; color:#fff; font-size:13px; font-weight:500; cursor:pointer; font-family:inherit;">Akzeptieren</button>
+  </div>
+</div>
+
+<script>
+  function setCookie(n,v,d){var e=new Date();e.setTime(e.getTime()+d*864e5);document.cookie=n+'='+v+';expires='+e.toUTCString()+';path=/';}
+  function getCookie(n){var v=document.cookie.match('(^|;) ?'+n+'=([^;]*)(;|$)');return v?v[2]:null;}
+  function loadTracking(){
+    var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-25WZQPJ5F3';document.head.appendChild(s);
+    window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config','G-25WZQPJ5F3',{linker:{accept_incoming:false}});
+    var u=new URL(window.location.href);['_gl','_ga','fbclid','utm_source','utm_medium','utm_campaign','utm_term','utm_content'].forEach(function(p){u.searchParams.delete(p);});if(u.href!==window.location.href){history.replaceState(null,'',u.href);}
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init','584799746334676');fbq('track','PageView');
+  }
+  function acceptCookies(){setCookie('cookie_consent','accepted',365);document.getElementById('cookieBanner').style.display='none';loadTracking();}
+  function rejectCookies(){setCookie('cookie_consent','rejected',365);document.getElementById('cookieBanner').style.display='none';}
+  window.addEventListener('DOMContentLoaded',function(){
+    var c=getCookie('cookie_consent');
+    if(!c){document.getElementById('cookieBanner').style.display='flex';}
+    else if(c==='accepted'){loadTracking();}
+  });
+
+  function toggleMenu(){var m=document.getElementById('mobileMenu');m.classList.toggle('open');}
+  function closeMenu(){document.getElementById('mobileMenu').classList.remove('open');}
+  document.addEventListener('click',function(e){var m=document.getElementById('mobileMenu');if(m&&m.classList.contains('open')&&!m.contains(e.target)&&!e.target.closest('.hamburger')){m.classList.remove('open');}});
+
+</script>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo"><img src="logo.svg" alt="LeoLan Digital"></a>
+  <ul class="nav-links">
+    <li><a href="#probleme">Probleme</a></li>
+    <li><a href="#leistungen">Leistungen</a></li>
+    <li><a href="#preise">Preise</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="/ueber-uns.html">Über uns</a></li>
+    <li><a href="https://hotel.leolan.net">Hotels →</a></li>
+    <li><a href="/portal/" style="background:#5e81f4;color:#fff;font-weight:600;padding:5px 14px;border-radius:999px;text-decoration:none;font-size:13px;line-height:1;display:inline-flex;align-items:center">Kunden-Portal</a></li>
+  </ul>
+  <a href="#kontakt" class="nav-cta">Konsultasi gratis ›</a>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menü"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#probleme" onclick="closeMenu()">Probleme</a>
+  <a href="#leistungen" onclick="closeMenu()">Leistungen</a>
+  <a href="#preise" onclick="closeMenu()">Preise</a>
+  <a href="#faq" onclick="closeMenu()">FAQ</a>
+  <a href="/ueber-uns.html" onclick="closeMenu()">Über uns</a>
+  <a href="https://hotel.leolan.net" onclick="closeMenu()">Hotels →</a>
+  <a href="/portal/" onclick="closeMenu()" style="color:#5e81f4; font-weight:600;">Kunden-Portal</a>
+  <a href="#kontakt" onclick="closeMenu()" style="color:#2997ff; font-weight:600;">Konsultasi gratis ›</a>
+</div>
+
+<!-- HERO -->
+<div id="urgencyBar" style="background: linear-gradient(90deg, rgba(0,113,227,0.12), rgba(0,113,227,0.04)); border-bottom: 1px solid rgba(0,113,227,0.25); padding: 8px 16px; text-align: center; font-size: 13px; font-weight: 600; color: rgba(245,245,247,0.9);">
+  ⚡ Jeder Tag ohne System = verlorene Reservierungen &nbsp;·&nbsp; <a href="#kontakt" style="color: #2997ff; text-decoration: underline;">Jetzt kostenlos starten →</a>
+</div>
+<section class="hero">
+  <p class="hero-eyebrow reveal">Untuk Restoran & Kafe dengan lebih dari 20 permintaan per hari · Tanpa keahlian teknis</p>
+  <h1 class="reveal reveal-delay-1"><span class="gradient">Du verlierst täglich Gäste —<br>weil niemand schnell genug antwortet.</span></h1>
+  <p class="hero-sub reveal reveal-delay-2">Panggilan terlewat, pesan tidak terjawab, dan reservasi hilang menguras pendapatan Anda setiap hari.</p>
+  <div class="hero-pain-pills reveal reveal-delay-3">
+    <span>📵 Panggilan terlewat</span>
+    <span>💬 Pesan tidak terjawab</span>
+    <span>🚶 Tamu pergi ke pesaing</span>
+  </div>
+  <div class="hero-money reveal reveal-delay-3" style="text-align:center;display:block;margin-left:auto;margin-right:auto;">💰 Schon <strong>3 verpasste Anfragen pro Tag</strong> können über <strong>4.000 € Umsatz im Monat</strong> kosten.</div>
+  <div class="hero-btns reveal reveal-delay-3">
+    <a href="#kontakt" class="btn-primary">Dapatkan demo →</a>
+    <a href="#leistungen" class="btn-secondary">Dapatkan lebih banyak reservasi ›</a>
+  </div>
+  <p class="hero-trust reveal reveal-delay-3" style="text-align:center;">✓ Kein Vertrag &nbsp;·&nbsp; ✓ Ergebnis in 5 Werktagen &nbsp;·&nbsp; ✓ Monatlich kündbar</p>
+  <p style="font-size:13px;color:rgba(245,245,247,0.45);margin-top:8px;text-align:center;" class="reveal reveal-delay-3">Sangat cocok untuk restoran dengan banyak panggilan telepon, wisatawan, permintaan pengiriman, atau tim kecil.</p>
+  
+    
+  <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:20px 24px;margin-bottom:28px;text-align:left;max-width:480px;margin-left:auto;margin-right:auto;" class="reveal reveal-delay-3">
+    <p style="font-size:14px;color:rgba(245,245,247,0.65);line-height:1.8;margin:0;">
+      ✓ Jika telepon Anda sering berdering dan tidak ada yang menjawab…<br>
+      ✓ Jika Anda banyak menerima permintaan melalui WhatsApp atau Instagram…<br>
+      ✓ Jika tim Anda tidak punya waktu untuk segera menjawab…<br>
+      <strong style="color:rgba(245,245,247,0.9);">→ Maka ini dibuat untuk Anda.</strong>
+    </p>
+  </div>
+  <div class="hero-img-wrap reveal reveal-delay-4">
+    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1400&q=80&auto=format&fit=crop" alt="Restaurant mehr Reservierungen">
+  </div>
+</section>
+
+
+<!-- SOCIAL PROOF TICKER -->
+<div style="background:rgba(0,113,227,0.08);border-top:1px solid rgba(0,113,227,0.15);border-bottom:1px solid rgba(0,113,227,0.15);padding:14px 24px;text-align:center;">
+  <div style="display:flex;gap:32px;justify-content:center;flex-wrap:wrap;align-items:center;">
+    <span style="font-size:13px;color:rgba(245,245,247,0.75);">
+      <strong style="font-size:18px;color:var(--accent-light);">23</strong> restoran mempercayai LeoLan
+    </span>
+    <span style="color:rgba(255,255,255,0.2);">|</span>
+    <span style="font-size:13px;color:rgba(245,245,247,0.75);">
+      <strong style="font-size:18px;color:#34c759;">4.800+</strong> reservasi diotomatiskan
+    </span>
+    <span style="color:rgba(255,255,255,0.2);">|</span>
+    <span style="font-size:13px;color:rgba(245,245,247,0.75);">
+      ⭐ <strong style="font-size:18px;color:#ffd60a;">4.9/5</strong> penilaian pelanggan
+    </span>
+  </div>
+</div>
+<!-- PAIN -->
+<section class="pain" id="probleme">
+  <div class="pain-inner">
+    <p class="section-tag reveal">Kenyataan Sehari-hari</p>
+    <h2 class="section-title reveal reveal-delay-1">Jeder Anruf den du verpasst,<br>geht zur Konkurrenz.</h2>
+    <p class="section-sub reveal reveal-delay-2">Panggilan terlewat. Ulasan tidak dijawab. Tidak ada media sosial. Anda adalah pemilik restoran — bukan ahli IT atau manajer pemasaran. Ini yang salah setiap hari:</p>
+    <div class="pain-grid">
+      <div class="pain-item reveal">
+        <div class="pain-icon">📵</div>
+        <h3>Setiap panggilan terlewat adalah tamu yang hilang</h3>
+        <p>68% tamu menelepon sekali — lalu menutup telepon dan pergi ke pesaing. Tidak ada panggilan balik. Tidak ada meja. Tidak ada pendapatan. (Statista, 2024)</p>
+      </div>
+      <div class="pain-item reveal reveal-delay-1">
+        <div class="pain-icon">📱</div>
+        <h3>Tidak ada konten = tidak terlihat = kehilangan pendapatan</h3>
+        <p>Restoran yang memposting setiap hari mendapatkan 3× lebih banyak jangkauan. Artinya hingga 40% lebih banyak tamu baru melalui media sosial. Siapa yang akan memposting saat Anda 12 jam di restoran?</p>
+      </div>
+      <div class="pain-item reveal reveal-delay-2">
+        <div class="pain-icon">⭐</div>
+        <h3>Setiap ulasan yang tidak dijawab merugikan tamu Anda</h3>
+        <p>94% tamu membaca balasan ulasan sebelum mengunjungi restoran (BrightLocal, 2024). Tidak ada balasan = tidak ada kepercayaan = tidak ada kunjungan.</p>
+      </div>
+      <div class="pain-item reveal">
+        <div class="pain-icon">📋</div>
+        <h3>Menu tidak diperbarui</h3>
+        <p>Menu cetak dari tahun lalu. Harga sudah tidak sesuai. Menu musiman tidak ada. Setiap perubahan memerlukan biaya.</p>
+      </div>
+      <div class="pain-item reveal reveal-delay-1">
+        <div class="pain-icon">🔍</div>
+        <h3>Tidak terlihat di Google</h3>
+        <p>Profil Google Anda sudah usang. Jam buka salah. Tidak ada foto. Tamu baru tidak menemukan Anda.</p>
+      </div>
+      <div class="pain-item reveal reveal-delay-2">
+        <div class="pain-icon">⏰</div>
+        <h3>Waktu Anda untuk tamu — bukan komputer</h3>
+        <p>Anda adalah pemilik restoran. Bukan manajer pemasaran. Bukan ahli IT. Waktu Anda terlalu berharga untuk hal-hal yang bisa diotomatiskan.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- WHATSAPP DEMO PROOF -->
+<section style="padding: 80px 24px; text-align: center; border-top: 1px solid rgba(255,255,255,0.07);">
+  <div style="max-width: 900px; margin: 0 auto;">
+    <p class="section-tag reveal">So funktioniert es in der Praxis</p>
+    <h2 class="section-title reveal reveal-delay-1">Bot Anda menjawab — sebelum tamu pergi ke pesaing.</h2>
+    <p class="section-sub reveal reveal-delay-2">Echtes Beispiel: So reagiert dein Asisten WhatsApp auf eine Reservierungsanfrage um 22:47 Uhr.</p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 48px; text-align: left;" class="reveal demo-grid">
+      <!-- WhatsApp Mockup -->
+      <div style="background: #0a0f1a; border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; overflow: hidden;">
+        <div style="background: #075E54; padding: 14px 20px; display: flex; align-items: center; gap: 12px;">
+          <div style="width: 38px; height: 38px; background: #128C7E; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px;">🍽️</div>
+          <div>
+            <div style="color: #fff; font-weight: 600; font-size: 15px;">Asisten Restoran</div>
+            <div style="color: rgba(255,255,255,0.7); font-size: 12px;">● Online · menjawab seketika</div>
+          </div>
+        </div>
+        <div style="padding: 20px; display: flex; flex-direction: column; gap: 12px;">
+          <div style="align-self: flex-end; background: #DCF8C6; color: #000; padding: 10px 14px; border-radius: 12px 12px 0 12px; font-size: 14px; max-width: 80%;">
+            Hallo, kann ich für morgen Abend einen Tisch für 4 reservieren? 19 Uhr?
+            <div style="font-size: 11px; color: rgba(0,0,0,0.4); text-align: right; margin-top: 4px;">22:47 ✓✓</div>
+          </div>
+          <div style="align-self: flex-start; background: #fff; color: #000; padding: 10px 14px; border-radius: 12px 12px 12px 0; font-size: 14px; max-width: 85%;">
+            Hallo! 😊 Ja, morgen Abend um 19:00 Uhr haben wir noch einen Tisch für 4 Personen verfügbar.<br><br>
+            Darf ich noch Ihren Namen für die Reservierung notieren?
+            <div style="font-size: 11px; color: rgba(0,0,0,0.4); text-align: right; margin-top: 4px;">22:47 · digitaler Assistent</div>
+          </div>
+          <div style="align-self: flex-end; background: #DCF8C6; color: #000; padding: 10px 14px; border-radius: 12px 12px 0 12px; font-size: 14px; max-width: 80%;">
+            Müller, Johann
+            <div style="font-size: 11px; color: rgba(0,0,0,0.4); text-align: right; margin-top: 4px;">22:48 ✓✓</div>
+          </div>
+          <div style="align-self: flex-start; background: #fff; color: #000; padding: 10px 14px; border-radius: 12px 12px 12px 0; font-size: 14px; max-width: 85%;">
+            ✅ Perfekt! Reservierung bestätigt:<br>
+            📅 Morgen, 19:00 Uhr<br>
+            👥 4 Personen<br>
+            📝 Name: Müller, Johann<br><br>
+            Wir freuen uns auf Sie! Sie erhalten morgen um 17 Uhr eine Erinnerung. 🍷
+            <div style="font-size: 11px; color: rgba(0,0,0,0.4); text-align: right; margin-top: 4px;">22:48 · digitaler Assistent</div>
+          </div>
+        </div>
+      </div>
+      <!-- Results -->
+      <div style="display: flex; flex-direction: column; justify-content: center; gap: 24px;">
+        <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(0,113,227,0.25); border-radius: 16px; padding: 24px;">
+          <div style="font-size: 36px; font-weight: 700; color: var(--accent-light);">22:47</div>
+          <div style="color: rgba(245,245,247,0.7); font-size: 14px; margin-top: 4px;">Permintaan masuk — saat tim Anda sudah tidur</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(52,199,89,0.35); border-radius: 16px; padding: 24px;">
+          <div style="font-size: 36px; font-weight: 700; color: #34c759;">< 3 Sek.</div>
+          <div style="color: rgba(245,245,247,0.7); font-size: 14px; margin-top: 4px;">Antwortzeit des Assistenten — automatisch</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,214,0,0.25); border-radius: 16px; padding: 24px;">
+          <div style="font-size: 36px; font-weight: 700; color: #ffd60a;">+1 Tisch</div>
+          <div style="color: rgba(245,245,247,0.7); font-size: 14px; margin-top: 4px;">Umsatz gesichert — vollautomatisch</div>
+        </div>
+      </div>
+    </div>
+    <p style="margin-top: 32px; font-size: 14px; color: rgba(245,245,247,0.5);">So oder ähnlich laufen täglich echte Gespräche ab. Ohne App. Ohne Telefonklingeln. Ohne verpasste Anfragen.</p>
+  </div>
+</section>
+
+<section style="padding: 60px 24px; border-top: 1px solid rgba(255,255,255,0.07);">
+  <div style="max-width: 800px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 16px; text-align: left;">
+    <h2 style="font-size: clamp(24px, 3vw, 36px); font-weight: 700; text-align: center; margin-bottom: 8px;" class="reveal">Ideal untuk Anda, jika…</h2>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;" class="reveal ideal-grid">
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(0,113,227,0.2); border-radius: 16px; padding: 24px;">
+        <p style="font-size: 13px; font-weight: 700; color: var(--accent-light); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px;">✓ Passt für dich</p>
+        <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0;">
+          <li style="font-size: 14px; color: rgba(245,245,247,0.75);">📵 Dein Telefon klingelt oft, niemand geht ran</li>
+          <li style="font-size: 14px; color: rgba(245,245,247,0.75);">💬 Viele WhatsApp- oder Instagram-Anfragen</li>
+          <li style="font-size: 14px; color: rgba(245,245,247,0.75);">👥 Kleines Team, wenig Zeit zum Antworten</li>
+          <li style="font-size: 14px; color: rgba(245,245,247,0.75);">🌍 Touristische Lage mit internationalem Publikum</li>
+          <li style="font-size: 14px; color: rgba(245,245,247,0.75);">🕐 Reservierungen außerhalb der Öffnungszeiten</li>
+        </ul>
+      </div>
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,214,0,0.2); border-radius: 16px; padding: 24px;">
+        <p style="font-size: 13px; font-weight: 700; color: #ffd60a; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px;">💰 Das bringt es dir</p>
+        <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0;">
+          <li style="font-size: 14px; color: rgba(245,245,247,0.75);">✓ Mehr Reservierungen ohne Mehraufwand</li>
+          <li style="font-size: 14px; color: rgba(245,245,247,0.75);">✓ Keine verpassten Anfragen mehr</li>
+          <li style="font-size: 14px; color: rgba(245,245,247,0.75);">✓ Weniger Telefonstress im Team</li>
+          <li style="font-size: 14px; color: rgba(245,245,247,0.75);">✓ Schnellere Antworten = mehr Umsatz</li>
+          <li style="font-size: 14px; color: rgba(245,245,247,0.75);">✓ Erreichbar 24/7 — auch nachts</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ERGEBNIS -->
+<section style="padding: 80px 24px; text-align: center; border-top: 1px solid rgba(255,255,255,0.07);">
+  <div style="max-width: 860px; margin: 0 auto;">
+    <p class="section-tag reveal">Das Ergebnis</p>
+    <h2 class="section-title reveal reveal-delay-1">Was du dadurch gewinnst</h2>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 40px; padding: 2px;" class="reveal ergebnis-grid">
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(0,113,227,0.25); border-radius: 20px; padding: 28px 24px;">
+        <div style="font-size: 40px; font-weight: 700; color: var(--accent-light); margin-bottom: 12px;">+30%</div>
+        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">Mehr Reservierungen</h3>
+        <p style="font-size: 13px; color: rgba(245,245,247,0.55);">Tidak ada permintaan yang terlewat lagi — baik malam hari, akhir pekan, maupun jam sibuk.</p>
+      </div>
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(0,113,227,0.25); border-radius: 20px; padding: 28px 24px;">
+        <div style="font-size: 40px; font-weight: 700; color: var(--accent-light); margin-bottom: 12px;">2h</div>
+        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">Zeitersparnis täglich</h3>
+        <p style="font-size: 13px; color: rgba(245,245,247,0.55);">Kein Anruf mehr, kein manuelles Antworten — du konzentrierst dich auf die Gäste im Restaurant.</p>
+      </div>
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(0,113,227,0.25); border-radius: 20px; padding: 28px 24px;">
+        <div style="font-size: 40px; font-weight: 700; color: var(--accent-light); margin-bottom: 12px;">24/7</div>
+        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">Erreichbar für Gäste</h3>
+        <p style="font-size: 13px; color: rgba(245,245,247,0.55);">Bahkan pukul 23:00 pun dijawab. Reservasi dikonfirmasi. Tamu kembali lagi.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- STATS -->
+<section class="stats">
+  <div class="stats-inner">
+    <div class="reveal">
+      <div class="stat-num">40<span>%</span></div>
+      <div class="stat-label">mehr Reservierungen durch WhatsApp-Automation</div>
+    </div>
+    <div class="reveal reveal-delay-1">
+      <div class="stat-num">94<span>%</span></div>
+      <div class="stat-label">der Gäste lesen Bewertungsantworten</div>
+    </div>
+    <div class="reveal reveal-delay-2">
+      <div class="stat-num">74<span>%</span></div>
+      <div class="stat-label">bestellen lieber direkt online</div>
+    </div>
+    <div class="reveal reveal-delay-3">
+      <div class="stat-num">24<span>/7</span></div>
+      <div class="stat-label">automatische Gästekommunikation</div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE/AFTER -->
+<section class="compare">
+  <div class="compare-inner">
+    <p class="section-tag reveal" style="text-align:center">Vorher vs. Nachher</p>
+    <h2 class="section-title reveal reveal-delay-1" style="text-align:center">Was sich wirklich ändert.</h2>
+    <div class="compare-grid">
+      <div class="compare-col before reveal">
+        <div class="compare-label">Ohne LeoLan Digital</div>
+        <ul class="compare-list">
+          <li>Reservasi lewat telepon — sering terlewat</li>
+          <li>Media sosial: 0 postingan per minggu</li>
+          <li>Profil Google usang, hampir tidak terlihat</li>
+          <li>Ulasan tidak dijawab</li>
+          <li>Menu di kertas, jarang diperbarui</li>
+          <li>Tidak ada data tamu, tidak ada gambaran umum</li>
+          <li>Setiap permintaan dijawab secara manual</li>
+        </ul>
+      </div>
+      <div class="compare-col after reveal reveal-delay-1">
+        <div class="compare-label">Mit LeoLan Digital</div>
+        <ul class="compare-list">
+          <li>Asisten WhatsApp menerima reservasi 24/7</li>
+          <li>1 postingan KI per hari di Instagram & Facebook</li>
+          <li>Google Business otomatis diperbarui & dioptimalkan</li>
+          <li>Balasan KI otomatis untuk semua ulasan</li>
+          <li>Menu digital via QR — dapat diubah kapan saja</li>
+          <li>Dasbor dengan semua pemesanan & metrik</li>
+          <li>Bot FAQ menjawab pertanyaan standar secara instan</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURE 1 -->
+<section class="feature" id="leistungen">
+  <div class="feature-inner">
+    <div class="reveal">
+      <div class="feature-tag">Menu Digital</div>
+      <h2>Begini cara mendapatkan lebih banyak reservasi – secara otomatis</h2>
+      <p>Kode QR di meja — tamu membuka menu di ponsel mereka tanpa aplikasi. Multibahasa, dengan foto, diperbarui secara real-time. Penawaran harian, alergen, harga — semua bisa diubah langsung.</p>
+      <ul class="feature-list">
+        <li>Kode QR untuk dicetak (A4-PDF)</li>
+        <li>Multibahasa: Indonesia & Inggris</li>
+        <li>Foto, alergen, kategori</li>
+        <li>Perubahan diterapkan dalam 24 jam</li>
+      </ul>
+      <div class="feature-stat">
+        <div class="feature-stat-num">0 €</div>
+        <div class="feature-stat-label">Druckkosten mehr für<br>neue Speisekarten</div>
+      </div>
+    </div>
+    <div class="feature-img reveal reveal-delay-1">
+      <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=900&q=80&auto=format&fit=crop" alt="Menu Digital">
+    </div>
+  </div>
+</section>
+
+<!-- FEATURE 2 -->
+<section class="feature">
+  <div class="feature-inner reverse">
+    <div class="reveal">
+      <div class="feature-tag">Asisten WhatsApp</div>
+      <h2>Tidak ada telepon yang tidak terjawab. (68% tamu lebih memilih reservasi WhatsApp daripada telepon — Statista, 2024)</h2>
+      <p>Asisten digital di WhatsApp menjawab pertanyaan tentang jam buka, menu, dan menerima reservasi — sepanjang waktu, dalam bahasa Anda, tanpa campur tangan Anda.</p>
+      <ul class="feature-list">
+        <li>Terima reservasi secara otomatis</li>
+        <li>Jam buka, rute, FAQ — otomatis</li>
+        <li>Pengingat untuk tamu sebelum kunjungan</li>
+        <li>Anda mendapat notifikasi setiap pemesanan</li>
+      </ul>
+      <div class="feature-stat">
+        <div class="feature-stat-num">24/7</div>
+        <div class="feature-stat-label">erreichbar — auch wenn<br>du schläfst</div>
+      </div>
+    </div>
+    <div class="feature-img reveal reveal-delay-1">
+      <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&q=80&auto=format&fit=crop" alt="WhatsApp Asisten Restoran">
+    </div>
+  </div>
+</section>
+
+<!-- FEATURE 3 -->
+<section class="feature">
+  <div class="feature-inner">
+    <div class="reveal">
+      <div class="feature-tag">KI Media Sosial</div>
+      <h2>Konten segar setiap hari — tanpa usaha Anda. Restoran yang memposting setiap hari di media sosial mendapatkan jangkauan 3× lebih banyak dibandingkan yang memposting mingguan (Meta Business Insights, 2024).</h2>
+      <p>KI kami membuat postingan menarik setiap hari untuk Instagram dan Facebook — berdasarkan menu, musim, dan penawaran harian Anda. Anda kirim foto seminggu sekali, kami urus sisanya.</p>
+      <ul class="feature-list">
+        <li>1 postingan per hari di Instagram & Facebook</li>
+        <li>Teks KI + hashtag</li>
+        <li>Disesuaikan dengan restoran dan bahasa Anda</li>
+        <li>Postingan Google Business otomatis</li>
+      </ul>
+      <div class="feature-stat">
+        <div class="feature-stat-num">3×</div>
+        <div class="feature-stat-label">mehr Reichweite durch<br>regelmäßigen Content</div>
+      </div>
+    </div>
+    <div class="feature-img reveal reveal-delay-1">
+      <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=900&q=80&auto=format&fit=crop" alt="Restaurant Social Media">
+    </div>
+  </div>
+</section>
+
+<!-- FEATURE 4 -->
+<section class="feature">
+  <div class="feature-inner reverse">
+    <div class="reveal">
+      <div class="feature-tag">Manajemen Ulasan</div>
+      <h2>Lebih banyak bintang. Lebih banyak kepercayaan. Lebih banyak tamu.</h2>
+      <p>94% tamu membaca balasan ulasan sebelum mengunjungi restoran baru (BrightLocal, 2024). Selain itu, 58% tamu membayar lebih di tempat yang membalas ulasan dengan positif (Harvard Business Review). KI kami membalas setiap ulasan Google baru secara otomatis, profesional, dan individual.</p>
+      <ul class="feature-list">
+        <li>Pemantauan ulasan baru setiap hari</li>
+        <li>Balasan KI otomatis dan individual</li>
+        <li>Tidak ada teks copy-paste generik</li>
+        <li>Respons dalam 24 jam</li>
+      </ul>
+      <div class="feature-stat">
+        <div class="feature-stat-num">58<span style="font-size:20px">%</span></div>
+        <div class="feature-stat-label">zahlen mehr bei Betrieben<br>mit guten Bewertungen</div>
+      </div>
+    </div>
+    <div class="feature-img reveal reveal-delay-1">
+      <img src="https://images.unsplash.com/photo-1551218808-94e220e084d2?w=900&q=80&auto=format&fit=crop" alt="Restaurant Bewertungen">
+    </div>
+  </div>
+</section>
+
+<!-- CARDS -->
+<section class="cards-section" id="leistungen-alle">
+  <div class="cards-header reveal">
+    <p class="section-tag">Alles inklusive</p>
+    <h2 class="section-title">Was du bekommst.</h2>
+    <p class="section-sub" style="margin-bottom:0">Keine 5 Tools, kein technisches Vorwissen. Kami mengatur segalanya — du profitierst ab Tag 1.</p>
+  </div>
+  <div class="card-grid">
+    <div class="card reveal">
+      <div class="card-icon">🍽️</div>
+      <h3>Menu Digital</h3>
+      <p>Kode QR di meja. Tamu langsung melihat menu Anda — selalu diperbarui, multibahasa, tanpa cetak.</p>
+      <p class="card-fact">↑ Keine Druckkosten mehr</p>
+    </div>
+    <div class="card reveal reveal-delay-1">
+      <div class="card-icon">💬</div>
+      <h3>Asisten WhatsApp</h3>
+      <p>Menjawab pertanyaan dan menerima reservasi — otomatis, 24 jam sehari, 7 hari seminggu.</p>
+      <p class="card-fact">↑ Kein verpasster Anruf mehr</p>
+    </div>
+    <div class="card reveal reveal-delay-2">
+      <div class="card-icon">📱</div>
+      <h3>KI Media Sosial</h3>
+      <p>Postingan harian di Instagram dan Facebook — dibuat oleh KI, khusus untuk restoran Anda.</p>
+      <p class="card-fact">↑ 3× mehr Reichweite</p>
+    </div>
+    <div class="card reveal">
+      <div class="card-icon">🌐</div>
+      <h3>Google Business</h3>
+      <p>Profil selalu diperbarui, postingan mingguan otomatis, jam buka tersinkronisasi.</p>
+      <p class="card-fact">↑ Mehr Sichtbarkeit bei Google</p>
+    </div>
+    <div class="card reveal reveal-delay-1">
+      <div class="card-icon">⭐</div>
+      <h3>Manajemen Ulasan</h3>
+      <p>KI membalas ulasan Google secara otomatis — individual, tidak generik.</p>
+      <p class="card-fact">↑ 94% lesen Antworten auf Bewertungen</p>
+    </div>
+    <div class="card reveal reveal-delay-2">
+      <div class="card-icon">📊</div>
+      <h3>Dasbor</h3>
+      <p>Semua reservasi, permintaan, dan metrik dalam satu tampilan — dari ponsel Anda di mana saja.</p>
+      <p class="card-fact">↑ Voller Überblick, jederzeit</p>
+    </div>
+    <div class="card reveal">
+      <div class="card-icon">🔒</div>
+      <h3>GDPR & Perlindungan Data</h3>
+      <p>100% sesuai GDPR. Data pelanggan Anda tetap di Jerman. Perlindungan data bukan fitur bagi kami — melainkan standar.</p>
+      <p class="card-fact">↑ Hosting in deutschen Rechenzentren</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process">
+  <p class="section-tag reveal">So läuft es ab</p>
+  <h2 class="section-title reveal reveal-delay-1">In 5 Tagen live.</h2>
+  <p class="section-sub reveal reveal-delay-2" style="margin-bottom:0">Tidak ada proyek berbulan-bulan. Tidak perlu departemen IT. Kami yang urus.</p>
+  <div class="process-steps">
+    <div class="step reveal">
+      <div class="step-num">01</div>
+      <h3>Percakapan Pertama</h3>
+      <p>30 menit. Kami memahami restoran, tantangan, dan kebutuhan Anda. Gratis, tanpa komitmen.</p>
+    </div>
+    <div class="step reveal reveal-delay-1">
+      <div class="step-num">02</div>
+      <h3>Kami mengatur segalanya</h3>
+      <p>Anda kirimkan menu dan beberapa informasi. Kami bangun semuanya — menu, WhatsApp, media sosial, Google.</p>
+    </div>
+    <div class="step reveal reveal-delay-2">
+      <div class="step-num">03</div>
+      <h3>Go-Live & Hasil</h3>
+      <p>Dalam 5 hari kerja semuanya live. Anda langsung melihat hasil pertama — lebih banyak reservasi, lebih banyak jangkauan.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL removed -->
+
+<!-- FOUNDER -->
+<section style="padding: 100px 24px; border-top: 1px solid rgba(255,255,255,0.07);">
+  <div style="max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 340px 1fr; gap: 72px; align-items: center;" class="founder-grid">
+    <div class="reveal" style="border-radius: 20px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.7);">
+      <img src="leo-bw.jpg" alt="Kamaleddin Nazari – Gründer LeoLan Digital" style="width:100%; display:block; filter: brightness(0.9);">
+    </div>
+    <div class="reveal reveal-delay-1">
+      <p style="font-size:13px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#2997ff; margin-bottom:16px;">Der Mensch dahinter</p>
+      <h2 style="font-size:clamp(28px,3.5vw,44px); font-weight:700; line-height:1.1; letter-spacing:-0.025em; margin-bottom:20px;">Ich kenne das Problem — aus beiden Seiten des Tresens.</h2>
+      <p style="font-size:17px; line-height:1.7; color:rgba(245,245,247,0.65); margin-bottom:16px;">Sebagai manajer restoran dengan 6 tahun pengalaman, saya tahu seperti apa keseharian itu. Tapi saya juga tahu sisi lainnya — sebagai tamu.</p>
+      <p style="font-size:17px; line-height:1.7; color:rgba(245,245,247,0.65); margin-bottom:16px;">Ich wollte einen Tisch im Lieblingsrestaurant meiner Frau reservieren — zu ihrem Geburtstag. 10 Anrufe. Kein einziger Rückruf. Wir haben woanders gegessen.</p>
+      <p style="font-size:17px; line-height:1.7; color:rgba(245,245,247,0.65); margin-bottom:32px;">Dieses Restaurant hat nicht nur meinen Tisch verloren. Sie haben den Geburtstag meiner Frau ruiniert — und einen Kunden für immer. <strong style="color:#f5f5f7;">Itulah mengapa saya mendirikan LeoLan Digital: agar tidak ada restoran yang lagi melewatkan panggilan — dan tidak ada tamu yang pulang dengan kecewa.</strong></p>
+      <div style="display:flex; align-items:center; gap:16px;">
+        <div>
+          <div style="font-size:17px; font-weight:600; color:#f5f5f7;">Kamaleddin Nazari</div>
+          <div style="font-size:14px; color:rgba(245,245,247,0.5); margin-top:2px;">Pendiri & CEO, LeoLan Digital</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- WARUM JETZT -->
+<section style="padding: 60px 24px; text-align: center; background: linear-gradient(180deg, rgba(255,59,48,0.06) 0%, transparent 100%); border-top: 1px solid rgba(255,59,48,0.2);">
+  <div style="max-width: 700px; margin: 0 auto;">
+    <p style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 16px;">⚡ Warum jetzt?</p>
+    <h2 style="font-size: clamp(28px, 4vw, 44px); font-weight: 700; letter-spacing: -0.025em; margin-bottom: 20px;">Jeder Tag ohne System<br>kostet dich bares Geld.</h2>
+    <p style="font-size: 17px; color: rgba(245,245,247,0.7); line-height: 1.65; margin-bottom: 32px;">Während du diesen Satz liest, hat ein Gast versucht, bei dir zu reservieren. Vielleicht hat er angerufen. Vielleicht eine WhatsApp geschickt. Wenn niemand geantwortet hat — ist er jetzt beim Restaurant um die Ecke.</p>
+    <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px;">
+      <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(0,113,227,0.25); border-radius: 16px; padding: 20px 28px; min-width: 180px;">
+        <div style="font-size: 32px; font-weight: 700; color: var(--accent-light);">30%</div>
+        <div style="font-size: 13px; color: rgba(245,245,247,0.6); margin-top: 4px;">Anfragen gehen verloren</div>
+      </div>
+      <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,214,0,0.25); border-radius: 16px; padding: 20px 28px; min-width: 180px;">
+        <div style="font-size: 32px; font-weight: 700; color: #ffd60a;">€150</div>
+        <div style="font-size: 13px; color: rgba(245,245,247,0.6); margin-top: 4px;">verloren pro versäumtem Tisch</div>
+      </div>
+      <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(52,199,89,0.25); border-radius: 16px; padding: 20px 28px; min-width: 180px;">
+        <div style="font-size: 32px; font-weight: 700; color: #34c759;">5 Tage</div>
+        <div style="font-size: 13px; color: rgba(245,245,247,0.6); margin-top: 4px;">bis dein System live ist</div>
+      </div>
+    </div>
+    <a href="#kontakt" style="display: inline-block; background: var(--accent); color: #fff; padding: 16px 36px; border-radius: 980px; font-size: 16px; font-weight: 600; text-decoration: none;">Jetzt starten — kostenlos & unverbindlich →</a>
+  </div>
+</section>
+
+<!-- ROI RECHNER -->
+<section style="padding:80px 24px;border-top:1px solid rgba(255,255,255,0.07);text-align:center;">
+  <div style="max-width:640px;margin:0 auto;">
+    <p class="section-tag reveal">Kostenloser Rechner</p>
+    <h2 class="section-title reveal reveal-delay-1">Wie viel verlierst du täglich?</h2>
+    <p class="section-sub reveal reveal-delay-2">Masukkan berapa permintaan yang diterima restoran Anda setiap hari — dan segera lihat kerugian pendapatan Anda.</p>
+    <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(0,113,227,0.25);border-radius:20px;padding:32px;margin-top:32px;" class="reveal">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px;">
+        <div>
+          <label style="display:block;font-size:13px;color:rgba(245,245,247,0.6);margin-bottom:8px;">Anfragen pro Tag</label>
+          <input type="number" id="roiAnfragen" value="10" min="1" max="200" oninput="berechneROI()" style="width:100%;padding:12px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:#fff;font-size:18px;font-weight:700;text-align:center;box-sizing:border-box;">
+        </div>
+        <div>
+          <label style="display:block;font-size:13px;color:rgba(245,245,247,0.6);margin-bottom:8px;">Umsatz pro Tisch (€)</label>
+          <input type="number" id="roiUmsatz" value="80" min="10" max="500" oninput="berechneROI()" style="width:100%;padding:12px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:#fff;font-size:18px;font-weight:700;text-align:center;box-sizing:border-box;">
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:24px;">
+        <div style="background:rgba(255,59,48,0.1);border:1px solid rgba(255,59,48,0.25);border-radius:14px;padding:16px;">
+          <div style="font-size:11px;color:rgba(245,245,247,0.5);margin-bottom:6px;">TÄGLICH</div>
+          <div id="roiDaily" style="font-size:24px;font-weight:800;color:#ff6b6b;">€240</div>
+        </div>
+        <div style="background:rgba(255,214,0,0.08);border:1px solid rgba(255,214,0,0.25);border-radius:14px;padding:16px;">
+          <div style="font-size:11px;color:rgba(245,245,247,0.5);margin-bottom:6px;">PRO MONAT</div>
+          <div id="roiMonthly" style="font-size:24px;font-weight:800;color:#ffd60a;">€7.200</div>
+        </div>
+        <div style="background:rgba(52,199,89,0.08);border:1px solid rgba(52,199,89,0.25);border-radius:14px;padding:16px;">
+          <div style="font-size:11px;color:rgba(245,245,247,0.5);margin-bottom:6px;">ROI LEOLAN</div>
+          <div id="roiReturn" style="font-size:24px;font-weight:800;color:#34c759;">36×</div>
+        </div>
+      </div>
+      <p id="roiText" style="font-size:14px;color:rgba(245,245,247,0.65);margin-bottom:20px;">Du verlierst <strong style="color:#ff6b6b;">€7.200 pro Monat</strong>. LeoLan hanya 199€ — dan mengembalikannya untuk Anda.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:12px;">
+        <input type="email" id="roiEmail" placeholder="deine@email.de" style="padding:12px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.2);border-radius:10px;color:#fff;font-size:15px;min-width:220px;outline:none;flex:1;max-width:300px;" />
+        <button onclick="sendeROIReport()" style="background:var(--accent);color:#fff;padding:12px 20px;border-radius:10px;border:none;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap;">📊 Report per E-Mail →</button>
+      </div>
+      <p style="font-size:12px;color:rgba(245,245,247,0.35);margin:0 0 16px;">Gratis · Tidak ada spam · Hanya laporan kerugian Anda</p>
+      <div id="roiSuccess" style="display:none;margin-bottom:12px;background:rgba(52,199,89,0.15);border:1px solid rgba(52,199,89,0.3);border-radius:10px;padding:12px;color:#34c759;font-size:14px;">✅ Report wird gesendet! Schau in dein Postfach.</div>
+      <a href="#kontakt" style="display:inline-block;background:rgba(255,255,255,0.06);color:rgba(245,245,247,0.6);padding:10px 24px;border-radius:980px;font-size:14px;font-weight:500;text-decoration:none;border:1px solid rgba(255,255,255,0.12);">Verluste stoppen — Demo →</a>
+    </div>
+  </div>
+</section>
+<script>
+function berechneROI(){var a=parseInt(document.getElementById("roiAnfragen").value)||10;var u=parseInt(document.getElementById("roiUmsatz").value)||80;var d=Math.round(a*0.3*u);var m=d*30;var r=Math.round(m/199);document.getElementById("roiDaily").textContent="€"+d.toLocaleString("de-DE");document.getElementById("roiMonthly").textContent="€"+m.toLocaleString("de-DE");document.getElementById("roiReturn").textContent=r+"×";document.getElementById("roiText").innerHTML="Du verlierst <strong style=\'color:#ff6b6b;\'>€"+m.toLocaleString("de-DE")+" pro Monat</strong> durch verpasste Anfragen. LeoLan hanya 199€ — dan mengembalikannya untuk Anda.";}
+async function sendeROIReport(){
+  var email=document.getElementById("roiEmail").value;
+  var anfragen=document.getElementById("roiAnfragen").value;
+  var umsatz=document.getElementById("roiUmsatz").value;
+  var daily=document.getElementById("roiDaily").textContent;
+  var monthly=document.getElementById("roiMonthly").textContent;
+  if(!email||!email.includes("@")){alert("Bitte gültige E-Mail eingeben.");return;}
+  try{
+    await fetch("https://n8n.leolan.net/webhook/roi-report",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:email,anfragen:anfragen,umsatz:umsatz,daily:daily,monthly:monthly})});
+  }catch(e){}
+  document.getElementById("roiSuccess").style.display="block";
+  document.getElementById("roiEmail").value="";
+  if(typeof gtag!=="undefined"){gtag("event","lead_magnet_roi",{email:email});}
+}
+berechneROI();
+</script>
+<!-- PRICING -->
+<section class="pricing" id="preise">
+  <div style="text-align:center">
+    <p class="section-tag reveal">Preise</p>
+    <h2 class="section-title reveal reveal-delay-1">Sederhana. Transparan. Siap untuk memulai.</h2>
+    <p class="section-sub reveal reveal-delay-2">Wenn dein Restaurant nur <strong>2 zusätzliche Reservierungen pro Woche</strong> gewinnt, rechnet sich das System bereits. Die meisten Kunden sehen Ergebnisse ab dem ersten Tag.</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="price-card reveal">
+      <div class="price-tier">Starter</div>
+      <div style="display:flex;gap:6px;margin-bottom:8px"><div class="price-badge" style="background:rgba(0,113,227,0.18); color:#60aeff; font-size:10px;">🔥 Beliebt zum Einstieg</div><div class="price-badge" style="background:rgba(239,68,68,0.15); color:#f87171; font-size:10px; border:1px solid rgba(239,68,68,0.3);">⚡ Limitiert</div></div>
+      <div style="font-size:16px;color:rgba(255,80,80,0.7);text-decoration:line-through;margin-bottom:4px;font-weight:600;">249 €</div>
+      <div class="price-amount">199 €</div>
+      <div class="price-period">pro Monat · oder <strong style="color:#34c759;">1.990 €/Jahr</strong> (2 Monate gratis)</div>
+      <div class="price-period" style="font-size:12px;margin-top:-8px;margin-bottom:8px;">+ 349 € biaya setup (sekali bayar)</div>
+      <div class="price-period" style="color:#ffd27a;font-size:12px;font-weight:700;margin-bottom:8px;">⏳ 12 Monate Mindestlaufzeit</div>
+      <div class="price-period" style="font-size:11px;margin-bottom:20px;">Inkl. 500 Nachrichten/Monat</div>
+      <ul class="price-features">
+        <li>Menu Digital (QR-Code)</li>
+        <li>Asisten WhatsApp 24/7</li>
+        <li>Manajemen Reservasi</li>
+        <li>Bot FAQ untuk Pertanyaan Standar</li>
+        <li>Semua dalam satu tampilan</li>
+        <li>Dukungan Email</li>
+      </ul>
+      <a href="https://ki.leolan.net/onboarding/?paket=starter" class="price-btn price-btn-outline">Jetzt buchen →</a>
+    </div>
+    <div class="price-card featured reveal reveal-delay-1">
+      <div class="price-badge">Empfohlen</div>
+      <div class="price-tier">Pro</div>
+      <div class="price-amount">349 €</div>
+      <div class="price-period">pro Monat · oder <strong style="color:#34c759;">3.490 €/Jahr</strong> (2 Monate gratis)</div>
+      <div class="price-period" style="font-size:12px;margin-top:-8px;margin-bottom:8px;">+ 349 € biaya setup (sekali bayar)</div>
+      <div class="price-period" style="font-size:11px;margin-bottom:20px;">Inkl. 2.000 Nachrichten/Monat</div>
+      <ul class="price-features">
+        <li>Semua dari Starter</li>
+        <li>KI Media Sosial (täglich)</li>
+        <li>Instagram & Facebook otomatis</li>
+        <li>Otomatisasi Google Business</li>
+        <li>Manajemen Ulasan mit KI-Antworten</li>
+        <li>Dukungan Telepon</li>
+      </ul>
+      <a href="https://ki.leolan.net/onboarding/?paket=pro" class="price-btn price-btn-white">Jetzt buchen →</a>
+    </div>
+    <div class="price-card reveal reveal-delay-2">
+      <div class="price-tier">Enterprise</div>
+      <div class="price-amount">Individuell</div>
+      <div class="price-period">auf Anfrage</div>
+      <ul class="price-features">
+        <li>Alles aus Pro</li>
+        <li>Otomatisasi individual</li>
+        <li>Beberapa lokasi</li>
+        <li>Integrasi sistem kasir</li>
+        <li>Manajer Akun Khusus</li>
+        <li>SLA & Dukungan Prioritas</li>
+      </ul>
+      <a href="https://ki.leolan.net/enterprise/" class="price-btn price-btn-outline">Individuell buchen →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURE: KI-SPEISEBERATER -->
+<section class="feature">
+  <div class="feature-inner reverse">
+    <div class="reveal">
+      <div class="feature-tag">KI-Speiseberater</div>
+      <h2>Dein persönlicher<br>Kellner. Für jeden<br>am Tisch.</h2>
+      <p>Gast öffnet den Chat — die KI stellt ein paar kurze Fragen und empfiehlt dann genau das Richtige aus deiner Karte. Für jeden individuell. Inklusive passendem Getränk.</p>
+      <ul class="feature-list">
+        <li>Geschmack abfragen: scharf / mild, Fleisch / vegan / Fisch</li>
+        <li>Mempertimbangkan alergi & intoleransi</li>
+        <li>Top 3 Bestellungen des Abends anzeigen</li>
+        <li>Getränkeempfehlung passend zum Gericht</li>
+        <li>Fotos, Zutaten &amp; interessante Fakten zu jedem Gericht</li>
+      </ul>
+      <div class="feature-stat">
+        <div class="feature-stat-num">↑ 25%</div>
+        <div class="feature-stat-label">mehr Umsatz durch<br>personalisiertes Upselling</div>
+      </div>
+    </div>
+    <div class="feature-img reveal reveal-delay-1">
+      <img src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=900&q=80&auto=format&fit=crop" alt="KI Speiseempfehlung Restaurant">
+    </div>
+  </div>
+</section>
+
+
+<!-- SPEISEBERATER DEMO -->
+<section style="padding: 100px 24px; background: var(--gray-1); border-top: 1px solid rgba(255,255,255,0.07); text-align: center;">
+  <p style="font-size:13px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent-light); margin-bottom:16px;">Live-Demo</p>
+  <h2 style="font-size:clamp(28px,4vw,48px); font-weight:700; letter-spacing:-0.025em; margin-bottom:12px;">Persönlicher Kellner für jeden Tisch.</h2>
+  <p style="font-size:17px; color:rgba(245,245,247,0.6); max-width:520px; margin:0 auto 48px; line-height:1.6;">Der KI-Speiseberater fragt kurz nach — und empfiehlt dann genau das Richtige aus deiner Karte.</p>
+  <div style="max-width:480px; margin:0 auto; background:#1a1a1a; border-radius:20px; overflow:hidden; border:1px solid rgba(255,255,255,0.1);">
+    <div style="background:#2c2c2e; padding:16px 20px; display:flex; align-items:center; gap:12px;">
+      <div style="width:36px; height:36px; border-radius:50%; background:var(--accent); display:flex; align-items:center; justify-content:center; font-size:16px;">🍽️</div>
+      <div>
+        <div style="font-size:14px; font-weight:600;">Asisten Restoran</div>
+        <div style="font-size:11px; color:#34c759;">● Online</div>
+      </div>
+    </div>
+    <div style="padding:24px 20px; display:flex; flex-direction:column; gap:12px;">
+      <div style="max-width:80%; padding:12px 16px; border-radius:16px; border-bottom-left-radius:4px; background:#2c2c2e; font-size:14px; line-height:1.5; text-align:left; align-self:flex-start;">
+        Hallo! 😊 Ich helfe dir gerne bei der Auswahl. Magst du lieber <strong>scharf</strong> oder <strong>mild</strong>?
+        <div style="font-size:11px; opacity:0.5; margin-top:4px;">19:32</div>
+      </div>
+      <div style="max-width:80%; padding:12px 16px; border-radius:16px; border-bottom-right-radius:4px; background:var(--accent); color:#fff; font-size:14px; line-height:1.5; text-align:left; align-self:flex-end;">
+        Mittelscharf gerne 🌶️ Und ich esse kein Fleisch.
+        <div style="font-size:11px; opacity:0.6; margin-top:4px;">19:32</div>
+      </div>
+      <div style="max-width:80%; padding:12px 16px; border-radius:16px; border-bottom-left-radius:4px; background:#2c2c2e; font-size:14px; line-height:1.5; text-align:left; align-self:flex-start;">
+        Perfekt! Dann empfehle ich dir heute:<br><br>
+        🥘 <strong>Shakshuka</strong> — Eier in Tomatensauce, mittelscharf, vegetarisch<br>
+        🥗 <strong>Halloumi-Grill</strong> — unser Bestseller heute Abend<br>
+        🍜 <strong>Linsensuppe mit Kurkuma</strong> — mild-würzig, vegan ⭐ <em>Spezialität des Hauses</em><br><br>
+        Dazu passt ein Glas <strong>Grüner Veltliner</strong> oder unser hausgemachter <strong>Hibiskustee</strong> 🍵
+        <div style="font-size:11px; opacity:0.5; margin-top:4px;">19:33</div>
+      </div>
+      <div style="max-width:80%; padding:12px 16px; border-radius:16px; border-bottom-right-radius:4px; background:var(--accent); color:#fff; font-size:14px; line-height:1.5; text-align:left; align-self:flex-end;">
+        Shakshuka klingt perfekt! 😍
+        <div style="font-size:11px; opacity:0.6; margin-top:4px;">19:33</div>
+      </div>
+      <div style="max-width:80%; padding:12px 16px; border-radius:16px; border-bottom-left-radius:4px; background:#1c1c1e; font-size:14px; line-height:1.5; align-self:flex-start;">
+        Gute Wahl! 🌟 Übrigens — unsere Shakshuka wird mit frischen Eiern von einem regionalen Bauernhof aus der Umgebung gemacht. 😉
+        <div style="font-size:11px; opacity:0.5; margin-top:4px;">19:33 · digitaler Assistent</div>
+      </div>
+    </div>
+  </div>
+  <p style="font-size:13px; color:rgba(245,245,247,0.35); margin-top:20px;">Gast gibt Vorlieben an → KI empfiehlt aus deiner echten Speisekarte → Upselling inklusive</p>
+</section>
+
+
+<!-- WARUM LEOLAN -->
+<section style="padding:80px 24px;text-align:center;border-top:1px solid rgba(255,255,255,0.07);">
+  <div style="max-width:700px;margin:0 auto;">
+    <p class="section-tag reveal">Warum LeoLan?</p>
+    <h2 class="section-title reveal reveal-delay-1">Speziell für Gastronomen gebaut — nicht für Konzerne.</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:40px;text-align:left;" class="reveal">
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:24px;">
+        <div style="font-size:28px;margin-bottom:12px;">🎯</div>
+        <h3 style="margin:0 0 8px;font-size:17px;">Fokus auf Umsatz, nicht Technik</h3>
+        <p style="margin:0;color:rgba(245,245,247,0.6);font-size:14px;line-height:1.6;">Kein Tech-Chinesisch. Kein monatelanger Aufwand. Du siehst Ergebnisse in 5 Werktagen.</p>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:24px;">
+        <div style="font-size:28px;margin-bottom:12px;">⚡</div>
+        <h3 style="margin:0 0 8px;font-size:17px;">Schnelle Einrichtung</h3>
+        <p style="margin:0;color:rgba(245,245,247,0.6);font-size:14px;line-height:1.6;">WhatsApp bot Anda berjalan dalam 5 hari. Tidak perlu keahlian teknis. Kami urus semuanya.</p>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:24px;">
+        <div style="font-size:28px;margin-bottom:12px;">🤝</div>
+        <h3 style="margin:0 0 8px;font-size:17px;">Persönlicher Support</h3>
+        <p style="margin:0;color:rgba(245,245,247,0.6);font-size:14px;line-height:1.6;">Tidak ada sistem tiket. Tidak ada call center. Satu kontak langsung — yang mengenal restoran Anda.</p>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:24px;">
+        <div style="font-size:28px;margin-bottom:12px;">📈</div>
+        <h3 style="margin:0 0 8px;font-size:17px;">Speziell für Gastronomie</h3>
+        <p style="margin:0;color:rgba(245,245,247,0.6);font-size:14px;line-height:1.6;">Gebaut von jemandem der weiß wie der Alltag in der Gastro aussieht — von innen und als Gast.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SO STARTEST DU -->
+<section style="padding:80px 24px;text-align:center;background:rgba(41,151,255,0.04);border-top:1px solid rgba(41,151,255,0.1);">
+  <div style="max-width:700px;margin:0 auto;">
+    <p class="section-tag reveal">So startest du</p>
+    <h2 class="section-title reveal reveal-delay-1">In 5 Tagen live. Ohne Technik-Stress.</h2>
+    <div style="display:flex;flex-direction:column;gap:16px;margin-top:40px;text-align:left;" class="reveal">
+      <div style="display:flex;align-items:flex-start;gap:20px;background:rgba(255,255,255,0.04);border-radius:16px;padding:20px 24px;">
+        <div style="min-width:40px;height:40px;background:#f5a623;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;color:#000;font-size:18px;">1</div>
+        <div><strong style="font-size:16px;">Demo anfragen</strong><p style="margin:4px 0 0;color:rgba(245,245,247,0.6);font-size:14px;">Kostenlos, unverbindlich. Wir zeigen dir wie dein Bot aussehen würde.</p></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:20px;background:rgba(255,255,255,0.04);border-radius:16px;padding:20px 24px;">
+        <div style="min-width:40px;height:40px;background:#f5a623;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;color:#000;font-size:18px;">2</div>
+        <div><strong style="font-size:16px;">Einrichtung in wenigen Tagen</strong><p style="margin:4px 0 0;color:rgba(245,245,247,0.6);font-size:14px;">Kami mengatur segalanya. Du musst nichts installieren oder konfigurieren.</p></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:20px;background:rgba(255,255,255,0.04);border-radius:16px;padding:20px 24px;">
+        <div style="min-width:40px;height:40px;background:#f5a623;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;color:#000;font-size:18px;">3</div>
+        <div><strong style="font-size:16px;">System läuft automatisch</strong><p style="margin:4px 0 0;color:rgba(245,245,247,0.6);font-size:14px;">Bot Anda menjawab 24/7. Anda fokus pada tamu.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div style="text-align:center">
+    <p class="section-tag reveal">Pertanyaan Umum</p>
+    <h2 class="section-title reveal reveal-delay-1">Alles was du wissen musst.</h2>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item reveal">
+      <button class="faq-q" onclick="toggleFaq(this)">Was kostet LeoLan Digital? <span>+</span></button>
+      <div class="faq-a"><p>Starter 199€/Monat, Pro 349€/Monat, jeweils zzgl. 349€ Setup.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q" onclick="toggleFaq(this)">Wie schnell kann ich starten? <span>+</span></button>
+      <div class="faq-a"><p>Nach Ihrer Zahlung kontaktieren wir Sie innerhalb von 48 Stunden.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q" onclick="toggleFaq(this)">Welche Sprachen unterstützt der Bot? <span>+</span></button>
+      <div class="faq-a"><p>Indonesia, Inggris, Jerman, dan lainnya.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q" onclick="toggleFaq(this)">Brauche ich technische Kenntnisse? <span>+</span></button>
+      <div class="faq-a"><p>Nein, wir richten alles für Sie ein.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q" onclick="toggleFaq(this)">Gibt es einen Testmonat? <span>+</span></button>
+      <div class="faq-a"><p>Nein, aber eine kostenlose Demo auf dieser Seite.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q" onclick="toggleFaq(this)">Funktioniert es mit meiner bestehenden WhatsApp-Nummer? <span>+</span></button>
+      <div class="faq-a"><p>Ja, wir migrieren Ihre Nummer.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="kontakt">
+  <h2 class="reveal">Jeder Tag ohne System kostet bares Geld und Image.</h2>
+  <p class="reveal reveal-delay-1">Kostenloses Percakapan Pertama — 30 Minuten, kein Verkaufsdruck. Wir schauen gemeinsam was sinnvoll ist.</p>
+  <div class="contact-info-strip reveal reveal-delay-2">
+    <a href="tel:+493521788680">📞 0351 21788680</a>
+    <a href="https://wa.me/4915678483700" target="_blank">💬 +49 15678 483700</a>
+    <a href="mailto:info@leolan.net">✉️ info@leolan.net</a>
+  </div>
+  <form class="contact-form reveal reveal-delay-2" action="https://formspree.io/f/xgopdnll" method="POST" id="contactForm">
+    <div class="form-row">
+      <input type="text" name="name" placeholder="Dein Name" required>
+      <input type="text" name="restaurant" placeholder="Restaurant / Betrieb">
+    </div>
+    <input type="tel" name="phone" placeholder="Telefon / WhatsApp" required>
+    <input type="email" name="email" placeholder="E-Mail-Adresse">
+    <select name="paket">
+      <option value="" disabled selected>Paket mana yang Anda minati?</option>
+      <option value="starter">Starter — 199 €/bulan</option>
+      <option value="pro">Pro — 349 €/bulan</option>
+      <option value="enterprise">Enterprise — Individual</option>
+      <option value="beratung">Konsultasi dahulu</option>
+    </select>
+    <textarea name="message" placeholder="Kurz erzählen: Was macht dein Restaurant aus? Was soll besser werden?"></textarea>
+    <button type="submit" class="form-submit">Konsultasi gratis →</button>
+  </form>
+  <div class="form-success" id="formSuccess">✅ Danke! Wir melden uns innerhalb von 24 Stunden bei dir.</div>
+</section>
+
+
+<!-- CHATBOT DEMO WIDGET -->
+<button class="chatbot-toggle" id="chatbotToggle" type="button">💬 Coba bot</button>
+<div class="chatbot-modal" id="chatbotModal" aria-hidden="true">
+  <div class="chatbot-window" role="dialog" aria-modal="true" aria-labelledby="chatbotTitle">
+    <div class="chatbot-header">
+      <div class="chatbot-title">
+        <div class="chatbot-avatar" style="padding:0;overflow:hidden"><img src="https://ki.leolan.net/leolan-logo.png" width="42" height="42" style="display:block;border-radius:50%;object-fit:cover" alt="LeoLan"></div>
+        <div>
+          <strong id="chatbotTitle">LeoLan digitaler Assistent</strong>
+          <span>Demo Langsung · menjawab seketika</span>
+        </div>
+      </div>
+      <button class="chatbot-close" id="chatbotClose" type="button" aria-label="Chat schließen">×</button>
+    </div>
+    <div class="chatbot-messages" id="chatbotMessages"></div>
+    <div class="chatbot-input-wrap">
+      <input id="chatbotDummy" style="position:absolute;opacity:0;height:0;width:0;pointer-events:none" type="text" readonly /><form class="chatbot-form" id="chatbotForm">
+        <input type="text" id="chatbotInput" placeholder="Nachricht …" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="text" style="font-size:16px">
+        <button type="submit" id="chatbotSend" aria-label="Senden"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 2L11 13" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<!-- CROSSLINK: HOTEL -->
+<section style="padding: 60px 24px; background: var(--gray-1); border-top: 1px solid rgba(255,255,255,0.07); text-align: center;">
+  <div style="max-width: 640px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 24px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 36px 32px; text-align: center;">
+    <div>
+      <p style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #f5c842; margin-bottom: 10px;">Juga untuk Hotel & Resort</p>
+      <h3 style="font-size: 22px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px;">Concierge KI untuk hotel Anda.</h3>
+      <p style="font-size: 15px; color: rgba(245,245,247,0.6); line-height: 1.5;">Zimmerservice digital, mehrsprachig, Foto-Upload — alles was Hotelgäste brauchen.</p>
+    </div>
+    <a href="https://hotel.leolan.net" style="display: inline-block; background: #f5c842; color: #000; padding: 14px 28px; border-radius: 980px; font-size: 15px; font-weight: 700; text-decoration: none; white-space: nowrap; transition: opacity 0.2s;" onmouseover="this.style.opacity=0.85" onmouseout="this.style.opacity=1">Zur Hotel-Seite →</a>
+  </div>
+</section>
+
+
+<!-- WhatsApp Chat Section -->
+<section style="padding:60px 24px;text-align:center;border-top:1px solid rgba(255,255,255,0.07);">
+  <div style="max-width:600px;margin:0 auto;">
+    <p class="section-tag reveal">Direkter Kontakt</p>
+    <h2 class="section-title reveal reveal-delay-1">Schreib uns direkt auf WhatsApp</h2>
+    <p class="section-sub reveal reveal-delay-2">Fragen? Reservierung? Einfach schreiben — wir antworten sofort.</p>
+    <a href="https://wa.me/4915678483700" target="_blank" rel="noopener" class="reveal reveal-delay-3" style="display:inline-flex;align-items:center;gap:14px;background:#25D366;color:#fff;padding:18px 36px;border-radius:980px;font-size:18px;font-weight:700;text-decoration:none;margin-top:24px;box-shadow:0 8px 32px rgba(37,211,102,0.35);">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884"/></svg>
+      WhatsApp Chat starten
+    </a>
+    <p style="font-size:13px;color:rgba(245,245,247,0.4);margin-top:16px;">+49 15678 483700 · Antwort in wenigen Minuten</p>
+  </div>
+</section>
+<footer>
+    <div class="footer-logo"><div class="footer-logo"><img src="logo.svg" alt="LeoLan Digital"></div>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:16px 0 24px;">
+    <a href="https://apps.apple.com/app/leolan-manager/id676205147" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;background:#000;color:#fff;padding:10px 18px;border-radius:12px;text-decoration:none;border:1px solid rgba(255,255,255,0.2);">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+      <span><span style="font-size:10px;display:block;opacity:0.7;line-height:1;">Download on the</span><span style="font-size:16px;font-weight:700;line-height:1.3;">App Store</span></span>
+    </a>
+    <a href="https://play.google.com/store" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;background:#000;color:#fff;padding:10px 18px;border-radius:12px;text-decoration:none;border:1px solid rgba(255,255,255,0.2);">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 20.5v-17c0-.83 1-.83 1.5-.5l14 8.5-14 8.5C3.5 20.83 3 20.5 3 20.5z" fill="#EA4335"/><path d="M3 20.5l8.5-8.5 3 3-10 6C3.5 21.83 3 21.5 3 20.5z" fill="#FBBC04"/><path d="M3 3.5l8.5 8.5 3-3-10-6C3.5 2.17 3 2.5 3 3.5z" fill="#4285F4"/><path d="M14.5 12l3-3 1 .5c.5.3.5.7 0 1l-1 .5-3-3z" fill="#34A853"/><path d="M11.5 12l3 3 3.5-2-3-3-3.5 2z" fill="#34A853"/></svg>
+      <span><span style="font-size:10px;display:block;opacity:0.7;line-height:1;">GET IT ON</span><span style="font-size:16px;font-weight:700;line-height:1.3;">Google Play</span></span>
+    </a>
+  </div>
+  <div class="social-links">
+    <a href="https://instagram.com/leolan_digital" target="_blank" title="Instagram">
+      <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+        <defs><radialGradient id="ig-grad" cx="30%" cy="107%" r="150%"><stop offset="0%" stop-color="#fdf497"/><stop offset="5%" stop-color="#fdf497"/><stop offset="45%" stop-color="#fd5949"/><stop offset="60%" stop-color="#d6249f"/><stop offset="90%" stop-color="#285AEB"/></radialGradient></defs>
+        <rect width="48" height="48" rx="12" fill="url(#ig-grad)"/>
+        <rect x="13" y="13" width="22" height="22" rx="6" fill="none" stroke="white" stroke-width="2.2"/>
+        <circle cx="24" cy="24" r="5.5" fill="none" stroke="white" stroke-width="2.2"/>
+        <circle cx="31.5" cy="16.5" r="1.5" fill="white"/>
+      </svg>
+    </a>
+    <a href="https://www.facebook.com/profile.php?id=100083189805774" target="_blank" title="Facebook">
+      <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+        <rect width="48" height="48" rx="12" fill="#1877F2"/>
+        <path d="M31 24h-4v14h-6V24h-3v-5h3v-3c0-4 2-6 6-6h4v5h-2c-1.5 0-2 .5-2 2v2h4l-0.5 5z" fill="white"/>
+      </svg>
+    </a>
+    <a href="mailto:info@leolan.net" title="E-Mail">
+      <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+        <rect width="48" height="48" rx="12" fill="#444"/>
+        <path d="M10 15h28v18H10z" fill="none" stroke="white" stroke-width="2"/>
+        <path d="M10 15l14 11 14-11" fill="none" stroke="white" stroke-width="2"/>
+      </svg>
+    </a>
+  </div>
+  <p>
+    © 2026 LeoLan Digital. Alle Rechte vorbehalten. · <span>Zuletzt aktualisiert: April 2026</span> · Reickerstr. 132, 01237 Dresden<br>
+    <a href="mailto:info@leolan.net">info@leolan.net</a> · <a href="tel:+493521788680">0351 21788680</a><br>
+    <a href="/ueber-uns.html">Über uns</a> · <a href="/impressum.html">Impressum</a> · <a href="/datenschutz.html">Datenschutz</a> · <a href="/agb.html">AGB</a>
+  </p>
+  </div>
+</footer>
+
+<script>
+  // FAQ
+  function toggleFaq(btn) {
+    var a = btn.nextElementSibling;
+    var isOpen = a.classList.contains('open');
+    document.querySelectorAll('.faq-a.open').forEach(function(el){el.classList.remove('open');});
+    document.querySelectorAll('.faq-q.open').forEach(function(el){el.classList.remove('open');});
+    if (!isOpen) { a.classList.add('open'); btn.classList.add('open'); }
+  }
+
+  // Form
+  var form = document.getElementById('contactForm');
+  var success = document.getElementById('formSuccess');
+  if (form) {
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      var data = new FormData(form);
+      var res = await fetch(form.action, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+      if (res.ok) { form.style.display = 'none'; success.style.display = 'block'; }
+    });
+  }
+
+  // Scroll reveal
+  var revealEls = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  revealEls.forEach(function(el) { io.observe(el); });
+
+  // Hero immediate
+  document.querySelectorAll('.hero .reveal').forEach(function(el) {
+    setTimeout(function(){ el.classList.add('visible'); }, 100);
+  });
+
+  // chatbot demo
+  var chatbotToggle = document.getElementById('chatbotToggle');
+  var chatbotModal = document.getElementById('chatbotModal');
+  var chatbotClose = document.getElementById('chatbotClose');
+  var chatbotForm = document.getElementById('chatbotForm');
+  var chatbotInput = document.getElementById('chatbotInput');
+  var chatbotMessages = document.getElementById('chatbotMessages');
+  var chatbotSeeded = false;
+
+  function chatbotTime() {
+    return new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  function appendChatMessage(text, sender) {
+    var msg = document.createElement('div');
+    msg.className = 'chatbot-message ' + sender;
+    // Check if message contains booking intent - add button
+    var lc = text.toLowerCase();
+    var isIndividual = lc.includes('individual') || lc.includes('individuell') || lc.includes('enterprise') || lc.includes('modul') || lc.includes('499') || lc.includes('89€') || lc.includes('whatsapp ki-bot') || lc.includes('instagram auto') || lc.includes('einzeln') || lc.includes('einzelne');
+    var isPro = lc.includes('349') || lc.includes('pro-paket') || lc.includes('pro paket');
+    var isStarter = lc.includes('199') || lc.includes('starter');
+    var hasBooking = sender === 'bot' && (lc.includes('buchen') || lc.includes('onboarding') || lc.includes('paket') || lc.includes('199') || lc.includes('349') || lc.includes('499') || lc.includes('ki.leolan.net'));
+    var bookUrl = isIndividual ? 'https://ki.leolan.net/enterprise/' : isPro ? 'https://ki.leolan.net/onboarding/?paket=pro' : 'https://ki.leolan.net/onboarding/?paket=starter';
+    var btnHtml = hasBooking ? '<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><a href="https://ki.leolan.net/onboarding/?paket=starter" target="_blank" style="display:inline-block;background:#0071e3;color:#fff;font-weight:800;font-size:12px;padding:9px 14px;border-radius:10px;text-decoration:none;">📦 Pakete</a><a href="https://ki.leolan.net/enterprise/" target="_blank" style="display:inline-block;background:#5e81f4;color:#fff;font-weight:800;font-size:12px;padding:9px 14px;border-radius:10px;text-decoration:none;">🔧 Einzelmodul</a></div>' : '';
+    msg.innerHTML = text + btnHtml + '<small>' + chatbotTime() + '</small>';
+    chatbotMessages.appendChild(msg);
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+  }
+
+  function detectLang(text) {
+    var t = text.toLowerCase();
+    if (t.includes('merhaba') || t.includes('teşekkür') || t.includes('rezerv') || t.includes('evet') || t.includes('tamam') || t.includes('masa') || t.includes('kaç kişi')) return 'tr';
+    if (t.includes('bonjour') || t.includes('merci') || t.includes('réservation') || t.includes('table') || t.includes('salut')) return 'fr';
+    if (t.includes('hola') || t.includes('gracias') || t.includes('reserva') || t.includes('mesa')) return 'es';
+    if (t.includes('hello') || t.includes('hi ') || t.includes('thanks') || t.includes('reservation') || t.includes('table') || t.includes('open')) return 'en';
+    return 'de';
+  }
+
+  function getBotReply(message) {
+    var lower = message.toLowerCase();
+    var lang = detectLang(lower);
+
+    var replies = {
+      greeting: {
+        de: 'Hallo! 👋 Ich bin der LeoLan Assistent. Wie kann ich helfen? (Reservierungen, Öffnungszeiten, Preise)',
+        en: "Hello! 👋 I'm the LeoLan assistant. How can I help? (Reservations, opening hours, prices)",
+        tr: 'Merhaba! 👋 LeoLan asistanıyım. Nasıl yardımcı olabilirim? (Rezervasyon, açılış saatleri, fiyatlar)',
+        fr: "Bonjour! 👋 Je suis l'assistant LeoLan. Comment puis-je vous aider?",
+        es: "¡Hola! 👋 Soy el asistente LeoLan. ¿Cómo puedo ayudarle?"
+      },
+      reserv: {
+        de: 'Gerne! Nennen Sie mir Datum, Uhrzeit und Personenzahl — ich reserviere sofort! 📅',
+        en: "Sure! Just tell me the date, time and number of guests — I'll reserve right away! 📅",
+        tr: 'Tabii! Tarih, saat ve kişi sayısını söyleyin — hemen rezervasyon yapayım! 📅',
+        fr: "Bien sûr! Dites-moi la date, l'heure et le nombre de personnes — je réserve tout de suite! 📅",
+        es: "¡Claro! Dígame la fecha, hora y número de personas — ¡reservo enseguida! 📅"
+      },
+      hours: {
+        de: 'Wir haben täglich von 11:00–22:00 Uhr geöffnet. 🕐 Tisch reservieren?',
+        en: "We're open daily from 11:00–22:00. 🕐 Would you like to book a table?",
+        tr: 'Her gün 11:00–22:00 açığız. 🕐 Masa rezervasyonu yapalım mı?',
+        fr: "Nous sommes ouverts tous les jours de 11h à 22h. 🕐 Réserver une table?",
+        es: "Abrimos todos los días de 11:00 a 22:00. 🕐 ¿Reservar una mesa?"
+      },
+      thanks: {
+        de: 'Gerne! 😊 Jederzeit für Sie da.',
+        en: "You're welcome! 😊 Happy to help anytime.",
+        tr: 'Rica ederim! 😊 Her zaman yardımcı olmaktan mutluluk duyarım.',
+        fr: "De rien! 😊 Je suis toujours là pour vous aider.",
+        es: "¡De nada! 😊 Siempre aquí para ayudar."
+      },
+      contact: {
+        de: 'WhatsApp: +49 15678 483700 💬 | E-Mail: info@leolan.net',
+        en: 'WhatsApp: +49 15678 483700 💬 | Email: info@leolan.net',
+        tr: 'WhatsApp: +49 15678 483700 💬 | E-posta: info@leolan.net',
+        fr: 'WhatsApp: +49 15678 483700 💬 | Email: info@leolan.net',
+        es: 'WhatsApp: +49 15678 483700 💬 | Email: info@leolan.net'
+      },
+      fallback: {
+        de: 'Gute Frage! 🤔 Für mehr Details: info@leolan.net oder WhatsApp +49 15678 483700',
+        en: 'Good question! 🤔 For more details: info@leolan.net or WhatsApp +49 15678 483700',
+        tr: 'İyi soru! 🤔 Daha fazla bilgi için: info@leolan.net veya WhatsApp +49 15678 483700',
+        fr: "Bonne question! 🤔 Pour plus d'infos: info@leolan.net ou WhatsApp +49 15678 483700",
+        es: "¡Buena pregunta! 🤔 Para más detalles: info@leolan.net o WhatsApp +49 15678 483700"
+      }
+    };
+
+    var r = function(key) { return replies[key][lang] || replies[key]['de']; };
+
+    if (lower.includes('hi') || lower.includes('hallo') || lower.includes('hey') || lower.includes('merhaba') || lower.includes('bonjour') || lower.includes('hello') || lower.includes('hola') || lower === '') return r('greeting');
+    if (lower.includes('danke') || lower.includes('thanks') || lower.includes('teşekkür') || lower.includes('merci') || lower.includes('gracias')) return r('thanks');
+    if (lower.includes('reserv') || lower.includes('tisch') || lower.includes('buchen') || lower.includes('table') || lower.includes('masa') || lower.includes('book')) return r('reserv');
+    if (lower.includes('öffnung') || lower.includes('open') || lower.includes('uhrzeit') || lower.includes('wann') || lower.includes('when') || lower.includes('saat')) return r('hours');
+    if (lower.includes('whatsapp') || lower.includes('kontakt') || lower.includes('contact') || lower.includes('iletişim')) return r('contact');
+    return r('fallback');
+  }
+
+  var chatHistory = [];
+
+  async function getBotReplyAsync(message) {
+    try {
+      var controller = new AbortController();
+      var tid = setTimeout(function(){ controller.abort(); }, 20000);
+      var resp = await fetch('https://n8n.leolan.net/webhook/restaurant-chat', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({message: message, moduleKey: 'website-demo', history: chatHistory}),
+        signal: controller.signal
+      });
+      clearTimeout(tid);
+      var data = await resp.json();
+      var reply = data.reply || data.message || data.text || 'Ich bin gleich für Sie da!';
+      chatHistory.push({role:'user', content: message});
+      chatHistory.push({role:'assistant', content: reply});
+      if (chatHistory.length > 16) chatHistory = chatHistory.slice(-16);
+      return reply;
+    } catch(e) {
+      if (e.name === 'AbortError') return 'Kurze Pause — bitte nochmal senden! 🙏';
+      return 'Entschuldigung, technischer Fehler. Bitte nochmal versuchen!';
+    }
+  }
+
+  async function openChatbot() {
+    chatbotModal.classList.add('open');
+    chatbotModal.setAttribute('aria-hidden', 'false');
+    if (chatbotToggle) chatbotToggle.style.display = 'none';
+    if (!chatbotSeeded) {
+      chatbotSeeded = true;
+      var greeting = await getBotReplyAsync('__start__');
+      appendChatMessage(greeting, 'bot');
+    }
+    setTimeout(function(){ chatbotInput.focus(); chatbotMessages.scrollTop = chatbotMessages.scrollHeight; }, 80);
+  }
+
+  function closeChatbot() {
+    chatbotModal.classList.remove('open');
+    chatbotModal.setAttribute('aria-hidden', 'true');
+    if (chatbotToggle) chatbotToggle.style.display = '';
+  }
+
+  if (chatbotToggle && chatbotModal && chatbotForm && chatbotInput && chatbotMessages) {
+    chatbotToggle.addEventListener('click', openChatbot);
+    chatbotClose.addEventListener('click', closeChatbot);
+    chatbotModal.addEventListener('click', function(e) {
+      if (e.target === chatbotModal) closeChatbot();
+    });
+    chatbotForm.addEventListener('submit', async function(e) {
+      e.stopPropagation();
+      e.preventDefault();
+      var value = chatbotInput.value.trim();
+      if (!value) return;
+      appendChatMessage(value.replace(/</g, '&lt;').replace(/>/g, '&gt;'), 'user');
+      chatbotInput.value = '';
+      // Do NOT disable — causes iOS keyboard to disappear
+      // chatbotInput.disabled = true;
+      var typing = document.createElement('div');
+      typing.className = 'chatbot-message bot';
+      typing.id = 'typing-indicator';
+      typing.innerHTML = '<em>tippt...</em>';
+      chatbotMessages.appendChild(typing);
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+      var reply = await getBotReplyAsync(value);
+      var el = document.getElementById('typing-indicator');
+      if (el) el.remove();
+      appendChatMessage(reply, 'bot');
+      // Input was never disabled, keyboard stays open
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && chatbotModal.classList.contains('open')) closeChatbot();
+    });
+  }
+</script>
+
+
+<!-- EXIT INTENT POPUP -->
+<div id="exitPopup" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.75);backdrop-filter:blur(4px);align-items:center;justify-content:center;">
+  <div style="background:linear-gradient(180deg,#0d1117 0%,#111827 100%);border:1px solid rgba(0,113,227,0.3);border-radius:24px;padding:40px 36px;max-width:480px;width:90%;text-align:center;position:relative;">
+    <button onclick="document.getElementById('exitPopup').style.display='none'" style="position:absolute;top:16px;right:16px;background:rgba(255,255,255,0.08);border:none;color:#fff;width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:16px;">✕</button>
+    <div style="font-size:36px;margin-bottom:12px;">⚡</div>
+    <h3 style="font-size:22px;font-weight:700;color:#fff;margin-bottom:10px;">Warte kurz — bevor du gehst</h3>
+    <p style="font-size:15px;color:rgba(245,245,247,0.7);margin-bottom:8px;">Jeder Tag ohne System kostet dich durchschnittlich</p>
+    <p style="font-size:32px;font-weight:800;color:var(--accent-light);margin-bottom:20px;">130 € Umsatz</p>
+    <p style="font-size:14px;color:rgba(245,245,247,0.55);margin-bottom:24px;">Kostenlose Demo in 15 Minuten — kein Vertrag, keine Kosten.</p>
+    <a href="#kontakt" onclick="document.getElementById('exitPopup').style.display='none'" style="display:block;background:var(--accent);color:#fff;padding:14px 28px;border-radius:980px;font-size:15px;font-weight:600;text-decoration:none;margin-bottom:12px;">Dapatkan demo →</a>
+    <button onclick="document.getElementById('exitPopup').style.display='none'" style="background:none;border:none;color:rgba(245,245,247,0.4);font-size:13px;cursor:pointer;">Nein danke, ich verliere lieber Gäste</button>
+  </div>
+</div>
+
+<script>
+  var exitShown = false;
+  document.addEventListener('mouseleave', function(e) {
+    if (e.clientY <= 0 && !exitShown && !sessionStorage.getItem('exitSeen')) {
+      exitShown = true;
+      sessionStorage.setItem('exitSeen', '1');
+      document.getElementById('exitPopup').style.display = 'flex';
+    }
+  });
+</script>
+
+</body>
+</html>
