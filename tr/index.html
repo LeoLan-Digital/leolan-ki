@@ -1175,7 +1175,7 @@
           <div id="roiReturn" style="font-size:24px;font-weight:800;color:#34c759;">36×</div>
         </div>
       </div>
-      <p id="roiText" style="font-size:14px;color:rgba(245,245,247,0.65);margin-bottom:20px;">Du verlierst <strong style="color:#ff6b6b;">€7.200 pro Monat</strong>. LeoLan 199€'ya mal olur — ve bunu geri kazandırır.</p>
+      <p id="roiText" style="font-size:14px;color:rgba(245,245,247,0.65);margin-bottom:20px;">Kaçırılan talepler yüzünden aylık <strong style="color:#ff6b6b;">€7.200</strong> kaybediyorsun. LeoLan 199€'ya mal olur — ve bunu geri kazandırır.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:12px;">
         <input type="email" id="roiEmail" placeholder="e-posta@adresin.com" style="padding:12px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.2);border-radius:10px;color:#fff;font-size:15px;min-width:220px;outline:none;flex:1;max-width:300px;" />
         <button onclick="sendeROIReport()" style="background:var(--accent);color:#fff;padding:12px 20px;border-radius:10px;border:none;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap;">📊 E-posta ile rapor al →</button>
@@ -1187,7 +1187,7 @@
   </div>
 </section>
 <script>
-function berechneROI(){var a=parseInt(document.getElementById("roiAnfragen").value)||10;var u=parseInt(document.getElementById("roiUmsatz").value)||80;var d=Math.round(a*0.3*u);var m=d*30;var r=Math.round(m/199);document.getElementById("roiDaily").textContent="€"+d.toLocaleString("de-DE");document.getElementById("roiMonthly").textContent="€"+m.toLocaleString("de-DE");document.getElementById("roiReturn").textContent=r+"×";document.getElementById("roiText").innerHTML="Du verlierst <strong style=\'color:#ff6b6b;\'>€"+m.toLocaleString("de-DE")+" pro Monat</strong> durch verpasste Anfragen. LeoLan 199€'ya mal olur — ve bunu geri kazandırır.";}
+function berechneROI(){var a=parseInt(document.getElementById("roiAnfragen").value)||10;var u=parseInt(document.getElementById("roiUmsatz").value)||80;var d=Math.round(a*0.3*u);var m=d*30;var r=Math.round(m/199);document.getElementById("roiDaily").textContent="€"+d.toLocaleString("de-DE");document.getElementById("roiMonthly").textContent="€"+m.toLocaleString("de-DE");document.getElementById("roiReturn").textContent=r+"×";document.getElementById("roiText").innerHTML="Kaçırılan talepler yüzünden aylık <strong style=\'color:#ff6b6b;\'>€"+m.toLocaleString("de-DE")+"</strong> kaybediyorsun. LeoLan 199€'ya mal olur — ve bunu geri kazandırır.";}
 async function sendeROIReport(){
   var email=document.getElementById("roiEmail").value;
   var anfragen=document.getElementById("roiAnfragen").value;
