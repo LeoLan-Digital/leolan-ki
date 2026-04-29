@@ -2,66 +2,107 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>KI fuer Gastronomie 2026: Mehr Buchungen mit KI-Automatisierung | LeoLan Digital</title>
-<meta name="description" content="Wie Restaurants mit KI-Automatisierung und WhatsApp Bots bis zu 30% mehr Reservierungen gewinnen. Praxisguide 2026.">
-<meta name="keywords" content="KI fuer Gastronomie, WhatsApp Bot Restaurant, Reservierungen automatisieren">
+<title>KI fuer Gastronomie 2026: Mehr Buchungen | LeoLan Digital</title>
+<meta name="description" content="Wie Restaurants mit KI-Automatisierung bis zu 30% mehr Reservierungen gewinnen.">
 <link rel="canonical" href="https://ki.leolan.net/blog/ki-fuer-gastronomie/">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Arial,sans-serif;background:#060d18;color:#9ab8d0;line-height:1.7}
-.topbar{background:#060d18;padding:16px 28px;border-bottom:1px solid #1a3050;display:flex;align-items:center}
-.topbar a{color:#4da6ff;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase}
-.topbar .logo{color:#fff;font-size:16px;font-weight:800;margin-left:auto}
-.hero{position:relative;height:440px;overflow:hidden;background:#0c1f36}
-.hero img{width:100%;height:100%;object-fit:cover;display:block}
-.hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.1) 0%,rgba(0,0,0,0.75) 100%)}
-.hero-content{position:absolute;bottom:0;left:0;right:0;padding:36px 48px}
-.tag{display:inline-block;background:#4da6ff;color:#fff;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;padding:5px 14px;border-radius:4px;margin-bottom:14px}
-h1{font-size:clamp(22px,3.8vw,42px);font-weight:800;line-height:1.2;color:#fff;max-width:780px}
-.wrap{max-width:860px;margin:0 auto;padding:48px 24px}
-.lead{background:#0c1f36;border-left:4px solid #4da6ff;border-radius:0 12px 12px 0;padding:22px 28px;margin-bottom:40px;font-size:17px;line-height:1.8;color:#9ab8d0}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:32px 0}
-.stat{background:#0c1f36;border:1px solid #1a3050;border-radius:14px;padding:18px 14px;text-align:center}
-.stat-n{font-size:30px;font-weight:800;color:#4da6ff;display:block;line-height:1}
-.stat-l{font-size:12px;color:#1a3050;margin-top:6px;line-height:1.4}
-h2{font-size:22px;font-weight:700;color:#4da6ff;margin:44px 0 14px;padding-bottom:8px;border-bottom:2px solid #1a3050}
+body{font-family:Arial,sans-serif;background:#060d18;color:#d0e0f0}
+nav{background:#040a14;padding:14px 28px;border-bottom:1px solid #1a3050;display:flex;justify-content:space-between;align-items:center}
+nav a{color:#4da6ff;text-decoration:none;font-size:13px;font-weight:700;text-transform:uppercase}
+nav .brand{color:#fff;font-weight:800;font-size:15px}
+.hero-full{position:relative;height:500px;overflow:hidden}
+.hero-full img{width:100%;height:100%;object-fit:cover}
+.hero-full::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(6,13,24,0.95) 40%,rgba(6,13,24,0.3) 100%)}
+.hero-text{position:absolute;top:50%;left:48px;transform:translateY(-50%);z-index:2;max-width:500px}
+.label{background:#4da6ff;color:#fff;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 12px;border-radius:3px;display:inline-block;margin-bottom:16px}
+.hero-text h1{font-size:clamp(24px,3.5vw,44px);font-weight:800;color:#fff;line-height:1.2;margin-bottom:20px}
+.hero-text p{font-size:16px;color:#8ab8d8;line-height:1.7}
+.layout{display:grid;grid-template-columns:280px 1fr;gap:0;max-width:1100px;margin:0 auto}
+.sidebar{background:#0a1828;border-right:1px solid #1a3050;padding:40px 28px;position:sticky;top:0;height:fit-content}
+.sidebar h3{color:#4da6ff;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px}
+.big-stat{margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid #1a3050}
+.big-stat:last-child{border-bottom:none}
+.big-num{font-size:48px;font-weight:900;color:#4da6ff;line-height:1;display:block}
+.big-label{font-size:13px;color:#5a8ab0;margin-top:6px}
+.main{padding:40px 48px}
+h2{font-size:22px;font-weight:700;color:#4da6ff;margin:36px 0 14px;padding-bottom:8px;border-bottom:1px solid #1a3050}
 p{font-size:16px;line-height:1.75;color:#9ab8d0;margin-bottom:16px}
-ul,ol{margin:0 0 20px;padding:0;list-style:none}
-li{padding:10px 0 10px 30px;position:relative;border-bottom:1px solid #0c1f36;color:#9ab8d0;font-size:15px}
-ul li::before{content:"->>";position:absolute;left:0;color:#4da6ff;font-weight:700}
-ol{counter-reset:n}ol li{counter-increment:n}
-ol li::before{content:counter(n);position:absolute;left:0;top:10px;background:#0c1f36;border:1px solid #1a3050;color:#4da6ff;font-size:12px;font-weight:700;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;line-height:22px}
-.blog-img{width:100%;border-radius:14px;margin:28px 0;display:block;max-height:420px;object-fit:cover;border:1px solid #1a3050}
-.app-img{width:100%;border-radius:12px;margin:24px 0;display:block;max-height:300px;object-fit:cover;border:2px solid #1a3050;box-shadow:0 4px 24px rgba(0,0,0,0.4)}
-.img-cap{text-align:center;font-size:13px;color:#1a3050;margin-top:-18px;margin-bottom:24px}
-.cta{background:linear-gradient(135deg,#0c1f36 0%,#1a3050 100%);border-radius:18px;padding:40px 36px;text-align:center;margin:48px 0;border:1px solid #4da6ff}
-.cta h3{color:#fff;font-size:22px;font-weight:800;margin-bottom:10px}
-.cta p{color:#9ab8d0;margin-bottom:24px}
-.btn{display:inline-block;background:#4da6ff;color:#fff;padding:13px 38px;border-radius:10px;font-weight:700;font-size:16px;text-decoration:none}
-.faq-item{background:#0c1f36;border:1px solid #1a3050;border-radius:12px;padding:18px 22px;margin-bottom:10px}
-.faq-item h3{color:#4da6ff;font-size:15px;font-weight:700;margin:0 0 8px}
-.faq-item p{margin:0;font-size:14px;color:#1a3050}
-footer{background:#060d18;border-top:1px solid #1a3050;padding:24px;text-align:center;color:#1a3050;font-size:13px}
-@media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr)}.hero-content{padding:24px}}</style>
+ul{margin:0 0 20px;padding:0;list-style:none}
+li{padding:10px 0 10px 24px;position:relative;border-bottom:1px solid #0c1f36;color:#9ab8d0;font-size:15px}
+li::before{content:">";position:absolute;left:0;color:#4da6ff;font-weight:700}
+ol{margin:0 0 20px;padding:0;list-style:none;counter-reset:n}
+ol li{counter-increment:n}
+ol li::before{content:counter(n);position:absolute;left:0;top:10px;background:#0c1f36;border:1px solid #1a4060;color:#4da6ff;font-size:11px;font-weight:700;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;line-height:20px;text-align:center}
+.blog-img{width:100%;border-radius:12px;margin:24px 0;max-height:380px;object-fit:cover;border:1px solid #1a3050}
+.app-img{width:100%;border-radius:10px;margin:20px 0;max-height:280px;object-fit:cover;border:2px solid #1a4060}
+.cap{text-align:center;font-size:12px;color:#3a6080;margin-top:-14px;margin-bottom:20px}
+.cta-box{background:#0c1f36;border:1px solid #4da6ff;border-radius:16px;padding:32px;text-align:center;margin:40px 0}
+.cta-box h3{color:#fff;font-size:20px;font-weight:800;margin-bottom:8px}
+.cta-box p{color:#5a8ab0;margin-bottom:20px;font-size:15px}
+.btn{background:#4da6ff;color:#fff;padding:12px 32px;border-radius:8px;font-weight:700;font-size:15px;text-decoration:none;display:inline-block}
+.faq{margin-top:36px}
+.faq-q{background:#0c1f36;border-radius:10px;padding:16px 20px;margin-bottom:8px}
+.faq-q h3{color:#7ec4ff;font-size:14px;font-weight:700;margin:0 0 6px}
+.faq-q p{margin:0;font-size:14px;color:#4a7a98}
+footer{background:#040a14;border-top:1px solid #1a3050;padding:20px;text-align:center;color:#2a5070;font-size:12px}
+@media(max-width:700px){.layout{grid-template-columns:1fr}.sidebar{position:static;display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.hero-text{left:24px;max-width:90%}}
+</style>
 </head>
 <body>
-<div class="topbar"><a href="/">Blog</a><span class="logo">LeoLan Digital</span></div>
-<div class="hero"><img src="https://raw.githubusercontent.com/LeoLan-Digital/leolan-ki/main/blog/images/hero/gastronomie.jpg" alt="KI fuer Gastronomie"><div class="hero-overlay"></div>
-<div class="hero-content"><span class="tag">KI Gastronomie 2026</span><h1>KI fuer Gastronomie 2026: Mehr Buchungen mit KI-Automatisierung</h1></div></div>
-<div class="wrap">
-<div class="lead">Restaurants die KI-Automatisierung einsetzen gewinnen durchschnittlich <strong>30% mehr Reservierungen</strong> - ohne Mehraufwand.</div>
-<div class="stats"><div class="stat"><span class="stat-n">4.800+</span><span class="stat-l">Automatische Reservierungen</span></div><div class="stat"><span class="stat-n">30%</span><span class="stat-l">Mehr Buchungen</span></div><div class="stat"><span class="stat-n">4,9/5</span><span class="stat-l">Kundenbewertung</span></div><div class="stat"><span class="stat-n">24/7</span><span class="stat-l">Rund um die Uhr</span></div></div>
-<img src="https://raw.githubusercontent.com/LeoLan-Digital/leolan-ki/main/blog/images/hero/gastronomie.jpg" alt="KI Gastronomie" class="blog-img">
+<nav><a href="/">Blog</a><span class="brand">LeoLan Digital</span></nav>
+<div class="hero-full">
+<img src="https://raw.githubusercontent.com/LeoLan-Digital/leolan-ki/main/blog/images/hero/gastronomie.jpg" alt="KI Gastronomie">
+<div class="hero-text">
+<span class="label">KI Gastronomie 2026</span>
+<h1>KI fuer Gastronomie: Mehr Buchungen mit Automatisierung</h1>
+<p>Wie Restaurants mit KI-Automatisierung bis zu 30% mehr Reservierungen gewinnen.</p>
+</div>
+</div>
+<div class="layout">
+<div class="sidebar">
+<h3>Zahlen & Fakten</h3>
+<div class="big-stat"><span class="big-num">4.800+</span><span class="big-label">Automatische Reservierungen</span></div>
+<div class="big-stat"><span class="big-num">+30%</span><span class="big-label">Mehr Buchungen im Schnitt</span></div>
+<div class="big-stat"><span class="big-num">4,9</span><span class="big-label">Sterne Kundenbewertung</span></div>
+<div class="big-stat"><span class="big-num">24/7</span><span class="big-label">Immer erreichbar</span></div>
+</div>
+<div class="main">
+<img src="https://raw.githubusercontent.com/LeoLan-Digital/leolan-ki/main/blog/images/hero/gastronomie.jpg" alt="Restaurant KI" class="blog-img">
 <h2>Warum KI in der Gastronomie kein Luxus mehr ist</h2>
 <p>Ein Gast schreibt um 23:17 Uhr auf WhatsApp. Du schlaefst. Der Gast bucht beim Restaurant um die Ecke. Das passiert taeglich - Restaurants verlieren bis zu <strong>68% aller Gaesteanfragen</strong> ausserhalb der Oeffnungszeiten.</p>
-<h2>Was ein KI-Assistent fuer dein Restaurant tut</h2>
-<ul><li>Reservierungen annehmen und bestaetigen - rund um die Uhr</li><li>Fragen zu Speisekarte Allergenen Oeffnungszeiten sofort beantworten</li><li>Stammgaeste erkennen und persoenlich ansprechen</li><li>Geburtstagsnachrichten automatisch verschicken</li><li>Google-Bewertungen automatisch beantworten</li><li>In 8 Sprachen kommunizieren - automatisch erkannt</li></ul>
-<img src="https://raw.githubusercontent.com/LeoLan-Digital/leolan-ki/main/blog/images/app/dashboard.jpg" alt="LeoLan Manager App Dashboard" class="app-img"><p class="img-cap">LeoLan Manager App - Dashboard mit Live-Reservierungen</p>
-<h2>So laeuft eine automatische Reservierung ab</h2>
-<ol><li>Gast: Ich moechte Freitag einen Tisch fuer 4 Personen reservieren</li><li>Bot fragt: Welche Uhrzeit passt Ihnen?</li><li>Gast: 19:00 Uhr</li><li>Bot: Reservierung bestaetigt! Freitag 19:00 Uhr 4 Personen. Wir freuen uns!</li></ol>
-<img src="https://raw.githubusercontent.com/LeoLan-Digital/leolan-ki/main/blog/images/app/messages.jpg" alt="LeoLan Manager App Nachrichten" class="app-img"><p class="img-cap">LeoLan Manager App - WhatsApp Nachrichten Uebersicht</p>
-<div class="cta"><h3>Jetzt kostenlos starten</h3><p>Erster Monat kostenlos - Kein Vertrag - In 5 Werktagen einsatzbereit</p><a href="https://ki.leolan.net" class="btn">Kostenlos testen</a></div>
-<h2>Haeufige Fragen</h2><div class="faq-item"><h3>Was kostet ein KI-Assistent?</h3><p>Ab 99 EUR/Monat erster Monat kostenlos kein Vertrag.</p></div><div class="faq-item"><h3>Wie schnell ist die Einrichtung?</h3><p>5 Werktage - vollstaendig eingerichtet.</p></div><div class="faq-item"><h3>Brauche ich technische Kenntnisse?</h3><p>Nein. LeoLan Digital uebernimmt alles.</p></div><div class="faq-item"><h3>In welchen Sprachen?</h3><p>DE EN TR AR RU FR IT ES.</p></div>
+<h2>Was ein KI-Assistent konkret tut</h2>
+<ul>
+<li>Reservierungen annehmen und bestaetigen - rund um die Uhr</li>
+<li>Fragen zu Speisekarte Allergenen Oeffnungszeiten sofort beantworten</li>
+<li>Stammgaeste erkennen und persoenlich ansprechen</li>
+<li>Geburtstagsnachrichten automatisch verschicken</li>
+<li>Google-Bewertungen automatisch beantworten</li>
+<li>In 8 Sprachen kommunizieren</li>
+</ul>
+<img src="https://raw.githubusercontent.com/LeoLan-Digital/leolan-ki/main/blog/images/app/dashboard.jpg" alt="LeoLan Manager App" class="app-img">
+<p class="cap">LeoLan Manager App - Dashboard mit Live-Reservierungen</p>
+<h2>Automatische Reservierung in 4 Schritten</h2>
+<ol>
+<li>Gast: Ich moechte Freitag einen Tisch fuer 4 Personen reservieren</li>
+<li>Bot fragt: Welche Uhrzeit passt Ihnen?</li>
+<li>Gast: 19:00 Uhr</li>
+<li>Bot: Reservierung bestaetigt! Freitag 19:00 Uhr 4 Personen. Wir freuen uns!</li>
+</ol>
+<img src="https://raw.githubusercontent.com/LeoLan-Digital/leolan-ki/main/blog/images/app/messages.jpg" alt="LeoLan Nachrichten" class="app-img">
+<p class="cap">LeoLan Manager App - WhatsApp Nachrichten Uebersicht</p>
+<div class="cta-box">
+<h3>Jetzt kostenlos starten</h3>
+<p>Erster Monat kostenlos - Kein Vertrag - 5 Werktage Einrichtung</p>
+<a href="https://ki.leolan.net" class="btn">Kostenlos testen</a>
+</div>
+<div class="faq">
+<h2>Haeufige Fragen</h2>
+<div class="faq-q"><h3>Was kostet ein KI-Assistent?</h3><p>Ab 99 EUR/Monat erster Monat kostenlos kein Vertrag.</p></div>
+<div class="faq-q"><h3>Wie schnell ist die Einrichtung?</h3><p>5 Werktage - vollstaendig eingerichtet.</p></div>
+<div class="faq-q"><h3>In welchen Sprachen?</h3><p>DE EN TR AR RU FR IT ES automatisch erkannt.</p></div>
+</div>
+</div>
 </div>
 <footer>2026 LeoLan Digital - <a href="https://ki.leolan.net" style="color:#4da6ff">ki.leolan.net</a></footer>
 </body></html>
