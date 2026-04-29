@@ -7,69 +7,62 @@
 <meta name="keywords" content="WhatsApp Bot Restaurant, WhatsApp Reservierungen Restaurant, automatische Reservierungen">
 <link rel="canonical" href="https://ki.leolan.net/blog/whatsapp-bot-restaurant/">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: Arial, sans-serif; background: #07111e; color: #d0e0f0; line-height: 1.7; }
-.topbar { background: #040c18; padding: 16px 28px; border-bottom: 1px solid #1a3050; display: flex; align-items: center; gap: 12px; }
-.topbar a { color: #4da6ff; text-decoration: none; font-size: 13px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; }
-.topbar .logo { color: #fff; font-size: 16px; font-weight: 800; margin-left: auto; }
-.hero { position: relative; height: 440px; overflow: hidden; background: #0a1a2e; }
-.hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(7,17,30,0.15) 0%, rgba(7,17,30,0.85) 100%); }
-.hero-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 36px 48px; }
-.tag { display: inline-block; background: #4da6ff; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; padding: 5px 14px; border-radius: 4px; margin-bottom: 14px; }
-h1 { font-size: clamp(22px, 3.8vw, 42px); font-weight: 800; line-height: 1.2; color: #fff; max-width: 780px; }
-.wrap { max-width: 860px; margin: 0 auto; padding: 48px 24px; }
-.lead { background: #0c1f36; border-left: 4px solid #4da6ff; border-radius: 0 12px 12px 0; padding: 22px 28px; margin-bottom: 40px; font-size: 17px; line-height: 1.8; color: #9fc0e0; }
-.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 32px 0; }
-.stat { background: #0a1830; border: 1px solid #1a3050; border-radius: 14px; padding: 18px 14px; text-align: center; }
-.stat-n { font-size: 30px; font-weight: 800; color: #4da6ff; display: block; line-height: 1; }
-.stat-l { font-size: 12px; color: #3a6080; margin-top: 6px; line-height: 1.4; }
-h2 { font-size: 22px; font-weight: 700; color: #4da6ff; margin: 44px 0 14px; padding-bottom: 8px; border-bottom: 2px solid #1a3050; }
-p { font-size: 16px; line-height: 1.75; color: #9ab8d0; margin-bottom: 16px; }
-ul, ol { margin: 0 0 20px; padding: 0; list-style: none; }
-li { padding: 10px 0 10px 30px; position: relative; border-bottom: 1px solid #0c1f36; color: #9ab8d0; font-size: 15px; }
-ul li::before { content: "->"; position: absolute; left: 0; color: #4da6ff; font-weight: 700; }
-ol { counter-reset: n; }
-ol li { counter-increment: n; }
-ol li::before { content: counter(n); position: absolute; left: 0; top: 10px; background: #0c1f36; border: 1px solid #1a4060; color: #4da6ff; font-size: 12px; font-weight: 700; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; line-height: 22px; }
-.blog-img { width: 100%; border-radius: 14px; margin: 28px 0; display: block; max-height: 420px; object-fit: cover; border: 1px solid #1a3050; }
-.app-img { width: 100%; border-radius: 12px; margin: 24px 0; display: block; max-height: 320px; object-fit: cover; border: 2px solid #1a4060; box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
-.img-cap { text-align: center; font-size: 13px; color: #3a6080; margin-top: -18px; margin-bottom: 24px; }
-.cta { background: linear-gradient(135deg, #0a2a5e 0%, #1050a0 100%); border-radius: 18px; padding: 40px 36px; text-align: center; margin: 48px 0; border: 1px solid #2a6ab8; }
-.cta h3 { color: #fff; font-size: 22px; font-weight: 800; margin-bottom: 10px; }
-.cta p { color: #6898c0; margin-bottom: 24px; }
-.btn { display: inline-block; background: #4da6ff; color: #fff; padding: 13px 38px; border-radius: 10px; font-weight: 700; font-size: 16px; text-decoration: none; }
-.faq-item { background: #0a1830; border: 1px solid #1a3050; border-radius: 12px; padding: 18px 22px; margin-bottom: 10px; }
-.faq-item h3 { color: #7ec4ff; font-size: 15px; font-weight: 700; margin: 0 0 8px; }
-.faq-item p { margin: 0; font-size: 14px; color: #5080a0; }
-footer { background: #040c18; border-top: 1px solid #1a3050; padding: 24px; text-align: center; color: #2a5070; font-size: 13px; }
-@media(max-width: 600px) { .stats { grid-template-columns: repeat(2, 1fr); } .hero-content { padding: 24px; } }
-</style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:#04131a;color:#8ab8c8;line-height:1.7}
+.topbar{background:#04131a;padding:16px 28px;border-bottom:1px solid #0e3040;display:flex;align-items:center}
+.topbar a{color:#00bcd4;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase}
+.topbar .logo{color:#fff;font-size:16px;font-weight:800;margin-left:auto}
+.hero{position:relative;height:440px;overflow:hidden;background:#091e2a}
+.hero img{width:100%;height:100%;object-fit:cover;display:block}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.1) 0%,rgba(0,0,0,0.75) 100%)}
+.hero-content{position:absolute;bottom:0;left:0;right:0;padding:36px 48px}
+.tag{display:inline-block;background:#00bcd4;color:#fff;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;padding:5px 14px;border-radius:4px;margin-bottom:14px}
+h1{font-size:clamp(22px,3.8vw,42px);font-weight:800;line-height:1.2;color:#fff;max-width:780px}
+.wrap{max-width:860px;margin:0 auto;padding:48px 24px}
+.lead{background:#091e2a;border-left:4px solid #00bcd4;border-radius:0 12px 12px 0;padding:22px 28px;margin-bottom:40px;font-size:17px;line-height:1.8;color:#8ab8c8}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:32px 0}
+.stat{background:#091e2a;border:1px solid #0e3040;border-radius:14px;padding:18px 14px;text-align:center}
+.stat-n{font-size:30px;font-weight:800;color:#00bcd4;display:block;line-height:1}
+.stat-l{font-size:12px;color:#0e3040;margin-top:6px;line-height:1.4}
+h2{font-size:22px;font-weight:700;color:#00bcd4;margin:44px 0 14px;padding-bottom:8px;border-bottom:2px solid #0e3040}
+p{font-size:16px;line-height:1.75;color:#8ab8c8;margin-bottom:16px}
+ul,ol{margin:0 0 20px;padding:0;list-style:none}
+li{padding:10px 0 10px 30px;position:relative;border-bottom:1px solid #091e2a;color:#8ab8c8;font-size:15px}
+ul li::before{content:"->>";position:absolute;left:0;color:#00bcd4;font-weight:700}
+ol{counter-reset:n}ol li{counter-increment:n}
+ol li::before{content:counter(n);position:absolute;left:0;top:10px;background:#091e2a;border:1px solid #0e3040;color:#00bcd4;font-size:12px;font-weight:700;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;line-height:22px}
+.blog-img{width:100%;border-radius:14px;margin:28px 0;display:block;max-height:420px;object-fit:cover;border:1px solid #0e3040}
+.app-img{width:100%;border-radius:12px;margin:24px 0;display:block;max-height:300px;object-fit:cover;border:2px solid #0e3040;box-shadow:0 4px 24px rgba(0,0,0,0.4)}
+.img-cap{text-align:center;font-size:13px;color:#0e3040;margin-top:-18px;margin-bottom:24px}
+.cta{background:linear-gradient(135deg,#091e2a 0%,#0e3040 100%);border-radius:18px;padding:40px 36px;text-align:center;margin:48px 0;border:1px solid #00bcd4}
+.cta h3{color:#fff;font-size:22px;font-weight:800;margin-bottom:10px}
+.cta p{color:#8ab8c8;margin-bottom:24px}
+.btn{display:inline-block;background:#00bcd4;color:#fff;padding:13px 38px;border-radius:10px;font-weight:700;font-size:16px;text-decoration:none}
+.faq-item{background:#091e2a;border:1px solid #0e3040;border-radius:12px;padding:18px 22px;margin-bottom:10px}
+.faq-item h3{color:#00bcd4;font-size:15px;font-weight:700;margin:0 0 8px}
+.faq-item p{margin:0;font-size:14px;color:#0e3040}
+footer{background:#04131a;border-top:1px solid #0e3040;padding:24px;text-align:center;color:#0e3040;font-size:13px}
+@media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr)}.hero-content{padding:24px}}</style>
 </head>
 <body>
 <div class="topbar"><a href="/">Blog</a><span class="logo">LeoLan Digital</span></div>
-<div class="hero">
-<img src="https://raw.githubusercontent.com/LeoLan-Digital/leolan-ki/main/blog/images/hero/whatsapp.jpg" alt="WhatsApp Bot Restaurant">
-<div class="hero-overlay"></div>
-<div class="hero-content"><span class="tag">WhatsApp Bot 2026</span><h1>WhatsApp Bot fuer Restaurants 2026: Der komplette Guide</h1></div>
-</div>
+<div class="hero"><img src="https://raw.githubusercontent.com/LeoLan-Digital/leolan-ki/main/blog/images/hero/whatsapp.jpg" alt="WhatsApp Bot Restaurant"><div class="hero-overlay"></div>
+<div class="hero-content"><span class="tag">WhatsApp Bot 2026</span><h1>WhatsApp Bot fuer Restaurants 2026: Der komplette Guide</h1></div></div>
 <div class="wrap">
-<div class="lead">Ein <strong>WhatsApp Bot fuer dein Restaurant</strong> antwortet sofort - 24/7, vollautomatisch. Restaurants gewinnen damit 8-12 zusaetzliche Buchungen pro Monat.</div>
-<div class="stats"><div class="stat"><span class="stat-n">68%</span><span class="stat-l">Abbrueche ohne sofortige Antwort</span></div><div class="stat"><span class="stat-n"><60s</span><span class="stat-l">Buchungszeit mit Bot</span></div><div class="stat"><span class="stat-n">8-12</span><span class="stat-l">Extra Buchungen/Monat</span></div><div class="stat"><span class="stat-n">8 Spr.</span><span class="stat-l">Automatisch erkannt</span></div></div>
+<div class="lead">Ein <strong>WhatsApp Bot fuer dein Restaurant</strong> antwortet sofort - 24/7 vollautomatisch. Restaurants gewinnen 8-12 zusaetzliche Buchungen pro Monat.</div>
+<div class="stats"><div class="stat"><span class="stat-n">68%</span><span class="stat-l">Abbrueche ohne Antwort</span></div><div class="stat"><span class="stat-n"><60s</span><span class="stat-l">Buchungszeit mit Bot</span></div><div class="stat"><span class="stat-n">8-12</span><span class="stat-l">Extra Buchungen/Monat</span></div><div class="stat"><span class="stat-n">8 Spr.</span><span class="stat-l">Automatisch erkannt</span></div></div>
 <img src="https://raw.githubusercontent.com/LeoLan-Digital/leolan-ki/main/blog/images/hero/whatsapp.jpg" alt="WhatsApp Bot Restaurant" class="blog-img">
 <h2>Warum WhatsApp der wichtigste Buchungskanal ist</h2>
-<p>Ueber 60 Millionen Deutsche nutzen WhatsApp taeglich. Mehr als 80% der unter 40-Jaehrigen bevorzugen WhatsApp gegenueber Telefonanrufen fuer Reservierungen. Wer nicht reagiert, verliert.</p>
-<h2>Konkretes Beispiel: Live-Reservierung</h2>
-<ol><li>Gast: "Hallo! Habt ihr morgen Abend noch Platz fuer 2 Personen?"</li><li>Bot: "Hi! Natuerlich! Fuer welche Uhrzeit?"</li><li>Gast: "19:30 Uhr"</li><li>Bot: "Auf welchen Namen?"</li><li>Gast: "Schmidt"</li><li>Bot: "Bestaetigt! Morgen 19:30 Uhr, 2 Personen auf Schmidt. Wir freuen uns!"</li></ol>
-<img src="https://raw.githubusercontent.com/LeoLan-Digital/leolan-ki/main/blog/images/app/messages.jpg" alt="LeoLan Manager App Nachrichten" class="app-img"><p class="img-cap">LeoLan Manager App - Alle WhatsApp-Gespraeche im Ueberblick</p>
+<p>Ueber 60 Millionen Deutsche nutzen WhatsApp taeglich. Mehr als 80% der unter 40-Jaehrigen bevorzugen WhatsApp gegenueber Telefonanrufen fuer Reservierungen.</p>
+<h2>Live-Beispiel: Reservierung im Chat</h2>
+<ol><li>Gast: Hallo! Habt ihr morgen Abend noch Platz fuer 2 Personen?</li><li>Bot: Hi! Natuerlich! Fuer welche Uhrzeit?</li><li>Gast: 19:30 Uhr</li><li>Bot: Auf welchen Namen?</li><li>Gast: Schmidt</li><li>Bot: Bestaetigt! Morgen 19:30 Uhr 2 Personen auf Schmidt. Wir freuen uns!</li></ol>
+<img src="https://raw.githubusercontent.com/LeoLan-Digital/leolan-ki/main/blog/images/app/messages.jpg" alt="LeoLan Manager App Nachrichten" class="app-img"><p class="img-cap">LeoLan Manager App - Alle WhatsApp Gespraeche im Ueberblick</p>
 <h2>Was der Bot noch kann</h2>
-<ul><li>Fragen zu Speisekarte, Allergenen, Oeffnungszeiten beantworten</li><li>Stammgaeste beim Namen kennen und persoenlich begruessen</li><li>Geburtstagsnachrichten automatisch versenden</li><li>Nach Besuch Feedback einholen</li><li>In 8 Sprachen kommunizieren</li></ul>
-<img src="https://raw.githubusercontent.com/LeoLan-Digital/leolan-ki/main/blog/images/app/dashboard.jpg" alt="LeoLan Manager App Dashboard" class="app-img"><p class="img-cap">LeoLan Manager App - Dashboard Uebersicht</p>
+<ul><li>Fragen zu Speisekarte Allergenen Oeffnungszeiten beantworten</li><li>Stammgaeste beim Namen kennen und persoenlich begruessen</li><li>Geburtstagsnachrichten automatisch versenden</li><li>Nach Besuch Feedback einholen</li><li>In 8 Sprachen kommunizieren</li></ul>
 <h2>Stammgaeste automatisch binden</h2>
-<p>Der Bot speichert Gastedaten DSGVO-konform. Stammgaeste werden persoenlich begruest, Geburtstage begluckwuenscht. Die Wiederbesuchsrate steigt um <strong>34%</strong>.</p>
+<p>Der Bot speichert Gastedaten DSGVO-konform. Stammgaeste werden persoenlich begruest - Geburtstage begluckwuenscht. Die Wiederbesuchsrate steigt um <strong>34%</strong>.</p>
 <div class="cta"><h3>Jetzt kostenlos starten</h3><p>Erster Monat kostenlos - Kein Vertrag - In 5 Werktagen einsatzbereit</p><a href="https://ki.leolan.net" class="btn">Kostenlos testen</a></div>
-<h2>Haeufige Fragen</h2>
-<div class="faq-item"><h3>Brauche ich technische Kenntnisse?</h3><p>Nein. LeoLan Digital uebernimmt alles.</p></div><div class="faq-item"><h3>Kann der Bot nachts antworten?</h3><p>Ja. 24/7, auch an Feiertagen.</p></div><div class="faq-item"><h3>Was kostet es?</h3><p>Ab 99/Monat, erster Monat kostenlos.</p></div>
+<h2>Haeufige Fragen</h2><div class="faq-item"><h3>Brauche ich technische Kenntnisse?</h3><p>Nein. LeoLan Digital uebernimmt alles.</p></div><div class="faq-item"><h3>Kann der Bot nachts antworten?</h3><p>Ja. 24/7 auch an Feiertagen.</p></div><div class="faq-item"><h3>Was kostet es?</h3><p>Ab 99 EUR/Monat erster Monat kostenlos.</p></div>
 </div>
-<footer>2026 LeoLan Digital - <a href="https://ki.leolan.net" style="color:#4da6ff">ki.leolan.net</a></footer>
+<footer>2026 LeoLan Digital - <a href="https://ki.leolan.net" style="color:#00bcd4">ki.leolan.net</a></footer>
 </body></html>
