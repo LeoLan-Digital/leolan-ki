@@ -1,0 +1,3 @@
+# Force HTTPS for any HTTP requests
+http://ki.leolan.net/* https://ki.leolan.net/:splat 301!
+http://www.leolan.net/* https://ki.leolan.net/:splat 301!
