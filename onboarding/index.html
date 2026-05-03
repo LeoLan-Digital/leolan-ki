@@ -307,7 +307,7 @@ function go1(){
     '<div class="sum-total">'+
     '<div class="sum-total-row"><span style="color:#8b949e">'+billingLabel+'</span><span>'+priceDisplay+'</span></div>'+
     (setup > 0 ? '<div class="sum-total-row"><span style="color:#8b949e">Setup-Gebühr (einmalig)</span><span>'+setup+'€</span></div>' : '<div class="sum-total-row"><span style="color:#4cd97b">✓ Setup kostenlos</span><span>0€</span></div>')+
-    '<div class="sum-total-row"><span style="color:#8b949e">MwSt. '+(reverseCharge?'0% (Reverse Charge)':'19%')+'</span><span>'+(isAnnual?(reverseCharge?'0.00':Math.round(monthly*12*0.19*100)/100).toFixed(2):vat.toFixed(2))+'€</span></div>'+
+    '<div class="sum-total-row"><span style="color:#8b949e">MwSt. '+(reverseCharge?'0% (Reverse Charge)':'19%')+'</span><span>'+(isAnnual?(reverseCharge?'0.00':(Math.round(monthly*12*0.19*100)/100).toFixed(2)):vat.toFixed(2))+'€</span></div>'+
     '<div class="sum-total-row big"><span>Gesamt '+(isAnnual?'pro Jahr':'heute')+'</span><span>'+grossTotal.toFixed(2)+'€</span></div>'+
     '</div>';
   show(2);
