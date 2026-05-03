@@ -247,7 +247,7 @@ function sseo(s){
   var sel=document.getElementById('seo-'+s);
   if(sel){sel.classList.add('on');sel.style.borderColor='#f5a623';sel.style.background='rgba(245,166,35,.07)';var chk=sel.querySelector('.chk');if(chk)chk.style.display='flex';}
 }
-function spkg(p){pkg=p;document.querySelectorAll('.pkg').forEach(function(c){c.classList.remove('on');});document.querySelector('[data-pkg="'+p+'"]').classList.add('on');setBilling(billing);});document.querySelector('[data-pkg="'+p+'"]').classList.add('on');}
+function spkg(p){pkg=p;document.querySelectorAll('.pkg').forEach(function(c){c.classList.remove('on');});var el=document.querySelector('[data-pkg="'+p+'"]');if(el)el.classList.add('on');setBilling(billing);});document.querySelector('[data-pkg="'+p+'"]').classList.add('on');setBilling(billing);});document.querySelector('[data-pkg="'+p+'"]').classList.add('on');}
 function setErr(id,has){var f=document.getElementById('fe-'+id);if(f)f.classList.toggle('bad',has);}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');}
 function go1(){
