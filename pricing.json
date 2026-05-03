@@ -1,0 +1,75 @@
+{
+  "updated": "2026-05-03",
+  "currency": "EUR",
+  "vatNote": "Alle Preise zzgl. 19% MwSt.",
+  "restaurant": {
+    "packages": [
+      {
+        "id": "starter",
+        "name": "Starter",
+        "monthly": 199,
+        "annual": 149,
+        "annualTotal": 1788,
+        "annualSavings": 600,
+        "setup": 199,
+        "setupNote": "Setup nur bei Monatszahlung (bei Jahresabo kostenlos)",
+        "messages": 500,
+        "highlight": "💰 Jahresabo: spare 600€/Jahr",
+        "features": [
+          "WhatsApp-Assistent 24/7",
+          "Digitale Speisekarte (QR-Code)",
+          "Reservierungsmanagement",
+          "FAQ-Bot für Standardfragen",
+          "Dashboard & Benachrichtigungen",
+          "E-Mail-Support"
+        ],
+        "bookingUrl": "https://ki.leolan.net/onboarding/?paket=starter"
+      },
+      {
+        "id": "pro",
+        "name": "Pro",
+        "monthly": 349,
+        "annual": 249,
+        "annualTotal": 2988,
+        "annualSavings": 1200,
+        "setup": 199,
+        "setupNote": "Setup nur bei Monatszahlung (bei Jahresabo kostenlos)",
+        "messages": 2000,
+        "highlight": "⭐ Empfohlen — spare 1.200€/Jahr",
+        "features": [
+          "Alles aus Starter",
+          "KI Social Media täglich",
+          "Instagram & Facebook automatisch",
+          "Google Business Automatisierung",
+          "Bewertungsmanagement mit KI-Antworten",
+          "Telefonischer Support"
+        ],
+        "bookingUrl": "https://ki.leolan.net/onboarding/?paket=pro"
+      },
+      {
+        "id": "enterprise",
+        "name": "Enterprise",
+        "monthly": null,
+        "note": "Individuell auf Anfrage",
+        "features": [
+          "Alles aus Pro",
+          "Individuelle Automatisierungen",
+          "Mehrere Standorte",
+          "Kassensystem-Anbindung",
+          "Dedicated Account Manager",
+          "SLA & Priority Support"
+        ],
+        "bookingUrl": "https://ki.leolan.net/enterprise/"
+      }
+    ],
+    "addons": [
+      { "id": "instagram", "name": "Instagram Auto-Posts", "price": 89, "desc": "Tägliche KI-Posts auf Instagram" },
+      { "id": "facebook", "name": "Facebook Auto-Posts", "price": 59, "desc": "Automatische Posts auf Facebook" },
+      { "id": "reviews", "name": "Bewertungsmanagement", "price": 89, "desc": "KI antwortet auf Google & TripAdvisor Reviews" },
+      { "id": "google-business", "name": "Google Business", "price": 79, "desc": "Google Business Profil automatisch aktualisieren" },
+      { "id": "dashboard", "name": "Analytics Dashboard", "price": 39, "desc": "Echtzeit-Dashboard für alle Kennzahlen" },
+      { "id": "email-monitor", "name": "E-Mail Monitor", "price": 59, "desc": "Wichtige E-Mails automatisch erkennen & beantworten" },
+      { "id": "reels", "name": "Reels mit KI-Videos", "price": 149, "desc": "Automatische KI-Video-Reels für Instagram & TikTok" }
+    ]
+  }
+}
