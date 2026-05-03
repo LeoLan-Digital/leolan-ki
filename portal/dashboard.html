@@ -469,24 +469,7 @@ function initWaSection(waStatus, waPhone, customerCode, email) {
   window._waCustCode = customerCode;
   window._waEmail = email;
 }
-async function requestWaSetup() {
-  const phone = document.getElementById('waPhoneInput').value.trim();
-  if (!phone) { alert('Bitte Telefonnummer eingeben'); return; }
-  const btn = document.getElementById('waSetupBtn');
-  btn.disabled = true; btn.textContent = 'Wird gesendet...';
-  try {
-    const r = await fetch('https://n8n.leolan.net/webhook/wa-setup-request', {
-      method: 'POST', headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({customerCode: window._waCustCode, email: window._waEmail, waPhone: phone})
-    });
-    document.getElementById('waSetupForm').style.display = 'none';
-    document.getElementById('waPending').style.display = 'block';
-    document.getElementById('waPending').innerHTML = '&#x23F3; WhatsApp-Einrichtung angefragt f&#252;r <b>' + phone + '</b>. Leo meldet sich innerhalb von 24h!';
-  } catch(e) {
-    btn.disabled = false; btn.textContent = '&#x1F4F1; WhatsApp verbinden anfragen';
-    alert('Fehler: ' + e.message);
-  }
-}
+// duplicate removed
 </script>
 
 <div class="card" style="margin-top:14px;">
