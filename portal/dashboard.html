@@ -307,7 +307,7 @@
       const res = await fetch('https://n8n.leolan.net/webhook/wa-setup-request', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ customerCode, email: sessionStorage.getItem('email') || '', waPhone: phone })
+        body: JSON.stringify({ customerCode: window._waCustCode || sessionStorage.getItem('customerCode') || '', email: window._waEmail || sessionStorage.getItem('email') || '', waPhone: phone })
       });
       const d = await res.json().catch(() => ({}));
       if (d.success || res.ok) {
