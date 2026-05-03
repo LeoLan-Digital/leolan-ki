@@ -345,6 +345,9 @@ var priceMap={
   }
 };
 var billingCycle = billing || 'annual';
+var isAnnual = billingCycle === 'annual';
+var setup = isAnnual ? 0 : 199;
+var monthly = isAnnual ? (fdata.package==='starter'?149:249) : (fdata.package==='starter'?199:349);
 var pkgInfo = (priceMap[fdata.package]||priceMap.starter)[billingCycle];
 var reverseCharge=fdata.vatId&&fdata.vatId.length>4;
 var vatRate=19; // Stripe handles Reverse Charge via customer tax ID
@@ -355,10 +358,10 @@ var chkPayload=Object.assign({},fdata,{
   modules:[{key:fdata.package,name:fdata.package==='starter'?'Starter':'Pro',price:pkgInfo.amount,priceId:pkgInfo.priceId,desc:'LeoLan '+fdata.package}],
   monthlyNetTotal:pkgInfo.amount,
   setupFeeAmount:setup,
-  netTotal:pkgInfo.amount+349,
+  netTotal:pkgInfo.amount+setup,
   vatRate:vatRate,
   vatAmount:vatAmount,
-  grossTotal:Math.round((pkgInfo.amount+349+(reverseCharge?0:Math.round((pkgInfo.amount+349)*0.19*100)/100))*100)/100, reverseCharge:false,
+  grossTotal:Math.round((pkgInfo.amount+setup+(reverseCharge?0:Math.round((pkgInfo.amount+setup)*0.19*100)/100))*100)/100,
   reverseCharge:reverseCharge,
   selectedPackage:fdata.package,
   successUrl:'https://ki.leolan.net/danke/',
