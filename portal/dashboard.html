@@ -1,272 +1,382 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Mein Konto — LeoLan Digital</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,sans-serif;background:#0e1621;color:#e8eaed;min-height:100vh;padding:0 0 80px}
-.header{background:#17212b;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #2a3a4a}
-.header-logo{display:flex;align-items:center;gap:10px}
-.header-logo img{width:32px;height:32px;object-fit:contain}
-.header-logo span{font-weight:700;font-size:16px}
-.header-code{color:#5e81f4;font-size:13px;font-weight:600}
-.logout{background:transparent;border:1px solid #2a3a4a;color:#8a9bb8;border-radius:8px;padding:6px 14px;font-size:13px;cursor:pointer}
-.content{padding:16px;max-width:600px;margin:0 auto}
-.card{background:#17212b;border-radius:14px;padding:18px;margin-bottom:14px}
-.card-title{font-size:13px;font-weight:700;color:#8a9bb8;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:14px}
-.row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #1a2a3a;font-size:14px}
-.row:last-child{border-bottom:none}
-.row-label{color:#8a9bb8}
-.row-value{font-weight:600;color:#e8eaed}
-.badge{background:#5e81f420;color:#5e81f4;border:1px solid #5e81f4;border-radius:6px;padding:2px 8px;font-size:12px;font-weight:700}
-.progress-bar{background:#0e1621;border-radius:6px;height:8px;margin-top:8px;overflow:hidden}
-.progress-fill{height:100%;border-radius:6px;background:#4cd97b;transition:width 0.3s}
-.progress-fill.yellow{background:#5e81f4}
-.progress-fill.red{background:#e8647c}
-.credit-row{display:flex;justify-content:space-between;margin-bottom:6px}
-.credit-label{color:#8a9bb8;font-size:13px}
-.credit-value{font-size:13px;font-weight:600}
-.btn{display:block;background:#5e81f4;color:#fff;border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;text-align:center;text-decoration:none;margin-top:6px}
-.btn.blue{background:#5e81f4}
-.loading{text-align:center;padding:60px 20px;color:#8a9bb8}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Restaurant Dashboard — LeoLan Digital</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0e1621;color:#e8eaed;min-height:100vh}
+    
+    /* Header */
+    header{background:#17212b;border-bottom:1px solid #2a3a4a;padding:0 20px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .header-left{display:flex;align-items:center;gap:12px}
+    .header-emoji{font-size:24px}
+    .header-title{font-size:16px;font-weight:700;color:#e8eaed}
+    .header-sub{font-size:12px;color:#8a9bb8}
+    .btn-logout{background:transparent;border:1.5px solid #2a3a4a;color:#8a9bb8;border-radius:10px;padding:7px 14px;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s}
+    .btn-logout:hover{border-color:#ef4444;color:#ef4444}
+    
+    /* Layout */
+    main{max-width:1100px;margin:0 auto;padding:24px 16px 48px}
+    
+    /* Loading */
+    .loading{text-align:center;padding:80px 20px;color:#8a9bb8}
+    .spinner{width:36px;height:36px;border:3px solid #2a3a4a;border-top-color:#5e81f4;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    
+    /* Stats row */
+    .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:24px}
+    @media(min-width:640px){.stats{grid-template-columns:repeat(4,1fr)}}
+    .stat-card{background:#17212b;border-radius:16px;padding:20px 16px;text-align:center}
+    .stat-icon{font-size:22px;margin-bottom:8px}
+    .stat-val{font-size:28px;font-weight:800;color:#5e81f4;line-height:1}
+    .stat-label{font-size:12px;color:#8a9bb8;margin-top:6px;font-weight:500}
+    
+    /* Section */
+    section{margin-bottom:24px}
+    .section-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+    .section-title{font-size:16px;font-weight:700}
+    .badge{background:rgba(94,129,244,0.15);color:#5e81f4;border-radius:20px;padding:2px 10px;font-size:12px;font-weight:700}
+    
+    /* Card */
+    .card{background:#17212b;border-radius:16px;overflow:hidden}
+    
+    /* Reservation list */
+    .res-item{padding:16px 20px;border-bottom:1px solid #1e2d3d;display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+    .res-item:last-child{border-bottom:none}
+    .res-info{flex:1;min-width:0}
+    .res-name{font-weight:700;font-size:15px;margin-bottom:3px}
+    .res-meta{font-size:13px;color:#8a9bb8}
+    .res-status{padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.4px}
+    .status-pending{background:rgba(251,191,36,0.15);color:#fbbf24}
+    .status-confirmed{background:rgba(52,199,89,0.15);color:#34c759}
+    .status-declined,.status-cancelled{background:rgba(239,68,68,0.15);color:#ef4444}
+    .res-actions{display:flex;gap:8px}
+    .btn-confirm{background:#34c759;color:#fff;border:none;border-radius:9px;padding:7px 14px;font-size:13px;font-weight:700;cursor:pointer;transition:opacity 0.2s}
+    .btn-decline{background:rgba(239,68,68,0.15);color:#ef4444;border:1.5px solid #ef4444;border-radius:9px;padding:7px 14px;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s}
+    .btn-confirm:hover,.btn-decline:hover{opacity:0.8}
+    .btn-confirm:disabled,.btn-decline:disabled{opacity:0.4;cursor:not-allowed}
+    
+    /* Messages */
+    .msg-thread{padding:16px 20px;border-bottom:1px solid #1e2d3d}
+    .msg-thread:last-child{border-bottom:none}
+    .msg-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+    .msg-from{font-weight:700;font-size:14px}
+    .msg-time{font-size:12px;color:#8a9bb8}
+    .msg-preview{font-size:13px;color:#8a9bb8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .msg-unread .msg-from{color:#5e81f4}
+    
+    /* Account */
+    .account-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+    .account-item{padding:16px 20px;border-bottom:1px solid #1e2d3d}
+    .account-item:nth-child(odd){border-right:1px solid #1e2d3d}
+    .account-item:nth-last-child(-n+2){border-bottom:none}
+    .account-label{font-size:12px;color:#8a9bb8;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px}
+    .account-val{font-size:15px;font-weight:700}
+    .pill{display:inline-block;padding:3px 12px;border-radius:20px;font-size:12px;font-weight:700}
+    .pill-green{background:rgba(52,199,89,0.15);color:#34c759}
+    .pill-yellow{background:rgba(251,191,36,0.15);color:#fbbf24}
+    .pill-red{background:rgba(239,68,68,0.15);color:#ef4444}
+    
+    /* Credits */
+    .credits-body{padding:20px}
+    .credits-numbers{display:flex;justify-content:space-between;margin-bottom:10px;font-size:14px;color:#8a9bb8}
+    .credits-numbers strong{color:#e8eaed}
+    .progress-bar{background:#1e2d3d;border-radius:999px;height:12px;overflow:hidden}
+    .progress-fill{background:linear-gradient(90deg,#5e81f4,#7c9df8);border-radius:999px;height:100%;transition:width 0.5s ease}
+    .credits-detail{margin-top:14px;font-size:13px;color:#8a9bb8;display:flex;gap:20px;flex-wrap:wrap}
+    
+    /* Empty state */
+    .empty{padding:40px 20px;text-align:center;color:#4a5a6a;font-size:14px}
+    .empty-icon{font-size:32px;display:block;margin-bottom:10px}
+
+    /* Toast */
+    .toast{position:fixed;bottom:24px;right:24px;background:#17212b;border:1.5px solid #2a3a4a;border-radius:12px;padding:12px 18px;font-size:14px;font-weight:600;color:#e8eaed;box-shadow:0 4px 16px rgba(0,0,0,0.4);transform:translateY(80px);opacity:0;transition:all 0.3s;z-index:200;max-width:300px}
+    .toast.show{transform:translateY(0);opacity:1}
+    .toast.success{border-color:#34c759;color:#34c759}
+    .toast.error{border-color:#ef4444;color:#ef4444}
+  </style>
 </head>
 <body>
-<div id="loading" class="loading">Konto wird geladen...</div>
-<div id="main" style="display:none">
-  <div class="header">
-    <div class="header-logo">
-      <img src="https://ki.leolan.net/leolan-logo.svg" alt="LeoLan" onerror="this.style.display='none'">
-      <span>Mein Konto</span>
-    </div>
-    <div>
-      <span class="header-code" id="headerCode"></span>
-      <button class="logout" onclick="logout()">Logout</button>
-    </div>
-  </div>
-  <div class="content">
-    <!-- Plan -->
-    <div class="card">
-      <div class="card-title">Ihr Paket</div>
-      <div class="row"><span class="row-label">Paket</span><span id="planName" class="badge">—</span></div>
-      <div class="row"><span class="row-label">Bereich</span><span class="row-value" id="planBereich">—</span></div>
-      <div class="row"><span class="row-label">Status</span><span class="row-value" style="color:#4cd97b">Aktiv ✓</span></div>
-    </div>
-    <!-- Credits -->
-    <div class="card">
-      <div class="card-title">Nachricht-Credits</div>
-      <div class="credit-row">
-        <span class="credit-label">Verwendet</span>
-        <span class="credit-value" id="creditsVerwendet">—</span>
-      </div>
-      <div class="credit-row">
-        <span class="credit-label">Limit</span>
-        <span class="credit-value" id="creditsLimit">—</span>
-      </div>
-      <div class="progress-bar">
-        <div class="progress-fill" id="creditBar" style="width:0%"></div>
-      </div>
-    </div>
-    <!-- Billing -->
-    <div class="card">
-      <div class="card-title">Rechnungsdaten</div>
-      <div class="row"><span class="row-label">Name</span><span class="row-value" id="billName">—</span></div>
-      <div class="row"><span class="row-label">Email</span><span class="row-value" id="billEmail">—</span></div>
-      <div class="row"><span class="row-label">Company</span><span class="row-value" id="billCompany">—</span></div>
-      <div class="row"><span class="row-label">Mitglied seit</span><span class="row-value" id="billSince">—</span></div>
-      <div class="row" id="billAddressRow" style="display:none"><span class="row-label">Address</span><span class="row-value" id="billAddress">—</span></div>
-      <div class="row" id="billZipRow" style="display:none"><span class="row-label">ZIP / City</span><span class="row-value" id="billZip">—</span></div>
-      <div class="row" id="billVatRow" style="display:none"><span class="row-label">VAT ID</span><span class="row-value" id="billVat">—</span></div>
-      <div class="row" id="billTaxRow" style="display:none"><span class="row-label">Tax</span><span class="row-value" id="billTax">—</span></div>
-      <button onclick="toggleEdit()" style="margin-top:12px;background:transparent;border:1px solid #2a3a4a;color:#5e81f4;border-radius:8px;padding:8px 16px;font-size:13px;cursor:pointer;width:100%">✏️ Edit Rechnungsdaten</button>
-    </div>
 
-    <!-- Edit Billing Form -->
-    <div class="card" id="editCard" style="display:none">
-      <div class="card-title">Edit Rechnungsdaten</div>
-      <label style="color:#8a9bb8;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;display:block">Firmenname</label>
-      <input id="e_company" type="text" style="width:100%;background:#0e1621;color:#e8eaed;border:1px solid #2a3a4a;border-radius:10px;padding:10px;font-size:14px;margin-bottom:10px;box-sizing:border-box">
-      <label style="color:#8a9bb8;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;display:block">Straße + Hausnummer</label>
-      <input id="e_address" type="text" style="width:100%;background:#0e1621;color:#e8eaed;border:1px solid #2a3a4a;border-radius:10px;padding:10px;font-size:14px;margin-bottom:10px;box-sizing:border-box">
-      <div style="display:flex;gap:8px;margin-bottom:10px">
-        <input id="e_zip" type="text" placeholder="ZIP" style="width:120px;flex-shrink:0;background:#0e1621;color:#e8eaed;border:1px solid #2a3a4a;border-radius:10px;padding:10px;font-size:14px">
-        <input id="e_city" type="text" placeholder="City" style="flex:1;background:#0e1621;color:#e8eaed;border:1px solid #2a3a4a;border-radius:10px;padding:10px;font-size:14px">
-      </div>
-      <label style="color:#8a9bb8;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;display:block">VAT ID (optional)</label>
-      <input id="e_vatid" type="text" placeholder="DE123456789" style="width:100%;background:#0e1621;color:#e8eaed;border:1px solid #2a3a4a;border-radius:10px;padding:10px;font-size:14px;margin-bottom:14px;box-sizing:border-box">
-      <div id="editErr" style="color:#e8647c;font-size:13px;margin-bottom:10px;display:none"></div>
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;padding:10px;background:#0e1621;border-radius:8px;border:1px solid #2a3a4a">
-        <input type="checkbox" id="e_reversecharge" style="width:18px;height:18px;flex-shrink:0">
-        <label for="e_reversecharge" style="color:#8a9bb8;font-size:13px;cursor:pointer">Ich bin kein EU-Unternehmen (Reverse Charge / 0% MwSt.)</label>
-      </div>
-      <button onclick="saveBilling()" style="width:100%;background:#5e81f4;color:#fff;border:none;border-radius:10px;padding:12px;font-size:15px;font-weight:700;cursor:pointer" id="saveBtn">Speichern</button>
-      <button onclick="toggleEdit()" style="width:100%;background:transparent;border:1px solid #2a3a4a;color:#8a9bb8;border-radius:10px;padding:10px;font-size:14px;cursor:pointer;margin-top:8px">Abbrechen</button>
-    </div>
-    <!-- Rechnungen -->
-    <div class="card" id="invoiceCard">
-      <div class="card-title">Rechnungen</div>
-      <div id="invoiceList"><p style="color:#8a9bb8;font-size:14px">Noch keine Rechnungen.</p></div>
-    </div>
-    <!-- Actions -->
-    <div class="card">
-      <div class="card-title">Upgrade / Add-ons</div>
-      <a class="btn blue" id="upgradeBtn" href="#">Credits kaufen oder Upgrade →</a>
+<header>
+  <div class="header-left">
+    <span class="header-emoji">🍽️</span>
+    <div>
+      <div class="header-title">Restaurant Dashboard</div>
+      <div class="header-sub" id="header-code">LeoLan Digital</div>
     </div>
   </div>
-</div>
+  <button class="btn-logout" onclick="logout()">Abmelden</button>
+</header>
+
+<main>
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <div>Daten werden geladen…</div>
+  </div>
+
+  <div id="content" style="display:none">
+    <!-- Stats -->
+    <div class="stats" id="stats-row"></div>
+
+    <!-- Reservierungen -->
+    <section>
+      <div class="section-header">
+        <span class="section-title">Reservierungen</span>
+        <span class="badge" id="res-badge">0</span>
+      </div>
+      <div class="card" id="res-list"></div>
+    </section>
+
+    <!-- Nachrichten -->
+    <section>
+      <div class="section-header">
+        <span class="section-title">WhatsApp Nachrichten</span>
+        <span class="badge" id="msg-badge">0</span>
+      </div>
+      <div class="card" id="msg-list"></div>
+    </section>
+
+    <!-- Konto -->
+    <section>
+      <div class="section-header">
+        <span class="section-title">Konto</span>
+      </div>
+      <div class="card">
+        <div class="account-grid" id="account-grid"></div>
+      </div>
+    </section>
+
+    <!-- Credits -->
+    <section>
+      <div class="section-header">
+        <span class="section-title">Nachrichten-Credits</span>
+      </div>
+      <div class="card">
+        <div class="credits-body" id="credits-body"></div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
 
 <script>
-var customerCode = (new URLSearchParams(window.location.search)).get('code') || '';
-if (!customerCode) { window.location.href = '/portal/'; }
+  const DASHBOARD_URL = 'https://n8n.leolan.net/webhook/kunden-dashboard';
+  const ADMIN_KEY = 'LeoLan2026Admin!';
 
-function logout() {
-  window.location.href = '/portal/';
-}
+  const token = sessionStorage.getItem('token');
+  const customerCode = sessionStorage.getItem('customerCode');
 
-var xhr = new XMLHttpRequest();
-xhr.open('POST', 'https://n8n.leolan.net/webhook/kunden-dashboard', true);
-xhr.setRequestHeader('Content-Type', 'application/json');
-xhr.onload = function() {
-  var data = {};
-  try { data = JSON.parse(xhr.responseText); } catch(e) {}
-  document.getElementById('loading').style.display = 'none';
-  document.getElementById('main').style.display = 'block';
+  if (!token || !customerCode) {
+    window.location.href = 'index.html';
+  }
 
-  var acc = data.account || {};
-  var usage = data.usageStats || {};
-  var used = usage.messagesVerwendet || 0;
-  var limit = usage.messagesLimit || usage.messageLimit || 500;
-  var ratio = limit > 0 ? Math.min(used / limit, 1) : 0;
+  document.getElementById('header-code').textContent = customerCode || 'LeoLan Digital';
 
-  document.getElementById('headerCode').textContent = customerCode;
-  document.getElementById('planName').textContent = (acc.paket || 'starter').toUpperCase();
-  document.getElementById('planBereich').textContent = acc.sector || 'hotel';
-  document.getElementById('creditsVerwendet').textContent = used;
-  document.getElementById('creditsLimit').textContent = limit;
-  document.getElementById('creditBar').style.width = Math.round(ratio * 100) + '%';
-  var bar = document.getElementById('creditBar');
-  if (ratio >= 0.9) bar.className = 'progress-fill red';
-  else if (ratio >= 0.7) bar.className = 'progress-fill yellow';
-  document.getElementById('billName').textContent = acc.name || '—';
-  document.getElementById('billEmail').textContent = acc.email || '—';
-  document.getElementById('billCompany').textContent = acc.companyName || '—';
-  if (acc.address) { document.getElementById('billAddress').textContent = acc.address; document.getElementById('billAddressRow').style.display = 'flex'; }
-  if (acc.zip || acc.city) { document.getElementById('billZip').textContent = (acc.zip || '') + ' ' + (acc.city || ''); document.getElementById('billZipRow').style.display = 'flex'; }
-  if (acc.vatId) { document.getElementById('billVat').textContent = acc.vatId; document.getElementById('billVatRow').style.display = 'flex'; }
-  if (acc.reverseCharge) { document.getElementById('billTax').textContent = '0% (Reverse Charge)'; document.getElementById('billTaxRow').style.display = 'flex'; }
-  else { document.getElementById('billTax').textContent = '19% VAT'; document.getElementById('billTaxRow').style.display = 'flex'; }
-  // Pre-fill checkbox
-  if (document.getElementById('e_reversecharge')) document.getElementById('e_reversecharge').checked = !!(acc.reverseCharge);
-  document.getElementById('billSince').textContent = (acc.createdAt || '').substring(0, 10) || '—';
-  // Pre-fill edit form
-  document.getElementById('e_company').value = acc.companyName || '';
-  document.getElementById('e_address').value = acc.address || '';
-  document.getElementById('e_zip').value = acc.zip || '';
-  document.getElementById('e_city').value = acc.city || '';
-  document.getElementById('e_vatid').value = acc.vatId || '';
+  function logout() {
+    sessionStorage.clear();
+    window.location.href = 'index.html';
+  }
 
-  document.getElementById('upgradeBtn').href = '/upgrade/?code=' + encodeURIComponent(customerCode);
+  function showToast(msg, type = '') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast show ' + type;
+    setTimeout(() => { t.className = 'toast'; }, 3000);
+  }
 
-  // Rechnungen
-  var invoices = acc.invoices || [];
-  var invList = document.getElementById('invoiceList');
-  if (invoices.length > 0) {
-    var html = '';
-    for (var i = 0; i < invoices.length; i++) {
-      var inv = invoices[i];
-      html += '<div style="padding:10px 0;border-bottom:1px solid #1a2a3a">';
-      html += '<div style="display:flex;justify-content:space-between;align-items:center">';
-      html += '<div>';
-      html += '<div style="font-size:14px;font-weight:600;color:#e8eaed">' + (inv.description || 'Invoice') + '</div>';
-      html += '<div style="font-size:12px;color:#8a9bb8;margin-top:2px">' + (inv.id || '') + ' · ' + (inv.date || '').substring(0,10) + '</div>';
-      if (inv.net) html += '<div style="font-size:11px;color:#8a9bb8;margin-top:2px">Net: ' + inv.net + ' · VAT: ' + (inv.vat || '0€') + '</div>';
-      html += '</div>';
-      html += '<div style="text-align:right">';
-      html += '<div style="font-size:15px;font-weight:700;color:#4cd97b">' + (inv.amount || '—') + '</div>';
-      html += '<div style="font-size:11px;color:#4cd97b;margin-top:2px">' + (inv.status === 'paid' ? '✓ Paid' : inv.status || '') + '</div>';
-      html += '<a href="javascript:void(0)" onclick="resendInvoice(\'' + (inv.id||'') + '\')" style="font-size:11px;color:#5e81f4;text-decoration:none;margin-top:4px;display:block">📧 Rechnung per E-Mail</a>';
-      html += '</div>';
-      html += '</div>';
-      html += '</div>';
+  function statusPill(s) {
+    if (!s) return '';
+    const map = { active:'pill-green', aktiv:'pill-green', inactive:'pill-yellow', paused:'pill-yellow', error:'pill-red', fehler:'pill-red' };
+    const cls = map[s.toLowerCase()] || 'pill-yellow';
+    return `<span class="pill ${cls}">${s}</span>`;
+  }
+
+  function resStatusBadge(s) {
+    if (!s) return '';
+    const map = { pending:'status-pending', confirmed:'status-confirmed', bestätigt:'status-confirmed', declined:'status-declined', abgelehnt:'status-declined', cancelled:'status-declined' };
+    const cls = map[(s||'').toLowerCase()] || 'status-pending';
+    const labels = { pending:'Ausstehend', confirmed:'Bestätigt', bestätigt:'Bestätigt', declined:'Abgelehnt', abgelehnt:'Abgelehnt', cancelled:'Storniert' };
+    return `<span class="res-status ${cls}">${labels[(s||'').toLowerCase()] || s}</span>`;
+  }
+
+  function fmtDate(d) {
+    if (!d) return '—';
+    try { return new Date(d).toLocaleDateString('de-DE', {day:'2-digit',month:'2-digit',year:'numeric'}); } catch(e){return d;}
+  }
+
+  async function callAction(action, extra = {}) {
+    const res = await fetch(DASHBOARD_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ adminKey: ADMIN_KEY, action, customerCode, token, ...extra })
+    });
+    return res.json().catch(() => ({}));
+  }
+
+  async function confirmReservation(id, btnEl) {
+    btnEl.disabled = true;
+    btnEl.textContent = '…';
+    try {
+      const d = await callAction('confirm-reservation', { reservationId: id });
+      if (d.success || d.ok) {
+        showToast('Reservierung bestätigt ✓', 'success');
+        await loadDashboard();
+      } else {
+        showToast(d.message || 'Fehler beim Bestätigen', 'error');
+        btnEl.disabled = false;
+        btnEl.textContent = 'Bestätigen';
+      }
+    } catch(e) {
+      showToast('Verbindungsfehler', 'error');
+      btnEl.disabled = false;
+      btnEl.textContent = 'Bestätigen';
     }
-    invList.innerHTML = html;
   }
-};
-xhr.onerror = function() {
-  document.getElementById('loading').textContent = 'Verbindungsfehler.';
-};
-xhr.send(JSON.stringify({customerCode: customerCode}));
 
-  function resendInvoice(invoiceId) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'https://n8n.leolan.net/webhook/resend-invoice', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.onload = function() {
-      var data = {};
-      try { data = JSON.parse(xhr.responseText); } catch(e) {}
-      if (data.success) {
-        alert('Rechnung wurde gesendet!');
+  async function declineReservation(id, btnEl) {
+    if (!confirm('Reservierung wirklich ablehnen?')) return;
+    btnEl.disabled = true;
+    btnEl.textContent = '…';
+    try {
+      const d = await callAction('decline-reservation', { reservationId: id });
+      if (d.success || d.ok) {
+        showToast('Reservierung abgelehnt', 'success');
+        await loadDashboard();
       } else {
-        alert('Error: ' + (data.error || 'Could not send invoice.'));
+        showToast(d.message || 'Fehler beim Ablehnen', 'error');
+        btnEl.disabled = false;
+        btnEl.textContent = 'Ablehnen';
       }
-    };
-    xhr.onerror = function() { alert('Verbindungsfehler.'); };
-    xhr.send(JSON.stringify({customerCode: customerCode, invoiceId: invoiceId, sector: 'restaurant'}));
+    } catch(e) {
+      showToast('Verbindungsfehler', 'error');
+      btnEl.disabled = false;
+      btnEl.textContent = 'Ablehnen';
+    }
   }
 
-  function downloadInvoice(invoiceId, code) {
-    window.open('https://n8n.leolan.net/webhook/download-invoice?code=' + encodeURIComponent(code) + '&id=' + encodeURIComponent(invoiceId) + '&sector=hotel', '_blank');
+  // Expose globally for inline onclick
+  window.confirmReservation = confirmReservation;
+  window.declineReservation = declineReservation;
+
+  function renderStats(data) {
+    const stats = [
+      { icon:'🔔', val: data.newReservations ?? data.pendingReservations ?? '—', label:'Neue Reservierungen' },
+      { icon:'📅', val: data.todayReservations ?? '—', label:'Heute Reservierungen' },
+      { icon:'💬', val: data.newMessages ?? '—', label:'Neue Nachrichten' },
+      { icon:'🎯', val: data.messageCredits ?? data.creditsRemaining ?? '—', label:'Nachrichten-Credits' },
+    ];
+    document.getElementById('stats-row').innerHTML = stats.map(s =>
+      `<div class="stat-card"><div class="stat-icon">${s.icon}</div><div class="stat-val">${s.val}</div><div class="stat-label">${s.label}</div></div>`
+    ).join('');
   }
 
-  function toggleEdit() {
-    var card = document.getElementById('editCard');
-    card.style.display = card.style.display === 'none' ? 'block' : 'none';
+  function renderReservations(reservations) {
+    const list = document.getElementById('res-list');
+    if (!reservations || reservations.length === 0) {
+      list.innerHTML = `<div class="empty"><span class="empty-icon">📋</span>Noch keine Reservierungen vorhanden</div>`;
+      document.getElementById('res-badge').textContent = '0';
+      return;
+    }
+    document.getElementById('res-badge').textContent = reservations.length;
+    list.innerHTML = reservations.map(r => {
+      const isPending = !r.status || r.status.toLowerCase() === 'pending';
+      const actions = isPending ? `
+        <div class="res-actions">
+          <button class="btn-confirm" onclick="confirmReservation('${r.id || r._id || ''}', this)">Bestätigen</button>
+          <button class="btn-decline" onclick="declineReservation('${r.id || r._id || ''}', this)">Ablehnen</button>
+        </div>` : '';
+      return `<div class="res-item">
+        <div class="res-info">
+          <div class="res-name">${r.guestName || r.name || 'Unbekannt'}</div>
+          <div class="res-meta">👥 ${r.partySize || r.guests || '?'} Personen &nbsp;·&nbsp; 📅 ${fmtDate(r.date)} &nbsp;·&nbsp; ⏰ ${r.time || '—'}</div>
+        </div>
+        ${resStatusBadge(r.status)}
+        ${actions}
+      </div>`;
+    }).join('');
   }
 
-  function saveBilling() {
-    var btn = document.getElementById('saveBtn');
-    var err = document.getElementById('editErr');
-    err.style.display = 'none';
-    btn.disabled = true;
-    btn.textContent = 'Speichern...';
+  function renderMessages(messages) {
+    const list = document.getElementById('msg-list');
+    if (!messages || messages.length === 0) {
+      list.innerHTML = `<div class="empty"><span class="empty-icon">💬</span>Noch keine Nachrichten vorhanden</div>`;
+      document.getElementById('msg-badge').textContent = '0';
+      return;
+    }
+    document.getElementById('msg-badge').textContent = messages.length;
+    list.innerHTML = messages.map(m => {
+      const unread = m.unread ? 'msg-unread' : '';
+      return `<div class="msg-thread ${unread}">
+        <div class="msg-header">
+          <span class="msg-from">${m.from || m.guestName || m.name || 'Unbekannt'}</span>
+          <span class="msg-time">${m.time || m.timestamp ? fmtDate(m.time || m.timestamp) : '—'}</span>
+        </div>
+        <div class="msg-preview">${m.lastMessage || m.preview || m.text || '—'}</div>
+      </div>`;
+    }).join('');
+  }
 
-    var payload = {
-      action: 'update-billing',
-      customerCode: customerCode,
-      companyName: document.getElementById('e_company').value.trim(),
-      address: document.getElementById('e_address').value.trim(),
-      zip: document.getElementById('e_zip').value.trim(),
-      city: document.getElementById('e_city').value.trim(),
-      vatId: document.getElementById('e_vatid').value.trim(),
-      reverseCharge: document.getElementById('e_reversecharge') && document.getElementById('e_reversecharge').checked
-    };
+  function renderAccount(data) {
+    const account = data.account || data;
+    const items = [
+      { label: 'Paket', val: account.package || account.plan || '—' },
+      { label: 'Status', val: statusPill(account.status || account.accountStatus || '—') },
+      { label: 'Bot-Status', val: statusPill(account.botStatus || account.bot_status || '—') },
+      { label: 'Mitglied seit', val: fmtDate(account.createdAt || account.memberSince) },
+    ];
+    document.getElementById('account-grid').innerHTML = items.map(i =>
+      `<div class="account-item"><div class="account-label">${i.label}</div><div class="account-val">${i.val || '—'}</div></div>`
+    ).join('');
+  }
 
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'https://n8n.leolan.net/webhook/kunden-dashboard', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.onload = function() {
-      btn.disabled = false;
-      btn.textContent = 'Speichern';
-      var data = {};
-      try { data = JSON.parse(xhr.responseText); } catch(e) {}
-      if (data.success) {
-        document.getElementById('billCompany').textContent = payload.companyName || '—';
-        if (payload.address) { document.getElementById('billAddress').textContent = payload.address; document.getElementById('billAddressRow').style.display = 'flex'; }
-        if (payload.zip || payload.city) { document.getElementById('billZip').textContent = (payload.zip||'') + ' ' + (payload.city||''); document.getElementById('billZipRow').style.display = 'flex'; }
-        if (payload.vatId) { document.getElementById('billVat').textContent = payload.vatId; document.getElementById('billVatRow').style.display = 'flex'; }
-        document.getElementById('billTax').textContent = payload.reverseCharge ? '0% (Reverse Charge)' : '19% VAT';
-        document.getElementById('billTaxRow').style.display = 'flex';
-        document.getElementById('editCard').style.display = 'none';
-      } else {
-        err.textContent = data.error || 'Error saving.';
-        err.style.display = 'block';
+  function renderCredits(data) {
+    const used = data.creditsUsed ?? data.messagesUsed ?? 0;
+    const remaining = data.creditsRemaining ?? data.messageCredits ?? 0;
+    const total = used + remaining || 1;
+    const pct = Math.min(100, Math.round((remaining / total) * 100));
+    const color = pct > 40 ? '#5e81f4' : pct > 15 ? '#fbbf24' : '#ef4444';
+    document.getElementById('credits-body').innerHTML = `
+      <div class="credits-numbers">
+        <span><strong>${remaining}</strong> verbleibend</span>
+        <span><strong>${used}</strong> verbraucht</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" style="width:${pct}%;background:${color}"></div>
+      </div>
+      <div class="credits-detail">
+        <span>📊 Gesamt: <strong>${total}</strong></span>
+        <span>💡 Auslastung: <strong>${100 - pct}%</strong></span>
+      </div>`;
+  }
+
+  async function loadDashboard() {
+    try {
+      const data = await callAction('get-dashboard');
+
+      if (data.error === 'unauthorized' || data.error === 'invalid_token') {
+        sessionStorage.clear();
+        window.location.href = 'index.html';
+        return;
       }
-    };
-    xhr.onerror = function() { btn.disabled = false; btn.textContent = 'Speichern'; };
-    xhr.send(JSON.stringify(payload));
+
+      renderStats(data);
+      renderReservations(data.reservations || []);
+      renderMessages(data.messages || []);
+      renderAccount(data);
+      renderCredits(data);
+
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('content').style.display = '';
+    } catch(e) {
+      document.getElementById('loading').innerHTML = `<div style="color:#ef4444">⚠️ Fehler beim Laden der Daten.<br><small>${e.message}</small></div><br><button onclick="loadDashboard()" style="margin-top:12px;padding:10px 20px;border-radius:10px;background:#5e81f4;color:#fff;border:none;cursor:pointer;font-weight:700">Erneut versuchen</button>`;
+    }
   }
+
+  loadDashboard();
 </script>
 </body>
 </html>
