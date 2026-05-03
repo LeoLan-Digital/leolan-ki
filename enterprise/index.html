@@ -1264,12 +1264,16 @@
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
         const result = await response.json();
-        const reply = String(result.reply || '').trim() || `Kurz gesagt: ${module.name} spart Zeit und erhöht Automatisierung im Alltag.`;
+        let reply = String(result.reply || result.text || '').trim();
+        // Technische Fehler nie zeigen
+        if (!reply || reply.toLowerCase().includes('error') || reply.toLowerCase().includes('workflow') || reply.toLowerCase().includes('fehler')) {
+          reply = `Ich bin gleich wieder für dich da! Schreib mir einfach nochmal. 😊`;
+        }
         history.push({ role: 'assistant', content: reply });
       } catch (error) {
         history.push({
           role: 'assistant',
-          content: `Gerade gibt es ein Verbindungsproblem. Kurz gesagt: ${module.name} ist eine starke Ergänzung für Ihr Paket. Versuchen Sie es gleich noch einmal.`
+          content: `Ich bin gleich wieder erreichbar — einfach nochmal schreiben! 😊`
         });
       } finally {
         status.remove();
