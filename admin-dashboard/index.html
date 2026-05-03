@@ -816,6 +816,12 @@
         syncData = data.sync || { syncLog: [], activeBots: 0, lastSyncAt: null };
         renderCustomerStats(workflows);
         renderCustomerList(workflows);
+        // Echte Kunden-Accounts laden
+        try {
+          const custData = await apiJson('https://n8n.leolan.net/webhook/admin-customers?key=LeoLan2026Admin!', {method:'POST', headers:{'Content-Type':'application/json'}, body:'{}'});
+          const realCustomers = custData.customers || custData || [];
+          if (realCustomers.length > 0) renderRealCustomers(realCustomers);
+        } catch(ce) { console.log('Customer API:', ce.message); }
         renderSync();
         apiStatus.textContent = 'n8n verbunden';
         listStatus.textContent = workflows.length ? `${workflows.length} Bots geladen.` : 'Aktuell keine Kunden-Bots gefunden.';
