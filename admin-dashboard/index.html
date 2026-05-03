@@ -1155,9 +1155,38 @@ function renderRealCustomers(customers){
   const list=document.getElementById("customerList");
   if(!list||!customers.length)return;
   const st=s=>s==="active"?'<span class="status-badge status-active">&#x2705; Aktiv</span>':s==="setup_pending"?'<span class="status-badge" style="background:rgba(255,214,10,.18);color:#ffd60a;">&#x1F504; Einrichten</span>':'<span class="status-badge status-inactive">&#x26A0; Inaktiv</span>';
-  const wa=(w,p)=>"<div style='font-size:12px;margin-top:6px;'>"+(w==="connected"?"<span style='color:#4cd97b;'>&#x1F7E2; WA Connected</span>":w==="pending"?"<span style='color:#ffd60a;'>&#x23F3; WA Pending "+(p?"(+"+p+")":"")+"</span>":"<span style='color:#8b949e;'>&#x26AB; WA Nicht eingerichtet "+(p?"(+"+p+")":"")+"</span>")+"</div>";
+  const wa=(w,p,code)=>{const esc=s=>String(s||"").replace(/"/g,"&quot;");return "<div style='font-size:12px;margin-top:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;'>"+(w==="connected"?"<span style='color:#4cd97b;'>&#x1F7E2; WA Connected</span>":w==="pending"?"<span style='color:#ffd60a;'>&#x23F3; WA Pending "+(p?"("+p+")":"")+"</span><button class=\"wa-confirm-btn\" data-code=\""+esc(code)+"\" data-phone=\""+esc(p)+"\" style='background:rgba(47,210,126,0.2);color:#2fd27e;border:1px solid rgba(47,210,126,0.35);border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;'>&#x2705; WA best&auml;tigen</button>":"<span style='color:#8b949e;'>&#x26AB; WA Nicht eingerichtet "+(p?"("+p+")":"")+"</span>")+"</div>";};
   list.innerHTML="<div style='padding:4px 0 12px;font-size:12px;color:#8b949e;'>"+customers.length+" Kunden-Accounts</div>"+
-    customers.map(c=>"<article style='padding:14px;margin-bottom:10px;background:rgba(255,255,255,0.04);border-radius:12px;border:1px solid rgba(255,255,255,0.08);'><div style='font-size:15px;font-weight:700;color:#f0f6fc;'>"+(c.name||c.restaurantName||c.email||"-")+"</div><div style='font-size:12px;color:#8b949e;margin-top:6px;line-height:1.7;'>&#x1F4E7; "+(c.email||"&#x2014;")+"<br>&#x1F511; <b style='color:#ffd487;'>"+(c.customerCode||"&#x2014;")+"</b> &middot; "+(c.paket||"starter").toUpperCase()+"<br>&#x1F4F1; "+((c.phone||c.whatsapp)?("+"+(c.phone||c.whatsapp)):"Keine Nummer")+"<br>Seit: "+(c.createdAt?new Date(c.createdAt).toLocaleDateString("de-DE"):"&#x2014;")+"</div>"+wa(c.waStatus,c.phone||c.whatsapp)+st(c.status)+"</article>").join("");
+    customers.map(c=>"<article style='padding:14px;margin-bottom:10px;background:rgba(255,255,255,0.04);border-radius:12px;border:1px solid rgba(255,255,255,0.08);'><div style='font-size:15px;font-weight:700;color:#f0f6fc;'>"+(c.name||c.restaurantName||c.email||"-")+"</div><div style='font-size:12px;color:#8b949e;margin-top:6px;line-height:1.7;'>&#x1F4E7; "+(c.email||"&#x2014;")+"<br>&#x1F511; <b style='color:#ffd487;'>"+(c.customerCode||"&#x2014;")+"</b> &middot; "+(c.paket||"starter").toUpperCase()+"<br>&#x1F4F1; "+((c.phone||c.whatsapp)?("+"+(c.phone||c.whatsapp)):"Keine Nummer")+"<br>Seit: "+(c.createdAt?new Date(c.createdAt).toLocaleDateString("de-DE"):"&#x2014;")+"</div>"+wa(c.waStatus,c.waPendingPhone||c.phone||c.whatsapp,c.customerCode)+st(c.status)+"</article>").join("");
+  // Event delegation for WA confirm buttons
+  list.addEventListener('click', e => {
+    const btn = e.target.closest('.wa-confirm-btn');
+    if (btn) confirmWaSetup(btn.dataset.code, btn.dataset.phone);
+  });
+
+}
+async function confirmWaSetup(customerCode, waPhone) {
+  if (!confirm('WhatsApp für ' + customerCode + ' bestätigen? Nummer: ' + waPhone)) return;
+  try {
+    const res = await fetch('https://n8n.leolan.net/webhook/wa-setup-confirm?adminKey=LeoLan2026Admin!', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ customerCode, waPhone })
+    });
+    const d = await res.json().catch(() => ({}));
+    if (d.success || res.ok) {
+      alert('✅ WhatsApp für ' + customerCode + ' bestätigt!');
+      try {
+        const custData = await fetch('https://n8n.leolan.net/webhook/admin-customers?key=LeoLan2026Admin!', {method:'POST', headers:{'Content-Type':'application/json'}, body:'{}'});
+        const cj = await custData.json();
+        renderRealCustomers(cj.customers || cj || []);
+      } catch(e) { console.log('Reload error:', e); }
+    } else {
+      alert('❌ Fehler: ' + (d.message || 'Unbekannter Fehler'));
+    }
+  } catch(e) {
+    alert('❌ Verbindungsfehler: ' + e.message);
+  }
 }
 </script>
 </body>
