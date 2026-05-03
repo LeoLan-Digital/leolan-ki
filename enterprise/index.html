@@ -1257,7 +1257,14 @@
           body: JSON.stringify({
             message,
             moduleKey: module.id,
-            history
+            moduleName: module.name,
+            modulePrice: module.price,
+            history,
+            pricingContext: {
+              starter: { monthly: 199, annual: 149, annualTotal: 1788, setup: 199 },
+              pro: { monthly: 349, annual: 249, annualTotal: 2988, setup: 199 },
+              currentModule: { name: module.name, price: module.price }
+            }
           })
         });
 
