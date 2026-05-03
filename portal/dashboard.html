@@ -506,5 +506,60 @@ async function changePassword() {
   } catch(e) { msg.style.background='rgba(255,69,58,.1)'; msg.style.color='#ff453a'; msg.textContent='Verbindungsfehler.'; msg.style.display='block'; }
 }
 </script>
+
+<!-- Meta Embedded Signup SDK -->
+<script>
+window.fbAsyncInit = function() {
+  FB.init({
+    appId: '1571650173916751',
+    autoLogAppEvents: true,
+    xfbml: true,
+    version: 'v18.0'
+  });
+};
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/de_DE/sdk.js';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
+function launchWhatsAppSignup() {
+  const custCode = window._waCustCode || sessionStorage.getItem('customerCode') || '';
+  FB.login(function(response) {
+    if (response.authResponse) {
+      const code = response.authResponse.code;
+      // Send code to our backend to exchange for WABA token
+      fetch('https://n8n.leolan.net/webhook/wa-embedded-signup', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({code: code, customerCode: custCode})
+      }).then(r => r.json()).then(d => {
+        if (d.success) {
+          document.getElementById('waSetupForm').style.display = 'none';
+          document.getElementById('waConnected').style.display = '';
+          document.getElementById('waConnected').innerHTML = '&#x2705; WhatsApp erfolgreich verbunden! Dein Bot ist aktiv.';
+        } else {
+          // Fallback: Meta Signup nicht verfügbar, zeige manuellen Weg
+          document.getElementById('waEmbeddedSignup').style.display = 'none';
+          showToast('Automatischer Signup nicht verf&#252;gbar — bitte manuelle Option nutzen.', 'info');
+        }
+      }).catch(() => {
+        document.getElementById('waEmbeddedSignup').style.display = 'none';
+      });
+    }
+  }, {
+    config_id: '1571650173916751',
+    response_type: 'code',
+    override_default_response_type: true,
+    extras: {
+      setup: {},
+      featureType: '',
+      sessionInfoVersion: '2'
+    }
+  });
+}
+</script>
 </body>
 </html>
