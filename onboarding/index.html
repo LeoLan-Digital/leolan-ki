@@ -303,14 +303,15 @@ function go1(){
   var annualTotal = isAnnual ? (monthly+seoPrice) * 12 : null;
   var billingLabel = isAnnual ? 'Jährlich (Paket) — '+monthly+'€/Mo × 12' : 'Monatlich (Paket)';
   var priceDisplay = isAnnual ? (monthly*12)+'€ / Jahr' : monthly+'€ / Monat';
-  var grossTotal = isAnnual ? Math.round(((monthly+seoPrice)*12+(reverseCharge?0:Math.round((monthly+seoPrice)*12*0.19*100)/100))*100)/100 : Math.round((monthly+seoPrice+vat+setup+vatSetup)*100)/100;
+  var grossTotal = isAnnual ? (monthly+seoPrice)*12+setup : (monthly+seoPrice+setup); // Keine MwSt. (§19 UStG)
   document.getElementById('sumPrice').innerHTML=
     '<div class="sum-total">'+
     '<div class="sum-total-row"><span style="color:#8b949e">'+billingLabel+'</span><span>'+priceDisplay+'</span></div>'+
     (seoPrice > 0 ? '<div class="sum-total-row"><span style="color:#8b949e">SEO Add-on '+(isAnnual?'— '+seoPrice+'€/Mo × 12':'')+'</span><span>'+(isAnnual?seoPrice*12+'€ / Jahr':'+'+seoPrice+'€ / Monat')+'</span></div>' : '')+
     (setup > 0 ? '<div class="sum-total-row"><span style="color:#8b949e">Setup-Gebühr (einmalig)</span><span>'+setup+'€</span></div>' : '<div class="sum-total-row"><span style="color:#4cd97b">✓ Setup kostenlos</span><span>0€</span></div>')+
-    '<div class="sum-total-row"><span style="color:#8b949e">MwSt. '+(reverseCharge?'0% (Reverse Charge)':'19%')+'</span><span>'+(isAnnual?(reverseCharge?'0.00':(Math.round((monthly+seoPrice)*12*0.19*100)/100).toFixed(2)):vat.toFixed(2))+'€</span></div>'+
+    '<div class="sum-total-row"><span style="color:#8b949e">MwSt. (§19 UStG)</span><span>0,00€</span></div>'+
     '<div class="sum-total-row big"><span>Gesamt '+(isAnnual?'pro Jahr':'heute')+'</span><span>'+grossTotal.toFixed(2)+'€</span></div>'+
+    '<div style="font-size:11px;color:#8b949e;padding-top:6px;">Gemäß §19 UStG wird keine Umsatzsteuer berechnet.</div>'+
     '</div>';
   show(2);
 }
