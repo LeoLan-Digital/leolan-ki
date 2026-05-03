@@ -294,6 +294,10 @@
   window.declineReservation = declineReservation;
 
   async function requestWaSetup() {
+  if (!window._waCustCode) {
+    window._waCustCode = sessionStorage.getItem('customerCode') || '';
+    window._waEmail = sessionStorage.getItem('email') || '';
+  }
     const phone = document.getElementById('waPhoneInput').value.trim();
     if (!phone) { showToast('Bitte Telefonnummer eingeben', 'error'); return; }
     const btn = document.getElementById('waSendBtn');
@@ -384,9 +388,9 @@
   function renderAccount(data) {
     const account = data.account || data;
     const items = [
-      { label: 'Paket', val: account.package || account.plan || '—' },
-      { label: 'Status', val: statusPill(account.status || account.accountStatus || '—') },
-      { label: 'Bot-Status', val: statusPill(account.botStatus || account.bot_status || '—') },
+      { label: 'Paket', val: (account.paket || account.package || account.plan || '—').toUpperCase() },
+      { label: 'Status', val: statusPill(account.status || (account.active ? 'active' : 'inactive')) },
+      { label: 'Bot-Status', val: statusPill(account.botStatus || account.bot_status || (account.active !== false ? 'active' : 'inactive')) },
       { label: 'Mitglied seit', val: fmtDate(account.createdAt || account.memberSince) },
     ];
     document.getElementById('account-grid').innerHTML = items.map(i =>
