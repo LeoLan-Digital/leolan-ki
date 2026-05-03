@@ -1687,14 +1687,18 @@ berechneROI();
       });
       clearTimeout(tid);
       var data = await resp.json();
-      var reply = data.reply || data.message || data.text || 'Ich bin gleich für Sie da!';
+      // Technische Fehler nie nach außen zeigen
+      var reply = data.reply || data.text || '';
+      if (!reply || reply.toLowerCase().includes('error') || reply.toLowerCase().includes('workflow') || reply.toLowerCase().includes('fehler')) {
+        reply = 'Ich bin gleich wieder für dich da! Schreib mir einfach nochmal. 😊';
+      }
       chatHistory.push({role:'user', content: message});
       chatHistory.push({role:'assistant', content: reply});
       if (chatHistory.length > 16) chatHistory = chatHistory.slice(-16);
       return reply;
     } catch(e) {
       if (e.name === 'AbortError') return 'Kurze Pause — bitte nochmal senden! 🙏';
-      return 'Entschuldigung, technischer Fehler. Bitte nochmal versuchen!';
+      return 'Ich bin gleich wieder erreichbar — einfach nochmal schreiben! 😊';
     }
   }
 
