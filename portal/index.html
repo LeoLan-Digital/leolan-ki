@@ -128,8 +128,8 @@
       });
       const data = await res.json().catch(() => ({}));
 
-      if (res.ok && data.token) {
-        sessionStorage.setItem('token', data.token);
+      if (res.ok && (data.token || data.success)) {
+        sessionStorage.setItem('token', data.token || (data.customerCode + '_' + Date.now()));
         sessionStorage.setItem('customerCode', data.customerCode || body.customerCode || '');
         sessionStorage.setItem('sector', 'restaurant');
         window.location.href = 'dashboard.html';
