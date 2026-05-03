@@ -282,7 +282,7 @@ function go1(){
   };
   // Build summary
   var vatId=fdata.vatId;
-  var reverseCharge=vatId&&vatId.length>4;
+  var reverseCharge=vatId&&vatId.length>4&&!vatId.toUpperCase().startsWith('DE'); // Deutsch→Deutsch = 19% MwSt
   var isAnnual = billing === 'annual';
   var monthly = isAnnual ? (pkg==='starter'?149:249) : (pkg==='starter'?199:349);
   var setup = isAnnual ? 0 : 199;
@@ -366,6 +366,8 @@ var chkPayload=Object.assign({},fdata,{
   grossTotal:Math.round((pkgInfo.amount+setup+(reverseCharge?0:Math.round((pkgInfo.amount+setup)*0.19*100)/100))*100)/100,
   reverseCharge:reverseCharge,
   selectedPackage:fdata.package,
+  billingCycle:billingCycle,
+  billingInterval:billingCycle==='annual'?'year':'month',
   successUrl:'https://ki.leolan.net/danke/',
   cancelUrl:'https://ki.leolan.net/onboarding/'
 });
