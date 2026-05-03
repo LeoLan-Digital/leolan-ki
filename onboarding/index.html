@@ -357,7 +357,17 @@ var vatAmount=reverseCharge?0:Math.round(pkgInfo.amount*0.19*100)/100;
 var chkPayload=Object.assign({},fdata,{
   customerEmail:fdata.email,
   priceIds:[pkgInfo.priceId],
-  modules:[{key:fdata.package,name:fdata.package==='starter'?'Starter':'Pro',price:pkgInfo.amount,priceId:pkgInfo.priceId,desc:'LeoLan '+fdata.package}],
+  modules:(function(){
+    var mods=[{key:fdata.package,name:fdata.package==='starter'?'Starter':'Pro',price:pkgInfo.amount,priceId:pkgInfo.priceId,desc:'LeoLan '+fdata.package}];
+    var seoP=fdata.seoPackage;
+    if(seoP&&seoP!=='none'){
+      var seoAmt=seoP==='basic'?99:199;
+      var seoName=seoP==='basic'?'SEO Basic':'SEO Pro';
+      var seoAnnual=billingCycle==='annual'?seoAmt*12:seoAmt;
+      mods.push({key:'seo-'+seoP,name:seoName+' Add-on',price:seoAnnual,desc:'LeoLan '+seoName});
+    }
+    return mods;
+  })(),
   monthlyNetTotal:pkgInfo.amount,
   setupFeeAmount:setup,
   netTotal:pkgInfo.amount+setup,
