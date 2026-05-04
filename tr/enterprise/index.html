@@ -738,6 +738,17 @@
       .bubble { max-width: 92%; }
     }
   </style>
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="LeoLan Digital">
+  <meta property="og:title" content="Enterprise Paketi | LeoLan Digital">
+  <meta property="og:description" content="Restoran zincirleri ve büyük işletmeler için özel yapay zeka çözümü.">
+  <meta property="og:url" content="https://ki.leolan.net/tr/enterprise/">
+  <meta property="og:image" content="https://ki.leolan.net/og-preview.png">
+  <meta property="og:locale" content="tr_TR">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Enterprise Paketi | LeoLan Digital">
+  <meta name="twitter:image" content="https://ki.leolan.net/og-preview.png">
 </head>
 <body>
 <div style="background:#0d1117;border-bottom:1px solid #21262d;position:sticky;top:0;z-index:100;padding:12px 20px">
@@ -1474,5 +1485,20 @@
     refreshModuleSelectionState();
     updateBookingButtonState();
   </script>
+<div id="cookieBanner" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:9999; background:#1c1c1e; border-top:1px solid rgba(255,255,255,0.1); padding:20px 24px; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px;">
+  <p style="margin:0; font-size:14px; color:rgba(245,245,247,0.8); max-width:600px;">Wir nutzen Cookies für Analysen, um unsere Website zu verbessern. <a href="/datenschutz/" style="color:#2997ff;">Mehr erfahren</a></p>
+  <div style="display:flex; gap:12px;">
+    <button onclick="rejectCookies()" style="background:transparent; border:1px solid rgba(255,255,255,0.2); color:rgba(245,245,247,0.8); padding:8px 20px; border-radius:980px; font-size:14px; cursor:pointer;">Ablehnen</button>
+    <button onclick="acceptCookies()" style="background:#0071e3; border:none; color:#fff; padding:8px 20px; border-radius:980px; font-size:14px; cursor:pointer; font-weight:500;">Akzeptieren</button>
+  </div>
+</div>
+<script>
+  function setCookie(n,v,d){var e=new Date();e.setTime(e.getTime()+d*864e5);document.cookie=n+"="+v+";expires="+e.toUTCString()+";path=/";}
+  function getCookie(n){var v=document.cookie.match("(^|;) ?"+n+"=([^;]*)(;|$)");return v?v[2]:null;}
+  function loadTracking(){var s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id=G-25WZQPJ5F3";document.head.appendChild(s);window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag("js",new Date());gtag("config","G-25WZQPJ5F3");}
+  function acceptCookies(){setCookie("cookie_consent","accepted",365);document.getElementById("cookieBanner").style.display="none";loadTracking();}
+  function rejectCookies(){setCookie("cookie_consent","rejected",365);document.getElementById("cookieBanner").style.display="none";}
+  (function(){var c=getCookie("cookie_consent");if(!c){document.getElementById("cookieBanner").style.display="flex";}else if(c==="accepted"){loadTracking();}})();
+</script>
 </body>
 </html>

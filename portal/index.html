@@ -1,153 +1,90 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Restaurant Portal — LeoLan Digital</title>
   <link rel="canonical" href="https://ki.leolan.net/portal/">
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0e1621;color:#e8eaed;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
-    .card{background:#17212b;border-radius:20px;padding:36px 32px;width:100%;max-width:420px;box-shadow:0 8px 32px rgba(0,0,0,0.4)}
-    .logo{text-align:center;margin-bottom:28px}
-    .logo-emoji{font-size:40px;display:block;margin-bottom:10px}
-    .logo h1{font-size:22px;font-weight:700;color:#e8eaed;margin-bottom:4px}
-    .logo p{color:#8a9bb8;font-size:14px}
-    .form-group{margin-bottom:16px}
-    label{display:block;color:#8a9bb8;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:7px}
-    input{width:100%;background:#0e1621;color:#e8eaed;border:1.5px solid #2a3a4a;border-radius:12px;padding:13px 14px;font-size:15px;transition:border-color 0.2s;outline:none}
-    input:focus{border-color:#5e81f4}
-    input::placeholder{color:#4a5a6a}
-    .btn{width:100%;background:#5e81f4;color:#fff;border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;transition:opacity 0.2s,transform 0.1s;margin-top:4px}
-    .btn:hover{opacity:0.9}
-    .btn:active{transform:scale(0.98)}
-    .btn:disabled{opacity:0.5;cursor:not-allowed}
-    .btn-spinner{display:none}
-    .err{background:rgba(239,68,68,0.12);border:1.5px solid #ef4444;border-radius:10px;padding:11px 14px;color:#ef4444;font-size:13px;margin-bottom:16px;display:none}
-    .divider{display:flex;align-items:center;gap:10px;margin:18px 0;color:#4a5a6a;font-size:13px}
-    .divider::before,.divider::after{content:'';flex:1;height:1px;background:#2a3a4a}
-    .tab-row{display:flex;gap:8px;margin-bottom:20px}
-    .tab{flex:1;padding:9px;text-align:center;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid #2a3a4a;background:transparent;color:#8a9bb8;transition:all 0.2s}
-    .tab.active{border-color:#5e81f4;background:rgba(94,129,244,0.12);color:#5e81f4}
-    .footer{text-align:center;margin-top:20px;font-size:13px;color:#8a9bb8}
-    .footer a{color:#5e81f4;text-decoration:none}
-  </style>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hotel Portal — LeoLan Digital</title>
+<style>
+body{margin:0;padding:20px;font-family:-apple-system,sans-serif;background:#0e1621;color:#e8eaed;min-height:100vh}
+.card{background:#17212b;border-radius:16px;padding:28px;max-width:420px;margin:40px auto}
+.logo{text-align:center;margin-bottom:24px}
+.logo img{width:64px;height:64px;object-fit:contain}
+h1{font-size:20px;font-weight:700;text-align:center;margin:0 0 4px}
+p.sub{color:#8a9bb8;font-size:14px;text-align:center;margin:0 0 24px}
+label{display:block;color:#8a9bb8;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px}
+input{width:100%;background:#0e1621;color:#e8eaed;border:1px solid #2a3a4a;border-radius:10px;padding:12px;font-size:15px;box-sizing:border-box;margin-bottom:14px}
+button{width:100%;background:#5e81f4;color:#fff;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:700;cursor:pointer}
+button:disabled{opacity:0.5;cursor:not-allowed}
+.err{background:#ef444420;border:1px solid #ef4444;border-radius:8px;padding:10px;color:#ef4444;font-size:13px;margin-bottom:14px;display:none}
+.link{text-align:center;margin-top:16px;font-size:13px;color:#8a9bb8}
+.link a{color:#5e81f4}
+</style>
 </head>
 <body>
 <div class="card">
   <div class="logo">
-    <span class="logo-emoji">🍽️</span>
-    <h1>Restaurant Portal</h1>
-    <p>LeoLan Digital — Kunden-Login</p>
+    <img src="https://ki.leolan.net/leolan-logo.svg" alt="LeoLan" onerror="this.style.display='none'">
+    <h1>Kunden-Portal</h1>
+    <p class="sub">LeoLan Digital</p>
   </div>
-
-  <div class="tab-row">
-    <button class="tab active" id="tab-code" onclick="switchTab('code')">Kundencode</button>
-    <button class="tab" id="tab-email" onclick="switchTab('email')">E-Mail</button>
-  </div>
-
-  <div id="err" class="err"></div>
-
-  <form id="login-form" onsubmit="doLogin(event)">
-    <!-- Code tab -->
-    <div id="section-code">
-      <div class="form-group">
-        <label>Kundencode</label>
-        <input type="text" id="customerCode" placeholder="z.B. REST-001" autocomplete="off" autocapitalize="characters">
-      </div>
-    </div>
-    <!-- Email tab -->
-    <div id="section-email" style="display:none">
-      <div class="form-group">
-        <label>E-Mail</label>
-        <input type="email" id="email" placeholder="ihre@email.de" autocomplete="email">
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label>Passwort</label>
-      <input type="password" id="password" placeholder="••••••••" autocomplete="current-password">
-    </div>
-
-    <button type="submit" class="btn" id="submit-btn">
-      <span id="btn-text">Anmelden</span>
-    </button>
-  </form>
-
-  <div class="footer">
-    Probleme? <a href="mailto:business@leolan.net">Support kontaktieren</a>
-  </div>
+  <div class="err" id="err"></div>
+  <label>Email</label>
+  <input type="email" id="email" placeholder="K100001 oder ihre@email.de">
+  <label>Passwort</label>
+  <input type="password" id="pw" placeholder="••••••••">
+  <button id="btn" onclick="login()">Einloggen</button>
+  <div class="link">No account? <a href="/onboarding/">Jetzt registrieren →</a></div>
 </div>
 
 <script>
-  let currentTab = 'code';
-
-  function switchTab(tab) {
-    currentTab = tab;
-    document.getElementById('tab-code').classList.toggle('active', tab === 'code');
-    document.getElementById('tab-email').classList.toggle('active', tab === 'email');
-    document.getElementById('section-code').style.display = tab === 'code' ? '' : 'none';
-    document.getElementById('section-email').style.display = tab === 'email' ? '' : 'none';
-    document.getElementById('err').style.display = 'none';
+function login() {
+  var email = document.getElementById('email').value.trim();
+  var pw = document.getElementById('pw').value;
+  var btn = document.getElementById('btn');
+  var err = document.getElementById('err');
+  
+  err.style.display = 'none';
+  
+  if (!email || !pw) {
+    err.textContent = 'Please enter email and password.';
+    err.style.display = 'block';
+    return;
   }
-
-  function showErr(msg) {
-    const el = document.getElementById('err');
-    el.textContent = msg;
-    el.style.display = 'block';
-  }
-
-  async function doLogin(e) {
-    e.preventDefault();
-    const btn = document.getElementById('submit-btn');
-    const btnText = document.getElementById('btn-text');
-    const password = document.getElementById('password').value.trim();
-    document.getElementById('err').style.display = 'none';
-
-    if (!password) { showErr('Bitte Passwort eingeben.'); return; }
-
-    let body = { password, sector: 'restaurant' };
-    if (currentTab === 'code') {
-      const code = document.getElementById('customerCode').value.trim();
-      if (!code) { showErr('Bitte Kundencode eingeben.'); return; }
-      body.customerCode = code.toUpperCase();
+  
+  btn.disabled = true;
+  btn.textContent = 'Wird angemeldet...';
+  
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'https://n8n.leolan.net/webhook/kunden-login', true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.onload = function() {
+    btn.disabled = false;
+    btn.textContent = 'Einloggen';
+    var raw = xhr.responseText;
+    err.textContent = 'Response: ' + raw.substring(0,200);
+    err.style.display = 'block';
+    var data = {};
+    try { data = JSON.parse(raw); } catch(e) { return; }
+    if (data.success && data.customerCode) {
+      window.location.href = '/portal/dashboard.html?code=' + encodeURIComponent(data.customerCode);
+    } else if (data.blocked) {
+      err.textContent = 'Zu viele Versuche. 15 Minuten warten.';
+      err.style.display = 'block';
     } else {
-      const email = document.getElementById('email').value.trim();
-      if (!email) { showErr('Bitte E-Mail eingeben.'); return; }
-      body.email = email;
+      err.textContent = data.error || 'Ungültige Anmeldedaten.';
+      err.style.display = 'block';
     }
-
-    btn.disabled = true;
-    btnText.textContent = 'Anmelden…';
-
-    try {
-      const res = await fetch('https://n8n.leolan.net/webhook/kunden-login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body)
-      });
-      const data = await res.json().catch(() => ({}));
-
-      if (res.ok && (data.token || data.success)) {
-        sessionStorage.setItem('token', data.token || (data.customerCode + '_' + Date.now()));
-        sessionStorage.setItem('customerCode', data.customerCode || body.customerCode || '');
-        sessionStorage.setItem('sector', 'restaurant');
-        window.location.href = 'dashboard.html';
-      } else {
-        showErr(data.message || data.error || 'Login fehlgeschlagen. Zugangsdaten prüfen.');
-      }
-    } catch (err) {
-      showErr('Verbindungsfehler. Bitte erneut versuchen.');
-    } finally {
-      btn.disabled = false;
-      btnText.textContent = 'Anmelden';
-    }
-  }
-
-  // Already logged in?
-  if (sessionStorage.getItem('token') && sessionStorage.getItem('customerCode')) {
-    window.location.href = 'dashboard.html';
-  }
+  };
+  xhr.onerror = function() {
+    btn.disabled = false;
+    btn.textContent = 'Einloggen';
+    err.textContent = 'Connection error. Please try again.';
+    err.style.display = 'block';
+  };
+  xhr.send(JSON.stringify({email: email, password: pw}));
+}
 </script>
 </body>
 </html>
