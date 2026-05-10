@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEO & SEO Audit — LeoLan Digital</title>
+<style>
+  :root { --bg:#0a0a0f; --surface:#13131a; --surface2:#1c1c26; --border:rgba(255,255,255,0.08); --accent:#0071e3; --text:#f5f5f7; --muted:rgba(245,245,247,0.55); --green:#34c759; --warn:#ff9f0a; --error:#ff453a; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+  .header { padding:32px 24px 0; text-align:center; }
+  .header h1 { font-size:clamp(22px,5vw,34px); font-weight:700; letter-spacing:-.02em; }
+  .header p { color:var(--muted); margin-top:8px; font-size:14px; }
+  .search-box { max-width:640px; margin:28px auto; padding:0 16px; }
+  .input-row { display:flex; gap:10px; }
+  .input-row input { flex:1; background:var(--surface); border:1px solid var(--border); color:var(--text); padding:14px 18px; border-radius:12px; font-size:15px; outline:none; }
+  .input-row input:focus { border-color:var(--accent); }
+  .input-row input::placeholder { color:var(--muted); }
+  .btn { background:var(--accent); color:#fff; border:none; padding:14px 22px; border-radius:12px; font-size:15px; font-weight:600; cursor:pointer; white-space:nowrap; }
+  .btn:disabled { opacity:.4; cursor:not-allowed; }
+  .results { max-width:900px; margin:0 auto; padding:0 16px 60px; }
+  .loading { text-align:center; padding:60px; color:var(--muted); }
+  .spinner { width:40px; height:40px; border:3px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin .8s linear infinite; margin:0 auto 16px; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .grade-card { background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:28px; margin:20px 0; display:flex; align-items:center; gap:28px; flex-wrap:wrap; }
+  .grade-circle { width:96px; height:96px; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; font-weight:800; flex-shrink:0; border:4px solid; }
+  .grade-circle .grade { font-size:34px; line-height:1; }
+  .grade-circle .score { font-size:12px; opacity:.7; margin-top:2px; }
+  .gA,.gB { border-color:var(--green); color:var(--green); }
+  .gCp,.gC { border-color:var(--accent); color:var(--accent); }
+  .gD { border-color:var(--warn); color:var(--warn); }
+  .gF { border-color:var(--error); color:var(--error); }
+  .score-bars { flex:1; min-width:240px; }
+  .score-row { display:flex; align-items:center; gap:10px; margin-bottom:9px; }
+  .score-label { width:110px; font-size:13px; color:var(--muted); }
+  .bar-track { flex:1; height:5px; background:var(--surface2); border-radius:3px; overflow:hidden; }
+  .bar-fill { height:100%; border-radius:3px; transition:width 1s ease; }
+  .bg { background:var(--green); } .bb { background:var(--accent); } .bo { background:var(--warn); } .br { background:var(--error); }
+  .score-num { width:28px; font-size:13px; font-weight:600; text-align:right; }
+  .section { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px; margin-bottom:14px; }
+  .stitle { font-size:15px; font-weight:600; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+  .badge { font-size:11px; padding:2px 8px; border-radius:20px; font-weight:600; }
+  .bp { background:rgba(52,199,89,.15); color:var(--green); }
+  .bw { background:rgba(255,159,10,.15); color:var(--warn); }
+  .bf { background:rgba(255,69,58,.15); color:var(--error); }
+  .check-row { display:flex; align-items:flex-start; gap:9px; padding:7px 0; border-bottom:1px solid var(--border); }
+  .check-row:last-child { border-bottom:none; }
+  .check-icon { font-size:15px; flex-shrink:0; }
+  .check-text { font-size:14px; line-height:1.4; }
+  .check-detail { font-size:12px; color:var(--muted); margin-top:1px; }
+  .meta-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px; }
+  .meta-item { background:var(--surface2); border-radius:10px; padding:12px; }
+  .meta-item label { font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); display:block; margin-bottom:3px; }
+  .meta-item .val { font-size:13px; font-weight:500; word-break:break-all; }
+  .meta-item .len { font-size:11px; margin-top:2px; }
+  .lok { color:var(--green); } .lwn { color:var(--warn); } .ler { color:var(--error); }
+  .schema-chips { display:flex; flex-wrap:wrap; gap:7px; }
+  .chip { padding:3px 10px; border-radius:20px; font-size:12px; font-weight:500; }
+  .cf { background:rgba(52,199,89,.1); color:var(--green); border:1px solid rgba(52,199,89,.3); }
+  .cm { background:rgba(255,255,255,.03); color:var(--muted); border:1px solid var(--border); }
+  .url-bar { font-size:13px; color:var(--muted); background:var(--surface); padding:8px 14px; border-radius:8px; margin-bottom:14px; word-break:break-all; }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>🔍 GEO & SEO Audit</h1>
+  <p>Technisch · Content · Schema · E-E-A-T · AI-Sichtbarkeit</p>
+</div>
+<div class="search-box">
+  <div class="input-row">
+    <input type="url" id="urlInput" placeholder="https://ki.leolan.net" value="https://ki.leolan.net" />
+    <button class="btn" id="auditBtn" onclick="runAudit()">Audit starten</button>
+  </div>
+</div>
+<div class="results" id="results"></div>
+<script>
+const WEBHOOK = 'https://n8n.leolan.net/webhook/seo-audit';
+
+async function runAudit() {
+  const url = document.getElementById('urlInput').value.trim();
+  if (!url) return;
+  const btn = document.getElementById('auditBtn');
+  const res = document.getElementById('results');
+  btn.disabled = true; btn.textContent = 'Analysiere…';
+  res.innerHTML = '<div class="loading"><div class="spinner"></div><p>Seite wird analysiert…</p></div>';
+  try {
+    const r = await fetch(WEBHOOK, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({url}) });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    renderResults(await r.json());
+  } catch(e) {
+    res.innerHTML = '<div class="loading"><p style="color:var(--error)">Fehler: ' + e.message + '<br><br>Stelle sicher dass der n8n Workflow aktiv ist.</p></div>';
+  } finally { btn.disabled = false; btn.textContent = 'Audit starten'; }
+}
+
+function bc(s) { return s>=80?'bg':s>=60?'bb':s>=40?'bo':'br'; }
+function gc(g) { return 'g'+g.replace('+','p'); }
+function ix(ok) { return ok ? '✅' : '❌'; }
+function si(s) { return s==='error'?'🔴':s==='warning'?'🟡':'ℹ️'; }
+function lc(l,min,max) { return (l>=min&&l<=max)?'lok':l>max?'lwn':'lwn'; }
+
+function renderResults(d) {
+  const s = d.scores;
+  const important = ['WebSite','Organization','LocalBusiness','Person','FAQPage','Restaurant','SoftwareCompany'];
+  document.getElementById('results').innerHTML = `
+<div class="url-bar">🔗 ${d.url} · Audit vom ${d.auditDate}</div>
+<div class="grade-card">
+  <div class="grade-circle ${gc(s.grade)}"><span class="grade">${s.grade}</span><span class="score">${s.total}/100</span></div>
+  <div class="score-bars">
+    ${[['Technisch',s.technical],['Content',s.content],['Schema',s.schema],['E-E-A-T',s.eeat],['AI-Sichtbarkeit',s.geo]].map(([l,v])=>
+    `<div class="score-row"><span class="score-label">${l}</span><div class="bar-track"><div class="bar-fill ${bc(v)}" style="width:${v}%"></div></div><span class="score-num">${v}</span></div>`).join('')}
+  </div>
+</div>
+<div class="section">
+  <div class="stitle">📄 Meta & Content</div>
+  <div class="meta-grid">
+    <div class="meta-item"><label>Meta Title</label><div class="val">${d.meta.title||'—'}</div><div class="len ${lc(d.meta.titleLength,40,60)}">${d.meta.titleLength} Zeichen ${d.meta.titleLength>60?'⚠️ zu lang':d.meta.titleLength<30?'⚠️ zu kurz':'✅'}</div></div>
+    <div class="meta-item"><label>Meta Description</label><div class="val" style="font-size:12px">${d.meta.description||'—'}</div><div class="len ${lc(d.meta.descriptionLength,120,160)}">${d.meta.descriptionLength} Zeichen</div></div>
+    <div class="meta-item"><label>H1</label><div class="val">${d.meta.h1||'—'}</div><div class="len">${d.meta.h1Count} H1 · ${d.meta.h2Count} H2 · ${d.meta.questionH2Count} Fragen</div></div>
+  </div>
+</div>
+<div class="section">
+  <div class="stitle">⚙️ Technisch <span class="badge ${s.technical>=80?'bp':s.technical>=60?'bw':'bf'}">${s.technical}/100</span></div>
+  ${[{ok:d.technical.https,l:'HTTPS / SSL',det:'Verschlüsselte Verbindung'},{ok:d.technical.robotsTxt,l:'robots.txt',det:'Vorhanden'},{ok:d.technical.sitemap,l:'XML Sitemap',det:'Vorhanden'},{ok:d.technical.viewport,l:'Mobile Viewport',det:'Meta-Tag'},{ok:d.technical.canonical,l:'Canonical URL',det:'Duplicate-Content Schutz'}].map(c=>`<div class="check-row"><span class="check-icon">${ix(c.ok)}</span><div><div class="check-text">${c.l}</div><div class="check-detail">${c.det}</div></div></div>`).join('')}
+</div>
+<div class="section">
+  <div class="stitle">🏷️ Schema Markup <span class="badge ${s.schema>=80?'bp':s.schema>=40?'bw':'bf'}">${s.schema}/100</span></div>
+  <div class="schema-chips">
+    ${important.map(t=>`<span class="chip ${d.schema.found.includes(t)?'cf':'cm'}">${d.schema.found.includes(t)?'✓':'+'} ${t}</span>`).join('')}
+    ${d.schema.found.filter(t=>!important.includes(t)).map(t=>`<span class="chip cf">✓ ${t}</span>`).join('')}
+  </div>
+</div>
+<div class="section">
+  <div class="stitle">🧠 AI-Sichtbarkeit (GEO) <span class="badge ${s.geo>=70?'bp':s.geo>=45?'bw':'bf'}">${s.geo}/100</span></div>
+  ${[{ok:d.geo.tldrBox,l:'TL;DR / Zusammenfassungs-Box',det:'Hilft KI-Systemen beim Zitieren'},{ok:d.geo.questionHeadings>=2,l:`Fragen-Überschriften (${d.geo.questionHeadings})`,det:'H2/H3 als Fragen = besser zitierbar'},{ok:d.geo.faqSchema,l:'FAQPage Schema',det:'Rich Snippets + KI-Sichtbarkeit'}].map(c=>`<div class="check-row"><span class="check-icon">${ix(c.ok)}</span><div><div class="check-text">${c.l}</div><div class="check-detail">${c.det}</div></div></div>`).join('')}
+  ${d.geo.issues.map(i=>`<div class="check-row"><span class="check-icon">${si(i.severity)}</span><div class="check-text">${i.msg}</div></div>`).join('')}
+</div>
+<div class="section">
+  <div class="stitle">🏅 E-E-A-T <span class="badge ${s.eeat>=70?'bp':s.eeat>=50?'bw':'bf'}">${s.eeat}/100</span></div>
+  ${[{ok:d.eeat.authorBox,l:'Author-Box / Team-Vorstellung',det:'Zeigt wer hinter dem Inhalt steht'},{ok:d.eeat.externalLinks>2,l:'Externe Quellen-Links ('+d.eeat.externalLinks+')',det:'Quellenangaben stärken Glaubwürdigkeit'},{ok:d.eeat.personSchema,l:'Person-Schema (Gründer)',det:'Signalisiert Expertise'}].map(c=>`<div class="check-row"><span class="check-icon">${ix(c.ok)}</span><div><div class="check-text">${c.l}</div><div class="check-detail">${c.det}</div></div></div>`).join('')}
+</div>
+${d.allIssues.length?`<div class="section"><div class="stitle">📋 Alle Empfehlungen (${d.allIssues.length})</div>${d.allIssues.map(i=>`<div class="check-row"><span class="check-icon">${si(i.severity)}</span><div class="check-text">${i.msg}</div></div>`).join('')}</div>`:''}`;
+}
+
+document.getElementById('urlInput').addEventListener('keydown', e => { if(e.key==='Enter') runAudit(); });
+</script>
+</body>
+</html>
