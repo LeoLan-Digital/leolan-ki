@@ -1701,6 +1701,18 @@ berechneROI();
 
   var chatHistory = [];
 
+  
+  // Detect page language from URL
+  const pageLang = (function() {
+    const path = window.location.pathname;
+    if (path.startsWith('/tr')) return 'tr';
+    if (path.startsWith('/en')) return 'en';
+    if (path.startsWith('/ru')) return 'ru';
+    if (path.startsWith('/id')) return 'id';
+    if (path.startsWith('/th')) return 'th';
+    if (path.startsWith('/ar')) return 'ar';
+    return 'de';
+  })();
   async function getBotReplyAsync(message) {
     try {
       var controller = new AbortController();
@@ -1708,7 +1720,7 @@ berechneROI();
       var resp = await fetch('https://n8n.leolan.net/webhook/restaurant-chat', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({message: message, moduleKey: 'website-demo', history: chatHistory}),
+        body: JSON.stringify({message: message, moduleKey: 'website-demo', history: chatHistory, lang: pageLang}),
         signal: controller.signal
       });
       clearTimeout(tid);
