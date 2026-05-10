@@ -63,13 +63,50 @@
       }
     ],
     "addons": [
-      { "id": "instagram", "name": "Instagram Auto-Posts", "price": 89, "desc": "Tägliche KI-Posts auf Instagram" },
-      { "id": "facebook", "name": "Facebook Auto-Posts", "price": 59, "desc": "Automatische Posts auf Facebook" },
-      { "id": "reviews", "name": "Bewertungsmanagement", "price": 89, "desc": "KI antwortet auf Google & TripAdvisor Reviews" },
-      { "id": "google-business", "name": "Google Business", "price": 79, "desc": "Google Business Profil automatisch aktualisieren" },
-      { "id": "dashboard", "name": "Analytics Dashboard", "price": 39, "desc": "Echtzeit-Dashboard für alle Kennzahlen" },
-      { "id": "email-monitor", "name": "E-Mail Monitor", "price": 59, "desc": "Wichtige E-Mails automatisch erkennen & beantworten" },
-      { "id": "reels", "name": "Reels mit KI-Videos", "price": 149, "desc": "Automatische KI-Video-Reels für Instagram & TikTok" }
+      {
+        "id": "instagram",
+        "name": "Instagram Auto-Posts",
+        "price": 89,
+        "desc": "Tägliche KI-Posts auf Instagram"
+      },
+      {
+        "id": "facebook",
+        "name": "Facebook Auto-Posts",
+        "price": 59,
+        "desc": "Automatische Posts auf Facebook"
+      },
+      {
+        "id": "reviews",
+        "name": "Bewertungsmanagement",
+        "price": 89,
+        "desc": "KI antwortet auf Google & TripAdvisor Reviews"
+      },
+      {
+        "id": "google-business",
+        "name": "Google Business",
+        "price": 79,
+        "desc": "Google Business Profil automatisch aktualisieren"
+      },
+      {
+        "id": "dashboard",
+        "name": "Analytics Dashboard",
+        "price": 39,
+        "desc": "Echtzeit-Dashboard für alle Kennzahlen"
+      },
+      {
+        "id": "email-monitor",
+        "name": "E-Mail Monitor",
+        "price": 59,
+        "desc": "Wichtige E-Mails automatisch erkennen & beantworten"
+      },
+      {
+        "id": "reels",
+        "name": "Reels mit KI-Videos",
+        "price": 149,
+        "desc": "Automatische KI-Video-Reels für Instagram & TikTok"
+      }
     ]
-  }
+  },
+  "freeFirstMonth": true,
+  "freeFirstMonthNote": "Erster Monat kostenlos für alle Neukunden"
 }
