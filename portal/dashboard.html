@@ -319,6 +319,31 @@ if (savedLang !== 'de') {
   document.documentElement.lang = savedLang;
 }
 
+
+function setPortalLang(l) {
+  localStorage.setItem('portalLang', l);
+  document.documentElement.lang = l;
+  document.body.dir = l === 'ar' ? 'rtl' : 'ltr';
+  ['de','en','tr','ar','id'].forEach(function(x) {
+    var el = document.getElementById('dlang-' + x);
+    if (el) el.style.opacity = x === l ? '1' : '0.4';
+  });
+  // Save to account if possible
+  if (typeof customerCode !== 'undefined' && customerCode) {
+    fetch('https://n8n.leolan.net/webhook/kunden-dashboard', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({action:'update-settings', customerCode, settings:{staffLanguage:l}})
+    }).catch(function(){});
+  }
+}
+
+// Apply saved language on load
+(function() {
+  var l = new URLSearchParams(window.location.search).get('lang') || localStorage.getItem('portalLang') || navigator.language.slice(0,2) || 'de';
+  if (!['de','en','tr','ar','id'].includes(l)) l = 'de';
+  setPortalLang(l);
+})();
+
 </script>
 </body>
 </html>
