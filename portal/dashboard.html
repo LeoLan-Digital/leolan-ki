@@ -122,7 +122,17 @@ body{font-family:-apple-system,sans-serif;background:#0e1621;color:#e8eaed;min-h
     <div class="card" id="upgradeCard">
       <div class="card-title">Upgrade / Add-ons</div>
       <a class="btn blue" id="upgradeBtn" href="#">Credits kaufen oder Upgrade →</a>
+        <div class="card">
+      <div class="card-title">📂 Dateien &amp; Speisekarte</div>
+      <p style="color:#8b949e;font-size:13px;margin-bottom:14px">Speisekarte und Fotos hochladen — der Bot nutzt diese automatisch.</p>
+      <input type="file" id="uploadInput" accept="image/*,application/pdf" style="display:none" onchange="handleUpload(this)">
+      <div style="display:flex;gap:10px">
+        <button onclick="document.getElementById('uploadInput').click()" style="flex:1;background:#f4a527;color:#fff;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:700;cursor:pointer">📷 Foto</button>
+        <button onclick="document.getElementById('uploadInput').click()" style="flex:2;background:#5e81f4;color:#fff;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:700;cursor:pointer">📤 PDF / Datei</button>
+      </div>
+      <div id="uploadList" style="margin-top:10px"></div>
     </div>
+</div>
   </div>
 </div>
 
