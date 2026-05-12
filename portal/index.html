@@ -29,7 +29,13 @@ input#otp{font-size:28px;font-weight:700;text-align:center;letter-spacing:12px}
 </head>
 <body>
 <div class="card">
-  <div class="logo">
+  <div style="display:flex;justify-content:flex-end;gap:6px;margin-bottom:16px">
+    <button onclick="setLang('de')" title="Deutsch" style="background:none;border:none;cursor:pointer;font-size:22px;opacity:0.6;transition:opacity .2s" id="lang-de">🇩🇪</button>
+    <button onclick="setLang('en')" title="English" style="background:none;border:none;cursor:pointer;font-size:22px;opacity:0.6;transition:opacity .2s" id="lang-en">🇬🇧</button>
+    <button onclick="setLang('tr')" title="Türkçe" style="background:none;border:none;cursor:pointer;font-size:22px;opacity:0.6;transition:opacity .2s" id="lang-tr">🇹🇷</button>
+    <button onclick="setLang('ar')" title="العربية" style="background:none;border:none;cursor:pointer;font-size:22px;opacity:0.6;transition:opacity .2s" id="lang-ar">🇸🇦</button>
+    <button onclick="setLang('id')" title="Bahasa Indonesia" style="background:none;border:none;cursor:pointer;font-size:22px;opacity:0.6;transition:opacity .2s" id="lang-id">🇮🇩</button>
+  </div>  <div class="logo">
     <img src="https://ki.leolan.net/leolan-logo.svg" alt="LeoLan" onerror="this.style.display='none'">
     <h1>Kunden-Portal</h1>
     <p class="sub">LeoLan Digital</p>
@@ -104,6 +110,52 @@ function resendOtp(){
     var s=60;var t=setInterval(function(){link.textContent="Erneut senden ("+s+"s)";s--;if(s<0){clearInterval(t);link.textContent="Code erneut senden";link.style.pointerEvents="auto";link.style.opacity="1";}},1000);
   }).catch(()=>{link.style.pointerEvents="auto";link.style.opacity="1";link.textContent="Code erneut senden";});
 }
+
+var _t = {
+  de: { title:'Kunden-Portal', sub:'LeoLan Digital', emailLabel:'E-Mail oder Kundencode', pwLabel:'Passwort', btn:'Einloggen', noAcc:'Noch kein Konto?', reg:'Jetzt registrieren →', otpHint:'Code wurde an Ihre E-Mail gesendet.', otpLabel:'6-stelliger Code', otpBtn:'Bestätigen', back:'← Zurück', codeSent:'✓ Code gesendet!' },
+  en: { title:'Customer Portal', sub:'LeoLan Digital', emailLabel:'Email or customer code', pwLabel:'Password', btn:'Log in', noAcc:'No account yet?', reg:'Register now →', otpHint:'Code was sent to your email.', otpLabel:'6-digit code', otpBtn:'Confirm', back:'← Back', codeSent:'✓ Code sent!' },
+  tr: { title:'Müşteri Portalı', sub:'LeoLan Digital', emailLabel:'E-posta veya müşteri kodu', pwLabel:'Şifre', btn:'Giriş yap', noAcc:'Hesabınız yok mu?', reg:'Şimdi kayıt ol →', otpHint:'Kod e-postanıza gönderildi.', otpLabel:'6 haneli kod', otpBtn:'Onayla', back:'← Geri', codeSent:'✓ Kod gönderildi!' },
+  ar: { title:'بوابة العملاء', sub:'LeoLan Digital', emailLabel:'البريد الإلكتروني أو رمز العميل', pwLabel:'كلمة المرور', btn:'تسجيل الدخول', noAcc:'ليس لديك حساب؟', reg:'سجّل الآن ←', otpHint:'تم إرسال الرمز إلى بريدك الإلكتروني.', otpLabel:'رمز من 6 أرقام', otpBtn:'تأكيد', back:'→ رجوع', codeSent:'✓ تم الإرسال!' },
+  id: { title:'Portal Pelanggan', sub:'LeoLan Digital', emailLabel:'Email atau kode pelanggan', pwLabel:'Kata sandi', btn:'Masuk', noAcc:'Belum punya akun?', reg:'Daftar sekarang →', otpHint:'Kode dikirim ke email Anda.', otpLabel:'Kode 6 digit', otpBtn:'Konfirmasi', back:'← Kembali', codeSent:'✓ Kode terkirim!' }
+};
+
+var _lang = localStorage.getItem('portalLang') || navigator.language.slice(0,2) || 'de';
+if (!_t[_lang]) _lang = 'de';
+
+function setLang(l) {
+  _lang = l;
+  localStorage.setItem('portalLang', l);
+  applyLang();
+}
+
+function applyLang() {
+  var t = _t[_lang] || _t.de;
+  document.querySelector('h1').textContent = t.title;
+  document.querySelector('p.sub').textContent = t.sub;
+  var labels = document.querySelectorAll('label');
+  if (labels[0]) labels[0].textContent = t.emailLabel;
+  if (labels[1]) labels[1].textContent = t.pwLabel;
+  var btn = document.getElementById('btnLogin');
+  if (btn) btn.textContent = t.btn;
+  var noAcc = document.querySelector('.link');
+  if (noAcc) noAcc.innerHTML = t.noAcc + ' <a href="/onboarding/">' + t.reg + '</a>';
+  var otpHint = document.getElementById('otpHint');
+  if (otpHint) otpHint.textContent = t.otpHint;
+  var otpLab = document.querySelector('#otpSection label');
+  if (otpLab) otpLab.textContent = t.otpLabel;
+  var otpBtn = document.getElementById('btnOtp');
+  if (otpBtn) otpBtn.textContent = t.otpBtn;
+  // RTL for Arabic
+  document.body.dir = _lang === 'ar' ? 'rtl' : 'ltr';
+  // Highlight active lang
+  ['de','en','tr','ar','id'].forEach(function(l) {
+    var el = document.getElementById('lang-' + l);
+    if (el) el.style.opacity = l === _lang ? '1' : '0.4';
+  });
+}
+
+window.addEventListener('DOMContentLoaded', applyLang);
+
 </script>
 </body>
 </html>
