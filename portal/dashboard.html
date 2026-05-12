@@ -58,7 +58,7 @@ body{font-family:-apple-system,sans-serif;background:#0e1621;color:#e8eaed;min-h
   <div class="content">
     <!-- Plan -->
     <div class="card">
-      <div class="card-title">Ihr Paket</div>
+      <div class="card-title" data-i18n="plan">Ihr Paket</div>
       <div class="row"><span class="row-label">Paket</span><span id="planName" class="badge">—</span></div>
       <div class="row"><span class="row-label">Bereich</span><span class="row-value" id="planBereich">—</span></div>
       <div class="row"><span class="row-label">Status</span><span class="row-value" style="color:#4cd97b">Aktiv ✓</span></div>
@@ -80,7 +80,7 @@ body{font-family:-apple-system,sans-serif;background:#0e1621;color:#e8eaed;min-h
     </div>
     <!-- Billing -->
     <div class="card">
-      <div class="card-title">Rechnungsdaten</div>
+      <div class="card-title" data-i18n="billing">Rechnungsdaten</div>
       <div class="row"><span class="row-label">Name</span><span class="row-value" id="billName">—</span></div>
       <div class="row"><span class="row-label">Email</span><span class="row-value" id="billEmail">—</span></div>
       <div class="row"><span class="row-label">Company</span><span class="row-value" id="billCompany">—</span></div>
@@ -115,15 +115,15 @@ body{font-family:-apple-system,sans-serif;background:#0e1621;color:#e8eaed;min-h
     </div>
     <!-- Rechnungen -->
     <div class="card" id="invoiceCard">
-      <div class="card-title">Rechnungen</div>
+      <div class="card-title" data-i18n="invoices">Rechnungen</div>
       <div id="invoiceList"><p style="color:#8a9bb8;font-size:14px">Noch keine Rechnungen.</p></div>
     </div>
     <!-- Actions -->
     <div class="card" id="upgradeCard">
-      <div class="card-title">Upgrade / Add-ons</div>
+      <div class="card-title" data-i18n="upgrade_title">Upgrade / Add-ons</div>
       <a class="btn blue" id="upgradeBtn" href="#">Credits kaufen oder Upgrade →</a>
         <div class="card">
-      <div class="card-title">🖼️ Restaurant Logo</div>
+      <div class="card-title" data-i18n="logo_title">🖼️ Restaurant Logo</div>
       <p style="color:#8b949e;font-size:13px;margin-bottom:14px">Dein Logo erscheint im WhatsApp-Bot deiner Gäste.</p>
       <div style="display:flex;align-items:center;gap:16px;margin-bottom:14px">
         <img id="logoPreview" src="" style="width:64px;height:64px;border-radius:12px;object-fit:cover;background:#2a3a4a;display:none">
@@ -134,7 +134,7 @@ body{font-family:-apple-system,sans-serif;background:#0e1621;color:#e8eaed;min-h
       <div id="logoStatus" style="font-size:13px;color:#8b949e;margin-top:8px;text-align:center"></div>
     </div>
     <div class="card">
-      <div class="card-title">📂 Dateien &amp; Speisekarte</div>
+      <div class="card-title" data-i18n="files_title">📂 Dateien &amp; Speisekarte</div>
       <p style="color:#8b949e;font-size:13px;margin-bottom:14px">Speisekarte und Fotos hochladen — der Bot nutzt diese automatisch.</p>
       <input type="file" id="uploadInput" accept="image/*,application/pdf" style="display:none" onchange="handleUpload(this)">
       <div style="display:flex;gap:10px">
@@ -394,56 +394,13 @@ if (savedLang !== 'de') {
 
 
 var _portalTrans = {
-  de: {
-    plan:'Ihr Paket', credits:'Nachrichten-Kontingent', used:'Verwendet', of:'von',
-    billing:'Rechnungsdaten', invoices:'Rechnungen',
-    logo:'Restaurant Logo', logoDesc:'Dein Logo erscheint im WhatsApp-Bot deiner Gäste.',
-    logoUpload:'📤 Logo hochladen (JPG, PNG)',
-    files:'Dateien & Speisekarte', filesDesc:'Speisekarte und Fotos hochladen — der Bot nutzt diese automatisch.',
-    photoBtn:'📷 Foto', fileBtn:'📤 PDF / Datei',
-    upgrade:'Upgrade / Add-ons', upgradeBtn:'Credits kaufen oder Upgrade →',
-    logout:'Logout', loading:'Konto wird geladen...'
-  },
-  en: {
-    plan:'Your Plan', credits:'Message Credits', used:'Used', of:'of',
-    billing:'Billing Data', invoices:'Invoices',
-    logo:'Restaurant Logo', logoDesc:'Your logo appears in the WhatsApp bot for your guests.',
-    logoUpload:'📤 Upload Logo (JPG, PNG)',
-    files:'Files & Menu', filesDesc:'Upload menu and photos — the bot uses these automatically.',
-    photoBtn:'📷 Photo', fileBtn:'📤 PDF / File',
-    upgrade:'Upgrade / Add-ons', upgradeBtn:'Buy credits or upgrade →',
-    logout:'Logout', loading:'Loading account...'
-  },
-  tr: {
-    plan:'Paketiniz', credits:'Mesaj Kotası', used:'Kullanılan', of:'/',
-    billing:'Fatura Bilgileri', invoices:'Faturalar',
-    logo:'Restoran Logosu', logoDesc:'Logonuz misafirlerinizin WhatsApp botunda görünür.',
-    logoUpload:'📤 Logo Yükle (JPG, PNG)',
-    files:'Dosyalar & Menü', filesDesc:'Menü ve fotoğraf yükle — bot bunları otomatik kullanır.',
-    photoBtn:'📷 Fotoğraf', fileBtn:'📤 PDF / Dosya',
-    upgrade:'Yükseltme / Eklentiler', upgradeBtn:'Kredi satın al veya yükselt →',
-    logout:'Çıkış', loading:'Hesap yükleniyor...'
-  },
-  ar: {
-    plan:'باقتك', credits:'رصيد الرسائل', used:'مُستخدم', of:'من',
-    billing:'بيانات الفواتير', invoices:'الفواتير',
-    logo:'شعار المطعم', logoDesc:'يظهر شعارك في بوت واتساب لضيوفك.',
-    logoUpload:'📤 رفع الشعار (JPG, PNG)',
-    files:'الملفات والقائمة', filesDesc:'ارفع القائمة والصور — يستخدمها البوت تلقائياً.',
-    photoBtn:'📷 صورة', fileBtn:'📤 PDF / ملف',
-    upgrade:'ترقية / إضافات', upgradeBtn:'شراء رصيد أو ترقية ←',
-    logout:'خروج', loading:'جارٍ تحميل الحساب...'
-  },
-  id: {
-    plan:'Paket Anda', credits:'Kuota Pesan', used:'Digunakan', of:'dari',
-    billing:'Data Tagihan', invoices:'Tagihan',
-    logo:'Logo Restoran', logoDesc:'Logo Anda muncul di bot WhatsApp untuk tamu Anda.',
-    logoUpload:'📤 Upload Logo (JPG, PNG)',
-    files:'File & Menu', filesDesc:'Upload menu dan foto — bot menggunakannya otomatis.',
-    photoBtn:'📷 Foto', fileBtn:'📤 PDF / File',
-    upgrade:'Upgrade / Add-on', upgradeBtn:'Beli kredit atau upgrade →',
-    logout:'Keluar', loading:'Memuat akun...'
-  }
+  de: { plan:'Ihr Paket', credits:'Nachrichten-Kontingent', billing:'Rechnungsdaten', invoices:'Rechnungen', logo_title:'🖼️ Restaurant Logo', files_title:'📂 Dateien & Speisekarte', upgrade_title:'Upgrade / Add-ons', logout:'Logout' },
+  en: { plan:'Your Plan', credits:'Message Credits', billing:'Billing Data', invoices:'Invoices', logo_title:'🖼️ Restaurant Logo', files_title:'📂 Files & Menu', upgrade_title:'Upgrade / Add-ons', logout:'Logout' },
+  tr: { plan:'Paketiniz', credits:'Mesaj Kotası', billing:'Fatura Bilgileri', invoices:'Faturalar', logo_title:'🖼️ Restoran Logosu', files_title:'📂 Dosyalar & Menü', upgrade_title:'Yükseltme / Eklentiler', logout:'Çıkış' },
+  ar: { plan:'باقتك', credits:'رصيد الرسائل', billing:'بيانات الفواتير', invoices:'الفواتير', logo_title:'🖼️ شعار المطعم', files_title:'📂 الملفات والقائمة', upgrade_title:'ترقية / إضافات', logout:'خروج' },
+  id: { plan:'Paket Anda', credits:'Kuota Pesan', billing:'Data Tagihan', invoices:'Tagihan', logo_title:'🖼️ Logo Restoran', files_title:'📂 File & Menu', upgrade_title:'Upgrade / Add-on', logout:'Keluar' },
+  ru: { plan:'Ваш пакет', credits:'Кредиты сообщений', billing:'Платёжные данные', invoices:'Счета', logo_title:'🖼️ Логотип', files_title:'📂 Файлы & Меню', upgrade_title:'Апгрейд / Дополнения', logout:'Выйти' },
+  fr: { plan:'Votre forfait', credits:'Crédits messages', billing:'Données de facturation', invoices:'Factures', logo_title:'🖼️ Logo du restaurant', files_title:'📂 Fichiers & Menu', upgrade_title:'Mise à niveau / Add-ons', logout:'Déconnexion' }
 };
 
 function setPortalLang(l) {
@@ -455,9 +412,30 @@ function setPortalLang(l) {
   // Highlight active flag
   ['de','en','tr','ar','id'].forEach(function(x) {
     var el = document.getElementById('dlang-' + x);
-    if (el) { el.style.opacity = x === l ? '1' : '0.4'; el.style.fontWeight = x === l ? 'bold' : 'normal'; }
+    if (el) { el.style.opacity = x === l ? '1' : '0.4'; }
   });
   
+  // Translate all elements with data-i18n
+  var t = _portalTrans[l];
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) el.textContent = t[key];
+  });
+  
+  // Save to account
+  if (typeof customerCode !== 'undefined' && customerCode) {
+    fetch('https://n8n.leolan.net/webhook/kunden-dashboard', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({action:'update-settings', customerCode:customerCode, settings:{staffLanguage:l}})
+    }).catch(function(){});
+  }
+}
+
+(function() {
+  var l = new URLSearchParams(window.location.search).get('lang') || localStorage.getItem('portalLang') || (navigator.language||'de').slice(0,2);
+  if (!_portalTrans[l]) l = 'de';
+  setTimeout(function(){ setPortalLang(l); }, 200);
+})();
   var t = _portalTrans[l];
   
   // Translate card titles
