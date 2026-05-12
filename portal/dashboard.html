@@ -393,28 +393,110 @@ if (savedLang !== 'de') {
 }
 
 
+var _portalTrans = {
+  de: {
+    plan:'Ihr Paket', credits:'Nachrichten-Kontingent', used:'Verwendet', of:'von',
+    billing:'Rechnungsdaten', invoices:'Rechnungen',
+    logo:'Restaurant Logo', logoDesc:'Dein Logo erscheint im WhatsApp-Bot deiner Gäste.',
+    logoUpload:'📤 Logo hochladen (JPG, PNG)',
+    files:'Dateien & Speisekarte', filesDesc:'Speisekarte und Fotos hochladen — der Bot nutzt diese automatisch.',
+    photoBtn:'📷 Foto', fileBtn:'📤 PDF / Datei',
+    upgrade:'Upgrade / Add-ons', upgradeBtn:'Credits kaufen oder Upgrade →',
+    logout:'Logout', loading:'Konto wird geladen...'
+  },
+  en: {
+    plan:'Your Plan', credits:'Message Credits', used:'Used', of:'of',
+    billing:'Billing Data', invoices:'Invoices',
+    logo:'Restaurant Logo', logoDesc:'Your logo appears in the WhatsApp bot for your guests.',
+    logoUpload:'📤 Upload Logo (JPG, PNG)',
+    files:'Files & Menu', filesDesc:'Upload menu and photos — the bot uses these automatically.',
+    photoBtn:'📷 Photo', fileBtn:'📤 PDF / File',
+    upgrade:'Upgrade / Add-ons', upgradeBtn:'Buy credits or upgrade →',
+    logout:'Logout', loading:'Loading account...'
+  },
+  tr: {
+    plan:'Paketiniz', credits:'Mesaj Kotası', used:'Kullanılan', of:'/',
+    billing:'Fatura Bilgileri', invoices:'Faturalar',
+    logo:'Restoran Logosu', logoDesc:'Logonuz misafirlerinizin WhatsApp botunda görünür.',
+    logoUpload:'📤 Logo Yükle (JPG, PNG)',
+    files:'Dosyalar & Menü', filesDesc:'Menü ve fotoğraf yükle — bot bunları otomatik kullanır.',
+    photoBtn:'📷 Fotoğraf', fileBtn:'📤 PDF / Dosya',
+    upgrade:'Yükseltme / Eklentiler', upgradeBtn:'Kredi satın al veya yükselt →',
+    logout:'Çıkış', loading:'Hesap yükleniyor...'
+  },
+  ar: {
+    plan:'باقتك', credits:'رصيد الرسائل', used:'مُستخدم', of:'من',
+    billing:'بيانات الفواتير', invoices:'الفواتير',
+    logo:'شعار المطعم', logoDesc:'يظهر شعارك في بوت واتساب لضيوفك.',
+    logoUpload:'📤 رفع الشعار (JPG, PNG)',
+    files:'الملفات والقائمة', filesDesc:'ارفع القائمة والصور — يستخدمها البوت تلقائياً.',
+    photoBtn:'📷 صورة', fileBtn:'📤 PDF / ملف',
+    upgrade:'ترقية / إضافات', upgradeBtn:'شراء رصيد أو ترقية ←',
+    logout:'خروج', loading:'جارٍ تحميل الحساب...'
+  },
+  id: {
+    plan:'Paket Anda', credits:'Kuota Pesan', used:'Digunakan', of:'dari',
+    billing:'Data Tagihan', invoices:'Tagihan',
+    logo:'Logo Restoran', logoDesc:'Logo Anda muncul di bot WhatsApp untuk tamu Anda.',
+    logoUpload:'📤 Upload Logo (JPG, PNG)',
+    files:'File & Menu', filesDesc:'Upload menu dan foto — bot menggunakannya otomatis.',
+    photoBtn:'📷 Foto', fileBtn:'📤 PDF / File',
+    upgrade:'Upgrade / Add-on', upgradeBtn:'Beli kredit atau upgrade →',
+    logout:'Keluar', loading:'Memuat akun...'
+  }
+};
+
 function setPortalLang(l) {
+  if (!_portalTrans[l]) l = 'de';
   localStorage.setItem('portalLang', l);
   document.documentElement.lang = l;
   document.body.dir = l === 'ar' ? 'rtl' : 'ltr';
+  
+  // Highlight active flag
   ['de','en','tr','ar','id'].forEach(function(x) {
     var el = document.getElementById('dlang-' + x);
-    if (el) el.style.opacity = x === l ? '1' : '0.4';
+    if (el) { el.style.opacity = x === l ? '1' : '0.4'; el.style.fontWeight = x === l ? 'bold' : 'normal'; }
   });
-  // Save to account if possible
+  
+  var t = _portalTrans[l];
+  
+  // Translate card titles
+  var titles = document.querySelectorAll('.card-title');
+  var titleMap = {
+    'Ihr Paket':'plan', 'Your Plan':'plan', 'Paketiniz':'plan', 'باقتك':'plan', 'Paket Anda':'plan',
+    'Nachrichten-Kontingent':'credits', 'Message Credits':'credits', 'Mesaj Kotası':'credits', 'رصيد الرسائل':'credits', 'Kuota Pesan':'credits',
+    'Rechnungsdaten':'billing', 'Billing Data':'billing', 'Fatura Bilgileri':'billing', 'بيانات الفواتير':'billing', 'Data Tagihan':'billing',
+    'Rechnungen':'invoices', 'Invoices':'invoices', 'Faturalar':'invoices', 'الفواتير':'invoices', 'Tagihan':'invoices',
+    'Restaurant Logo':'logo', 'Restoran Logosu':'logo', 'شعار المطعم':'logo', 'Logo Restoran':'logo',
+    'Dateien & Speisekarte':'files', 'Files & Menu':'files', 'Dosyalar & Menü':'files', 'الملفات والقائمة':'files', 'File & Menu':'files',
+    'Upgrade / Add-ons':'upgrade', 'Yükseltme / Eklentiler':'upgrade', 'ترقية / إضافات':'upgrade', 'Upgrade / Add-on':'upgrade'
+  };
+  titles.forEach(function(el) {
+    var key = titleMap[el.textContent.trim()];
+    if (key && t[key]) el.textContent = t[key];
+  });
+  
+  // Translate buttons
+  var logoutBtn = document.querySelector('button[onclick*="logout"], a[onclick*="logout"], .btn-logout');
+  if (!logoutBtn) {
+    var btns = document.querySelectorAll('.header button, .header a');
+    btns.forEach(function(b) { if (b.textContent.trim() === 'Logout' || b.textContent.trim() === 'Çıkış' || b.textContent.trim() === 'Keluar') b.textContent = t.logout; });
+  }
+  
+  // Save language to account
   if (typeof customerCode !== 'undefined' && customerCode) {
     fetch('https://n8n.leolan.net/webhook/kunden-dashboard', {
       method: 'POST', headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({action:'update-settings', customerCode, settings:{staffLanguage:l}})
+      body: JSON.stringify({action:'update-settings', customerCode: customerCode, settings:{staffLanguage:l}})
     }).catch(function(){});
   }
 }
 
-// Apply saved language on load
+// Apply on load
 (function() {
   var l = new URLSearchParams(window.location.search).get('lang') || localStorage.getItem('portalLang') || navigator.language.slice(0,2) || 'de';
-  if (!['de','en','tr','ar','id'].includes(l)) l = 'de';
-  setPortalLang(l);
+  if (!_portalTrans[l]) l = 'de';
+  setTimeout(function() { setPortalLang(l); }, 100);
 })();
 
 </script>
