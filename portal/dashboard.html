@@ -111,7 +111,7 @@ body{font-family:-apple-system,sans-serif;background:#0e1621;color:#e8eaed;min-h
       <div id="invoiceList"><p style="color:#8a9bb8;font-size:14px">Noch keine Rechnungen.</p></div>
     </div>
     <!-- Actions -->
-    <div class="card">
+    <div class="card" id="upgradeCard">
       <div class="card-title">Upgrade / Add-ons</div>
       <a class="btn blue" id="upgradeBtn" href="#">Credits kaufen oder Upgrade →</a>
     </div>
@@ -142,7 +142,14 @@ xhr.onload = function() {
   var ratio = limit > 0 ? Math.min(used / limit, 1) : 0;
 
   document.getElementById('headerCode').textContent = customerCode;
-  document.getElementById('planName').textContent = (acc.paket || 'starter').toUpperCase();
+  var paketMap = {'starter':'Starter','pro':'Pro','core':'Pro','enterprise':'Enterprise'};
+  var paketDisplay = paketMap[acc.paket] || (acc.paket || 'Starter');
+  document.getElementById('planName').textContent = paketDisplay;
+  // Hide upgrade button for Pro/Enterprise customers
+  var upgradeCard = document.getElementById('upgradeCard');
+  if (upgradeCard && (acc.paket === 'pro' || acc.paket === 'enterprise' || acc.paket === 'core')) {
+    upgradeCard.style.display = 'none';
+  }
   document.getElementById('planBereich').textContent = acc.sector || 'hotel';
   document.getElementById('creditsVerwendet').textContent = used;
   document.getElementById('creditsLimit').textContent = limit;
@@ -268,6 +275,50 @@ xhr.send(JSON.stringify({customerCode: customerCode}));
     xhr.onerror = function() { btn.disabled = false; btn.textContent = 'Speichern'; };
     xhr.send(JSON.stringify(payload));
   }
+
+function handleUpload(input) {
+  var file = input.files[0];
+  if (!file) return;
+  var formData = new FormData();
+  formData.append('file', file);
+  formData.append('customerCode', customerCode);
+  formData.append('fileName', file.name);
+  formData.append('dishName', file.name.replace(/\.[^.]+$/,''));
+  
+  var list = document.getElementById('uploadList');
+  var item = document.createElement('div');
+  item.style = 'background:#2a3a4a;border-radius:8px;padding:8px 12px;margin-bottom:6px;font-size:13px;color:#e8eaed';
+  item.textContent = '⏳ ' + file.name + ' wird hochgeladen...';
+  list.prepend(item);
+  
+  fetch('https://n8n.leolan.net/webhook/upload-media', { method: 'POST', body: formData })
+    .then(r => { item.textContent = r.ok ? '✅ ' + file.name : '❌ Fehler beim Hochladen: ' + file.name; })
+    .catch(() => { item.textContent = '❌ Verbindungsfehler: ' + file.name; });
+  input.value = '';
+}
+
+var translations = {
+  de: { plan: 'Ihr Paket', credits: 'Nachrichten-Kontingent', billing: 'Rechnungsdaten', upload: 'Dateien & Speisekarte', lang: 'Sprache' },
+  en: { plan: 'Your Plan', credits: 'Message Credits', billing: 'Billing Data', upload: 'Files & Menu', lang: 'Language' },
+  tr: { plan: 'Paketiniz', credits: 'Mesaj Kotası', billing: 'Fatura Bilgileri', upload: 'Dosyalar & Menü', lang: 'Dil' },
+  ar: { plan: 'باقتك', credits: 'رصيد الرسائل', billing: 'بيانات الفواتير', upload: 'الملفات والقائمة', lang: 'اللغة' }
+};
+
+function setLang(lang) {
+  localStorage.setItem('portalLang', lang);
+  var t = translations[lang] || translations.de;
+  // Update visible text
+  var cards = document.querySelectorAll('.card-title');
+  // Simple approach: reload with lang param
+  window.location.href = window.location.pathname + '?code=' + customerCode + '&lang=' + lang;
+}
+
+// Apply saved language
+var savedLang = new URLSearchParams(window.location.search).get('lang') || localStorage.getItem('portalLang') || 'de';
+if (savedLang !== 'de') {
+  document.documentElement.lang = savedLang;
+}
+
 </script>
 </body>
 </html>
