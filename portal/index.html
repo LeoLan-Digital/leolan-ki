@@ -49,6 +49,7 @@ input#otp{font-size:28px;font-weight:700;text-align:center;letter-spacing:12px}
     <label>6-stelliger Code</label>
     <input type="text" id="otp" maxlength="6" placeholder="000000" onkeydown="if(event.key==='Enter')verifyOtp()">
     <button id="btnOtp" onclick="verifyOtp()">Bestätigen</button>
+    <div class="link" style="margin-top:8px"><a onclick="resendOtp()" id="resendLink">Code erneut senden</a></div>
     <div class="link"><a onclick="backToLogin()">← Zurück</a></div>
   </div>
 </div>
@@ -93,6 +94,15 @@ function verifyOtp(){
     if(data.success){window.location.href='/portal/dashboard.html?code='+encodeURIComponent(pendingCode);}
     else{showErr(data.error||'Falscher Code. Bitte erneut versuchen.');document.getElementById('otp').value='';document.getElementById('otp').focus();}
   }).catch(()=>{btn.disabled=false;btn.textContent='Bestätigen';showErr('Verbindungsfehler.');});
+}
+function resendOtp(){
+  var link=document.getElementById("resendLink");
+  link.style.pointerEvents="none";link.style.opacity="0.4";link.textContent="Wird gesendet...";
+  fetch("https://n8n.leolan.net/webhook/otp-send",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({customerCode:pendingCode})})
+  .then(r=>r.json()).then(()=>{
+    showInfo("✓ Neuer Code wurde gesendet!");
+    var s=60;var t=setInterval(function(){link.textContent="Erneut senden ("+s+"s)";s--;if(s<0){clearInterval(t);link.textContent="Code erneut senden";link.style.pointerEvents="auto";link.style.opacity="1";}},1000);
+  }).catch(()=>{link.style.pointerEvents="auto";link.style.opacity="1";link.textContent="Code erneut senden";});
 }
 </script>
 </body>
