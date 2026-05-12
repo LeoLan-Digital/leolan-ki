@@ -227,6 +227,19 @@ body{background:#0d1117;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFo
 <script>
 var urlPkg=new URLSearchParams(window.location.search).get('paket'); var pkg=urlPkg==='pro'?'pro':'starter';
 var billing='annual';
+
+function previewLogo(input) {
+  var file = input.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var box = document.getElementById('logoPreviewBox');
+    box.innerHTML = '<img src="' + e.target.result + '" style="width:100%;height:100%;object-fit:cover;border-radius:10px">';
+    document.getElementById('logoName').textContent = '✓ ' + file.name;
+  };
+  reader.readAsDataURL(file);
+}
+
 function setBilling(b){
   billing=b;
   var ma=document.getElementById('toggle-annual'),mm=document.getElementById('toggle-monthly');

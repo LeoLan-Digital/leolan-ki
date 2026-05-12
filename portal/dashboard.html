@@ -123,6 +123,17 @@ body{font-family:-apple-system,sans-serif;background:#0e1621;color:#e8eaed;min-h
       <div class="card-title">Upgrade / Add-ons</div>
       <a class="btn blue" id="upgradeBtn" href="#">Credits kaufen oder Upgrade →</a>
         <div class="card">
+      <div class="card-title">🖼️ Restaurant Logo</div>
+      <p style="color:#8b949e;font-size:13px;margin-bottom:14px">Dein Logo erscheint im WhatsApp-Bot deiner Gäste.</p>
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:14px">
+        <img id="logoPreview" src="" style="width:64px;height:64px;border-radius:12px;object-fit:cover;background:#2a3a4a;display:none">
+        <div id="logoPlaceholder" style="width:64px;height:64px;border-radius:12px;background:#2a3a4a;display:flex;align-items:center;justify-content:center;font-size:28px">🏪</div>
+      </div>
+      <input type="file" id="logoInput" accept="image/*" style="display:none" onchange="handleLogoUpload(this)">
+      <button onclick="document.getElementById('logoInput').click()" style="width:100%;background:#5e81f4;color:#fff;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:700;cursor:pointer">📤 Logo hochladen</button>
+      <div id="logoStatus" style="font-size:13px;color:#8b949e;margin-top:8px;text-align:center"></div>
+    </div>
+    <div class="card">
       <div class="card-title">📂 Dateien &amp; Speisekarte</div>
       <p style="color:#8b949e;font-size:13px;margin-bottom:14px">Speisekarte und Fotos hochladen — der Bot nutzt diese automatisch.</p>
       <input type="file" id="uploadInput" accept="image/*,application/pdf" style="display:none" onchange="handleUpload(this)">
@@ -293,6 +304,50 @@ xhr.send(JSON.stringify({customerCode: customerCode}));
     xhr.onerror = function() { btn.disabled = false; btn.textContent = 'Speichern'; };
     xhr.send(JSON.stringify(payload));
   }
+
+
+function handleLogoUpload(input) {
+  var file = input.files[0];
+  if (!file) return;
+  var status = document.getElementById('logoStatus');
+  var preview = document.getElementById('logoPreview');
+  var placeholder = document.getElementById('logoPlaceholder');
+  
+  // Show preview
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    preview.src = e.target.result;
+    preview.style.display = 'block';
+    placeholder.style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+  
+  status.textContent = '⏳ Logo wird hochgeladen...';
+  status.style.color = '#8b949e';
+  
+  var formData = new FormData();
+  formData.append('file', file);
+  formData.append('customerCode', customerCode);
+  formData.append('fileName', 'logo.' + file.name.split('.').pop());
+  formData.append('dishName', 'logo');
+  formData.append('category', 'logo');
+  
+  fetch('https://n8n.leolan.net/webhook/upload-media', { method: 'POST', body: formData })
+    .then(function(r) {
+      if (r.ok) {
+        status.textContent = '✅ Logo gespeichert! Bot-Avatar wird aktualisiert.';
+        status.style.color = '#4cd97b';
+      } else {
+        status.textContent = '❌ Fehler beim Hochladen';
+        status.style.color = '#ef4444';
+      }
+    })
+    .catch(function() {
+      status.textContent = '❌ Verbindungsfehler';
+      status.style.color = '#ef4444';
+    });
+  input.value = '';
+}
 
 function handleUpload(input) {
   var file = input.files[0];
