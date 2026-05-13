@@ -181,16 +181,15 @@ body{background:#0d1117;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFo
 </div>
 <script>
 var urlPkg=new URLSearchParams(window.location.search).get('paket'); var pkg=urlPkg==='pro'?'pro':'starter';
-// Auto-fill from WhatsApp Bot URL params
-(function(){
+// Auto-fill from WhatsApp Bot URL params (runs after all scripts)
+window.addEventListener('load', function(){
   var p=new URLSearchParams(window.location.search);
-  function fill(id,val){var el=document.getElementById(id);if(el&&val)el.value=decodeURIComponent(val);}
+  function fill(id,val){var el=document.getElementById(id);if(el&&val)el.value=val;}
   fill('company',p.get('name'));
   fill('city',p.get('city'));
   fill('whatsapp',p.get('wa'));
   fill('email',p.get('email'));
-  // cuisine has no direct field — skip
-})();
+});
 var fdata={};
 function tpw(id,btn){var i=document.getElementById(id);if(i.type==='password'){i.type='text';btn.textContent='Verbergen';}else{i.type='password';btn.textContent='Zeigen';}}
 function spkg(p){pkg=p;document.querySelectorAll('.pkg').forEach(function(c){c.classList.remove('on')});document.querySelector('[data-pkg="'+p+'"]').classList.add('on');}
