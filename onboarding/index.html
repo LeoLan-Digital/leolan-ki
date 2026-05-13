@@ -226,6 +226,16 @@ body{background:#0d1117;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFo
 </div>
 <script>
 var urlPkg=new URLSearchParams(window.location.search).get('paket'); var pkg=urlPkg==='pro'?'pro':'starter';
+// Auto-fill from WhatsApp Bot URL params
+window.addEventListener('load', function(){
+  var p=new URLSearchParams(window.location.search);
+  function fill(id,val){var el=document.getElementById(id);if(el&&val)el.value=val;}
+  fill('company',p.get('name'));
+  fill('city',p.get('city'));
+  fill('whatsapp',p.get('wa'));
+  fill('email',p.get('email'));
+});
+
 var billing='annual';
 
 function previewLogo(input) {
