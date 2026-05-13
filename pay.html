@@ -16,7 +16,12 @@ p{color:#8b949e;font-size:14px;}</style>
 (function(){
   var u = new URLSearchParams(window.location.search).get('u');
   if(u){
-    try{ window.location.replace(atob(u)); }
+    try{
+      // Support both base64url (no padding) and standard base64
+      var b64 = u.replace(/-/g,'+').replace(/_/g,'/');
+      while(b64.length % 4) b64 += '=';
+      window.location.replace(atob(b64));
+    }
     catch(e){ window.location.replace(decodeURIComponent(u)); }
   } else {
     document.querySelector('p').textContent = 'Ungültiger Link. Bitte erneut versuchen.';
