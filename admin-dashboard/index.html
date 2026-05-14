@@ -1015,7 +1015,7 @@
     }
 
     async function openChat(workflowId, name, email = '') {
-      currentChat = { workflowId, name, email };
+      currentChat = { workflowId, name, email, pushToken: null };
       chatTitle.textContent = `Chat · ${name}`;
       chatSubtitle.textContent = `Workflow-ID: ${workflowId}${email ? ` · ${email}` : ''}`;
       chatReply.value = '';
@@ -1026,6 +1026,11 @@
         const data = await apiJson(url, { method: 'GET' });
         renderChatMessages(Array.isArray(data.messages) ? data.messages : []);
         chatStatus.textContent = data.customerEmail ? `Antwort geht an ${data.customerEmail}` : 'Keine Kunden-E-Mail hinterlegt.';
+        // Push-Token laden
+        try {
+          const ptRes = await apiJson('https://n8n.leolan.net/webhook/kunden-register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'get-push-token', adminKey: 'LeoLan2026Admin!', customerCode: workflowId }) });
+          if (ptRes.pushToken) currentChat.pushToken = ptRes.pushToken;
+        } catch(e) {}
         await loadChatCustomers();
       } catch (error) {
         renderChatMessages([]);
@@ -1051,6 +1056,14 @@
         renderChatMessages(Array.isArray(data.messages) ? data.messages : []);
         chatReply.value = '';
         chatStatus.textContent = data.customerEmail ? `Gesendet an ${data.customerEmail}` : 'Antwort gespeichert, aber keine Kunden-E-Mail vorhanden.';
+        // Push notification direkt senden
+        if (currentChat.pushToken && String(currentChat.pushToken).startsWith('ExponentPushToken')) {
+          fetch('https://exp.host/--/api/v2/push/send', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ to: currentChat.pushToken, title: '\uD83D\uDCAC Neue Nachricht vom Support', body: message, data: { type: 'chat-message', workflowId: currentChat.workflowId }, sound: 'default', priority: 'high', badge: 1 })
+          }).catch(() => {});
+        }
         await loadChatCustomers();
       } catch (error) {
         chatStatus.textContent = error.message || 'Antwort konnte nicht gesendet werden.';
