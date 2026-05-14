@@ -1026,11 +1026,8 @@
         const data = await apiJson(url, { method: 'GET' });
         renderChatMessages(Array.isArray(data.messages) ? data.messages : []);
         chatStatus.textContent = data.customerEmail ? `Antwort geht an ${data.customerEmail}` : 'Keine Kunden-E-Mail hinterlegt.';
-        // Push-Token laden
-        try {
-          const ptRes = await apiJson('https://n8n.leolan.net/webhook/kunden-register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'get-push-token', adminKey: 'LeoLan2026Admin!', customerCode: workflowId }) });
-          if (ptRes.pushToken) currentChat.pushToken = ptRes.pushToken;
-        } catch(e) {}
+        // Push-Token direkt aus History-Response
+        if (data.pushToken) currentChat.pushToken = data.pushToken;
         await loadChatCustomers();
       } catch (error) {
         renderChatMessages([]);
