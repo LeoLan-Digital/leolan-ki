@@ -436,39 +436,6 @@ function setPortalLang(l) {
   if (!_portalTrans[l]) l = 'de';
   setTimeout(function(){ setPortalLang(l); }, 200);
 })();
-  var t = _portalTrans[l];
-  
-  // Translate card titles
-  var titles = document.querySelectorAll('.card-title');
-  var titleMap = {
-    'Ihr Paket':'plan', 'Your Plan':'plan', 'Paketiniz':'plan', 'باقتك':'plan', 'Paket Anda':'plan',
-    'Nachrichten-Kontingent':'credits', 'Message Credits':'credits', 'Mesaj Kotası':'credits', 'رصيد الرسائل':'credits', 'Kuota Pesan':'credits',
-    'Rechnungsdaten':'billing', 'Billing Data':'billing', 'Fatura Bilgileri':'billing', 'بيانات الفواتير':'billing', 'Data Tagihan':'billing',
-    'Rechnungen':'invoices', 'Invoices':'invoices', 'Faturalar':'invoices', 'الفواتير':'invoices', 'Tagihan':'invoices',
-    'Restaurant Logo':'logo', 'Restoran Logosu':'logo', 'شعار المطعم':'logo', 'Logo Restoran':'logo',
-    'Dateien & Speisekarte':'files', 'Files & Menu':'files', 'Dosyalar & Menü':'files', 'الملفات والقائمة':'files', 'File & Menu':'files',
-    'Upgrade / Add-ons':'upgrade', 'Yükseltme / Eklentiler':'upgrade', 'ترقية / إضافات':'upgrade', 'Upgrade / Add-on':'upgrade'
-  };
-  titles.forEach(function(el) {
-    var key = titleMap[el.textContent.trim()];
-    if (key && t[key]) el.textContent = t[key];
-  });
-  
-  // Translate buttons
-  var logoutBtn = document.querySelector('button[onclick*="logout"], a[onclick*="logout"], .btn-logout');
-  if (!logoutBtn) {
-    var btns = document.querySelectorAll('.header button, .header a');
-    btns.forEach(function(b) { if (b.textContent.trim() === 'Logout' || b.textContent.trim() === 'Çıkış' || b.textContent.trim() === 'Keluar') b.textContent = t.logout; });
-  }
-  
-  // Save language to account
-  if (typeof customerCode !== 'undefined' && customerCode) {
-    fetch('https://n8n.leolan.net/webhook/kunden-dashboard', {
-      method: 'POST', headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({action:'update-settings', customerCode: customerCode, settings:{staffLanguage:l}})
-    }).catch(function(){});
-  }
-}
 
 // Apply on load
 (function() {
