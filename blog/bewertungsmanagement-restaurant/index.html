@@ -135,4 +135,31 @@ footer{background:#2a1e08;padding:20px;text-align:center;color:#6a5030;font-size
   function rejectCookies(){setCookie("cookie_consent","rejected",365);document.getElementById("cookieBanner").style.display="none";}
   (function(){var c=getCookie("cookie_consent");if(!c){document.getElementById("cookieBanner").style.display="flex";}else if(c==="accepted"){loadTracking();}})();
 </script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ki.leolan.net/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://ki.leolan.net/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Bewertungsmanagement Restaurant",
+      "item": "https://ki.leolan.net/blog/bewertungsmanagement-restaurant/"
+    }
+  ]
+}
+</script>
 </body></html>

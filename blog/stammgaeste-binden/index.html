@@ -141,7 +141,7 @@ footer{background:#040c18;border-top:1px solid #1a3050;padding:24px;text-align:c
 <div class="cta"><h3>Stammgast-CRM jetzt aktivieren</h3><p>Erster Monat kostenlos - Kein Vertrag - 5 Werktage Einrichtung</p><a href="https://ki.leolan.net" class="btn">Kostenlos testen</a></div>
 <h2>Haeufige Fragen</h2>
 <div class="faq-item"><h3>Wie werden Gastedaten gespeichert?</h3><p>DSGVO-konform auf deutschen Servern. Gaeste koennen ihre Daten jederzeit loeschen lassen.</p></div>
-<div class="faq-item"><h3>Was kostet das Stammgast-CRM?</h3><p>Ab 99 EUR/Monat inklusive WhatsApp Bot und CRM. Erster Monat kostenlos.</p></div>
+<div class="faq-item"><h3>Was kostet das Stammgast-CRM?</h3><p>Ab 149 EUR/Monat inklusive WhatsApp Bot und CRM — erster Monat kostenlos.</p></div>
 <div class="faq-item"><h3>Koennen Stammgaeste die Nachrichten ablehnen?</h3><p>Ja. Jede Nachricht enthaelt eine einfache Opt-out Option.</p></div>
 </div>
 <footer>2026 LeoLan Digital - <a href="https://ki.leolan.net" style="color:#4da6ff">ki.leolan.net</a></footer>
@@ -160,5 +160,57 @@ footer{background:#040c18;border-top:1px solid #1a3050;padding:24px;text-align:c
   function acceptCookies(){setCookie("cookie_consent","accepted",365);document.getElementById("cookieBanner").style.display="none";loadTracking();}
   function rejectCookies(){setCookie("cookie_consent","rejected",365);document.getElementById("cookieBanner").style.display="none";}
   (function(){var c=getCookie("cookie_consent");if(!c){document.getElementById("cookieBanner").style.display="flex";}else if(c==="accepted"){loadTracking();}})();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Was kostet das Stammgast-CRM?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ab 149 EUR/Monat inklusive WhatsApp Bot und CRM — erster Monat kostenlos."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie funktioniert das Treueprogramm per WhatsApp?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Gäste erhalten automatische Willkommensnachrichten, Geburtstagsgüße und personalisierte Angebote über WhatsApp."
+      }
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ki.leolan.net/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://ki.leolan.net/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Stammgaeste Binden",
+      "item": "https://ki.leolan.net/blog/stammgaeste-binden/"
+    }
+  ]
+}
 </script>
 </body></html>

@@ -137,7 +137,7 @@ footer{background:#040a14;border-top:1px solid #1a3050;padding:20px;text-align:c
 </div>
 <div class="faq">
 <h2>Haeufige Fragen</h2>
-<div class="faq-q"><h3>Was kostet ein KI-Assistent?</h3><p>Ab 99 EUR/Monat erster Monat kostenlos kein Vertrag.</p></div>
+<div class="faq-q"><h3>Was kostet ein KI-Assistent?</h3><p>Ab 149 EUR/Monat — erster Monat kostenlos, kein Vertrag.</p></div>
 <div class="faq-q"><h3>Wie schnell ist die Einrichtung?</h3><p>5 Werktage - vollstaendig eingerichtet.</p></div>
 <div class="faq-q"><h3>In welchen Sprachen?</h3><p>DE EN TR AR RU FR IT ES automatisch erkannt.</p></div>
 </div>
@@ -159,5 +159,65 @@ footer{background:#040a14;border-top:1px solid #1a3050;padding:20px;text-align:c
   function acceptCookies(){setCookie("cookie_consent","accepted",365);document.getElementById("cookieBanner").style.display="none";loadTracking();}
   function rejectCookies(){setCookie("cookie_consent","rejected",365);document.getElementById("cookieBanner").style.display="none";}
   (function(){var c=getCookie("cookie_consent");if(!c){document.getElementById("cookieBanner").style.display="flex";}else if(c==="accepted"){loadTracking();}})();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Was kostet ein KI-Assistent für Restaurants?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ab 149 EUR/Monat — erster Monat kostenlos, kein Vertrag."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie viele mehr Reservierungen bringt KI?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Unsere Kunden berichten von bis zu 30% mehr Reservierungen durch 24/7-Erreichbarkeit und automatische Antworten."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Ist der KI-Assistent DSGVO-konform?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja, alle Daten werden auf EU-Servern verarbeitet. LeoLan Digital bietet einen Auftragsverarbeitungsvertrag (AVV) an."
+      }
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ki.leolan.net/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://ki.leolan.net/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Ki Fuer Gastronomie",
+      "item": "https://ki.leolan.net/blog/ki-fuer-gastronomie/"
+    }
+  ]
+}
 </script>
 </body></html>

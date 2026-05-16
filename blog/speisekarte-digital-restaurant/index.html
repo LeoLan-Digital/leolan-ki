@@ -163,5 +163,32 @@ footer{background:#040a14;border-top:1px solid #1a3050;padding:20px;text-align:c
 <script>
 if(!localStorage.getItem('cookieConsent')){document.getElementById('cookieBanner').style.display='flex';}
 </script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ki.leolan.net/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://ki.leolan.net/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Speisekarte Digital Restaurant",
+      "item": "https://ki.leolan.net/blog/speisekarte-digital-restaurant/"
+    }
+  ]
+}
+</script>
 </body>
 </html>
