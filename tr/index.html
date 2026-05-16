@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+<link rel="preload" as="image" href="/images/home/hero-restaurant.webp" fetchpriority="high" media="(min-width: 601px)">
+<link rel="preload" as="image" href="/images/home/hero-restaurant-mobile.webp" fetchpriority="high" media="(max-width: 600px)">
+
 <base href="https://ki.leolan.net/">
 <script>
 (function() {
@@ -509,7 +512,7 @@
   "@type": "SoftwareCompany",
   "name": "LeoLan Digital",
   "url": "https://ki.leolan.net",
-  "logo": "https://ki.leolan.net/leolan-logo.png",
+  "logo": "/leolan-logo-new.png",
   "description": "Restoranlar için daha fazla rezervasyon: WhatsApp Botu, Yorum Yönetimi, Sosyal Medya ve dijital menü.",
   "address": {
     "@type": "PostalAddress",
@@ -714,7 +717,7 @@
     </p>
   </div>
   <div class="hero-img-wrap reveal reveal-delay-4">
-    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1400&q=80&auto=format&fit=crop" alt="Restoran daha fazla rezervasyon">
+    <img fetchpriority="high" srcset="/images/home/hero-restaurant-mobile.webp 600w, /images/home/hero-restaurant.webp 1400w" sizes="(max-width: 600px) 600px, 1400px" src="/images/home/hero-restaurant.webp" alt="Restoran daha fazla rezervasyon">
   </div>
 </section>
 
@@ -964,7 +967,7 @@
       </div>
     </div>
     <div class="feature-img reveal reveal-delay-1">
-      <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=900&q=80&auto=format&fit=crop" alt="Dijital Menü">
+      <img src="/images/home/feature-speisekarte.webp" alt="Dijital Menü">
     </div>
   </div>
 </section>
@@ -988,7 +991,7 @@
       </div>
     </div>
     <div class="feature-img reveal reveal-delay-1">
-      <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&q=80&auto=format&fit=crop" alt="WhatsApp Restoran Asistanı">
+      <img src="/images/home/feature-whatsapp.webp" alt="WhatsApp Restoran Asistanı">
     </div>
   </div>
 </section>
@@ -1012,7 +1015,7 @@
       </div>
     </div>
     <div class="feature-img reveal reveal-delay-1">
-      <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=900&q=80&auto=format&fit=crop" alt="Restaurant Social Media">
+      <img src="/images/home/feature-restaurant.webp" alt="Restaurant Social Media">
     </div>
   </div>
 </section>
@@ -1036,7 +1039,7 @@
       </div>
     </div>
     <div class="feature-img reveal reveal-delay-1">
-      <img src="https://images.unsplash.com/photo-1551218808-94e220e084d2?w=900&q=80&auto=format&fit=crop" alt="Restoran Yorumları">
+      <img src="/images/home/feature-bewertungen.webp" alt="Restoran Yorumları">
     </div>
   </div>
 </section>
@@ -1313,7 +1316,7 @@ berechneROI();
       </div>
     </div>
     <div class="feature-img reveal reveal-delay-1">
-      <img src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=900&q=80&auto=format&fit=crop" alt="AI Speiseempfehlung Restaurant">
+      <img src="/images/home/feature-speise2.webp" alt="AI Speiseempfehlung Restaurant">
     </div>
   </div>
 </section>
@@ -1485,7 +1488,7 @@ berechneROI();
   <div class="chatbot-window" role="dialog" aria-modal="true" aria-labelledby="chatbotTitle">
     <div class="chatbot-header">
       <div class="chatbot-title">
-        <div class="chatbot-avatar" style="padding:0;overflow:hidden"><img src="https://ki.leolan.net/leolan-logo.png" width="42" height="42" style="display:block;border-radius:50%;object-fit:cover" alt="LeoLan"></div>
+        <div class="chatbot-avatar" style="padding:0;overflow:hidden"><img src="/leolan-logo-new.png" width="42" height="42" style="display:block;border-radius:50%;object-fit:cover" alt="LeoLan"></div>
         <div>
           <strong id="chatbotTitle">LeoLan dijital asistan</strong>
           <span>Canlı Demo · hemen yanıt verir</span>
