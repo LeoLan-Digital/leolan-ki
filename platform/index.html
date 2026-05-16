@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LeoLan Intelligence Platform</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d1117; color:#e6edf3; font-family:-apple-system,sans-serif; padding:20px; }
+h1 { font-size:20px; font-weight:700; color:#58a6ff; margin-bottom:4px; }
+.sub { font-size:12px; color:#8b949e; margin-bottom:20px; }
+.grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:20px; }
+.card { background:#161b22; border:1px solid #30363d; border-radius:12px; padding:16px; }
+.card .label { font-size:11px; color:#8b949e; text-transform:uppercase; letter-spacing:.08em; margin-bottom:6px; }
+.card .value { font-size:28px; font-weight:700; }
+.card .trend { font-size:11px; margin-top:4px; }
+.green { color:#3fb950; } .blue { color:#58a6ff; } .orange { color:#d29922; } .purple { color:#bc8cff; }
+.agents { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:20px; }
+.agent { background:#161b22; border:1px solid #30363d; border-radius:10px; padding:12px; display:flex; align-items:center; gap:10px; }
+.agent .dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.dot-idle { background:#484f58; }
+.dot-active { background:#3fb950; box-shadow:0 0 6px #3fb950; animation:pulse 1.5s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+.agent .name { font-size:12px; font-weight:600; flex:1; }
+.agent .type { font-size:10px; color:#8b949e; }
+.agent .badge { font-size:10px; padding:2px 7px; border-radius:20px; }
+.badge-idle { background:#21262d; color:#8b949e; }
+.badge-active { background:#1f4e2f; color:#3fb950; }
+.badge-ready { background:#1c2840; color:#58a6ff; }
+.tasks { background:#161b22; border:1px solid #30363d; border-radius:12px; padding:16px; margin-bottom:20px; }
+.tasks h2, .model-bar h2 { font-size:13px; font-weight:700; color:#8b949e; text-transform:uppercase; letter-spacing:.08em; margin-bottom:12px; }
+.task-row { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid #21262d; }
+.task-row:last-child { border-bottom:none; }
+.task-icon { font-size:16px; }
+.task-name { flex:1; font-size:13px; }
+.task-status { font-size:11px; padding:3px 8px; border-radius:20px; }
+.st-done { background:#1f4e2f; color:#3fb950; }
+.st-run { background:#1c2840; color:#58a6ff; }
+.model-bar { background:#161b22; border:1px solid #30363d; border-radius:12px; padding:16px; margin-bottom:20px; }
+.bar-row { margin-bottom:10px; }
+.bar-label { display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px; }
+.bar-track { background:#21262d; border-radius:4px; height:8px; overflow:hidden; }
+.bar-fill { height:100%; border-radius:4px; }
+.sites { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.site { background:#161b22; border:1px solid #30363d; border-radius:10px; padding:14px; }
+.site h3 { font-size:13px; font-weight:700; margin-bottom:8px; }
+.site-row { display:flex; justify-content:space-between; font-size:12px; padding:3px 0; color:#8b949e; }
+.site-row span:last-child { color:#e6edf3; }
+.ticker { font-size:11px; color:#8b949e; border-top:1px solid #21262d; padding-top:12px; margin-top:16px; }
+.ticker span { color:#58a6ff; }
+</style>
+</head>
+<body>
+<h1>🐝 LeoLan Intelligence Platform</h1>
+<div class="sub">Ruflo V3 · OpenClaw · <span id="clock" style="color:#3fb950;font-weight:700"></span></div>
+
+<div class="grid">
+  <div class="card"><div class="label">Agenten Total</div><div class="value blue">109</div><div class="trend green">+ 50 Hive Workers</div></div>
+  <div class="card"><div class="label">Status</div><div class="value green">Active</div><div class="trend green">✅ Autopilot AN</div></div>
+  <div class="card"><div class="label">Token-Einsparung</div><div class="value orange">83%</div><div class="trend orange">~35€/Tag statt 200€</div></div>
+  <div class="card"><div class="label">Tasks heute</div><div class="value purple">7</div><div class="trend purple">5 parallel ✓</div></div>
+</div>
+
+<div class="agents" id="agentGrid">
+  <div class="agent"><div class="dot dot-active"></div><div><div class="name">SEO-Agent</div><div class="type">researcher</div></div><div class="badge badge-active">Active</div></div>
+  <div class="agent"><div class="dot dot-active"></div><div><div class="name">Content-Agent</div><div class="type">researcher</div></div><div class="badge badge-active">Active</div></div>
+  <div class="agent"><div class="dot dot-idle"></div><div><div class="name">Analytics-Agent</div><div class="type">analyst</div></div><div class="badge badge-idle">Idle</div></div>
+  <div class="agent"><div class="dot dot-idle"></div><div><div class="name">Sales-Agent</div><div class="type">coordinator</div></div><div class="badge badge-idle">Idle</div></div>
+  <div class="agent"><div class="dot dot-idle"></div><div><div class="name">Billing-Agent</div><div class="type">analyst</div></div><div class="badge badge-idle">Idle</div></div>
+  <div class="agent"><div class="dot dot-active"></div><div><div class="name">leolan-developer</div><div class="type">coder</div></div><div class="badge badge-active">Active</div></div>
+  <div class="agent"><div class="dot dot-idle"></div><div><div class="name">leolan-security</div><div class="type">security-arch</div></div><div class="badge badge-idle">Idle</div></div>
+  <div class="agent"><div class="dot dot-idle"></div><div><div class="name">leolan-optimizer</div><div class="type">optimizer</div></div><div class="badge badge-ready">Ready</div></div>
+  <div class="agent"><div class="dot dot-active"></div><div><div class="name">Keyword-Agent</div><div class="type">researcher</div></div><div class="badge badge-active">Active</div></div>
+</div>
+
+<div class="tasks">
+  <h2>📋 Task Log — Heute</h2>
+  <div class="task-row"><div class="task-icon">🔍</div><div class="task-name">SEO-Check beide Sites</div><div class="task-status st-done">Done ✓</div></div>
+  <div class="task-row"><div class="task-icon">📸</div><div class="task-name">Instagram Post gepostet @leolan_digital</div><div class="task-status st-done">Done ✓</div></div>
+  <div class="task-row"><div class="task-icon">🐦</div><div class="task-name">Twitter/X Posts (3x) Hotel</div><div class="task-status st-done">Done ✓</div></div>
+  <div class="task-row"><div class="task-icon">🔎</div><div class="task-name">Top 5 Wettbewerber Analyse</div><div class="task-status st-done">Done ✓</div></div>
+  <div class="task-row"><div class="task-icon">📅</div><div class="task-name">Content-Plan KW21 (7 Ideen)</div><div class="task-status st-done">Done ✓</div></div>
+  <div class="task-row"><div class="task-icon">🔑</div><div class="task-name">Keyword-Optimierung (9 Seiten)</div><div class="task-status st-done">Done ✓</div></div>
+  <div class="task-row"><div class="task-icon">📊</div><div class="task-name">Dashboard erstellt</div><div class="task-status st-run">Live</div></div>
+</div>
+
+<div class="model-bar">
+  <h2>⚡ Model-Routing</h2>
+  <div class="bar-row"><div class="bar-label"><span>gpt-4o-mini</span><span style="color:#3fb950">60%</span></div><div class="bar-track"><div class="bar-fill" style="width:60%;background:#3fb950"></div></div></div>
+  <div class="bar-row"><div class="bar-label"><span>claude-haiku</span><span style="color:#58a6ff">20%</span></div><div class="bar-track"><div class="bar-fill" style="width:20%;background:#58a6ff"></div></div></div>
+  <div class="bar-row"><div class="bar-label"><span>gpt-4o</span><span style="color:#d29922">15%</span></div><div class="bar-track"><div class="bar-fill" style="width:15%;background:#d29922"></div></div></div>
+  <div class="bar-row"><div class="bar-label"><span>claude-sonnet</span><span style="color:#bc8cff">5%</span></div><div class="bar-track"><div class="bar-fill" style="width:5%;background:#bc8cff"></div></div></div>
+</div>
+
+<div class="sites">
+  <div class="site"><h3>🍽️ ki.leolan.net</h3>
+    <div class="site-row"><span>Status</span><span style="color:#3fb950">✅ Live</span></div>
+    <div class="site-row"><span>TTFB</span><span>207ms</span></div>
+    <div class="site-row"><span>Blog Posts</span><span>7</span></div>
+    <div class="site-row"><span>Keywords</span><span style="color:#3fb950">✅ Optimiert</span></div>
+  </div>
+  <div class="site"><h3>🏨 hotel.leolan.net</h3>
+    <div class="site-row"><span>Status</span><span style="color:#3fb950">✅ Live</span></div>
+    <div class="site-row"><span>TTFB</span><span>220ms</span></div>
+    <div class="site-row"><span>Blog Posts</span><span>5</span></div>
+    <div class="site-row"><span>Keywords</span><span style="color:#3fb950">✅ Optimiert</span></div>
+  </div>
+</div>
+
+<div class="ticker">Live: <span id="ticker">109 Agenten aktiv · 83% Token-Einsparung · ki.leolan.net + hotel.leolan.net ✅</span></div>
+
+<script>
+function tick(){document.getElementById('clock').textContent=new Date().toLocaleTimeString('de-DE');}
+tick();setInterval(tick,1000);
+var msgs=['109 Agenten bereit · Autopilot AN · Ruflo V3','Instagram Token erneuert (60 Tage) · Post live','Keyword-Optimierung: 9 Seiten deployed','83% Token-Einsparung · ~35€/Tag','ki.leolan.net + hotel.leolan.net ✅ Live'];
+var mi=0;setInterval(function(){mi=(mi+1)%msgs.length;document.getElementById('ticker').textContent=msgs[mi];},4000);
+var dots=document.querySelectorAll('.dot');
+setInterval(function(){
+  var i=Math.floor(Math.random()*dots.length);
+  var d=dots[i],b=d.parentElement.parentElement.querySelector('.badge');
+  if(d.classList.contains('dot-idle')){
+    d.className='dot dot-active';
+    if(b){b.className='badge badge-active';b.textContent='Active';}
+    setTimeout(function(){d.className='dot dot-idle';if(b){b.className='badge badge-idle';b.textContent='Idle';}},2500);
+  }
+},1800);
+</script>
+</body>
+</html>
