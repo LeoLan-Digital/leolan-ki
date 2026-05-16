@@ -262,6 +262,8 @@
   <meta name="twitter:image" content="https://ki.leolan.net/og-preview.png">
 </head>
 <body>
+<a href="#main-content" class="skip-nav" style="position:absolute;top:-40px;left:0;padding:8px;background:#0071e3;color:#fff;font-size:14px;z-index:9999;border-radius:0 0 4px 0;transition:top 0.2s;text-decoration:none;">Zum Hauptinhalt springen</a>
+
   <div class="wrap hero">
     <div class="hero-card">
       <div class="hero-inner">
@@ -307,7 +309,7 @@
         <a href="#kontakt">11. Datenschutz-Kontakt</a>
       </aside>
 
-      <main class="panel">
+      <main id="main-content" class="panel">
         <section id="verantwortlicher">
           <h2>1. Verantwortlicher</h2>
           <p>
@@ -537,7 +539,8 @@
     </div>
   </div>
 
-  <div class="wrap footer">
+  <footer role="contentinfo">
+<div class="wrap footer">
     <p>
       Diese Datenschutzerklärung wurde für die Website und den WhatsApp-Bot von LeoLan Digital in deutscher Sprache erstellt.
       Je nach technischer oder rechtlicher Weiterentwicklung sollte sie bei Änderungen der eingesetzten Dienste angepasst werden.
@@ -559,5 +562,6 @@
   function rejectCookies(){setCookie("cookie_consent","rejected",365);document.getElementById("cookieBanner").style.display="none";}
   (function(){var c=getCookie("cookie_consent");if(!c){document.getElementById("cookieBanner").style.display="flex";}else if(c==="accepted"){loadTracking();}})();
 </script>
+</footer>
 </body>
 </html>

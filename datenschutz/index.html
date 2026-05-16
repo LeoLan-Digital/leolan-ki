@@ -36,7 +36,12 @@
   <meta name="twitter:image" content="https://ki.leolan.net/og-preview.png">
 </head>
 <body>
+<a href="#main-content" class="skip-nav" style="position:absolute;top:-40px;left:0;padding:8px;background:#0071e3;color:#fff;font-size:14px;z-index:9999;border-radius:0 0 4px 0;transition:top 0.2s;text-decoration:none;">Zum Hauptinhalt springen</a>
+
+<header role="banner">
 <nav><a href="/">← Zurück</a></nav>
+</header>
+<main id="main-content">
 <div class="content">
   <h1>Datenschutzerklärung</h1>
   <p class="lead">Diese Datenschutzerklärung informiert über die Verarbeitung personenbezogener Daten auf den Webseiten und in den digitalen Services von LeoLan Digital.</p>
@@ -98,5 +103,7 @@
   function rejectCookies(){setCookie("cookie_consent","rejected",365);document.getElementById("cookieBanner").style.display="none";}
   (function(){var c=getCookie("cookie_consent");if(!c){document.getElementById("cookieBanner").style.display="flex";}else if(c==="accepted"){loadTracking();}})();
 </script>
+</main>
+<footer role="contentinfo"></footer>
 </body>
 </html>

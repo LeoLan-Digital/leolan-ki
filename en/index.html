@@ -470,6 +470,8 @@
 </script>
 </head>
 <body>
+<a href="#main-content" class="skip-nav" style="position:absolute;top:-40px;left:0;padding:8px;background:#0071e3;color:#fff;font-size:14px;z-index:9999;border-radius:0 0 4px 0;transition:top 0.2s;text-decoration:none;">Zum Hauptinhalt springen</a>
+
 
 <!-- COOKIE BANNER -->
 <div id="cookieBanner" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:9999; background:#1c1c1e; border-top:1px solid rgba(255,255,255,0.1); padding:20px 24px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px;">
@@ -503,6 +505,7 @@
 </script>
 
 <!-- NAV -->
+<header role="banner">
 <nav>
   <a href="/" class="nav-logo" aria-label="LeoLan Digital - Homepage"><img src="/logo.svg" alt="LeoLan Digital" style="height:120px;width:auto;display:block;"></a>
   <ul class="nav-links">
@@ -515,8 +518,10 @@
     <li><a href="/portal/" style="background:#5e81f4;color:#fff;font-weight:600;padding:5px 14px;border-radius:999px;text-decoration:none;font-size:13px;line-height:1;display:inline-flex;align-items:center">Customer Portal</a></li>
   </ul>
   <a href="#kontakt" class="nav-cta">Free Inquiry ›</a>
-  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu" aria-label="Menü öffnen" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
+</header>
+<main id="main-content">
 <div class="mobile-menu" id="mobileMenu">
   <a href="#probleme" onclick="closeMenu()">Problems</a>
   <a href="#leistungen" onclick="closeMenu()">Services</a>
@@ -1024,11 +1029,11 @@
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px;">
         <div>
           <label style="display:block;font-size:13px;color:rgba(245,245,247,0.87);margin-bottom:8px;">Inquiries per day</label>
-          <input type="number" id="roiAnfragen" value="10" min="1" max="200" oninput="berechneROI()" style="width:100%;padding:12px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:#fff;font-size:18px;font-weight:700;text-align:center;box-sizing:border-box;">
+          <input type="number" id="roiAnfragen" value="10" min="1" max="200" oninput="berechneROI()" style="width:100%;padding:12px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:#fff;font-size:18px;font-weight:700;text-align:center;box-sizing:border-box;" aria-label="Anfragen pro Tag">
         </div>
         <div>
           <label style="display:block;font-size:13px;color:rgba(245,245,247,0.87);margin-bottom:8px;">Revenue per table (€)</label>
-          <input type="number" id="roiUmsatz" value="80" min="10" max="500" oninput="berechneROI()" style="width:100%;padding:12px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:#fff;font-size:18px;font-weight:700;text-align:center;box-sizing:border-box;">
+          <input type="number" id="roiUmsatz" value="80" min="10" max="500" oninput="berechneROI()" style="width:100%;padding:12px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:#fff;font-size:18px;font-weight:700;text-align:center;box-sizing:border-box;" aria-label="Durchschnittlicher Umsatz pro Tisch in Euro">
         </div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:24px;">
@@ -1309,7 +1314,7 @@ berechneROI();
     </div>
     <input aria-label="Phone / WhatsApp" type="tel" name="phone" placeholder="Phone / WhatsApp" required>
     <input aria-label="Email address" type="email" name="email" placeholder="Email address">
-    <select name="paket">
+    <select aria-label="Paket" name="paket">
       <option value="" disabled selected>Which package interests you?</option>
       <option value="starter">Starter — €199/month</option>
       <option value="pro">Pro — €349

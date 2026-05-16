@@ -125,6 +125,8 @@
   </style>
 </head>
 <body>
+<a href="#main-content" class="skip-nav" style="position:absolute;top:-40px;left:0;padding:8px;background:#0071e3;color:#fff;font-size:14px;z-index:9999;border-radius:0 0 4px 0;transition:top 0.2s;text-decoration:none;">Zum Hauptinhalt springen</a>
+
 
 <!-- LOGIN -->
 <div id="loginScreen">
@@ -927,5 +929,6 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js').catch(() => {});
 }
 </script>
+<footer role="contentinfo"></footer>
 </body>
 </html>
