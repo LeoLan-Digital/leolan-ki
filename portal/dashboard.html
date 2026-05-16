@@ -186,6 +186,17 @@ xhr.onload = function() {
 
   var acc = data.account || {};
   var usage = data.usageStats || {};
+  // Merge localStorage cache - persists billing edits across reloads
+  var cacheKey = 'leolan_portal_' + customerCode;
+  var cached = {};
+  try { cached = JSON.parse(localStorage.getItem(cacheKey) || '{}'); } catch(e) {}
+  if (cached.companyName) acc.companyName = cached.companyName;
+  if (cached.address) acc.address = cached.address;
+  if (cached.zip) acc.zip = cached.zip;
+  if (cached.city) acc.city = cached.city;
+  if (cached.vatId) acc.vatId = cached.vatId;
+  if (cached.reverseCharge !== undefined) acc.reverseCharge = cached.reverseCharge;
+  if (cached.logoUrl) acc.logoUrl = cached.logoUrl;
   var used = usage.messagesVerwendet || 0;
   var limit = usage.messagesLimit || usage.messageLimit || 500;
   var ratio = limit > 0 ? Math.min(used / limit, 1) : 0;
@@ -361,6 +372,12 @@ xhr.send(JSON.stringify({customerCode: customerCode}));
         document.getElementById('billTax').textContent = payload.reverseCharge ? '0% (Reverse Charge)' : '19% VAT';
         document.getElementById('billTaxRow').style.display = 'flex';
         document.getElementById('editCard').style.display = 'none';
+        // Persist to localStorage so data survives reload
+        var ck = 'leolan_portal_' + customerCode;
+        var cc = {}; try { cc = JSON.parse(localStorage.getItem(ck)||'{}'); } catch(e) {}
+        cc.companyName=payload.companyName; cc.address=payload.address; cc.zip=payload.zip;
+        cc.city=payload.city; cc.vatId=payload.vatId; cc.reverseCharge=payload.reverseCharge;
+        localStorage.setItem(ck, JSON.stringify(cc));
       } else {
         err.textContent = data.error || 'Error saving.';
         err.style.display = 'block';
