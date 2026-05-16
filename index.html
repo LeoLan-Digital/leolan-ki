@@ -1568,12 +1568,14 @@ berechneROI();
     });
   }
 
-  // Scroll reveal
+  // Scroll reveal — deferred until after LCP
+  setTimeout(function() {
   var revealEls = document.querySelectorAll('.reveal');
   var io = new IntersectionObserver(function(entries) {
     entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
   }, { threshold: 0.1 });
   revealEls.forEach(function(el) { io.observe(el); });
+  }, 500); // defer scroll reveal 500ms after page load
 
   // Hero immediate
   document.querySelectorAll('.hero .reveal').forEach(function(el) {
