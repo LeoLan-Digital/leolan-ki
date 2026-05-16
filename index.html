@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
+<link rel="preload" as="image" href="/images/home/hero-restaurant.webp" fetchpriority="high" media="(min-width: 601px)">
+<link rel="preload" as="image" href="/images/home/hero-restaurant-mobile.webp" fetchpriority="high" media="(max-width: 600px)">
+
 <script>
 (function() {
   // Bereits auf einer Sprachunterseite? Nicht nochmal umleiten
@@ -593,7 +596,6 @@
   ]
 }
 </script>
-<link rel="preload" as="image" href="/images/home/hero-restaurant.webp" fetchpriority="high">
 </head>
 <body>
 
@@ -689,7 +691,7 @@
     </p>
   </div>
   <div class="hero-img-wrap reveal reveal-delay-4">
-    <img fetchpriority="high" src="/images/home/hero-restaurant.webp" alt="Restaurant mehr Reservierungen">
+    <img fetchpriority="high" src="/images/home/hero-restaurant.webp" srcset="/images/home/hero-restaurant-mobile.webp 600w, /images/home/hero-restaurant.webp 1400w" sizes="(max-width: 600px) 600px, 1400px" alt="Restaurant mehr Reservierungen">
   </div>
 </section>
 
