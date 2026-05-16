@@ -435,11 +435,11 @@
       A: 'You lose guests every day —<br>because nobody responds fast enough.',
       B: 'More Reservations.<br>Less Stress. Fully Automated.'
     };
-    document.addEventListener('DOMContentLoaded', function() {
+    
       var h1 = document.querySelector('.hero h1 .gradient');
       if (h1 && variant === 'B') { h1.innerHTML = headlines[variant]; }
       if (typeof gtag !== 'undefined') {
-        gtag('event', 'ab_test_impression', { 'test_name': 'hero_headline', 'variant': variant });
+        gtag('event', 'ab_test_impression', { 'test_name': 'hero_headline', 'variant': variant 
       }
       document.querySelectorAll('.hero-btns a').forEach(function(btn) {
         btn.addEventListener('click', function() {

@@ -390,7 +390,7 @@
       B: 'Mehr Reservierungen.<br>Weniger Stress. Vollautomatisch.'
     };
     
-    document.addEventListener('DOMContentLoaded', function() {
+    
       var h1 = document.querySelector('.hero h1 .gradient');
       if (h1 && variant === 'B') {
         h1.innerHTML = headlines[variant];
@@ -401,7 +401,7 @@
         gtag('event', 'ab_test_impression', {
           'test_name': 'hero_headline',
           'variant': variant
-        });
+        
       }
       
       // CTA Click tracking
@@ -1573,14 +1573,12 @@ berechneROI();
     });
   }
 
-  // Scroll reveal — deferred until after LCP
-  setTimeout(function() {
+  // Scroll reveal
   var revealEls = document.querySelectorAll('.reveal');
   var io = new IntersectionObserver(function(entries) {
     entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
   }, { threshold: 0.1 });
   revealEls.forEach(function(el) { io.observe(el); });
-  }, 500); // defer scroll reveal 500ms after page load
 
   // Hero immediate
   document.querySelectorAll('.hero .reveal').forEach(function(el) {

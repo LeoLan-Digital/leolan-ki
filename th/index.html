@@ -435,11 +435,11 @@
       A: 'คุณสูญเสียลูกค้าทุกวัน —<br>เพราะไม่มีใครตอบสนองเร็วพอ',
       B: 'การจองมากขึ้น.<br>ความเครียดน้อยลง. อัตโนมัติเต็มรูปแบบ.'
     };
-    document.addEventListener('DOMContentLoaded', function() {
+    
       var h1 = document.querySelector('.hero h1 .gradient');
       if (h1 && variant === 'B') { h1.innerHTML = headlines[variant]; }
       if (typeof gtag !== 'undefined') {
-        gtag('event', 'ab_test_impression', { 'test_name': 'hero_headline', 'variant': variant });
+        gtag('event', 'ab_test_impression', { 'test_name': 'hero_headline', 'variant': variant 
       }
       document.querySelectorAll('.hero-btns a').forEach(function(btn) {
         btn.addEventListener('click', function() {

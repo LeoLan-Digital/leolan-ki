@@ -569,7 +569,7 @@
       B: 'Daha Fazla Rezervasyon.<br>Daha Az Stres. Tamamen Otomatik.'
     };
     
-    document.addEventListener('DOMContentLoaded', function() {
+    
       var h1 = document.querySelector('.hero h1 .gradient');
       if (h1 && variant === 'B') {
         h1.innerHTML = headlines[variant];
@@ -580,7 +580,7 @@
         gtag('event', 'ab_test_impression', {
           'test_name': 'hero_headline',
           'variant': variant
-        });
+        
       }
       
       // CTA Click tracking
