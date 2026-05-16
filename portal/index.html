@@ -44,16 +44,16 @@ input#otp{font-size:28px;font-weight:700;text-align:center;letter-spacing:12px}
   <div class="info" id="info"></div>
   <div id="loginSection">
     <label>E-Mail oder Kundencode</label>
-    <input type="email" id="email" placeholder="K100001 oder ihre@email.de">
+    <input aria-label="K100001 oder ihre@email.de" type="email" id="email" placeholder="K100001 oder ihre@email.de">
     <label>Passwort</label>
-    <input type="password" id="pw" placeholder="••••••••" onkeydown="if(event.key==='Enter')login()">
+    <input aria-label="••••••••" type="password" id="pw" placeholder="••••••••" onkeydown="if(event.key==='Enter')login()">
     <button id="btnLogin" onclick="login()">Einloggen</button>
     <div class="link">Noch kein Konto? <a href="/onboarding/">Jetzt registrieren →</a></div>
   </div>
   <div id="otpSection">
     <p class="otp-hint" id="otpHint">Code wurde an Ihre E-Mail gesendet.</p>
     <label>6-stelliger Code</label>
-    <input type="text" id="otp" maxlength="6" placeholder="000000" onkeydown="if(event.key==='Enter')verifyOtp()">
+    <input aria-label="000000" type="text" id="otp" maxlength="6" placeholder="000000" onkeydown="if(event.key==='Enter')verifyOtp()">
     <button id="btnOtp" onclick="verifyOtp()">Bestätigen</button>
     <div class="link" style="margin-top:8px"><a onclick="resendOtp()" id="resendLink">Code erneut senden</a></div>
     <div class="link"><a onclick="backToLogin()">← Zurück</a></div>

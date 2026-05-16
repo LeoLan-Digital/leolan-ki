@@ -200,8 +200,8 @@
       <h1>Admin Dashboard</h1>
       <p>Kunden, Ideen, Bot-Feedback und Synchronisation zentral steuern. Passwort bleibt lokal im Browser gespeichert.</p>
       <form class="login-form" id="loginForm">
-        <input class="input" id="emailInput" type="email" placeholder="E-Mail-Adresse" autocomplete="email" style="margin-bottom:10px;" />
-        <input class="input" id="passwordInput" type="password" placeholder="Passwort" autocomplete="current-password" />
+        <input aria-label="E-Mail-Adresse" class="input" id="emailInput" type="email" placeholder="E-Mail-Adresse" autocomplete="email" style="margin-bottom:10px;" />
+        <input aria-label="Passwort" class="input" id="passwordInput" type="password" placeholder="Passwort" autocomplete="current-password" />
         <button class="button" type="submit">Einloggen</button>
       </form>
       <div class="error" id="loginError"></div>
@@ -264,7 +264,7 @@
                 <p style="color:var(--muted);margin-top:8px">Ein Klick zum Schalten, ein Klick zum Chat.</p>
               </div>
               <div class="search-wrap">
-                <input class="input" id="searchInput" type="search" placeholder="Restaurant suchen…" />
+                <input aria-label="Restaurant suchen…" class="input" id="searchInput" type="search" placeholder="Restaurant suchen…" />
               </div>
             </div>
             <div class="status-line" id="listStatus"></div>
@@ -462,11 +462,11 @@
           <h3 style="color:#f5a623;margin:0 0 20px;font-size:16px;">🔒 Passwort ändern</h3>
           
           <div style="display:flex;flex-direction:column;gap:12px;">
-            <input type="password" id="currentPasswordInput" placeholder="Aktuelles Passwort" 
+            <input aria-label="Aktuelles Passwort" type="password" id="currentPasswordInput" placeholder="Aktuelles Passwort" 
               style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:12px 16px;color:#fff;font-size:14px;font-family:inherit;outline:none;width:100%;box-sizing:border-box;">
-            <input type="password" id="newPasswordInput" placeholder="Neues Passwort (min. 8 Zeichen)" 
+            <input aria-label="Neues Passwort (min. 8 Zeichen)" type="password" id="newPasswordInput" placeholder="Neues Passwort (min. 8 Zeichen)" 
               style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:12px 16px;color:#fff;font-size:14px;font-family:inherit;outline:none;width:100%;box-sizing:border-box;">
-            <input type="password" id="confirmPasswordInput" placeholder="Neues Passwort bestätigen" 
+            <input aria-label="Neues Passwort bestätigen" type="password" id="confirmPasswordInput" placeholder="Neues Passwort bestätigen" 
               style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:12px 16px;color:#fff;font-size:14px;font-family:inherit;outline:none;width:100%;box-sizing:border-box;">
             <button onclick="changeAdminPassword()" 
               style="background:linear-gradient(135deg,#f5a623,#e8920a);color:#1a2744;border:none;border-radius:12px;padding:13px;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit;">

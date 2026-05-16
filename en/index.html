@@ -504,7 +504,7 @@
 
 <!-- NAV -->
 <nav>
-  <a href="/" class="nav-logo"><img src="/logo.svg" alt="LeoLan Digital" style="height:120px;width:auto;display:block;"></a>
+  <a href="/" class="nav-logo" aria-label="LeoLan Digital - Homepage"><img src="/logo.svg" alt="LeoLan Digital" style="height:120px;width:auto;display:block;"></a>
   <ul class="nav-links">
     <li><a href="#probleme">Problems</a></li>
     <li><a href="#leistungen">Services</a></li>
@@ -1047,7 +1047,7 @@
       </div>
       <p id="roiText" style="font-size:14px;color:rgba(245,245,247,0.87);margin-bottom:20px;">You're losing <strong style="color:#ff6b6b;">€7,200 per month</strong>. LeoLan costs €199 — and gets it back for you.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:12px;">
-        <input type="email" id="roiEmail" placeholder="your@email.com" style="padding:12px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.2);border-radius:10px;color:#fff;font-size:15px;min-width:220px;outline:none;flex:1;max-width:300px;" />
+        <input aria-label="your@email.com" type="email" id="roiEmail" placeholder="your@email.com" style="padding:12px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.2);border-radius:10px;color:#fff;font-size:15px;min-width:220px;outline:none;flex:1;max-width:300px;" />
         <button onclick="sendeROIReport()" style="background:var(--accent);color:#fff;padding:12px 20px;border-radius:10px;border:none;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap;">📊 Report by Email →</button>
       </div>
       <p style="font-size:12px;color:rgba(245,245,247,0.75);margin:0 0 16px;">Free · No spam · Your loss report only</p>
@@ -1304,11 +1304,11 @@ berechneROI();
   </div>
   <form class="contact-form reveal reveal-delay-2" action="https://formspree.io/f/xgopdnll" method="POST" id="contactForm">
     <div class="form-row">
-      <input type="text" name="name" placeholder="Your name" required>
-      <input type="text" name="restaurant" placeholder="Restaurant / Business">
+      <input aria-label="Your name" type="text" name="name" placeholder="Your name" required>
+      <input aria-label="Restaurant / Business" type="text" name="restaurant" placeholder="Restaurant / Business">
     </div>
-    <input type="tel" name="phone" placeholder="Phone / WhatsApp" required>
-    <input type="email" name="email" placeholder="Email address">
+    <input aria-label="Phone / WhatsApp" type="tel" name="phone" placeholder="Phone / WhatsApp" required>
+    <input aria-label="Email address" type="email" name="email" placeholder="Email address">
     <select name="paket">
       <option value="" disabled selected>Which package interests you?</option>
       <option value="starter">Starter — €199/month</option>

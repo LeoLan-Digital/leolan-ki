@@ -165,29 +165,29 @@ body{background:#0d1117;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFo
     <div class="card">
       <h3>👤 Zugangsdaten</h3>
       <div class="g2">
-        <div class="field" id="fe-email"><label>E-Mail *</label><input type="email" id="email" placeholder="name@firma.de" autocomplete="email"><div class="err">Gültige E-Mail eingeben.</div></div>
+        <div class="field" id="fe-email"><label>E-Mail *</label><input aria-label="name@firma.de" type="email" id="email" placeholder="name@firma.de" autocomplete="email"><div class="err">Gültige E-Mail eingeben.</div></div>
         <div style="background:rgba(52,199,89,0.08);border:1px solid rgba(52,199,89,0.2);border-radius:10px;padding:12px 14px;font-size:13px;color:rgba(245,245,247,0.7);margin-top:8px;">🔐 Dein Zugangscode wird automatisch nach der Einrichtung an diese E-Mail gesendet.</div>
-        <div class="field" id="fe-name"><label>Ihr Name *</label><input type="text" id="name" placeholder="Max Mustermann" autocomplete="name"><div class="err">Name eingeben.</div></div>
+        <div class="field" id="fe-name"><label>Ihr Name *</label><input aria-label="Max Mustermann" type="text" id="name" placeholder="Max Mustermann" autocomplete="name"><div class="err">Name eingeben.</div></div>
       </div>
     </div>
     <!-- Kundendaten -->
     <div class="card">
       <h3>🏢 Restaurant & Rechnungsdaten</h3>
-      <div class="field" id="fe-company"><label>Restaurantname *</label><input type="text" id="company" placeholder="z. B. Bella Vista GmbH"><div class="err">Restaurantname eingeben.</div></div>
+      <div class="field" id="fe-company"><label>Restaurantname *</label><input aria-label="z. B. Bella Vista GmbH" type="text" id="company" placeholder="z. B. Bella Vista GmbH"><div class="err">Restaurantname eingeben.</div></div>
       <div class="g2">
-        <div class="field" id="fe-street"><label>Straße & Hausnummer *</label><input type="text" id="street" placeholder="Musterstraße 1"><div class="err">Adresse eingeben.</div></div>
+        <div class="field" id="fe-street"><label>Straße & Hausnummer *</label><input aria-label="Musterstraße 1" type="text" id="street" placeholder="Musterstraße 1"><div class="err">Adresse eingeben.</div></div>
         <div class="g2" style="gap:8px">
-          <div class="field" id="fe-zip"><label>PLZ *</label><input type="text" id="zip" placeholder="01234" maxlength="10"><div class="err">PLZ eingeben.</div></div>
-          <div class="field" id="fe-city"><label>Stadt *</label><input type="text" id="city" placeholder="Dresden"><div class="err">Stadt eingeben.</div></div>
+          <div class="field" id="fe-zip"><label>PLZ *</label><input aria-label="01234" type="text" id="zip" placeholder="01234" maxlength="10"><div class="err">PLZ eingeben.</div></div>
+          <div class="field" id="fe-city"><label>Stadt *</label><input aria-label="Dresden" type="text" id="city" placeholder="Dresden"><div class="err">Stadt eingeben.</div></div>
         </div>
       </div>
       <div class="g2">
-        <div class="field" id="fe-vatId"><label>USt-ID <span style="color:#484f58;font-weight:400">(optional)</span></label><input type="text" id="vatId" placeholder="DE123456789"><div class="hint">Mit USt-ID → 0% MwSt. (Reverse Charge)</div><div class="err">Ungültiges Format. Beispiel: DE123456789 (2 Großbuchstaben + mind. 5 Zeichen)</div></div>
-        <div class="field"><label>Website <span style="color:#484f58;font-weight:400">(optional)</span></label><input type="url" id="website" placeholder="https://..."></div>
+        <div class="field" id="fe-vatId"><label>USt-ID <span style="color:#484f58;font-weight:400">(optional)</span></label><input aria-label="DE123456789" type="text" id="vatId" placeholder="DE123456789"><div class="hint">Mit USt-ID → 0% MwSt. (Reverse Charge)</div><div class="err">Ungültiges Format. Beispiel: DE123456789 (2 Großbuchstaben + mind. 5 Zeichen)</div></div>
+        <div class="field"><label>Website <span style="color:#484f58;font-weight:400">(optional)</span></label><input aria-label="https://..." type="url" id="website" placeholder="https://..."></div>
       </div>
       <div class="field" id="fe-whatsapp">
         <label>WhatsApp-Nummer *</label>
-        <input type="tel" id="whatsapp" placeholder="+49 15678 483700">
+        <input aria-label="+49 15678 483700" type="tel" id="whatsapp" placeholder="+49 15678 483700">
         <div class="hint orange">📱 Pflicht: Über diese Nummer richten wir Ihren KI-Bot ein.</div>
         <div class="err">Bitte gültige Nummer mit + und Ländervorwahl eingeben (z. B. +49 15678 483700).</div>
       </div>

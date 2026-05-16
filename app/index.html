@@ -134,7 +134,7 @@
     <p>Betreiber-Dashboard</p>
   </div>
   <div class="login-card">
-    <input id="codeInput" type="text" placeholder="Kundencode (z.B. REST42)" autocomplete="off" autocapitalize="characters">
+    <input aria-label="Kundencode (z.B. REST42)" id="codeInput" type="text" placeholder="Kundencode (z.B. REST42)" autocomplete="off" autocapitalize="characters">
     <button class="btn" onclick="doLogin()">Anmelden →</button>
     <div class="error-msg" id="loginError"></div>
   </div>
@@ -211,7 +211,7 @@
         </div>
         <div class="seats-row">
           <label for="inputSeats" id="t-seats-label">Maximale Platzanzahl</label>
-          <input type="number" id="inputSeats" min="1" max="999" placeholder="50" oninput="saveReservationSettings()">
+          <input aria-label="50" type="number" id="inputSeats" min="1" max="999" placeholder="50" oninput="saveReservationSettings()">
         </div>
         <div class="upload-status" id="reservStatus"></div>
       </div>

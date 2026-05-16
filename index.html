@@ -1170,7 +1170,7 @@
       </div>
       <p id="roiText" style="font-size:14px;color:rgba(245,245,247,0.87);margin-bottom:20px;">Du verlierst <strong style="color:#ff6b6b;">€7.200 pro Monat</strong>. LeoLan kostet ab 149€/Monat — und holt dir das zurück.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:12px;">
-        <input type="email" id="roiEmail" placeholder="deine@email.de" style="padding:12px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.2);border-radius:10px;color:#fff;font-size:15px;min-width:220px;outline:none;flex:1;max-width:300px;" />
+        <input aria-label="deine@email.de" type="email" id="roiEmail" placeholder="deine@email.de" style="padding:12px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.2);border-radius:10px;color:#fff;font-size:15px;min-width:220px;outline:none;flex:1;max-width:300px;" />
         <button onclick="sendeROIReport()" style="background:var(--accent);color:#fff;padding:12px 20px;border-radius:10px;border:none;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap;">📊 Report per E-Mail →</button>
       </div>
       <p style="font-size:12px;color:rgba(245,245,247,0.75);margin:0 0 16px;">Kostenlos · Kein Spam · Nur dein Verlust-Report</p>
@@ -1468,7 +1468,7 @@ berechneROI();
     <div class="chatbot-messages" id="chatbotMessages"></div>
     <div class="chatbot-input-wrap">
       <input id="chatbotDummy" style="position:absolute;opacity:0;height:0;width:0;pointer-events:none" type="text" readonly /><form class="chatbot-form" id="chatbotForm">
-        <input type="text" id="chatbotInput" placeholder="Nachricht …" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="text" style="font-size:16px">
+        <input aria-label="Nachricht …" type="text" id="chatbotInput" placeholder="Nachricht …" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="text" style="font-size:16px">
         <button type="submit" id="chatbotSend" aria-label="Senden"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 2L11 13" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       </form>
     </div>

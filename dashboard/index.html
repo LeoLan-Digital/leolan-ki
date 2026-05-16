@@ -408,9 +408,9 @@
       <h1>LeoLan Dashboard</h1>
       <p>Bitte melden Sie sich an.</p>
       <form id="loginForm">
-        <input id="emailInput" type="email" placeholder="E-Mail" autocomplete="email" style="width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:12px;padding:12px 14px;color:#fff;font-size:15px;margin-bottom:10px;outline:none;font-family:inherit" required />
+        <input aria-label="E-Mail" id="emailInput" type="email" placeholder="E-Mail" autocomplete="email" style="width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:12px;padding:12px 14px;color:#fff;font-size:15px;margin-bottom:10px;outline:none;font-family:inherit" required />
         <div class="password-row" style="margin-top:0">
-          <input id="passwordInput" type="password" placeholder="Passwort" autocomplete="current-password" />
+          <input aria-label="Passwort" id="passwordInput" type="password" placeholder="Passwort" autocomplete="current-password" />
           <button type="submit">Anmelden</button>
         </div>
       </form>
@@ -602,9 +602,9 @@
       <div style="background:#1a2744;border-radius:20px;padding:32px;max-width:440px;width:100%;box-shadow:0 20px 50px rgba(0,0,0,0.5)">
         <h3 style="margin:0 0 20px;color:#fff">Nutzer einladen</h3>
         <label style="color:var(--muted);font-size:13px;display:block;margin-bottom:5px">Name</label>
-        <input id="inviteName" type="text" placeholder="Max Mustermann" style="width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:10px 12px;color:#fff;font-size:14px;margin-bottom:14px;outline:none">
+        <input aria-label="Max Mustermann" id="inviteName" type="text" placeholder="Max Mustermann" style="width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:10px 12px;color:#fff;font-size:14px;margin-bottom:14px;outline:none">
         <label style="color:var(--muted);font-size:13px;display:block;margin-bottom:5px">E-Mail *</label>
-        <input id="inviteEmail" type="email" placeholder="name@firma.de" style="width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:10px 12px;color:#fff;font-size:14px;margin-bottom:14px;outline:none">
+        <input aria-label="name@firma.de" id="inviteEmail" type="email" placeholder="name@firma.de" style="width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:10px 12px;color:#fff;font-size:14px;margin-bottom:14px;outline:none">
         <label style="color:var(--muted);font-size:13px;display:block;margin-bottom:5px">Rolle</label>
         <select id="inviteRole" style="width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:10px 12px;color:#fff;font-size:14px;margin-bottom:20px;outline:none">
           <option value="viewer">Viewer (nur lesen)</option>
