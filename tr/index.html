@@ -63,9 +63,6 @@
   <link rel="alternate" hreflang="ar" href="https://ki.leolan.net/ar/">
 <link rel="alternate" hreflang="x-default" href="https://ki.leolan.net/">
 
-  <meta http-equiv="Cache-Control" content="max-age=86400, public">
-  <meta http-equiv="X-Content-Type-Options" content="nosniff">
-  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
       <link rel="icon" type="image/png" sizes="32x32" href="/favicon-new.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-new.png">
   <link rel="shortcut icon" href="/favicon-new.png">
@@ -394,6 +391,7 @@
   .chatbot-form input::placeholder { color: rgba(255,255,255,0.87); }
   .chatbot-form button { background: #2695d3; color: #fff; border: none; border-radius: 50%; width: 44px; height: 44px; min-width: 44px; cursor: pointer; display: flex !important; align-items: center; justify-content: center; flex-shrink: 0; }
   .chatbot-form button:active { opacity: 0.8; }
+  a:focus, button:focus, input:focus, select:focus, textarea:focus { outline: 2px solid #0071e3 !important; outline-offset: 2px !important; }
 </style>
 <script type="application/ld+json">
 {
@@ -512,7 +510,7 @@
   "@type": "SoftwareCompany",
   "name": "LeoLan Digital",
   "url": "https://ki.leolan.net",
-  "logo": "/leolan-logo-new.png",
+  "logo": "https://ki.leolan.net/leolan-logo.png",
   "description": "Restoranlar için daha fazla rezervasyon: WhatsApp Botu, Yorum Yönetimi, Sosyal Medya ve dijital menü.",
   "address": {
     "@type": "PostalAddress",
@@ -621,7 +619,7 @@
 
 
 <!-- COOAIE BANNER -->
-<div id="cookieBanner" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:9999; background:#1c1c1e; border-top:1px solid rgba(255,255,255,0.1); padding:20px 24px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px;">
+<div id="cookieBanner" role="alertdialog" aria-label="Cookie-Einstellungen" aria-live="polite" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:9999; background:#1c1c1e; border-top:1px solid rgba(255,255,255,0.1); padding:20px 24px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px;">
   <p style="font-size:13px; color:rgba(245,245,247,0.7); max-width:680px; line-height:1.5; margin:0;">Web sitemizi geliştirmek ve ilgili reklamlar için Çerezler (Google Analytics, Meta Pixel) kullanıyoruz. <a href="/tr/datenschutz.html" style="color:#2997ff;">Daha fazla bilgi</a></p>
   <div style="display:flex; gap:10px; flex-shrink:0;">
     <button onclick="rejectCookies()" style="padding:10px 20px; border-radius:980px; border:1px solid rgba(255,255,255,0.2); background:transparent; color:rgba(245,245,247,0.7); font-size:13px; cursor:pointer; font-family:inherit;">Reddet</button>
@@ -647,7 +645,7 @@
     else if(c==='accepted'){loadTracking();}
   });
 
-  function toggleMenu(){var m=document.getElementById('mobileMenu');m.classList.toggle('open');}
+  function toggleMenu(){var m=document.getElementById('mobileMenu');var open=m.classList.toggle('open');m.setAttribute('aria-hidden',open?'false':'true');}
   function closeMenu(){document.getElementById('mobileMenu').classList.remove('open');}
   document.addEventListener('click',function(e){var m=document.getElementById('mobileMenu');if(m&&m.classList.contains('open')&&!m.contains(e.target)&&!e.target.closest('.hamburger')){m.classList.remove('open');}});
 
@@ -656,7 +654,7 @@
 <!-- NAV -->
 <header role="banner">
 <nav>
-  <a href="/" class="nav-logo" aria-label="LeoLan Digital - Homepage"><img src="logo.svg" alt="LeoLan Digital"></a>
+  <a href="/" class="nav-logo" aria-label="LeoLan Digital - Homepage"><img src="logo.svg" alt="LeoLan Digital" width="120" height="40"></a>
   <ul class="nav-links">
     <li><a href="#probleme">Sorunlar</a></li>
     <li><a href="#leistungen">Hizmetler</a></li>
@@ -669,7 +667,7 @@
   <a href="#kontakt" class="nav-cta">Ücretsiz sorgula ›</a>
   <button class="hamburger" onclick="toggleMenu()" aria-label="Menü" aria-label="Menü öffnen" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
-</header><main id="main-content">
+</header><main id="main-content" tabindex="-1">
 <div class="mobile-menu" id="mobileMenu">
   <a href="#probleme" onclick="closeMenu()">Sorunlar</a>
   <a href="#leistungen" onclick="closeMenu()">Hizmetler</a>
@@ -721,7 +719,7 @@
     </p>
   </div>
   <div class="hero-img-wrap reveal reveal-delay-4">
-    <img fetchpriority="high" srcset="/images/home/hero-restaurant-mobile.webp 600w, /images/home/hero-restaurant.webp 1400w" sizes="(max-width: 600px) 600px, 1400px" src="/images/home/hero-restaurant.webp" alt="Restoran daha fazla rezervasyon">
+    <img fetchpriority="high" srcset="/images/home/hero-restaurant-mobile.webp 600w, /images/home/hero-restaurant.webp 1400w" sizes="(max-width: 600px) 600px, 1400px" src="/images/home/hero-restaurant.webp" alt="Restoran daha fazla rezervasyon" width="1400" height="900">
   </div>
 </section>
 
@@ -1131,7 +1129,7 @@
 <section style="padding: 100px 24px; border-top: 1px solid rgba(255,255,255,0.07);">
   <div style="max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 340px 1fr; gap: 72px; align-items: center;" class="founder-grid">
     <div class="reveal" style="border-radius: 20px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.7);">
-      <img src="leo-bw.jpg" alt="Kamaleddin Nazari – LeoLan Digital Kurucusu" style="width:100%; display:block; filter:brightness(0.9); object-fit:cover; object-position:center 15%;">
+      <img src="/leo-bw.webp" alt="Kamaleddin Nazari – LeoLan Digital Kurucusu" style="width:100%; display:block; filter:brightness(0.9); object-fit:cover; object-position:center 15%;" width="400" height="500" loading="lazy">
     </div>
     <div class="reveal reveal-delay-1">
       <p style="font-size:13px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#2997ff; margin-bottom:16px;">Arkasındaki insan</p>
@@ -1430,28 +1428,28 @@ berechneROI();
   </div>
   <div class="faq-list">
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)">LeoLan Digital ne kadar? <span>+</span></button>
-      <div class="faq-a"><p>Starter 199€/ay, Pro 349€/ay, her biri için +349€ kurulum ücreti.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-1">LeoLan Digital ne kadar? <span>+</span></button>
+      <div class="faq-a" id="faq-answer-1"><p>Starter 199€/ay, Pro 349€/ay, her biri için +349€ kurulum ücreti.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)">Ne kadar hızlı başlayabilirim? <span>+</span></button>
-      <div class="faq-a"><p>Ödemenizin ardından 48 saat içinde sizinle iletişime geçeceğiz.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-2">Ne kadar hızlı başlayabilirim? <span>+</span></button>
+      <div class="faq-a" id="faq-answer-2"><p>Ödemenizin ardından 48 saat içinde sizinle iletişime geçeceğiz.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)">Bot hangi dilleri destekliyor? <span>+</span></button>
-      <div class="faq-a"><p>Türkçe, Almanca, İngilizce ve daha fazlası.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-3">Bot hangi dilleri destekliyor? <span>+</span></button>
+      <div class="faq-a" id="faq-answer-3"><p>Türkçe, Almanca, İngilizce ve daha fazlası.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)">Teknik bilgi gerekiyor mu? <span>+</span></button>
-      <div class="faq-a"><p>Hayır, her şeyi biz kurarız.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-4">Teknik bilgi gerekiyor mu? <span>+</span></button>
+      <div class="faq-a" id="faq-answer-4"><p>Hayır, her şeyi biz kurarız.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)">Ücretsiz deneme var mı? <span>+</span></button>
-      <div class="faq-a"><p>Evet! İlk ay ücretsizdir. Botu doğrudan bu sayfada test edebilirsiniz — veya WhatsApp'tan yazın: <a href="https://wa.me/4915678483700" target="_blank" style="color:#2997ff;">+49 15678 483700</a></p></div>
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-5">Ücretsiz deneme var mı? <span>+</span></button>
+      <div class="faq-a" id="faq-answer-5"><p>Evet! İlk ay ücretsizdir. Botu doğrudan bu sayfada test edebilirsiniz — veya WhatsApp'tan yazın: <a href="https://wa.me/4915678483700" target="_blank" style="color:#2997ff;">+49 15678 483700</a></p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)">Mevcut WhatsApp numaram ile çalışır mı? <span>+</span></button>
-      <div class="faq-a"><p>Evet, numaranızı taşıyoruz.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-6">Mevcut WhatsApp numaram ile çalışır mı? <span>+</span></button>
+      <div class="faq-a" id="faq-answer-6"><p>Evet, numaranızı taşıyoruz.</p></div>
     </div>
   </div>
 </section>
@@ -1479,7 +1477,7 @@ berechneROI();
       <option value="enterprise">Enterprise — Bireysel</option>
       <option value="beratung">Önce danışma al</option>
     </select>
-    <textarea name="message" placeholder="Kısaca anlat: Restoranın ne ile öne çıkıyor? Ne daha iyi olsun?"></textarea>
+    <textarea name="message" placeholder="Kısaca anlat: Restoranın ne ile öne çıkıyor? Ne daha iyi olsun?" aria-label="Deine Nachricht"></textarea>
     <button type="submit" class="form-submit">Ücretsiz sorgula →</button>
   </form>
   <div class="form-success" id="formSuccess">✅ Teşekkürler! 24 saat içinde sizinle iletişime geçeceğiz.</div>
@@ -1487,7 +1485,7 @@ berechneROI();
 
 
 <!-- CHATBOT DEMO WIDGET -->
-<button class="chatbot-toggle" id="chatbotToggle" type="button">💬 Botu test et</button>
+<button class="chatbot-toggle" id="chatbotToggle" type="button" aria-label="Chat öffnen" aria-haspopup="dialog">💬 Botu test et</button>
 <div class="chatbot-modal" id="chatbotModal" aria-hidden="true">
   <div class="chatbot-window" role="dialog" aria-modal="true" aria-labelledby="chatbotTitle">
     <div class="chatbot-header">
@@ -1539,19 +1537,15 @@ berechneROI();
 </section>
 </main>
 <footer>
-    <div class="footer-logo"><div class="footer-logo"><img src="logo.svg" alt="LeoLan Digital"></div>
+    <div class="footer-logo"><div class="footer-logo"><img src="logo.svg" alt="LeoLan Digital" width="120" height="40"></div>
   <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:16px 0 24px;">
     <a href="https://apps.apple.com/app/leolan-manager/id6762051472" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;background:#000;color:#fff;padding:10px 18px;border-radius:12px;text-decoration:none;border:1px solid rgba(255,255,255,0.2);">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
       <span><span style="font-size:10px;display:block;opacity:0.7;line-height:1;">Download on the</span><span style="font-size:16px;font-weight:700;line-height:1.3;">App Store</span></span>
     </a>
-    <a href="https://ki.leolan.net" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;background:#000;color:#fff;padding:10px 18px;border-radius:12px;text-decoration:none;border:1px solid rgba(255,255,255,0.2);">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 20.5v-17c0-.83 1-.83 1.5-.5l14 8.5-14 8.5C3.5 20.83 3 20.5 3 20.5z" fill="#EA4335"/><path d="M3 20.5l8.5-8.5 3 3-10 6C3.5 21.83 3 21.5 3 20.5z" fill="#FBBC04"/><path d="M3 3.5l8.5 8.5 3-3-10-6C3.5 2.17 3 2.5 3 3.5z" fill="#4285F4"/><path d="M14.5 12l3-3 1 .5c.5.3.5.7 0 1l-1 .5-3-3z" fill="#34A853"/><path d="M11.5 12l3 3 3.5-2-3-3-3.5 2z" fill="#34A853"/></svg>
-      <span><span style="font-size:10px;display:block;opacity:0.7;line-height:1;">GET IT ON</span><span style="font-size:16px;font-weight:700;line-height:1.3;">Google Play</span></span>
-    </a>
-  </div>
+    </div>
   <div class="social-links">
-    <a href="https://instagram.com/leolan_digital" target="_blank" title="Instagram">
+    <a href="https://instagram.com/leolan_digital" target="_blank" title="Instagram" aria-label="Instagram">
       <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
         <defs><radialGradient id="ig-grad" cx="%30" cy="107%" r="150%"><stop offset="0%" stop-color="#fdf497"/><stop offset="5%" stop-color="#fdf497"/><stop offset="45%" stop-color="#fd5949"/><stop offset="60%" stop-color="#d6249f"/><stop offset="90%" stop-color="#285AEB"/></radialGradient></defs>
         <rect width="48" height="48" rx="12" fill="url(#ig-grad)"/>
@@ -1560,13 +1554,13 @@ berechneROI();
         <circle cx="31.5" cy="16.5" r="1.5" fill="white"/>
       </svg>
     </a>
-    <a href="https://www.facebook.com/profile.php?id=100083189805774" target="_blank" title="Facebook">
+    <a href="https://www.facebook.com/profile.php?id=100083189805774" target="_blank" title="Facebook" aria-label="Facebook">
       <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
         <rect width="48" height="48" rx="12" fill="#1877F2"/>
         <path d="M31 24h-4v14h-6V24h-3v-5h3v-3c0-4 2-6 6-6h4v5h-2c-1.5 0-2 .5-2 2v2h4l-0.5 5z" fill="white"/>
       </svg>
     </a>
-    <a href="mailto:info@leolan.net" title="E-Mail">
+    <a href="mailto:info@leolan.net" title="E-Mail" aria-label="E-Mail senden">
       <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
         <rect width="48" height="48" rx="12" fill="#444"/>
         <path d="M10 15h28v18H10z" fill="none" stroke="white" stroke-width="2"/>
@@ -1583,6 +1577,7 @@ berechneROI();
 </footer>
 
 <script>
+document.addEventListener('DOMContentLoaded', function() {
   // FAQ
   function toggleFaq(btn) {
     var a = btn.nextElementSibling;
@@ -1800,6 +1795,7 @@ berechneROI();
       if (e.key === 'Escape' && chatbotModal.classList.contains('open')) closeChatbot();
     });
   }
+});
 </script>
 
 

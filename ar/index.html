@@ -191,6 +191,7 @@
     .pricing-grid { grid-template-columns: 1fr !important; }
     .form-row { grid-template-columns: 1fr !important; }
   }
+  a:focus, button:focus, input:focus, select:focus, textarea:focus { outline: 2px solid #0071e3 !important; outline-offset: 2px !important; }
 </style>
 </head>
 <body>
@@ -198,7 +199,7 @@
 
 
 <!-- COOKIE BANNER -->
-<div id="cookieBanner" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:9999; background:#1c1c1e; border-top:1px solid rgba(255,255,255,0.1); padding:20px 24px; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px;">
+<div id="cookieBanner" role="alertdialog" aria-label="Cookie-Einstellungen" aria-live="polite" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:9999; background:#1c1c1e; border-top:1px solid rgba(255,255,255,0.1); padding:20px 24px; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px;">
   <p style="font-size:13px; color:rgba(245,245,247,0.7); max-width:680px; line-height:1.5; margin:0;">نستخدم ملفات تعريف الارتباط (Google Analytics) لتحسين موقعنا. <a href="/ar/datenschutz.html" style="color:#2997ff;">اعرف المزيد</a></p>
   <div style="display:flex; gap:10px; flex-shrink:0;">
     <button onclick="rejectCookies()" style="padding:10px 20px; border-radius:980px; border:1px solid rgba(255,255,255,0.2); background:transparent; color:rgba(245,245,247,0.7); font-size:13px; cursor:pointer; font-family:inherit;">رفض</button>
@@ -212,7 +213,7 @@
   function acceptCookies(){setCookie('cookie_consent','accepted',365);document.getElementById('cookieBanner').style.display='none';loadTracking();}
   function rejectCookies(){setCookie('cookie_consent','rejected',365);document.getElementById('cookieBanner').style.display='none';}
   window.addEventListener('DOMContentLoaded',function(){var c=getCookie('cookie_consent');if(!c){document.getElementById('cookieBanner').style.display='flex';}else if(c==='accepted'){loadTracking();}});
-  function toggleMenu(){var m=document.getElementById('mobileMenu');m.classList.toggle('open');}
+  function toggleMenu(){var m=document.getElementById('mobileMenu');var open=m.classList.toggle('open');m.setAttribute('aria-hidden',open?'false':'true');}
   function closeMenu(){document.getElementById('mobileMenu').classList.remove('open');}
 </script>
 
@@ -230,7 +231,7 @@
   <a href="#kontakt" class="nav-cta">استشارة مجانية ›</a>
   <button class="hamburger" onclick="toggleMenu()" aria-label="القائمة" aria-label="Menü öffnen" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
-</header><main id="main-content">
+</header><main id="main-content" tabindex="-1">
 <div class="mobile-menu" id="mobileMenu">
   <a href="#probleme" onclick="closeMenu()">المشكلات</a>
   <a href="#leistungen" onclick="closeMenu()">الخدمات</a>
@@ -486,32 +487,32 @@
   </div>
   <div class="faq-list">
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)">كم يكلف LeoLan Digital؟ <span>+</span></button>
-      <div class="faq-a"><p>Starter من 149€/شهر (سنوي) أو 199€/شهر (شهري). Pro من 249€/شهر (سنوي) أو 349€/شهر (شهري). رسوم الإعداد 199€ مرة واحدة — مجانية عند الدفع السنوي.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-1">كم يكلف LeoLan Digital؟ <span>+</span></button>
+      <div class="faq-a" id="faq-answer-1"><p>Starter من 149€/شهر (سنوي) أو 199€/شهر (شهري). Pro من 249€/شهر (سنوي) أو 349€/شهر (شهري). رسوم الإعداد 199€ مرة واحدة — مجانية عند الدفع السنوي.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)">كم من الوقت يستغرق البدء؟ <span>+</span></button>
-      <div class="faq-a"><p>بعد الدفع نتواصل معك خلال 48 ساعة. الإعداد الكامل يستغرق 2–3 أيام.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-2">كم من الوقت يستغرق البدء؟ <span>+</span></button>
+      <div class="faq-a" id="faq-answer-2"><p>بعد الدفع نتواصل معك خلال 48 ساعة. الإعداد الكامل يستغرق 2–3 أيام.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)">ما اللغات التي يدعمها البوت؟ <span>+</span></button>
-      <div class="faq-a"><p>الألمانية، الإنجليزية، التركية، العربية والمزيد — يتكيف تلقائياً مع لغة الضيف.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-3">ما اللغات التي يدعمها البوت؟ <span>+</span></button>
+      <div class="faq-a" id="faq-answer-3"><p>الألمانية، الإنجليزية، التركية، العربية والمزيد — يتكيف تلقائياً مع لغة الضيف.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)">هل أحتاج معرفة تقنية؟ <span>+</span></button>
-      <div class="faq-a"><p>لا، نحن نعد كل شيء من أجلك. لا تحتاج تثبيت أو إعداد أي شيء.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-4">هل أحتاج معرفة تقنية؟ <span>+</span></button>
+      <div class="faq-a" id="faq-answer-4"><p>لا، نحن نعد كل شيء من أجلك. لا تحتاج تثبيت أو إعداد أي شيء.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)">هل يوجد شهر تجربة مجاني؟ <span>+</span></button>
-      <div class="faq-a"><p>نعم! الشهر الأول مجاني بعد تفعيل رقم واتساب. يمكنك اختبار البوت مباشرةً أو راسلنا على واتساب: <a href="https://wa.me/4915678483700" target="_blank" style="color:#2997ff;">+49 15678 483700</a></p></div>
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-5">هل يوجد شهر تجربة مجاني؟ <span>+</span></button>
+      <div class="faq-a" id="faq-answer-5"><p>نعم! الشهر الأول مجاني بعد تفعيل رقم واتساب. يمكنك اختبار البوت مباشرةً أو راسلنا على واتساب: <a href="https://wa.me/4915678483700" target="_blank" style="color:#2997ff;">+49 15678 483700</a></p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)">هل يعمل مع رقم واتساب الحالي لدي؟ <span>+</span></button>
-      <div class="faq-a"><p>نعم، نقوم بترحيل رقمك. أو نوفر لك رقماً جديداً مخصصاً.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-6">هل يعمل مع رقم واتساب الحالي لدي؟ <span>+</span></button>
+      <div class="faq-a" id="faq-answer-6"><p>نعم، نقوم بترحيل رقمك. أو نوفر لك رقماً جديداً مخصصاً.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)">كيف يمكنني الإلغاء؟ <span>+</span></button>
-      <div class="faq-a"><p>الإلغاء ممكن في أي وقت عبر البريد الإلكتروني <a href="mailto:business@leolan.net" style="color:#2997ff;">business@leolan.net</a>. إذا ألغيت خلال شهر التجربة المجاني، تُرد رسوم الإعداد بالكامل.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-7">كيف يمكنني الإلغاء؟ <span>+</span></button>
+      <div class="faq-a" id="faq-answer-7"><p>الإلغاء ممكن في أي وقت عبر البريد الإلكتروني <a href="mailto:business@leolan.net" style="color:#2997ff;">business@leolan.net</a>. إذا ألغيت خلال شهر التجربة المجاني، تُرد رسوم الإعداد بالكامل.</p></div>
     </div>
   </div>
 </section>
@@ -539,7 +540,7 @@
       <option value="pro">Pro — 349€/شهر</option>
       <option value="enterprise">Enterprise — حسب الطلب</option>
     </select>
-    <textarea name="message" placeholder="سؤالك أو ملاحظاتك (اختياري)"></textarea>
+    <textarea name="message" placeholder="سؤالك أو ملاحظاتك (اختياري)" aria-label="Deine Nachricht"></textarea>
     <button type="submit" class="form-submit">إرسال الطلب المجاني ←</button>
   </form>
   <div id="formSuccess" style="display:none;text-align:center;padding:32px;font-size:18px;color:var(--accent-light);">

@@ -36,9 +36,6 @@
   <link rel="alternate" hreflang="th" href="https://ki.leolan.net/th/">
   <link rel="alternate" hreflang="ar" href="https://ki.leolan.net/ar/">
   <link rel="alternate" hreflang="x-default" href="https://ki.leolan.net/">
-  <meta http-equiv="Cache-Control" content="max-age=86400, public">
-  <meta http-equiv="X-Content-Type-Options" content="nosniff">
-  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-new.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-new.png">
   <link rel="shortcut icon" href="/favicon-new.png">
@@ -341,6 +338,7 @@
   .chatbot-form input::placeholder { color: rgba(255,255,255,0.87); }
   .chatbot-form button { background: #2695d3; color: #fff; border: none; border-radius: 50%; width: 44px; height: 44px; min-width: 44px; cursor: pointer; display: flex !important; align-items: center; justify-content: center; flex-shrink: 0; }
   .chatbot-form button:active { opacity: 0.8; }
+  a:focus, button:focus, input:focus, select:focus, textarea:focus { outline: 2px solid #0071e3 !important; outline-offset: 2px !important; }
 </style>
 <script type="application/ld+json">
 {
@@ -474,7 +472,7 @@
 
 
 <!-- COOKIE BANNER -->
-<div id="cookieBanner" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:9999; background:#1c1c1e; border-top:1px solid rgba(255,255,255,0.1); padding:20px 24px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px;">
+<div id="cookieBanner" role="alertdialog" aria-label="Cookie-Einstellungen" aria-live="polite" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:9999; background:#1c1c1e; border-top:1px solid rgba(255,255,255,0.1); padding:20px 24px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px;">
   <p style="font-size:13px; color:rgba(245,245,247,0.7); max-width:680px; line-height:1.5; margin:0;">We use cookies (Google Analytics, Meta Pixel) to improve our website and for relevant advertising. <a href="/datenschutz.html" style="color:#2997ff;">Learn more</a></p>
   <div style="display:flex; gap:10px; flex-shrink:0;">
     <button onclick="rejectCookies()" style="padding:10px 20px; border-radius:980px; border:1px solid rgba(255,255,255,0.2); background:transparent; color:rgba(245,245,247,0.7); font-size:13px; cursor:pointer; font-family:inherit;">Decline</button>
@@ -499,7 +497,7 @@
     if(!c){document.getElementById('cookieBanner').style.display='flex';}
     else if(c==='accepted'){loadTracking();}
   });
-  function toggleMenu(){var m=document.getElementById('mobileMenu');m.classList.toggle('open');}
+  function toggleMenu(){var m=document.getElementById('mobileMenu');var open=m.classList.toggle('open');m.setAttribute('aria-hidden',open?'false':'true');}
   function closeMenu(){document.getElementById('mobileMenu').classList.remove('open');}
   document.addEventListener('click',function(e){var m=document.getElementById('mobileMenu');if(m&&m.classList.contains('open')&&!m.contains(e.target)&&!e.target.closest('.hamburger')){m.classList.remove('open');}});
 </script>
@@ -521,7 +519,7 @@
   <button class="hamburger" onclick="toggleMenu()" aria-label="Menu" aria-label="Menü öffnen" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 </header>
-<main id="main-content">
+<main id="main-content" tabindex="-1">
 <div class="mobile-menu" id="mobileMenu">
   <a href="#probleme" onclick="closeMenu()">Problems</a>
   <a href="#leistungen" onclick="closeMenu()">Services</a>
@@ -571,7 +569,7 @@
     </p>
   </div>
   <div class="hero-img-wrap reveal reveal-delay-4">
-    <img fetchpriority="high" srcset="/images/home/hero-restaurant-mobile.webp 600w, /images/home/hero-restaurant.webp 1400w" sizes="(max-width: 600px) 600px, 1400px" src="/images/home/hero-restaurant.webp" alt="Restaurant more reservations">
+    <img fetchpriority="high" srcset="/images/home/hero-restaurant-mobile.webp 600w, /images/home/hero-restaurant.webp 1400w" sizes="(max-width: 600px) 600px, 1400px" src="/images/home/hero-restaurant.webp" alt="Restaurant more reservations" width="1400" height="900">
   </div>
 </section>
 
@@ -1272,28 +1270,28 @@ berechneROI();
   </div>
   <div class="faq-list">
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)">What does LeoLan Digital cost? <span>+</span></button>
-      <div class="faq-a"><p>Starter €199/month, Pro €349/month, each plus €349 setup.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-1">What does LeoLan Digital cost? <span>+</span></button>
+      <div class="faq-a" id="faq-answer-1"><p>Starter €199/month, Pro €349/month, each plus €349 setup.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)">How quickly can I get started? <span>+</span></button>
-      <div class="faq-a"><p>After your payment we will contact you within 48 hours.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-2">How quickly can I get started? <span>+</span></button>
+      <div class="faq-a" id="faq-answer-2"><p>After your payment we will contact you within 48 hours.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)">What languages does the bot support? <span>+</span></button>
-      <div class="faq-a"><p>German, English, Turkish and more.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-3">What languages does the bot support? <span>+</span></button>
+      <div class="faq-a" id="faq-answer-3"><p>German, English, Turkish and more.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)">Do I need technical knowledge? <span>+</span></button>
-      <div class="faq-a"><p>No, we set everything up for you.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-4">Do I need technical knowledge? <span>+</span></button>
+      <div class="faq-a" id="faq-answer-4"><p>No, we set everything up for you.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)">Is there a free trial? <span>+</span></button>
-      <div class="faq-a"><p>Yes! The first month is free. You can test the bot directly on this page — or message us on WhatsApp: <a href="https://wa.me/4915678483700" target="_blank" style="color:#2997ff;">+49 15678 483700</a></p></div>
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-5">Is there a free trial? <span>+</span></button>
+      <div class="faq-a" id="faq-answer-5"><p>Yes! The first month is free. You can test the bot directly on this page — or message us on WhatsApp: <a href="https://wa.me/4915678483700" target="_blank" style="color:#2997ff;">+49 15678 483700</a></p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)">Does it work with my existing WhatsApp number? <span>+</span></button>
-      <div class="faq-a"><p>Yes, we migrate your number.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-6">Does it work with my existing WhatsApp number? <span>+</span></button>
+      <div class="faq-a" id="faq-answer-6"><p>Yes, we migrate your number.</p></div>
     </div>
   </div>
 </section>
