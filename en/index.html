@@ -36,6 +36,9 @@
   <link rel="alternate" hreflang="th" href="https://ki.leolan.net/th/">
   <link rel="alternate" hreflang="ar" href="https://ki.leolan.net/ar/">
   <link rel="alternate" hreflang="x-default" href="https://ki.leolan.net/">
+  <meta http-equiv="Cache-Control" content="max-age=86400, public">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-new.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-new.png">
   <link rel="shortcut icon" href="/favicon-new.png">
@@ -77,8 +80,8 @@
     --gray-2: rgba(255,255,255,0.06);
     --gray-3: #3a3a3c;
     --text-primary: #f5f5f7;
-    --text-secondary: rgba(245,245,247,0.87);
-    --text-tertiary: rgba(245,245,247,0.75);
+    --text-secondary: rgba(245,245,247,0.6);
+    --text-tertiary: rgba(245,245,247,0.35);
     --accent: #0071e3;
     --accent-light: #2997ff;
     --font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Arial, sans-serif;
@@ -172,7 +175,7 @@
   .compare-col.before { background: var(--gray-1); }
   .compare-col.after { background: var(--gray-1); border: 1px solid rgba(0,113,227,0.35); border-radius: 24px; }
   .compare-label { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px; }
-  .compare-col.before .compare-label { color: rgba(245,245,247,0.78); }
+  .compare-col.before .compare-label { color: rgba(245,245,247,0.4); }
   .compare-col.after .compare-label { color: var(--accent-light); }
   .compare-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
   .compare-list li { font-size: 15px; color: var(--text-secondary); display: flex; gap: 12px; align-items: flex-start; line-height: 1.5; }
@@ -232,7 +235,7 @@
   .price-tier { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(245,245,247,0.72); margin-bottom: 8px; }
   .price-card.featured .price-tier { color: rgba(245,245,247,0.88); }
   .price-amount { font-size: 44px; font-weight: 700; letter-spacing: -0.03em; margin: 4px 0; color: #fff; }
-  .price-period { font-size: 13px; color: rgba(245,245,247,0.87); margin-bottom: 28px; }
+  .price-period { font-size: 13px; color: rgba(245,245,247,0.68); margin-bottom: 28px; }
   .price-card.featured .price-period { color: rgba(245,245,247,0.76); }
   .price-features { list-style: none; flex: 1; display: flex; flex-direction: column; gap: 10px; }
   .price-features li { font-size: 14px; color: rgba(245,245,247,0.82); display: flex; gap: 10px; align-items: flex-start; line-height: 1.4; }
@@ -256,16 +259,16 @@
   .chatbot-title { display: flex; align-items: center; gap: 12px; }
   .chatbot-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; }
   .chatbot-header strong { display: block; font-size: 15px; }
-  .chatbot-header span { display: block; font-size: 12px; color: rgba(245,245,247,0.87); margin-top: 2px; }
+  .chatbot-header span { display: block; font-size: 12px; color: rgba(245,245,247,0.6); margin-top: 2px; }
   .chatbot-close { background: transparent; border: none; color: rgba(245,245,247,0.8); font-size: 24px; line-height: 1; cursor: pointer; }
   .chatbot-messages { flex: 1; padding: 12px 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; scroll-behavior: smooth; background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 18px 18px; }
   .chatbot-message { max-width: 84%; padding: 12px 14px; border-radius: 18px; font-size: 14px; line-height: 1.5; }
   .chatbot-message.bot { align-self: flex-start; background: #223243; color: rgba(255,255,255,0.92); border-bottom-left-radius: 6px; }
   .chatbot-message.user { align-self: flex-end; background: #2b5278; color: #fff; border-bottom-right-radius: 6px; }
-  .chatbot-message small { display: block; margin-top: 6px; font-size: 11px; color: rgba(255,255,255,0.87); }
+  .chatbot-message small { display: block; margin-top: 6px; font-size: 11px; color: rgba(255,255,255,0.5); }
   .chatbot-input-wrap { padding: 8px 12px 12px; background: #17212b; }
-  .chatbot-form input::placeholder { color: rgba(245,245,247,0.75); }
-  .chatbot-hint { margin-top: 10px; font-size: 12px; color: rgba(245,245,247,0.82); text-align: center; }
+  .chatbot-form input::placeholder { color: rgba(245,245,247,0.38); }
+  .chatbot-hint { margin-top: 10px; font-size: 12px; color: rgba(245,245,247,0.5); text-align: center; }
   @media (max-width: 640px) {
     .chatbot-modal { padding: 12px; }
     .chatbot-window { width: 100%; height: min(78vh, 640px); border-radius: 20px; }
@@ -335,10 +338,9 @@
   .reveal-delay-4 { transition-delay: 0.4s; }
   .chatbot-form { display: flex; align-items: center; gap: 8px; }
   .chatbot-form input { flex: 1; background: #2b3847; border: none; color: #fff; border-radius: 22px; padding: 10px 16px; font-size: 16px; outline: none; height: 44px; }
-  .chatbot-form input::placeholder { color: rgba(255,255,255,0.87); }
+  .chatbot-form input::placeholder { color: rgba(255,255,255,0.4); }
   .chatbot-form button { background: #2695d3; color: #fff; border: none; border-radius: 50%; width: 44px; height: 44px; min-width: 44px; cursor: pointer; display: flex !important; align-items: center; justify-content: center; flex-shrink: 0; }
   .chatbot-form button:active { opacity: 0.8; }
-  a:focus, button:focus, input:focus, select:focus, textarea:focus { outline: 2px solid #0071e3 !important; outline-offset: 2px !important; }
 </style>
 <script type="application/ld+json">
 {
@@ -420,6 +422,7 @@
 }
 </script>
   <link rel="apple-touch-icon" href="/favicon-new.png">
+  <script src="https://t.contentsquare.net/uxa/5b3e797417378.js" async></script>
 
 <script>
   (function() {
@@ -432,11 +435,11 @@
       A: 'You lose guests every day —<br>because nobody responds fast enough.',
       B: 'More Reservations.<br>Less Stress. Fully Automated.'
     };
-    
+    document.addEventListener('DOMContentLoaded', function() {
       var h1 = document.querySelector('.hero h1 .gradient');
       if (h1 && variant === 'B') { h1.innerHTML = headlines[variant]; }
       if (typeof gtag !== 'undefined') {
-        gtag('event', 'ab_test_impression', { 'test_name': 'hero_headline', 'variant': variant 
+        gtag('event', 'ab_test_impression', { 'test_name': 'hero_headline', 'variant': variant });
       }
       document.querySelectorAll('.hero-btns a').forEach(function(btn) {
         btn.addEventListener('click', function() {
@@ -467,11 +470,9 @@
 </script>
 </head>
 <body>
-<a href="#main-content" class="skip-nav" style="position:absolute;top:-40px;left:0;padding:8px;background:#0071e3;color:#fff;font-size:14px;z-index:9999;border-radius:0 0 4px 0;transition:top 0.2s;text-decoration:none;">Zum Hauptinhalt springen</a>
-
 
 <!-- COOKIE BANNER -->
-<div id="cookieBanner" role="alertdialog" aria-label="Cookie-Einstellungen" aria-live="polite" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:9999; background:#1c1c1e; border-top:1px solid rgba(255,255,255,0.1); padding:20px 24px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px;">
+<div id="cookieBanner" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:9999; background:#1c1c1e; border-top:1px solid rgba(255,255,255,0.1); padding:20px 24px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px;">
   <p style="font-size:13px; color:rgba(245,245,247,0.7); max-width:680px; line-height:1.5; margin:0;">We use cookies (Google Analytics, Meta Pixel) to improve our website and for relevant advertising. <a href="/datenschutz.html" style="color:#2997ff;">Learn more</a></p>
   <div style="display:flex; gap:10px; flex-shrink:0;">
     <button onclick="rejectCookies()" style="padding:10px 20px; border-radius:980px; border:1px solid rgba(255,255,255,0.2); background:transparent; color:rgba(245,245,247,0.7); font-size:13px; cursor:pointer; font-family:inherit;">Decline</button>
@@ -496,14 +497,14 @@
     if(!c){document.getElementById('cookieBanner').style.display='flex';}
     else if(c==='accepted'){loadTracking();}
   });
-  function toggleMenu(){var m=document.getElementById('mobileMenu');var open=m.classList.toggle('open');m.setAttribute('aria-hidden',open?'false':'true');}
+  function toggleMenu(){var m=document.getElementById('mobileMenu');m.classList.toggle('open');}
   function closeMenu(){document.getElementById('mobileMenu').classList.remove('open');}
   document.addEventListener('click',function(e){var m=document.getElementById('mobileMenu');if(m&&m.classList.contains('open')&&!m.contains(e.target)&&!e.target.closest('.hamburger')){m.classList.remove('open');}});
 </script>
 
 <!-- NAV -->
 <nav>
-  <a href="/" class="nav-logo" aria-label="LeoLan Digital - Homepage"><img src="/logo.svg" width="120" height="40"  alt="LeoLan Digital" style="height:120px;width:auto;display:block;"></a>
+  <a href="/" class="nav-logo"><img src="/logo.svg" alt="LeoLan Digital" style="height:120px;width:auto;display:block;"></a>
   <ul class="nav-links">
     <li><a href="#probleme">Problems</a></li>
     <li><a href="#leistungen">Services</a></li>
@@ -514,9 +515,8 @@
     <li><a href="/portal/" style="background:#5e81f4;color:#fff;font-weight:600;padding:5px 14px;border-radius:999px;text-decoration:none;font-size:13px;line-height:1;display:inline-flex;align-items:center">Customer Portal</a></li>
   </ul>
   <a href="#kontakt" class="nav-cta">Free Inquiry ›</a>
-  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu" aria-label="Menü öffnen" aria-expanded="false"><span></span><span></span><span></span></button>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
-<main id="main-content" tabindex="-1">
 <div class="mobile-menu" id="mobileMenu">
   <a href="#probleme" onclick="closeMenu()">Problems</a>
   <a href="#leistungen" onclick="closeMenu()">Services</a>
@@ -556,9 +556,9 @@
     <a href="#leistungen" class="btn-secondary">Secure More Reservations ›</a>
   </div>
   <p class="hero-trust reveal reveal-delay-3" style="text-align:center;">✓ First month free &nbsp;·&nbsp; ✓ No contract &nbsp;·&nbsp; ✓ Results in 5 business days &nbsp;·&nbsp; ✓ Cancel monthly</p>
-  <p style="font-size:13px;color:rgba(245,245,247,0.80);margin-top:8px;text-align:center;" class="reveal reveal-delay-3">Especially suitable for restaurants with high call volume, tourists, delivery inquiries or small teams.</p>
+  <p style="font-size:13px;color:rgba(245,245,247,0.45);margin-top:8px;text-align:center;" class="reveal reveal-delay-3">Especially suitable for restaurants with high call volume, tourists, delivery inquiries or small teams.</p>
   <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:20px 24px;margin-bottom:28px;text-align:left;max-width:480px;margin-left:auto;margin-right:auto;" class="reveal reveal-delay-3">
-    <p style="font-size:14px;color:rgba(245,245,247,0.87);line-height:1.8;margin:0;">
+    <p style="font-size:14px;color:rgba(245,245,247,0.65);line-height:1.8;margin:0;">
       ✓ If your phone rings often and nobody picks up…<br>
       ✓ If you receive many WhatsApp or Instagram inquiries…<br>
       ✓ If your team doesn't have time to respond immediately…<br>
@@ -566,7 +566,7 @@
     </p>
   </div>
   <div class="hero-img-wrap reveal reveal-delay-4">
-    <img fetchpriority="high" srcset="/images/home/hero-restaurant-mobile.webp 600w, /images/home/hero-restaurant.webp 1400w" sizes="(max-width: 600px) 600px, 1400px" src="/images/home/hero-restaurant.webp" alt="Restaurant more reservations" width="1400" height="900">
+    <img fetchpriority="high" srcset="/images/home/hero-restaurant-mobile.webp 600w, /images/home/hero-restaurant.webp 1400w" sizes="(max-width: 600px) 600px, 1400px" src="/images/home/hero-restaurant.webp" alt="Restaurant more reservations">
   </div>
 </section>
 
@@ -682,7 +682,7 @@
         </div>
       </div>
     </div>
-    <p style="margin-top: 32px; font-size: 14px; color: rgba(245,245,247,0.82);">This is roughly how real conversations happen daily. No app. No phone ringing. No missed inquiries.</p>
+    <p style="margin-top: 32px; font-size: 14px; color: rgba(245,245,247,0.5);">This is roughly how real conversations happen daily. No app. No phone ringing. No missed inquiries.</p>
   </div>
 </section>
 
@@ -723,17 +723,17 @@
       <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(0,113,227,0.25); border-radius: 20px; padding: 28px 24px;">
         <div style="font-size: 40px; font-weight: 700; color: var(--accent-light); margin-bottom: 12px;">+30%</div>
         <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">More reservations</h3>
-        <p style="font-size: 13px; color: rgba(245,245,247,0.85);">No inquiry gets lost — whether at night, on weekends or during peak hours.</p>
+        <p style="font-size: 13px; color: rgba(245,245,247,0.55);">No inquiry gets lost — whether at night, on weekends or during peak hours.</p>
       </div>
       <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(0,113,227,0.25); border-radius: 20px; padding: 28px 24px;">
         <div style="font-size: 40px; font-weight: 700; color: var(--accent-light); margin-bottom: 12px;">2h</div>
         <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">Time savings daily</h3>
-        <p style="font-size: 13px; color: rgba(245,245,247,0.85);">No more calls, no manual replies — you focus on your in-house guests.</p>
+        <p style="font-size: 13px; color: rgba(245,245,247,0.55);">No more calls, no manual replies — you focus on your in-house guests.</p>
       </div>
       <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(0,113,227,0.25); border-radius: 20px; padding: 28px 24px;">
         <div style="font-size: 40px; font-weight: 700; color: var(--accent-light); margin-bottom: 12px;">24/7</div>
         <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">Available for guests</h3>
-        <p style="font-size: 13px; color: rgba(245,245,247,0.85);">Even at 11 PM messages are answered. Reservations confirmed. Guests come back.</p>
+        <p style="font-size: 13px; color: rgba(245,245,247,0.55);">Even at 11 PM messages are answered. Reservations confirmed. Guests come back.</p>
       </div>
     </div>
   </div>
@@ -972,18 +972,18 @@
 <section style="padding: 100px 24px; border-top: 1px solid rgba(255,255,255,0.07);">
   <div style="max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 340px 1fr; gap: 72px; align-items: center;" class="founder-grid">
     <div class="reveal" style="border-radius: 20px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.7);">
-      <img src="/leo-bw.webp" width="400" height="500" alt="Kamaleddin Nazari – Founder LeoLan Digital" style="width:100%; display:block; filter: brightness(0.9);">
+      <img src="/leo-bw.jpg" alt="Kamaleddin Nazari – Founder LeoLan Digital" style="width:100%; display:block; filter: brightness(0.9);">
     </div>
     <div class="reveal reveal-delay-1">
       <p style="font-size:13px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#2997ff; margin-bottom:16px;">The person behind it</p>
       <h2 style="font-size:clamp(28px,3.5vw,44px); font-weight:700; line-height:1.1; letter-spacing:-0.025em; margin-bottom:20px;">I know the problem — from both sides of the counter.</h2>
-      <p style="font-size:17px; line-height:1.7; color:rgba(245,245,247,0.87); margin-bottom:16px;">As a restaurant manager with 6 years of professional experience, I know what daily life looks like. But I also know the other side — as a guest.</p>
-      <p style="font-size:17px; line-height:1.7; color:rgba(245,245,247,0.87); margin-bottom:16px;">I wanted to reserve a table at my wife's favorite restaurant — for her birthday. 10 calls. Not a single callback. We ate somewhere else.</p>
-      <p style="font-size:17px; line-height:1.7; color:rgba(245,245,247,0.87); margin-bottom:32px;">That restaurant didn't just lose my table. They ruined my wife's birthday — and lost a customer forever. <strong style="color:#f5f5f7;">That's why I founded LeoLan Digital: so no restaurant ever misses a call again — and no guest goes home disappointed.</strong></p>
+      <p style="font-size:17px; line-height:1.7; color:rgba(245,245,247,0.65); margin-bottom:16px;">As a restaurant manager with 6 years of professional experience, I know what daily life looks like. But I also know the other side — as a guest.</p>
+      <p style="font-size:17px; line-height:1.7; color:rgba(245,245,247,0.65); margin-bottom:16px;">I wanted to reserve a table at my wife's favorite restaurant — for her birthday. 10 calls. Not a single callback. We ate somewhere else.</p>
+      <p style="font-size:17px; line-height:1.7; color:rgba(245,245,247,0.65); margin-bottom:32px;">That restaurant didn't just lose my table. They ruined my wife's birthday — and lost a customer forever. <strong style="color:#f5f5f7;">That's why I founded LeoLan Digital: so no restaurant ever misses a call again — and no guest goes home disappointed.</strong></p>
       <div style="display:flex; align-items:center; gap:16px;">
         <div>
           <div style="font-size:17px; font-weight:600; color:#f5f5f7;">Kamaleddin Nazari</div>
-          <div style="font-size:14px; color:rgba(245,245,247,0.82); margin-top:2px;">Founder & CEO, LeoLan Digital</div>
+          <div style="font-size:14px; color:rgba(245,245,247,0.5); margin-top:2px;">Founder & CEO, LeoLan Digital</div>
         </div>
       </div>
     </div>
@@ -999,15 +999,15 @@
     <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px;">
       <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(0,113,227,0.25); border-radius: 16px; padding: 20px 28px; min-width: 180px;">
         <div style="font-size: 32px; font-weight: 700; color: var(--accent-light);">30%</div>
-        <div style="font-size: 13px; color: rgba(245,245,247,0.87); margin-top: 4px;">of inquiries are lost</div>
+        <div style="font-size: 13px; color: rgba(245,245,247,0.6); margin-top: 4px;">of inquiries are lost</div>
       </div>
       <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,214,0,0.25); border-radius: 16px; padding: 20px 28px; min-width: 180px;">
         <div style="font-size: 32px; font-weight: 700; color: #ffd60a;">€150</div>
-        <div style="font-size: 13px; color: rgba(245,245,247,0.87); margin-top: 4px;">lost per missed table</div>
+        <div style="font-size: 13px; color: rgba(245,245,247,0.6); margin-top: 4px;">lost per missed table</div>
       </div>
       <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(52,199,89,0.25); border-radius: 16px; padding: 20px 28px; min-width: 180px;">
         <div style="font-size: 32px; font-weight: 700; color: #34c759;">5 days</div>
-        <div style="font-size: 13px; color: rgba(245,245,247,0.87); margin-top: 4px;">until your system is live</div>
+        <div style="font-size: 13px; color: rgba(245,245,247,0.6); margin-top: 4px;">until your system is live</div>
       </div>
     </div>
     <a href="#kontakt" style="display: inline-block; background: var(--accent); color: #fff; padding: 16px 36px; border-radius: 980px; font-size: 16px; font-weight: 600; text-decoration: none;">Start now — free & no obligation →</a>
@@ -1023,36 +1023,36 @@
     <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(0,113,227,0.25);border-radius:20px;padding:32px;margin-top:32px;" class="reveal">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px;">
         <div>
-          <label style="display:block;font-size:13px;color:rgba(245,245,247,0.87);margin-bottom:8px;">Inquiries per day</label>
-          <input type="number" id="roiAnfragen" value="10" min="1" max="200" oninput="berechneROI()" style="width:100%;padding:12px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:#fff;font-size:18px;font-weight:700;text-align:center;box-sizing:border-box;" aria-label="Anfragen pro Tag">
+          <label style="display:block;font-size:13px;color:rgba(245,245,247,0.6);margin-bottom:8px;">Inquiries per day</label>
+          <input type="number" id="roiAnfragen" value="10" min="1" max="200" oninput="berechneROI()" style="width:100%;padding:12px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:#fff;font-size:18px;font-weight:700;text-align:center;box-sizing:border-box;">
         </div>
         <div>
-          <label style="display:block;font-size:13px;color:rgba(245,245,247,0.87);margin-bottom:8px;">Revenue per table (€)</label>
-          <input type="number" id="roiUmsatz" value="80" min="10" max="500" oninput="berechneROI()" style="width:100%;padding:12px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:#fff;font-size:18px;font-weight:700;text-align:center;box-sizing:border-box;" aria-label="Durchschnittlicher Umsatz pro Tisch in Euro">
+          <label style="display:block;font-size:13px;color:rgba(245,245,247,0.6);margin-bottom:8px;">Revenue per table (€)</label>
+          <input type="number" id="roiUmsatz" value="80" min="10" max="500" oninput="berechneROI()" style="width:100%;padding:12px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:#fff;font-size:18px;font-weight:700;text-align:center;box-sizing:border-box;">
         </div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:24px;">
         <div style="background:rgba(255,59,48,0.1);border:1px solid rgba(255,59,48,0.25);border-radius:14px;padding:16px;">
-          <div style="font-size:11px;color:rgba(245,245,247,0.82);margin-bottom:6px;">DAILY</div>
+          <div style="font-size:11px;color:rgba(245,245,247,0.5);margin-bottom:6px;">DAILY</div>
           <div id="roiDaily" style="font-size:24px;font-weight:800;color:#ff6b6b;">€240</div>
         </div>
         <div style="background:rgba(255,214,0,0.08);border:1px solid rgba(255,214,0,0.25);border-radius:14px;padding:16px;">
-          <div style="font-size:11px;color:rgba(245,245,247,0.82);margin-bottom:6px;">PER MONTH</div>
+          <div style="font-size:11px;color:rgba(245,245,247,0.5);margin-bottom:6px;">PER MONTH</div>
           <div id="roiMonthly" style="font-size:24px;font-weight:800;color:#ffd60a;">€7,200</div>
         </div>
         <div style="background:rgba(52,199,89,0.08);border:1px solid rgba(52,199,89,0.25);border-radius:14px;padding:16px;">
-          <div style="font-size:11px;color:rgba(245,245,247,0.82);margin-bottom:6px;">ROI LEOLAN</div>
+          <div style="font-size:11px;color:rgba(245,245,247,0.5);margin-bottom:6px;">ROI LEOLAN</div>
           <div id="roiReturn" style="font-size:24px;font-weight:800;color:#34c759;">36×</div>
         </div>
       </div>
-      <p id="roiText" style="font-size:14px;color:rgba(245,245,247,0.87);margin-bottom:20px;">You're losing <strong style="color:#ff6b6b;">€7,200 per month</strong>. LeoLan costs €199 — and gets it back for you.</p>
+      <p id="roiText" style="font-size:14px;color:rgba(245,245,247,0.65);margin-bottom:20px;">You're losing <strong style="color:#ff6b6b;">€7,200 per month</strong>. LeoLan costs €199 — and gets it back for you.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:12px;">
-        <input aria-label="your@email.com" type="email" id="roiEmail" placeholder="your@email.com" style="padding:12px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.2);border-radius:10px;color:#fff;font-size:15px;min-width:220px;outline:none;flex:1;max-width:300px;" />
+        <input type="email" id="roiEmail" placeholder="your@email.com" style="padding:12px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.2);border-radius:10px;color:#fff;font-size:15px;min-width:220px;outline:none;flex:1;max-width:300px;" />
         <button onclick="sendeROIReport()" style="background:var(--accent);color:#fff;padding:12px 20px;border-radius:10px;border:none;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap;">📊 Report by Email →</button>
       </div>
-      <p style="font-size:12px;color:rgba(245,245,247,0.75);margin:0 0 16px;">Free · No spam · Your loss report only</p>
+      <p style="font-size:12px;color:rgba(245,245,247,0.35);margin:0 0 16px;">Free · No spam · Your loss report only</p>
       <div id="roiSuccess" style="display:none;margin-bottom:12px;background:rgba(52,199,89,0.15);border:1px solid rgba(52,199,89,0.3);border-radius:10px;padding:12px;color:#34c759;font-size:14px;">✅ Report on its way! Check your inbox.</div>
-      <a href="#kontakt" style="display:inline-block;background:rgba(255,255,255,0.06);color:rgba(245,245,247,0.87);padding:10px 24px;border-radius:980px;font-size:14px;font-weight:500;text-decoration:none;border:1px solid rgba(255,255,255,0.12);">Stop the losses — Demo →</a>
+      <a href="#kontakt" style="display:inline-block;background:rgba(255,255,255,0.06);color:rgba(245,245,247,0.6);padding:10px 24px;border-radius:980px;font-size:14px;font-weight:500;text-decoration:none;border:1px solid rgba(255,255,255,0.12);">Stop the losses — Demo →</a>
     </div>
   </div>
 </section>
@@ -1168,7 +1168,7 @@ berechneROI();
 <section style="padding: 100px 24px; background: var(--gray-1); border-top: 1px solid rgba(255,255,255,0.07); text-align: center;">
   <p style="font-size:13px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent-light); margin-bottom:16px;">Live demo</p>
   <h2 style="font-size:clamp(28px,4vw,48px); font-weight:700; letter-spacing:-0.025em; margin-bottom:12px;">Personal waiter for every table.</h2>
-  <p style="font-size:17px; color:rgba(245,245,247,0.87); max-width:520px; margin:0 auto 48px; line-height:1.6;">The AI food advisor asks a few questions — and then recommends exactly the right dish from your menu.</p>
+  <p style="font-size:17px; color:rgba(245,245,247,0.6); max-width:520px; margin:0 auto 48px; line-height:1.6;">The AI food advisor asks a few questions — and then recommends exactly the right dish from your menu.</p>
   <div style="max-width:480px; margin:0 auto; background:#1a1a1a; border-radius:20px; overflow:hidden; border:1px solid rgba(255,255,255,0.1);">
     <div style="background:#2c2c2e; padding:16px 20px; display:flex; align-items:center; gap:12px;">
       <div style="width:36px; height:36px; border-radius:50%; background:var(--accent); display:flex; align-items:center; justify-content:center; font-size:16px;">🍽️</div>
@@ -1180,11 +1180,11 @@ berechneROI();
     <div style="padding:24px 20px; display:flex; flex-direction:column; gap:12px;">
       <div style="max-width:80%; padding:12px 16px; border-radius:16px; border-bottom-left-radius:4px; background:#2c2c2e; font-size:14px; line-height:1.5; text-align:left; align-self:flex-start;">
         Hello! 😊 I'm happy to help you choose. Do you prefer <strong>spicy</strong> or <strong>mild</strong>?
-        <div style="font-size:11px; color:rgba(200,200,210,0.95); margin-top:4px;">7:32 PM</div>
+        <div style="font-size:11px; opacity:0.5; margin-top:4px;">7:32 PM</div>
       </div>
       <div style="max-width:80%; padding:12px 16px; border-radius:16px; border-bottom-right-radius:4px; background:var(--accent); color:#fff; font-size:14px; line-height:1.5; text-align:left; align-self:flex-end;">
         Medium spicy please 🌶️ And I don't eat meat.
-        <div style="font-size:11px; color:rgba(200,200,210,0.95); margin-top:4px;">7:32 PM</div>
+        <div style="font-size:11px; opacity:0.6; margin-top:4px;">7:32 PM</div>
       </div>
       <div style="max-width:80%; padding:12px 16px; border-radius:16px; border-bottom-left-radius:4px; background:#2c2c2e; font-size:14px; line-height:1.5; text-align:left; align-self:flex-start;">
         Perfect! Here are my recommendations for tonight:<br><br>
@@ -1192,19 +1192,19 @@ berechneROI();
         🥗 <strong>Grilled Halloumi</strong> — our bestseller tonight<br>
         🍜 <strong>Lentil Soup with Turmeric</strong> — mildly spiced, vegan ⭐ <em>House specialty</em><br><br>
         Pairs well with a glass of <strong>Grüner Veltliner</strong> or our homemade <strong>Hibiscus tea</strong> 🍵
-        <div style="font-size:11px; color:rgba(200,200,210,0.95); margin-top:4px;">7:33 PM</div>
+        <div style="font-size:11px; opacity:0.5; margin-top:4px;">7:33 PM</div>
       </div>
       <div style="max-width:80%; padding:12px 16px; border-radius:16px; border-bottom-right-radius:4px; background:var(--accent); color:#fff; font-size:14px; line-height:1.5; text-align:left; align-self:flex-end;">
         Shakshuka sounds perfect! 😍
-        <div style="font-size:11px; color:rgba(200,200,210,0.95); margin-top:4px;">7:33 PM</div>
+        <div style="font-size:11px; opacity:0.6; margin-top:4px;">7:33 PM</div>
       </div>
       <div style="max-width:80%; padding:12px 16px; border-radius:16px; border-bottom-left-radius:4px; background:#1c1c1e; font-size:14px; line-height:1.5; align-self:flex-start;">
         Great choice! 🌟 By the way — our Shakshuka is made with fresh eggs from a local farm nearby. 😉
-        <div style="font-size:11px; color:rgba(200,200,210,0.95); margin-top:4px;">7:33 PM · digital assistant</div>
+        <div style="font-size:11px; opacity:0.5; margin-top:4px;">7:33 PM · digital assistant</div>
       </div>
     </div>
   </div>
-  <p style="font-size:13px; color:rgba(245,245,247,0.75); margin-top:20px;">Guest enters preferences → AI recommends from your real menu → Upselling included</p>
+  <p style="font-size:13px; color:rgba(245,245,247,0.35); margin-top:20px;">Guest enters preferences → AI recommends from your real menu → Upselling included</p>
 </section>
 
 <!-- WHY LEOLAN -->
@@ -1216,22 +1216,22 @@ berechneROI();
       <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:24px;">
         <div style="font-size:28px;margin-bottom:12px;">🎯</div>
         <h3 style="margin:0 0 8px;font-size:17px;">Focus on revenue, not tech</h3>
-        <p style="margin:0;color:rgba(245,245,247,0.87);font-size:14px;line-height:1.6;">No tech jargon. No months of effort. You see results in 5 business days.</p>
+        <p style="margin:0;color:rgba(245,245,247,0.6);font-size:14px;line-height:1.6;">No tech jargon. No months of effort. You see results in 5 business days.</p>
       </div>
       <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:24px;">
         <div style="font-size:28px;margin-bottom:12px;">⚡</div>
         <h3 style="margin:0 0 8px;font-size:17px;">Fast setup</h3>
-        <p style="margin:0;color:rgba(245,245,247,0.87);font-size:14px;line-height:1.6;">Your WhatsApp bot runs in 5 days. No IT knowledge needed. We take care of everything.</p>
+        <p style="margin:0;color:rgba(245,245,247,0.6);font-size:14px;line-height:1.6;">Your WhatsApp bot runs in 5 days. No IT knowledge needed. We take care of everything.</p>
       </div>
       <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:24px;">
         <div style="font-size:28px;margin-bottom:12px;">🤝</div>
         <h3 style="margin:0 0 8px;font-size:17px;">Personal support</h3>
-        <p style="margin:0;color:rgba(245,245,247,0.87);font-size:14px;line-height:1.6;">No ticket system. No call center. One direct contact — who knows your restaurant.</p>
+        <p style="margin:0;color:rgba(245,245,247,0.6);font-size:14px;line-height:1.6;">No ticket system. No call center. One direct contact — who knows your restaurant.</p>
       </div>
       <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:24px;">
         <div style="font-size:28px;margin-bottom:12px;">📈</div>
         <h3 style="margin:0 0 8px;font-size:17px;">Built for hospitality</h3>
-        <p style="margin:0;color:rgba(245,245,247,0.87);font-size:14px;line-height:1.6;">Built by someone who knows what daily life in hospitality looks like — from the inside and as a guest.</p>
+        <p style="margin:0;color:rgba(245,245,247,0.6);font-size:14px;line-height:1.6;">Built by someone who knows what daily life in hospitality looks like — from the inside and as a guest.</p>
       </div>
     </div>
   </div>
@@ -1245,15 +1245,15 @@ berechneROI();
     <div style="display:flex;flex-direction:column;gap:16px;margin-top:40px;text-align:left;" class="reveal">
       <div style="display:flex;align-items:flex-start;gap:20px;background:rgba(255,255,255,0.04);border-radius:16px;padding:20px 24px;">
         <div style="min-width:40px;height:40px;background:#f5a623;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;color:#000;font-size:18px;">1</div>
-        <div><strong style="font-size:16px;">Request a demo</strong><p style="margin:4px 0 0;color:rgba(245,245,247,0.87);font-size:14px;">Free, no obligation. We show you what your bot would look like.</p></div>
+        <div><strong style="font-size:16px;">Request a demo</strong><p style="margin:4px 0 0;color:rgba(245,245,247,0.6);font-size:14px;">Free, no obligation. We show you what your bot would look like.</p></div>
       </div>
       <div style="display:flex;align-items:flex-start;gap:20px;background:rgba(255,255,255,0.04);border-radius:16px;padding:20px 24px;">
         <div style="min-width:40px;height:40px;background:#f5a623;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;color:#000;font-size:18px;">2</div>
-        <div><strong style="font-size:16px;">Setup in a few days</strong><p style="margin:4px 0 0;color:rgba(245,245,247,0.87);font-size:14px;">We set everything up. You don't need to install or configure anything.</p></div>
+        <div><strong style="font-size:16px;">Setup in a few days</strong><p style="margin:4px 0 0;color:rgba(245,245,247,0.6);font-size:14px;">We set everything up. You don't need to install or configure anything.</p></div>
       </div>
       <div style="display:flex;align-items:flex-start;gap:20px;background:rgba(255,255,255,0.04);border-radius:16px;padding:20px 24px;">
         <div style="min-width:40px;height:40px;background:#f5a623;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;color:#000;font-size:18px;">3</div>
-        <div><strong style="font-size:16px;">System runs automatically</strong><p style="margin:4px 0 0;color:rgba(245,245,247,0.87);font-size:14px;">Your bot responds 24/7. You focus on your guests.</p></div>
+        <div><strong style="font-size:16px;">System runs automatically</strong><p style="margin:4px 0 0;color:rgba(245,245,247,0.6);font-size:14px;">Your bot responds 24/7. You focus on your guests.</p></div>
       </div>
     </div>
   </div>
@@ -1267,28 +1267,28 @@ berechneROI();
   </div>
   <div class="faq-list">
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-1">What does LeoLan Digital cost? <span>+</span></button>
-      <div class="faq-a" id="faq-answer-1"><p>Starter €199/month, Pro €349/month, each plus €349 setup.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)">What does LeoLan Digital cost? <span>+</span></button>
+      <div class="faq-a"><p>Starter €199/month, Pro €349/month, each plus €349 setup.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-2">How quickly can I get started? <span>+</span></button>
-      <div class="faq-a" id="faq-answer-2"><p>After your payment we will contact you within 48 hours.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)">How quickly can I get started? <span>+</span></button>
+      <div class="faq-a"><p>After your payment we will contact you within 48 hours.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-3">What languages does the bot support? <span>+</span></button>
-      <div class="faq-a" id="faq-answer-3"><p>German, English, Turkish and more.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)">What languages does the bot support? <span>+</span></button>
+      <div class="faq-a"><p>German, English, Turkish and more.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-4">Do I need technical knowledge? <span>+</span></button>
-      <div class="faq-a" id="faq-answer-4"><p>No, we set everything up for you.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)">Do I need technical knowledge? <span>+</span></button>
+      <div class="faq-a"><p>No, we set everything up for you.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-5">Is there a free trial? <span>+</span></button>
-      <div class="faq-a" id="faq-answer-5"><p>Yes! The first month is free. You can test the bot directly on this page — or message us on WhatsApp: <a href="https://wa.me/4915678483700" target="_blank" style="color:#2997ff;">+49 15678 483700</a></p></div>
+      <button class="faq-q" onclick="toggleFaq(this)">Is there a free trial? <span>+</span></button>
+      <div class="faq-a"><p>Yes! The first month is free. You can test the bot directly on this page — or message us on WhatsApp: <a href="https://wa.me/4915678483700" target="_blank" style="color:#2997ff;">+49 15678 483700</a></p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-6">Does it work with my existing WhatsApp number? <span>+</span></button>
-      <div class="faq-a" id="faq-answer-6"><p>Yes, we migrate your number.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)">Does it work with my existing WhatsApp number? <span>+</span></button>
+      <div class="faq-a"><p>Yes, we migrate your number.</p></div>
     </div>
   </div>
 </section>
@@ -1304,12 +1304,12 @@ berechneROI();
   </div>
   <form class="contact-form reveal reveal-delay-2" action="https://formspree.io/f/xgopdnll" method="POST" id="contactForm">
     <div class="form-row">
-      <input aria-label="Your name" type="text" name="name" placeholder="Your name" required>
-      <input aria-label="Restaurant / Business" type="text" name="restaurant" placeholder="Restaurant / Business">
+      <input type="text" name="name" placeholder="Your name" required>
+      <input type="text" name="restaurant" placeholder="Restaurant / Business">
     </div>
-    <input aria-label="Phone / WhatsApp" type="tel" name="phone" placeholder="Phone / WhatsApp" required>
-    <input aria-label="Email address" type="email" name="email" placeholder="Email address">
-    <select aria-label="Paket" name="paket">
+    <input type="tel" name="phone" placeholder="Phone / WhatsApp" required>
+    <input type="email" name="email" placeholder="Email address">
+    <select name="paket">
       <option value="" disabled selected>Which package interests you?</option>
       <option value="starter">Starter — €199/month</option>
       <option value="pro">Pro — €349

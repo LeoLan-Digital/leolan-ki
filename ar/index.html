@@ -40,8 +40,8 @@
     --gray-2: rgba(255,255,255,0.06);
     --gray-3: #3a3a3c;
     --text-primary: #f5f5f7;
-    --text-secondary: rgba(245,245,247,0.87);
-    --text-tertiary: rgba(245,245,247,0.75);
+    --text-secondary: rgba(245,245,247,0.6);
+    --text-tertiary: rgba(245,245,247,0.35);
     --accent: #0071e3;
     --accent-light: #2997ff;
     --font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Tahoma, Arial, sans-serif;
@@ -125,7 +125,7 @@
   .price-tier { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(245,245,247,0.72); margin-bottom: 8px; }
   .price-card.featured .price-tier { color: rgba(245,245,247,0.88); }
   .price-amount { font-size: 44px; font-weight: 700; letter-spacing: -0.03em; margin: 4px 0; color: #fff; }
-  .price-period { font-size: 13px; color: rgba(245,245,247,0.87); margin-bottom: 28px; }
+  .price-period { font-size: 13px; color: rgba(245,245,247,0.68); margin-bottom: 28px; }
   .price-features { list-style: none; flex: 1; display: flex; flex-direction: column; gap: 10px; padding: 0; }
   .price-features li { font-size: 14px; color: rgba(245,245,247,0.82); display: flex; gap: 10px; align-items: flex-start; line-height: 1.4; flex-direction: row-reverse; }
   .price-features li::after { content: '✓'; color: var(--accent-light); flex-shrink: 0; font-size: 13px; font-weight: 700; }
@@ -191,15 +191,12 @@
     .pricing-grid { grid-template-columns: 1fr !important; }
     .form-row { grid-template-columns: 1fr !important; }
   }
-  a:focus, button:focus, input:focus, select:focus, textarea:focus { outline: 2px solid #0071e3 !important; outline-offset: 2px !important; }
 </style>
 </head>
 <body>
-<a href="#main-content" class="skip-nav" style="position:absolute;top:-40px;left:0;padding:8px;background:#0071e3;color:#fff;font-size:14px;z-index:9999;border-radius:0 0 4px 0;transition:top 0.2s;text-decoration:none;">Zum Hauptinhalt springen</a>
-
 
 <!-- COOKIE BANNER -->
-<div id="cookieBanner" role="alertdialog" aria-label="Cookie-Einstellungen" aria-live="polite" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:9999; background:#1c1c1e; border-top:1px solid rgba(255,255,255,0.1); padding:20px 24px; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px;">
+<div id="cookieBanner" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:9999; background:#1c1c1e; border-top:1px solid rgba(255,255,255,0.1); padding:20px 24px; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px;">
   <p style="font-size:13px; color:rgba(245,245,247,0.7); max-width:680px; line-height:1.5; margin:0;">نستخدم ملفات تعريف الارتباط (Google Analytics) لتحسين موقعنا. <a href="/ar/datenschutz.html" style="color:#2997ff;">اعرف المزيد</a></p>
   <div style="display:flex; gap:10px; flex-shrink:0;">
     <button onclick="rejectCookies()" style="padding:10px 20px; border-radius:980px; border:1px solid rgba(255,255,255,0.2); background:transparent; color:rgba(245,245,247,0.7); font-size:13px; cursor:pointer; font-family:inherit;">رفض</button>
@@ -213,13 +210,13 @@
   function acceptCookies(){setCookie('cookie_consent','accepted',365);document.getElementById('cookieBanner').style.display='none';loadTracking();}
   function rejectCookies(){setCookie('cookie_consent','rejected',365);document.getElementById('cookieBanner').style.display='none';}
   window.addEventListener('DOMContentLoaded',function(){var c=getCookie('cookie_consent');if(!c){document.getElementById('cookieBanner').style.display='flex';}else if(c==='accepted'){loadTracking();}});
-  function toggleMenu(){var m=document.getElementById('mobileMenu');var open=m.classList.toggle('open');m.setAttribute('aria-hidden',open?'false':'true');}
+  function toggleMenu(){var m=document.getElementById('mobileMenu');m.classList.toggle('open');}
   function closeMenu(){document.getElementById('mobileMenu').classList.remove('open');}
 </script>
 
 <!-- NAV -->
 <nav>
-  <a href="/ar/" class="nav-logo" aria-label="LeoLan Digital - Homepage"><img src="/logo.svg" width="120" height="40"  alt="LeoLan Digital" style="height:120px;width:auto;display:block;"></a>
+  <a href="/ar/" class="nav-logo"><img src="/logo.svg" alt="LeoLan Digital" style="height:120px;width:auto;display:block;"></a>
   <ul class="nav-links">
     <li><a href="#probleme">المشكلات</a></li>
     <li><a href="#leistungen">الخدمات</a></li>
@@ -228,8 +225,8 @@
     <li><a href="/ar/ueber-uns.html">عن الشركة</a></li>
   </ul>
   <a href="#kontakt" class="nav-cta">استشارة مجانية ›</a>
-  <button class="hamburger" onclick="toggleMenu()" aria-label="القائمة" aria-label="Menü öffnen" aria-expanded="false"><span></span><span></span><span></span></button>
-</nav><main id="main-content" tabindex="-1">
+  <button class="hamburger" onclick="toggleMenu()" aria-label="القائمة"><span></span><span></span><span></span></button>
+</nav>
 <div class="mobile-menu" id="mobileMenu">
   <a href="#probleme" onclick="closeMenu()">المشكلات</a>
   <a href="#leistungen" onclick="closeMenu()">الخدمات</a>
@@ -267,7 +264,7 @@
     <a href="#leistungen" class="btn-secondary">استحوذ على المزيد من الحجوزات ›</a>
   </div>
   <p style="font-size:14px;color:rgba(245,245,247,0.7);margin-bottom:32px;background:rgba(255,214,0,0.08);border:1px solid rgba(255,214,0,0.2);padding:12px 20px;border-radius:12px;display:inline-block;" class="reveal reveal-delay-3">💰 فقط <strong>3 استفسارات يومية فائتة</strong> قد تكلفك أكثر من <strong>4,000€ إيرادات شهرياً</strong>.</p>
-  <p class="reveal reveal-delay-3" style="font-size:14px;color:rgba(245,245,247,0.87);text-align:center;">✓ الشهر الأول مجاني &nbsp;·&nbsp; ✓ بلا عقد ملزم &nbsp;·&nbsp; ✓ نتائج في 5 أيام عمل &nbsp;·&nbsp; ✓ إلغاء شهري</p>
+  <p class="reveal reveal-delay-3" style="font-size:14px;color:rgba(245,245,247,0.65);text-align:center;">✓ الشهر الأول مجاني &nbsp;·&nbsp; ✓ بلا عقد ملزم &nbsp;·&nbsp; ✓ نتائج في 5 أيام عمل &nbsp;·&nbsp; ✓ إلغاء شهري</p>
 </section>
 
 <!-- SOCIAL PROOF TICKER -->
@@ -474,7 +471,7 @@
       <a href="https://ki.leolan.net/enterprise/" class="price-btn price-btn-outline">اطلب بشكل فردي ←</a>
     </div>
   </div>
-  <p style="text-align:center;font-size:14px;color:rgba(245,245,247,0.80);margin-top:24px;">جميع الأسعار بدون ضريبة مبيعات · الشهر الأول مجاني · إلغاء شهري ممكن</p>
+  <p style="text-align:center;font-size:14px;color:rgba(245,245,247,0.45);margin-top:24px;">جميع الأسعار بدون ضريبة مبيعات · الشهر الأول مجاني · إلغاء شهري ممكن</p>
 </section>
 
 <!-- FAQ -->
@@ -485,32 +482,32 @@
   </div>
   <div class="faq-list">
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-1">كم يكلف LeoLan Digital؟ <span>+</span></button>
-      <div class="faq-a" id="faq-answer-1"><p>Starter من 149€/شهر (سنوي) أو 199€/شهر (شهري). Pro من 249€/شهر (سنوي) أو 349€/شهر (شهري). رسوم الإعداد 199€ مرة واحدة — مجانية عند الدفع السنوي.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)">كم يكلف LeoLan Digital؟ <span>+</span></button>
+      <div class="faq-a"><p>Starter من 149€/شهر (سنوي) أو 199€/شهر (شهري). Pro من 249€/شهر (سنوي) أو 349€/شهر (شهري). رسوم الإعداد 199€ مرة واحدة — مجانية عند الدفع السنوي.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-2">كم من الوقت يستغرق البدء؟ <span>+</span></button>
-      <div class="faq-a" id="faq-answer-2"><p>بعد الدفع نتواصل معك خلال 48 ساعة. الإعداد الكامل يستغرق 2–3 أيام.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)">كم من الوقت يستغرق البدء؟ <span>+</span></button>
+      <div class="faq-a"><p>بعد الدفع نتواصل معك خلال 48 ساعة. الإعداد الكامل يستغرق 2–3 أيام.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-3">ما اللغات التي يدعمها البوت؟ <span>+</span></button>
-      <div class="faq-a" id="faq-answer-3"><p>الألمانية، الإنجليزية، التركية، العربية والمزيد — يتكيف تلقائياً مع لغة الضيف.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)">ما اللغات التي يدعمها البوت؟ <span>+</span></button>
+      <div class="faq-a"><p>الألمانية، الإنجليزية، التركية، العربية والمزيد — يتكيف تلقائياً مع لغة الضيف.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-4">هل أحتاج معرفة تقنية؟ <span>+</span></button>
-      <div class="faq-a" id="faq-answer-4"><p>لا، نحن نعد كل شيء من أجلك. لا تحتاج تثبيت أو إعداد أي شيء.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)">هل أحتاج معرفة تقنية؟ <span>+</span></button>
+      <div class="faq-a"><p>لا، نحن نعد كل شيء من أجلك. لا تحتاج تثبيت أو إعداد أي شيء.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-5">هل يوجد شهر تجربة مجاني؟ <span>+</span></button>
-      <div class="faq-a" id="faq-answer-5"><p>نعم! الشهر الأول مجاني بعد تفعيل رقم واتساب. يمكنك اختبار البوت مباشرةً أو راسلنا على واتساب: <a href="https://wa.me/4915678483700" target="_blank" style="color:#2997ff;">+49 15678 483700</a></p></div>
+      <button class="faq-q" onclick="toggleFaq(this)">هل يوجد شهر تجربة مجاني؟ <span>+</span></button>
+      <div class="faq-a"><p>نعم! الشهر الأول مجاني بعد تفعيل رقم واتساب. يمكنك اختبار البوت مباشرةً أو راسلنا على واتساب: <a href="https://wa.me/4915678483700" target="_blank" style="color:#2997ff;">+49 15678 483700</a></p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-6">هل يعمل مع رقم واتساب الحالي لدي؟ <span>+</span></button>
-      <div class="faq-a" id="faq-answer-6"><p>نعم، نقوم بترحيل رقمك. أو نوفر لك رقماً جديداً مخصصاً.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)">هل يعمل مع رقم واتساب الحالي لدي؟ <span>+</span></button>
+      <div class="faq-a"><p>نعم، نقوم بترحيل رقمك. أو نوفر لك رقماً جديداً مخصصاً.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-7">كيف يمكنني الإلغاء؟ <span>+</span></button>
-      <div class="faq-a" id="faq-answer-7"><p>الإلغاء ممكن في أي وقت عبر البريد الإلكتروني <a href="mailto:business@leolan.net" style="color:#2997ff;">business@leolan.net</a>. إذا ألغيت خلال شهر التجربة المجاني، تُرد رسوم الإعداد بالكامل.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)">كيف يمكنني الإلغاء؟ <span>+</span></button>
+      <div class="faq-a"><p>الإلغاء ممكن في أي وقت عبر البريد الإلكتروني <a href="mailto:business@leolan.net" style="color:#2997ff;">business@leolan.net</a>. إذا ألغيت خلال شهر التجربة المجاني، تُرد رسوم الإعداد بالكامل.</p></div>
     </div>
   </div>
 </section>
@@ -527,18 +524,18 @@
   <form class="contact-form reveal reveal-delay-2" action="https://formspree.io/f/xgopdnll" method="POST" id="contactForm">
     <input type="hidden" name="_lang" value="ar">
     <div class="form-row">
-      <input aria-label="اسمك" type="text" name="name" placeholder="اسمك" required>
-      <input aria-label="المطعم / النشاط التجاري" type="text" name="restaurant" placeholder="المطعم / النشاط التجاري">
+      <input type="text" name="name" placeholder="اسمك" required>
+      <input type="text" name="restaurant" placeholder="المطعم / النشاط التجاري">
     </div>
-    <input aria-label="الهاتف / واتساب" type="tel" name="phone" placeholder="الهاتف / واتساب" required>
-    <input aria-label="البريد الإلكتروني" type="email" name="email" placeholder="البريد الإلكتروني">
-    <select aria-label="Paket" name="paket">
+    <input type="tel" name="phone" placeholder="الهاتف / واتساب" required>
+    <input type="email" name="email" placeholder="البريد الإلكتروني">
+    <select name="paket">
       <option value="" disabled selected>أي باقة تهمك؟</option>
       <option value="starter">Starter — 199€/شهر</option>
       <option value="pro">Pro — 349€/شهر</option>
       <option value="enterprise">Enterprise — حسب الطلب</option>
     </select>
-    <textarea name="message" placeholder="سؤالك أو ملاحظاتك (اختياري)" aria-label="Deine Nachricht"></textarea>
+    <textarea name="message" placeholder="سؤالك أو ملاحظاتك (اختياري)"></textarea>
     <button type="submit" class="form-submit">إرسال الطلب المجاني ←</button>
   </form>
   <div id="formSuccess" style="display:none;text-align:center;padding:32px;font-size:18px;color:var(--accent-light);">
@@ -549,7 +546,7 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">
-    <img src="/logo.svg" alt="LeoLan Digital" width="120" height="40">
+    <img src="/logo.svg" alt="LeoLan Digital">
   </div>
   <div class="social-links">
     <a href="https://www.instagram.com/leolan_digital" target="_blank" rel="noopener" title="Instagram">
@@ -593,6 +590,5 @@
     e.preventDefault();
   });
 </script>
-</main>
 </body>
 </html>

@@ -36,6 +36,9 @@
   <link rel="alternate" hreflang="th" href="https://ki.leolan.net/th/">
   <link rel="alternate" hreflang="ar" href="https://ki.leolan.net/ar/">
 <link rel="alternate" hreflang="x-default" href="https://ki.leolan.net/">
+  <meta http-equiv="Cache-Control" content="max-age=86400, public">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-new.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-new.png">
   <link rel="shortcut icon" href="/favicon-new.png">
@@ -77,8 +80,8 @@
     --gray-2: rgba(255,255,255,0.06);
     --gray-3: #3a3a3c;
     --text-primary: #f5f5f7;
-    --text-secondary: rgba(245,245,247,0.87);
-    --text-tertiary: rgba(245,245,247,0.75);
+    --text-secondary: rgba(245,245,247,0.6);
+    --text-tertiary: rgba(245,245,247,0.35);
     --accent: #0071e3;
     --accent-light: #2997ff;
     --font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Arial, sans-serif;
@@ -172,7 +175,7 @@
   .compare-col.before { background: var(--gray-1); }
   .compare-col.after { background: var(--gray-1); border: 1px solid rgba(0,113,227,0.35); border-radius: 24px; }
   .compare-label { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px; }
-  .compare-col.before .compare-label { color: rgba(245,245,247,0.78); }
+  .compare-col.before .compare-label { color: rgba(245,245,247,0.4); }
   .compare-col.after .compare-label { color: var(--accent-light); }
   .compare-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
   .compare-list li { font-size: 15px; color: var(--text-secondary); display: flex; gap: 12px; align-items: flex-start; line-height: 1.5; }
@@ -232,7 +235,7 @@
   .price-tier { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(245,245,247,0.72); margin-bottom: 8px; }
   .price-card.featured .price-tier { color: rgba(245,245,247,0.88); }
   .price-amount { font-size: 44px; font-weight: 700; letter-spacing: -0.03em; margin: 4px 0; color: #fff; }
-  .price-period { font-size: 13px; color: rgba(245,245,247,0.87); margin-bottom: 28px; }
+  .price-period { font-size: 13px; color: rgba(245,245,247,0.68); margin-bottom: 28px; }
   .price-card.featured .price-period { color: rgba(245,245,247,0.76); }
   .price-features { list-style: none; flex: 1; display: flex; flex-direction: column; gap: 10px; }
   .price-features li { font-size: 14px; color: rgba(245,245,247,0.82); display: flex; gap: 10px; align-items: flex-start; line-height: 1.4; }
@@ -256,16 +259,16 @@
   .chatbot-title { display: flex; align-items: center; gap: 12px; }
   .chatbot-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; }
   .chatbot-header strong { display: block; font-size: 15px; }
-  .chatbot-header span { display: block; font-size: 12px; color: rgba(245,245,247,0.87); margin-top: 2px; }
+  .chatbot-header span { display: block; font-size: 12px; color: rgba(245,245,247,0.6); margin-top: 2px; }
   .chatbot-close { background: transparent; border: none; color: rgba(245,245,247,0.8); font-size: 24px; line-height: 1; cursor: pointer; }
   .chatbot-messages { flex: 1; padding: 12px 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; scroll-behavior: smooth; background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 18px 18px; }
   .chatbot-message { max-width: 84%; padding: 12px 14px; border-radius: 18px; font-size: 14px; line-height: 1.5; }
   .chatbot-message.bot { align-self: flex-start; background: #223243; color: rgba(255,255,255,0.92); border-bottom-left-radius: 6px; }
   .chatbot-message.user { align-self: flex-end; background: #2b5278; color: #fff; border-bottom-right-radius: 6px; }
-  .chatbot-message small { display: block; margin-top: 6px; font-size: 11px; color: rgba(255,255,255,0.87); }
+  .chatbot-message small { display: block; margin-top: 6px; font-size: 11px; color: rgba(255,255,255,0.5); }
   .chatbot-input-wrap { padding: 8px 12px 12px; background: #17212b; }
-  .chatbot-form input::placeholder { color: rgba(245,245,247,0.75); }
-  .chatbot-hint { margin-top: 10px; font-size: 12px; color: rgba(245,245,247,0.82); text-align: center; }
+  .chatbot-form input::placeholder { color: rgba(245,245,247,0.38); }
+  .chatbot-hint { margin-top: 10px; font-size: 12px; color: rgba(245,245,247,0.5); text-align: center; }
   @media (max-width: 640px) {
     .chatbot-modal { padding: 12px; }
     .chatbot-window { width: 100%; height: min(78vh, 640px); border-radius: 20px; }
@@ -335,10 +338,9 @@
   .reveal-delay-4 { transition-delay: 0.4s; }
   .chatbot-form { display: flex; align-items: center; gap: 8px; }
   .chatbot-form input { flex: 1; background: #2b3847; border: none; color: #fff; border-radius: 22px; padding: 10px 16px; font-size: 16px; outline: none; height: 44px; }
-  .chatbot-form input::placeholder { color: rgba(255,255,255,0.87); }
+  .chatbot-form input::placeholder { color: rgba(255,255,255,0.4); }
   .chatbot-form button { background: #2695d3; color: #fff; border: none; border-radius: 50%; width: 44px; height: 44px; min-width: 44px; cursor: pointer; display: flex !important; align-items: center; justify-content: center; flex-shrink: 0; }
   .chatbot-form button:active { opacity: 0.8; }
-  a:focus, button:focus, input:focus, select:focus, textarea:focus { outline: 2px solid #0071e3 !important; outline-offset: 2px !important; }
 </style>
 <script type="application/ld+json">
 {
@@ -420,6 +422,7 @@
 }
 </script>
   <link rel="apple-touch-icon" href="/favicon-new.png">
+  <script src="https://t.contentsquare.net/uxa/5b3e797417378.js" async></script>
 
 <script>
   (function() {
@@ -432,11 +435,11 @@
       A: 'คุณสูญเสียลูกค้าทุกวัน —<br>เพราะไม่มีใครตอบสนองเร็วพอ',
       B: 'การจองมากขึ้น.<br>ความเครียดน้อยลง. อัตโนมัติเต็มรูปแบบ.'
     };
-    
+    document.addEventListener('DOMContentLoaded', function() {
       var h1 = document.querySelector('.hero h1 .gradient');
       if (h1 && variant === 'B') { h1.innerHTML = headlines[variant]; }
       if (typeof gtag !== 'undefined') {
-        gtag('event', 'ab_test_impression', { 'test_name': 'hero_headline', 'variant': variant 
+        gtag('event', 'ab_test_impression', { 'test_name': 'hero_headline', 'variant': variant });
       }
       document.querySelectorAll('.hero-btns a').forEach(function(btn) {
         btn.addEventListener('click', function() {
@@ -450,11 +453,9 @@
 </script>
 </head>
 <body>
-<a href="#main-content" class="skip-nav" style="position:absolute;top:-40px;left:0;padding:8px;background:#0071e3;color:#fff;font-size:14px;z-index:9999;border-radius:0 0 4px 0;transition:top 0.2s;text-decoration:none;">Zum Hauptinhalt springen</a>
-
 
 <!-- COOKIE BANNER -->
-<div id="cookieBanner" role="alertdialog" aria-label="Cookie-Einstellungen" aria-live="polite" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:9999; background:#1c1c1e; border-top:1px solid rgba(255,255,255,0.1); padding:20px 24px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px;">
+<div id="cookieBanner" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:9999; background:#1c1c1e; border-top:1px solid rgba(255,255,255,0.1); padding:20px 24px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px;">
   <p style="font-size:13px; color:rgba(245,245,247,0.7); max-width:680px; line-height:1.5; margin:0;">เราใช้คุกกี้ (Google Analytics, Meta Pixel) เพื่อปรับปรุงเว็บไซต์ของเราและสำหรับการโฆษณาที่เกี่ยวข้อง <a href="/datenschutz.html" style="color:#2997ff;">เรียนรู้เพิ่มเติม</a></p>
   <div style="display:flex; gap:10px; flex-shrink:0;">
     <button onclick="rejectCookies()" style="padding:10px 20px; border-radius:980px; border:1px solid rgba(255,255,255,0.2); background:transparent; color:rgba(245,245,247,0.7); font-size:13px; cursor:pointer; font-family:inherit;">ปฏิเสธ</button>
@@ -479,14 +480,14 @@
     if(!c){document.getElementById('cookieBanner').style.display='flex';}
     else if(c==='accepted'){loadTracking();}
   });
-  function toggleMenu(){var m=document.getElementById('mobileMenu');var open=m.classList.toggle('open');m.setAttribute('aria-hidden',open?'false':'true');}
+  function toggleMenu(){var m=document.getElementById('mobileMenu');m.classList.toggle('open');}
   function closeMenu(){document.getElementById('mobileMenu').classList.remove('open');}
   document.addEventListener('click',function(e){var m=document.getElementById('mobileMenu');if(m&&m.classList.contains('open')&&!m.contains(e.target)&&!e.target.closest('.hamburger')){m.classList.remove('open');}});
 </script>
 
 <!-- NAV -->
 <nav>
-  <a href="/" class="nav-logo" aria-label="LeoLan Digital - Homepage"><img src="/logo.svg" width="120" height="40"  alt="LeoLan Digital" style="height:120px;width:auto;display:block;"></a>
+  <a href="/" class="nav-logo"><img src="/logo.svg" alt="LeoLan Digital" style="height:120px;width:auto;display:block;"></a>
   <ul class="nav-links">
     <li><a href="#probleme">ปัญหา</a></li>
     <li><a href="#leistungen">บริการ</a></li>
@@ -497,9 +498,8 @@
     <li><a href="/portal/" style="background:#5e81f4;color:#fff;font-weight:600;padding:5px 14px;border-radius:999px;text-decoration:none;font-size:13px;line-height:1;display:inline-flex;align-items:center">พอร์ทัลลูกค้า</a></li>
   </ul>
   <a href="#kontakt" class="nav-cta">สอบถามฟรี ›</a>
-  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu" aria-label="Menü öffnen" aria-expanded="false"><span></span><span></span><span></span></button>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
-<main id="main-content" tabindex="-1">
 <div class="mobile-menu" id="mobileMenu">
   <a href="#probleme" onclick="closeMenu()">ปัญหา</a>
   <a href="#leistungen" onclick="closeMenu()">บริการ</a>
@@ -530,9 +530,9 @@
     <a href="#leistungen" class="btn-secondary">รักษาการจองเพิ่มเติม ›</a>
   </div>
   <p class="hero-trust reveal reveal-delay-3" style="text-align:center;">✓ ไม่มีสัญญา &nbsp;·&nbsp; ✓ ผลลัพธ์ใน 5 วันทำการ &nbsp;·&nbsp; ✓ ยกเลิกได้รายเดือน</p>
-  <p style="font-size:13px;color:rgba(245,245,247,0.80);margin-top:8px;text-align:center;" class="reveal reveal-delay-3">เหมาะสำหรับร้านอาหารที่มีปริมาณการโทรสูง นักท่องเที่ยว การสอบถามการจัดส่ง หรือทีมเล็กๆ</p>
+  <p style="font-size:13px;color:rgba(245,245,247,0.45);margin-top:8px;text-align:center;" class="reveal reveal-delay-3">เหมาะสำหรับร้านอาหารที่มีปริมาณการโทรสูง นักท่องเที่ยว การสอบถามการจัดส่ง หรือทีมเล็กๆ</p>
   <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:20px 24px;margin-bottom:28px;text-align:left;max-width:480px;margin-left:auto;margin-right:auto;" class="reveal reveal-delay-3">
-    <p style="font-size:14px;color:rgba(245,245,247,0.87);line-height:1.8;margin:0;">
+    <p style="font-size:14px;color:rgba(245,245,247,0.65);line-height:1.8;margin:0;">
       ✓ หากโทรศัพท์ของคุณดังบ่อยแต่ไม่มีใครรับสาย…<br>
       ✓ หากคุณได้รับการสอบถามทาง WhatsApp หรือ Instagram มากมาย…<br>
       ✓ หากทีมของคุณไม่มีเวลาตอบสนองทันที…<br>
@@ -540,7 +540,7 @@
     </p>
   </div>
   <div class="hero-img-wrap reveal reveal-delay-4">
-    <img fetchpriority="high" srcset="/images/home/hero-restaurant-mobile.webp 600w, /images/home/hero-restaurant.webp 1400w" sizes="(max-width: 600px) 600px, 1400px" src="/images/home/hero-restaurant.webp" alt="ร้านอาหาร การจองเพิ่มเติม" width="1400" height="900">
+    <img fetchpriority="high" srcset="/images/home/hero-restaurant-mobile.webp 600w, /images/home/hero-restaurant.webp 1400w" sizes="(max-width: 600px) 600px, 1400px" src="/images/home/hero-restaurant.webp" alt="ร้านอาหาร การจองเพิ่มเติม">
   </div>
 </section>
 
@@ -656,4 +656,4 @@
         </div>
       </div>
     </div>
-    <p style="margin-top: 32px; font-size: 14px; color: rgba(245,245,247,0.82);">นี่คือวิธีที่การสนทนาจริงเกิดขึ้นทุกวัน ไม่มีแอป ไม่มีการโทรที่ดัง ไม่มีการสอบ
+    <p style="margin-top: 32px; font-size: 14px; color: rgba(245,245,247,0.5);">นี่คือวิธีที่การสนทนาจริงเกิดขึ้นทุกวัน ไม่มีแอป ไม่มีการโทรที่ดัง ไม่มีการสอบ

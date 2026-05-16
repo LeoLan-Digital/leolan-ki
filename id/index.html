@@ -63,6 +63,9 @@
   <link rel="alternate" hreflang="ar" href="https://ki.leolan.net/ar/">
 <link rel="alternate" hreflang="x-default" href="https://ki.leolan.net/">
 
+  <meta http-equiv="Cache-Control" content="max-age=86400, public">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
       <link rel="icon" type="image/png" sizes="32x32" href="/favicon-new.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-new.png">
   <link rel="shortcut icon" href="/favicon-new.png">
@@ -104,8 +107,8 @@
     --gray-2: rgba(255,255,255,0.06);
     --gray-3: #3a3a3c;
     --text-primary: #f5f5f7;
-    --text-secondary: rgba(245,245,247,0.87);
-    --text-tertiary: rgba(245,245,247,0.75);
+    --text-secondary: rgba(245,245,247,0.6);
+    --text-tertiary: rgba(245,245,247,0.35);
     --accent: #0071e3;
     --accent-light: #2997ff;
     --font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Arial, sans-serif;
@@ -205,7 +208,7 @@
   .compare-col.before { background: var(--gray-1); }
   .compare-col.after { background: var(--gray-1); border: 1px solid rgba(0,113,227,0.35); border-radius: 24px; }
   .compare-label { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px; }
-  .compare-col.before .compare-label { color: rgba(245,245,247,0.78); }
+  .compare-col.before .compare-label { color: rgba(245,245,247,0.4); }
   .compare-col.after .compare-label { color: var(--accent-light); }
   .compare-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
   .compare-list li { font-size: 15px; color: var(--text-secondary); display: flex; gap: 12px; align-items: flex-start; line-height: 1.5; }
@@ -270,7 +273,7 @@
   .price-tier { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(245,245,247,0.72); margin-bottom: 8px; }
   .price-card.featured .price-tier { color: rgba(245,245,247,0.88); }
   .price-amount { font-size: 44px; font-weight: 700; letter-spacing: -0.03em; margin: 4px 0; color: #fff; }
-  .price-period { font-size: 13px; color: rgba(245,245,247,0.87); margin-bottom: 28px; }
+  .price-period { font-size: 13px; color: rgba(245,245,247,0.68); margin-bottom: 28px; }
   .price-card.featured .price-period { color: rgba(245,245,247,0.76); }
   .price-features { list-style: none; flex: 1; display: flex; flex-direction: column; gap: 10px; }
   .price-features li { font-size: 14px; color: rgba(245,245,247,0.82); display: flex; gap: 10px; align-items: flex-start; line-height: 1.4; }
@@ -296,19 +299,19 @@
   .chatbot-title { display: flex; align-items: center; gap: 12px; }
   .chatbot-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; }
   .chatbot-header strong { display: block; font-size: 15px; }
-  .chatbot-header span { display: block; font-size: 12px; color: rgba(245,245,247,0.87); margin-top: 2px; }
+  .chatbot-header span { display: block; font-size: 12px; color: rgba(245,245,247,0.6); margin-top: 2px; }
   .chatbot-close { background: transparent; border: none; color: rgba(245,245,247,0.8); font-size: 24px; line-height: 1; cursor: pointer; }
   .chatbot-messages { flex: 1; padding: 12px 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; scroll-behavior: smooth; background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 18px 18px; }
   .chatbot-message { max-width: 84%; padding: 12px 14px; border-radius: 18px; font-size: 14px; line-height: 1.5; }
   .chatbot-message.bot { align-self: flex-start; background: #223243; color: rgba(255,255,255,0.92); border-bottom-left-radius: 6px; }
   .chatbot-message.user { align-self: flex-end; background: #2b5278; color: #fff; border-bottom-right-radius: 6px; }
-  .chatbot-message small { display: block; margin-top: 6px; font-size: 11px; color: rgba(255,255,255,0.87); }
+  .chatbot-message small { display: block; margin-top: 6px; font-size: 11px; color: rgba(255,255,255,0.5); }
   .chatbot-input-wrap { padding: 8px 12px 12px; background: #17212b; }
    
-  .chatbot-form input::placeholder { color: rgba(245,245,247,0.75); }
+  .chatbot-form input::placeholder { color: rgba(245,245,247,0.38); }
   
   
-  .chatbot-hint { margin-top: 10px; font-size: 12px; color: rgba(245,245,247,0.82); text-align: center; }
+  .chatbot-hint { margin-top: 10px; font-size: 12px; color: rgba(245,245,247,0.5); text-align: center; }
   @media (max-width: 640px) {
     .chatbot-modal { padding: 12px; }
     .chatbot-window { width: 100%; height: min(78vh, 640px); border-radius: 20px; }
@@ -387,10 +390,9 @@
   /* Telegram-style chat input */
   .chatbot-form { display: flex; align-items: center; gap: 8px; }
   .chatbot-form input { flex: 1; background: #2b3847; border: none; color: #fff; border-radius: 22px; padding: 10px 16px; font-size: 16px; outline: none; height: 44px; }
-  .chatbot-form input::placeholder { color: rgba(255,255,255,0.87); }
+  .chatbot-form input::placeholder { color: rgba(255,255,255,0.4); }
   .chatbot-form button { background: #2695d3; color: #fff; border: none; border-radius: 50%; width: 44px; height: 44px; min-width: 44px; cursor: pointer; display: flex !important; align-items: center; justify-content: center; flex-shrink: 0; }
   .chatbot-form button:active { opacity: 0.8; }
-  a:focus, button:focus, input:focus, select:focus, textarea:focus { outline: 2px solid #0071e3 !important; outline-offset: 2px !important; }
 </style>
 <script type="application/ld+json">
 {
@@ -509,7 +511,7 @@
   "@type": "SoftwareCompany",
   "name": "LeoLan Digital",
   "url": "https://ki.leolan.net",
-  "logo": "https://ki.leolan.net/leolan-logo.png",
+  "logo": "/leolan-logo-new.png",
   "description": "Lebih banyak reservasi untuk restoran dan kuliner: bot WhatsApp, manajemen ulasan, media sosial, dan menu digital.",
   "address": {
     "@type": "PostalAddress",
@@ -550,6 +552,7 @@
   }
   </script>
   <!-- ContentSquare / Hotjar Tracking -->
+  <script src="https://t.contentsquare.net/uxa/5b3e797417378.js" async></script>
 
 <script>
   // A/B Test: Hero Headline
@@ -565,7 +568,7 @@
       B: 'Lebih Banyak Reservasi.<br>Lebih Sedikit Stres. Sepenuhnya Otomatis.'
     };
     
-    
+    document.addEventListener('DOMContentLoaded', function() {
       var h1 = document.querySelector('.hero h1 .gradient');
       if (h1 && variant === 'B') {
         h1.innerHTML = headlines[variant];
@@ -576,7 +579,7 @@
         gtag('event', 'ab_test_impression', {
           'test_name': 'hero_headline',
           'variant': variant
-        
+        });
       }
       
       // CTA Click tracking
@@ -595,11 +598,9 @@
 </script>
 </head>
 <body>
-<a href="#main-content" class="skip-nav" style="position:absolute;top:-40px;left:0;padding:8px;background:#0071e3;color:#fff;font-size:14px;z-index:9999;border-radius:0 0 4px 0;transition:top 0.2s;text-decoration:none;">Zum Hauptinhalt springen</a>
-
 
 <!-- COOKIE BANNER -->
-<div id="cookieBanner" role="alertdialog" aria-label="Cookie-Einstellungen" aria-live="polite" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:9999; background:#1c1c1e; border-top:1px solid rgba(255,255,255,0.1); padding:20px 24px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px;">
+<div id="cookieBanner" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:9999; background:#1c1c1e; border-top:1px solid rgba(255,255,255,0.1); padding:20px 24px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px;">
   <p style="font-size:13px; color:rgba(245,245,247,0.7); max-width:680px; line-height:1.5; margin:0;">Kami menggunakan cookie (Google Analytics, Meta Pixel) untuk meningkatkan website kami dan menampilkan iklan yang relevan. <a href="/datenschutz.html" style="color:#2997ff;">Pelajari lebih lanjut</a></p>
   <div style="display:flex; gap:10px; flex-shrink:0;">
     <button onclick="rejectCookies()" style="padding:10px 20px; border-radius:980px; border:1px solid rgba(255,255,255,0.2); background:transparent; color:rgba(245,245,247,0.7); font-size:13px; cursor:pointer; font-family:inherit;">Tolak</button>
@@ -625,7 +626,7 @@
     else if(c==='accepted'){loadTracking();}
   });
 
-  function toggleMenu(){var m=document.getElementById('mobileMenu');var open=m.classList.toggle('open');m.setAttribute('aria-hidden',open?'false':'true');}
+  function toggleMenu(){var m=document.getElementById('mobileMenu');m.classList.toggle('open');}
   function closeMenu(){document.getElementById('mobileMenu').classList.remove('open');}
   document.addEventListener('click',function(e){var m=document.getElementById('mobileMenu');if(m&&m.classList.contains('open')&&!m.contains(e.target)&&!e.target.closest('.hamburger')){m.classList.remove('open');}});
 
@@ -633,7 +634,7 @@
 
 <!-- NAV -->
 <nav>
-  <a href="/" class="nav-logo" aria-label="LeoLan Digital - Homepage"><img src="logo.svg" alt="LeoLan Digital" width="120" height="40"></a>
+  <a href="/" class="nav-logo"><img src="logo.svg" alt="LeoLan Digital"></a>
   <ul class="nav-links">
     <li><a href="#probleme">Masalah</a></li>
     <li><a href="#leistungen">Layanan</a></li>
@@ -644,8 +645,8 @@
     <li><a href="/portal/" style="background:#5e81f4;color:#fff;font-weight:600;padding:5px 14px;border-radius:999px;text-decoration:none;font-size:13px;line-height:1;display:inline-flex;align-items:center">Portal Klien</a></li>
   </ul>
   <a href="#kontakt" class="nav-cta">Konsultasi gratis ›</a>
-  <button class="hamburger" onclick="toggleMenu()" aria-label="Menü" aria-label="Menü öffnen" aria-expanded="false"><span></span><span></span><span></span></button>
-</nav><main id="main-content" tabindex="-1">
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menü"><span></span><span></span><span></span></button>
+</nav>
 <div class="mobile-menu" id="mobileMenu">
   <a href="#probleme" onclick="closeMenu()">Masalah</a>
   <a href="#leistungen" onclick="closeMenu()">Layanan</a>
@@ -676,11 +677,11 @@
     <a href="#leistungen" class="btn-secondary">Dapatkan lebih banyak reservasi ›</a>
   </div>
   <p class="hero-trust reveal reveal-delay-3" style="text-align:center;">✓ Tanpa kontrak &nbsp;·&nbsp; ✓ Hasil dalam 5 hari kerja &nbsp;·&nbsp; ✓ Bisa dibatalkan kapan saja</p>
-  <p style="font-size:13px;color:rgba(245,245,247,0.80);margin-top:8px;text-align:center;" class="reveal reveal-delay-3">Sangat cocok untuk restoran dengan banyak panggilan telepon, wisatawan, permintaan pengiriman, atau tim kecil.</p>
+  <p style="font-size:13px;color:rgba(245,245,247,0.45);margin-top:8px;text-align:center;" class="reveal reveal-delay-3">Sangat cocok untuk restoran dengan banyak panggilan telepon, wisatawan, permintaan pengiriman, atau tim kecil.</p>
   
     
   <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:20px 24px;margin-bottom:28px;text-align:left;max-width:480px;margin-left:auto;margin-right:auto;" class="reveal reveal-delay-3">
-    <p style="font-size:14px;color:rgba(245,245,247,0.87);line-height:1.8;margin:0;">
+    <p style="font-size:14px;color:rgba(245,245,247,0.65);line-height:1.8;margin:0;">
       ✓ Jika telepon Anda sering berdering dan tidak ada yang menjawab…<br>
       ✓ Jika Anda banyak menerima permintaan melalui WhatsApp atau Instagram…<br>
       ✓ Jika tim Anda tidak punya waktu untuk segera menjawab…<br>
@@ -688,7 +689,7 @@
     </p>
   </div>
   <div class="hero-img-wrap reveal reveal-delay-4">
-    <img fetchpriority="high" srcset="/images/home/hero-restaurant-mobile.webp 600w, /images/home/hero-restaurant.webp 1400w" sizes="(max-width: 600px) 600px, 1400px" src="/images/home/hero-restaurant.webp" alt="Restoran lebih banyak reservasi" width="1400" height="900">
+    <img fetchpriority="high" srcset="/images/home/hero-restaurant-mobile.webp 600w, /images/home/hero-restaurant.webp 1400w" sizes="(max-width: 600px) 600px, 1400px" src="/images/home/hero-restaurant.webp" alt="Restoran lebih banyak reservasi">
   </div>
 </section>
 
@@ -807,7 +808,7 @@
         </div>
       </div>
     </div>
-    <p style="margin-top: 32px; font-size: 14px; color: rgba(245,245,247,0.82);">Begitulah percakapan nyata terjadi setiap hari. Tanpa aplikasi. Tanpa dering telepon. Tanpa permintaan yang terlewat.</p>
+    <p style="margin-top: 32px; font-size: 14px; color: rgba(245,245,247,0.5);">Begitulah percakapan nyata terjadi setiap hari. Tanpa aplikasi. Tanpa dering telepon. Tanpa permintaan yang terlewat.</p>
   </div>
 </section>
 
@@ -848,17 +849,17 @@
       <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(0,113,227,0.25); border-radius: 20px; padding: 28px 24px;">
         <div style="font-size: 40px; font-weight: 700; color: var(--accent-light); margin-bottom: 12px;">+30%</div>
         <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">Lebih Banyak Reservasi</h3>
-        <p style="font-size: 13px; color: rgba(245,245,247,0.85);">Tidak ada permintaan yang terlewat lagi — baik malam hari, akhir pekan, maupun jam sibuk.</p>
+        <p style="font-size: 13px; color: rgba(245,245,247,0.55);">Tidak ada permintaan yang terlewat lagi — baik malam hari, akhir pekan, maupun jam sibuk.</p>
       </div>
       <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(0,113,227,0.25); border-radius: 20px; padding: 28px 24px;">
         <div style="font-size: 40px; font-weight: 700; color: var(--accent-light); margin-bottom: 12px;">2h</div>
         <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">Hemat Waktu Setiap Hari</h3>
-        <p style="font-size: 13px; color: rgba(245,245,247,0.85);">Tidak ada telepon, tidak ada balasan manual — Anda fokus pada tamu di restoran.</p>
+        <p style="font-size: 13px; color: rgba(245,245,247,0.55);">Tidak ada telepon, tidak ada balasan manual — Anda fokus pada tamu di restoran.</p>
       </div>
       <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(0,113,227,0.25); border-radius: 20px; padding: 28px 24px;">
         <div style="font-size: 40px; font-weight: 700; color: var(--accent-light); margin-bottom: 12px;">24/7</div>
         <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">Tersedia untuk Tamu</h3>
-        <p style="font-size: 13px; color: rgba(245,245,247,0.85);">Bahkan pukul 23:00 pun dijawab. Reservasi dikonfirmasi. Tamu kembali lagi.</p>
+        <p style="font-size: 13px; color: rgba(245,245,247,0.55);">Bahkan pukul 23:00 pun dijawab. Reservasi dikonfirmasi. Tamu kembali lagi.</p>
       </div>
     </div>
   </div>
@@ -1098,18 +1099,18 @@
 <section style="padding: 100px 24px; border-top: 1px solid rgba(255,255,255,0.07);">
   <div style="max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 340px 1fr; gap: 72px; align-items: center;" class="founder-grid">
     <div class="reveal" style="border-radius: 20px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.7);">
-      <img src="/leo-bw.webp" alt="Kamaleddin Nazari – Gründer LeoLan Digital" style="width:100%; display:block; filter: brightness(0.9);" width="400" height="500" loading="lazy">
+      <img src="leo-bw.jpg" alt="Kamaleddin Nazari – Gründer LeoLan Digital" style="width:100%; display:block; filter: brightness(0.9);">
     </div>
     <div class="reveal reveal-delay-1">
       <p style="font-size:13px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#2997ff; margin-bottom:16px;">Orang di Baliknya</p>
       <h2 style="font-size:clamp(28px,3.5vw,44px); font-weight:700; line-height:1.1; letter-spacing:-0.025em; margin-bottom:20px;">Saya mengenal masalah ini — dari kedua sisi konter.</h2>
-      <p style="font-size:17px; line-height:1.7; color:rgba(245,245,247,0.87); margin-bottom:16px;">Sebagai manajer restoran dengan 6 tahun pengalaman, saya tahu seperti apa keseharian itu. Tapi saya juga tahu sisi lainnya — sebagai tamu.</p>
-      <p style="font-size:17px; line-height:1.7; color:rgba(245,245,247,0.87); margin-bottom:16px;">Saya ingin memesan meja di restoran favorit istri saya — untuk ulang tahunnya. 10 panggilan. Tidak ada satu pun yang menelepon balik. Kami makan di tempat lain.</p>
-      <p style="font-size:17px; line-height:1.7; color:rgba(245,245,247,0.87); margin-bottom:32px;">Restoran itu tidak hanya kehilangan meja saya. Mereka merusak ulang tahun istri saya — dan kehilangan pelanggan selamanya. <strong style="color:#f5f5f7;">Itulah mengapa saya mendirikan LeoLan Digital: agar tidak ada restoran yang lagi melewatkan panggilan — dan tidak ada tamu yang pulang dengan kecewa.</strong></p>
+      <p style="font-size:17px; line-height:1.7; color:rgba(245,245,247,0.65); margin-bottom:16px;">Sebagai manajer restoran dengan 6 tahun pengalaman, saya tahu seperti apa keseharian itu. Tapi saya juga tahu sisi lainnya — sebagai tamu.</p>
+      <p style="font-size:17px; line-height:1.7; color:rgba(245,245,247,0.65); margin-bottom:16px;">Saya ingin memesan meja di restoran favorit istri saya — untuk ulang tahunnya. 10 panggilan. Tidak ada satu pun yang menelepon balik. Kami makan di tempat lain.</p>
+      <p style="font-size:17px; line-height:1.7; color:rgba(245,245,247,0.65); margin-bottom:32px;">Restoran itu tidak hanya kehilangan meja saya. Mereka merusak ulang tahun istri saya — dan kehilangan pelanggan selamanya. <strong style="color:#f5f5f7;">Itulah mengapa saya mendirikan LeoLan Digital: agar tidak ada restoran yang lagi melewatkan panggilan — dan tidak ada tamu yang pulang dengan kecewa.</strong></p>
       <div style="display:flex; align-items:center; gap:16px;">
         <div>
           <div style="font-size:17px; font-weight:600; color:#f5f5f7;">Kamaleddin Nazari</div>
-          <div style="font-size:14px; color:rgba(245,245,247,0.82); margin-top:2px;">Pendiri & CEO, LeoLan Digital</div>
+          <div style="font-size:14px; color:rgba(245,245,247,0.5); margin-top:2px;">Pendiri & CEO, LeoLan Digital</div>
         </div>
       </div>
     </div>
@@ -1126,15 +1127,15 @@
     <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px;">
       <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(0,113,227,0.25); border-radius: 16px; padding: 20px 28px; min-width: 180px;">
         <div style="font-size: 32px; font-weight: 700; color: var(--accent-light);">30%</div>
-        <div style="font-size: 13px; color: rgba(245,245,247,0.87); margin-top: 4px;">permintaan hilang</div>
+        <div style="font-size: 13px; color: rgba(245,245,247,0.6); margin-top: 4px;">permintaan hilang</div>
       </div>
       <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,214,0,0.25); border-radius: 16px; padding: 20px 28px; min-width: 180px;">
         <div style="font-size: 32px; font-weight: 700; color: #ffd60a;">€150</div>
-        <div style="font-size: 13px; color: rgba(245,245,247,0.87); margin-top: 4px;">hilang per meja yang terlewat</div>
+        <div style="font-size: 13px; color: rgba(245,245,247,0.6); margin-top: 4px;">hilang per meja yang terlewat</div>
       </div>
       <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(52,199,89,0.25); border-radius: 16px; padding: 20px 28px; min-width: 180px;">
         <div style="font-size: 32px; font-weight: 700; color: #34c759;">5 Hari</div>
-        <div style="font-size: 13px; color: rgba(245,245,247,0.87); margin-top: 4px;">hingga sistem Anda aktif</div>
+        <div style="font-size: 13px; color: rgba(245,245,247,0.6); margin-top: 4px;">hingga sistem Anda aktif</div>
       </div>
     </div>
     <a href="#kontakt" style="display: inline-block; background: var(--accent); color: #fff; padding: 16px 36px; border-radius: 980px; font-size: 16px; font-weight: 600; text-decoration: none;">Mulai sekarang — gratis & tanpa komitmen →</a>
@@ -1150,36 +1151,36 @@
     <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(0,113,227,0.25);border-radius:20px;padding:32px;margin-top:32px;" class="reveal">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px;">
         <div>
-          <label style="display:block;font-size:13px;color:rgba(245,245,247,0.87);margin-bottom:8px;">Permintaan per hari</label>
-          <input type="number" id="roiAnfragen" value="10" min="1" max="200" oninput="berechneROI()" style="width:100%;padding:12px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:#fff;font-size:18px;font-weight:700;text-align:center;box-sizing:border-box;" aria-label="Anfragen pro Tag">
+          <label style="display:block;font-size:13px;color:rgba(245,245,247,0.6);margin-bottom:8px;">Permintaan per hari</label>
+          <input type="number" id="roiAnfragen" value="10" min="1" max="200" oninput="berechneROI()" style="width:100%;padding:12px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:#fff;font-size:18px;font-weight:700;text-align:center;box-sizing:border-box;">
         </div>
         <div>
-          <label style="display:block;font-size:13px;color:rgba(245,245,247,0.87);margin-bottom:8px;">Omzet per meja (€)</label>
-          <input type="number" id="roiUmsatz" value="80" min="10" max="500" oninput="berechneROI()" style="width:100%;padding:12px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:#fff;font-size:18px;font-weight:700;text-align:center;box-sizing:border-box;" aria-label="Durchschnittlicher Umsatz pro Tisch in Euro">
+          <label style="display:block;font-size:13px;color:rgba(245,245,247,0.6);margin-bottom:8px;">Omzet per meja (€)</label>
+          <input type="number" id="roiUmsatz" value="80" min="10" max="500" oninput="berechneROI()" style="width:100%;padding:12px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:#fff;font-size:18px;font-weight:700;text-align:center;box-sizing:border-box;">
         </div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:24px;">
         <div style="background:rgba(255,59,48,0.1);border:1px solid rgba(255,59,48,0.25);border-radius:14px;padding:16px;">
-          <div style="font-size:11px;color:rgba(245,245,247,0.82);margin-bottom:6px;">HARIAN</div>
+          <div style="font-size:11px;color:rgba(245,245,247,0.5);margin-bottom:6px;">HARIAN</div>
           <div id="roiDaily" style="font-size:24px;font-weight:800;color:#ff6b6b;">€240</div>
         </div>
         <div style="background:rgba(255,214,0,0.08);border:1px solid rgba(255,214,0,0.25);border-radius:14px;padding:16px;">
-          <div style="font-size:11px;color:rgba(245,245,247,0.82);margin-bottom:6px;">PER BULAN</div>
+          <div style="font-size:11px;color:rgba(245,245,247,0.5);margin-bottom:6px;">PER BULAN</div>
           <div id="roiMonthly" style="font-size:24px;font-weight:800;color:#ffd60a;">€7.200</div>
         </div>
         <div style="background:rgba(52,199,89,0.08);border:1px solid rgba(52,199,89,0.25);border-radius:14px;padding:16px;">
-          <div style="font-size:11px;color:rgba(245,245,247,0.82);margin-bottom:6px;">ROI LEOLAN</div>
+          <div style="font-size:11px;color:rgba(245,245,247,0.5);margin-bottom:6px;">ROI LEOLAN</div>
           <div id="roiReturn" style="font-size:24px;font-weight:800;color:#34c759;">36×</div>
         </div>
       </div>
-      <p id="roiText" style="font-size:14px;color:rgba(245,245,247,0.87);margin-bottom:20px;">Anda kehilangan <strong style="color:#ff6b6b;">€7.200 per bulan</strong> karena permintaan yang terlewat. LeoLan hanya €199 — dan mengembalikannya untuk Anda.</p>
+      <p id="roiText" style="font-size:14px;color:rgba(245,245,247,0.65);margin-bottom:20px;">Anda kehilangan <strong style="color:#ff6b6b;">€7.200 per bulan</strong> karena permintaan yang terlewat. LeoLan hanya €199 — dan mengembalikannya untuk Anda.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:12px;">
-        <input aria-label="email@anda.com" type="email" id="roiEmail" placeholder="email@anda.com" style="padding:12px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.2);border-radius:10px;color:#fff;font-size:15px;min-width:220px;outline:none;flex:1;max-width:300px;" />
+        <input type="email" id="roiEmail" placeholder="email@anda.com" style="padding:12px 16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.2);border-radius:10px;color:#fff;font-size:15px;min-width:220px;outline:none;flex:1;max-width:300px;" />
         <button onclick="sendeROIReport()" style="background:var(--accent);color:#fff;padding:12px 20px;border-radius:10px;border:none;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap;">📊 Laporan via Email →</button>
       </div>
-      <p style="font-size:12px;color:rgba(245,245,247,0.75);margin:0 0 16px;">Gratis · Tidak ada spam · Hanya laporan kerugian Anda</p>
+      <p style="font-size:12px;color:rgba(245,245,247,0.35);margin:0 0 16px;">Gratis · Tidak ada spam · Hanya laporan kerugian Anda</p>
       <div id="roiSuccess" style="display:none;margin-bottom:12px;background:rgba(52,199,89,0.15);border:1px solid rgba(52,199,89,0.3);border-radius:10px;padding:12px;color:#34c759;font-size:14px;">✅ Laporan sedang dikirim! Periksa kotak masuk Anda.</div>
-      <a href="#kontakt" style="display:inline-block;background:rgba(255,255,255,0.06);color:rgba(245,245,247,0.87);padding:10px 24px;border-radius:980px;font-size:14px;font-weight:500;text-decoration:none;border:1px solid rgba(255,255,255,0.12);">Hentikan kerugian — Demo →</a>
+      <a href="#kontakt" style="display:inline-block;background:rgba(255,255,255,0.06);color:rgba(245,245,247,0.6);padding:10px 24px;border-radius:980px;font-size:14px;font-weight:500;text-decoration:none;border:1px solid rgba(255,255,255,0.12);">Hentikan kerugian — Demo →</a>
     </div>
   </div>
 </section>
@@ -1292,7 +1293,7 @@ berechneROI();
 <section style="padding: 100px 24px; background: var(--gray-1); border-top: 1px solid rgba(255,255,255,0.07); text-align: center;">
   <p style="font-size:13px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent-light); margin-bottom:16px;">Live-Demo</p>
   <h2 style="font-size:clamp(28px,4vw,48px); font-weight:700; letter-spacing:-0.025em; margin-bottom:12px;">Pelayan Pribadi untuk Setiap Meja.</h2>
-  <p style="font-size:17px; color:rgba(245,245,247,0.87); max-width:520px; margin:0 auto 48px; line-height:1.6;">Penasihat Kuliner AI bertanya sebentar — lalu merekomendasikan hidangan yang tepat dari menu Anda.</p>
+  <p style="font-size:17px; color:rgba(245,245,247,0.6); max-width:520px; margin:0 auto 48px; line-height:1.6;">Penasihat Kuliner AI bertanya sebentar — lalu merekomendasikan hidangan yang tepat dari menu Anda.</p>
   <div style="max-width:480px; margin:0 auto; background:#1a1a1a; border-radius:20px; overflow:hidden; border:1px solid rgba(255,255,255,0.1);">
     <div style="background:#2c2c2e; padding:16px 20px; display:flex; align-items:center; gap:12px;">
       <div style="width:36px; height:36px; border-radius:50%; background:var(--accent); display:flex; align-items:center; justify-content:center; font-size:16px;">🍽️</div>
@@ -1304,11 +1305,11 @@ berechneROI();
     <div style="padding:24px 20px; display:flex; flex-direction:column; gap:12px;">
       <div style="max-width:80%; padding:12px 16px; border-radius:16px; border-bottom-left-radius:4px; background:#2c2c2e; font-size:14px; line-height:1.5; text-align:left; align-self:flex-start;">
         Halo! 😊 Saya senang membantu Anda memilih. Apakah Anda lebih suka <strong>pedas</strong> atau <strong>tidak pedas</strong>?
-        <div style="font-size:11px; color:rgba(200,200,210,0.95); margin-top:4px;">19:32</div>
+        <div style="font-size:11px; opacity:0.5; margin-top:4px;">19:32</div>
       </div>
       <div style="max-width:80%; padding:12px 16px; border-radius:16px; border-bottom-right-radius:4px; background:var(--accent); color:#fff; font-size:14px; line-height:1.5; text-align:left; align-self:flex-end;">
         Agak pedas boleh 🌶️ Dan saya tidak makan daging.
-        <div style="font-size:11px; color:rgba(200,200,210,0.95); margin-top:4px;">19:32</div>
+        <div style="font-size:11px; opacity:0.6; margin-top:4px;">19:32</div>
       </div>
       <div style="max-width:80%; padding:12px 16px; border-radius:16px; border-bottom-left-radius:4px; background:#2c2c2e; font-size:14px; line-height:1.5; text-align:left; align-self:flex-start;">
         Sempurna! Saya rekomendasikan untuk Anda hari ini:<br><br>
@@ -1316,19 +1317,19 @@ berechneROI();
         🥗 <strong>Halloumi Bakar</strong> — terlaris malam ini<br>
         🍜 <strong>Sup Lentil Kunyit</strong> — gurih ringan, vegan ⭐ <em>Spesialitas Rumah</em><br><br>
         Cocok dengan segelas <strong>jus jeruk segar</strong> atau <strong>teh hibiskus buatan sendiri</strong> 🍵
-        <div style="font-size:11px; color:rgba(200,200,210,0.95); margin-top:4px;">19:33</div>
+        <div style="font-size:11px; opacity:0.5; margin-top:4px;">19:33</div>
       </div>
       <div style="max-width:80%; padding:12px 16px; border-radius:16px; border-bottom-right-radius:4px; background:var(--accent); color:#fff; font-size:14px; line-height:1.5; text-align:left; align-self:flex-end;">
         Shakshuka kedengarannya sempurna! 😍
-        <div style="font-size:11px; color:rgba(200,200,210,0.95); margin-top:4px;">19:33</div>
+        <div style="font-size:11px; opacity:0.6; margin-top:4px;">19:33</div>
       </div>
       <div style="max-width:80%; padding:12px 16px; border-radius:16px; border-bottom-left-radius:4px; background:#1c1c1e; font-size:14px; line-height:1.5; align-self:flex-start;">
         Pilihan bagus! 🌟 Ngomong-ngomong — Shakshuka kami dibuat dengan telur segar dari peternakan lokal di sekitar kami. 😉
-        <div style="font-size:11px; color:rgba(200,200,210,0.95); margin-top:4px;">19:33 · asisten digital</div>
+        <div style="font-size:11px; opacity:0.5; margin-top:4px;">19:33 · asisten digital</div>
       </div>
     </div>
   </div>
-  <p style="font-size:13px; color:rgba(245,245,247,0.75); margin-top:20px;">Tamu memberi tahu preferensi → AI merekomendasikan dari menu asli Anda → Upselling sudah termasuk</p>
+  <p style="font-size:13px; color:rgba(245,245,247,0.35); margin-top:20px;">Tamu memberi tahu preferensi → AI merekomendasikan dari menu asli Anda → Upselling sudah termasuk</p>
 </section>
 
 
@@ -1341,22 +1342,22 @@ berechneROI();
       <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:24px;">
         <div style="font-size:28px;margin-bottom:12px;">🎯</div>
         <h3 style="margin:0 0 8px;font-size:17px;">Fokus pada Pendapatan, Bukan Teknologi</h3>
-        <p style="margin:0;color:rgba(245,245,247,0.87);font-size:14px;line-height:1.6;">Tidak ada jargon teknis. Tidak perlu berminggu-minggu. Anda melihat hasil dalam 5 hari kerja.</p>
+        <p style="margin:0;color:rgba(245,245,247,0.6);font-size:14px;line-height:1.6;">Tidak ada jargon teknis. Tidak perlu berminggu-minggu. Anda melihat hasil dalam 5 hari kerja.</p>
       </div>
       <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:24px;">
         <div style="font-size:28px;margin-bottom:12px;">⚡</div>
         <h3 style="margin:0 0 8px;font-size:17px;">Schnelle Einrichtung</h3>
-        <p style="margin:0;color:rgba(245,245,247,0.87);font-size:14px;line-height:1.6;">WhatsApp bot Anda berjalan dalam 5 hari. Tidak perlu keahlian teknis. Kami urus semuanya.</p>
+        <p style="margin:0;color:rgba(245,245,247,0.6);font-size:14px;line-height:1.6;">WhatsApp bot Anda berjalan dalam 5 hari. Tidak perlu keahlian teknis. Kami urus semuanya.</p>
       </div>
       <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:24px;">
         <div style="font-size:28px;margin-bottom:12px;">🤝</div>
         <h3 style="margin:0 0 8px;font-size:17px;">Persönlicher Support</h3>
-        <p style="margin:0;color:rgba(245,245,247,0.87);font-size:14px;line-height:1.6;">Tidak ada sistem tiket. Tidak ada call center. Satu kontak langsung — yang mengenal restoran Anda.</p>
+        <p style="margin:0;color:rgba(245,245,247,0.6);font-size:14px;line-height:1.6;">Tidak ada sistem tiket. Tidak ada call center. Satu kontak langsung — yang mengenal restoran Anda.</p>
       </div>
       <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:24px;">
         <div style="font-size:28px;margin-bottom:12px;">📈</div>
         <h3 style="margin:0 0 8px;font-size:17px;">Khusus untuk Kuliner</h3>
-        <p style="margin:0;color:rgba(245,245,247,0.87);font-size:14px;line-height:1.6;">Dibangun oleh seseorang yang tahu bagaimana kehidupan sehari-hari di restoran — dari dalam dan sebagai tamu.</p>
+        <p style="margin:0;color:rgba(245,245,247,0.6);font-size:14px;line-height:1.6;">Dibangun oleh seseorang yang tahu bagaimana kehidupan sehari-hari di restoran — dari dalam dan sebagai tamu.</p>
       </div>
     </div>
   </div>
@@ -1370,15 +1371,15 @@ berechneROI();
     <div style="display:flex;flex-direction:column;gap:16px;margin-top:40px;text-align:left;" class="reveal">
       <div style="display:flex;align-items:flex-start;gap:20px;background:rgba(255,255,255,0.04);border-radius:16px;padding:20px 24px;">
         <div style="min-width:40px;height:40px;background:#f5a623;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;color:#000;font-size:18px;">1</div>
-        <div><strong style="font-size:16px;">Minta Demo</strong><p style="margin:4px 0 0;color:rgba(245,245,247,0.87);font-size:14px;">Gratis, tanpa komitmen. Kami tunjukkan seperti apa bot Anda nanti.</p></div>
+        <div><strong style="font-size:16px;">Minta Demo</strong><p style="margin:4px 0 0;color:rgba(245,245,247,0.6);font-size:14px;">Gratis, tanpa komitmen. Kami tunjukkan seperti apa bot Anda nanti.</p></div>
       </div>
       <div style="display:flex;align-items:flex-start;gap:20px;background:rgba(255,255,255,0.04);border-radius:16px;padding:20px 24px;">
         <div style="min-width:40px;height:40px;background:#f5a623;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;color:#000;font-size:18px;">2</div>
-        <div><strong style="font-size:16px;">Pengaturan dalam Beberapa Hari</strong><p style="margin:4px 0 0;color:rgba(245,245,247,0.87);font-size:14px;">Kami mengatur segalanya. Anda tidak perlu menginstal atau mengkonfigurasi apapun.</p></div>
+        <div><strong style="font-size:16px;">Pengaturan dalam Beberapa Hari</strong><p style="margin:4px 0 0;color:rgba(245,245,247,0.6);font-size:14px;">Kami mengatur segalanya. Anda tidak perlu menginstal atau mengkonfigurasi apapun.</p></div>
       </div>
       <div style="display:flex;align-items:flex-start;gap:20px;background:rgba(255,255,255,0.04);border-radius:16px;padding:20px 24px;">
         <div style="min-width:40px;height:40px;background:#f5a623;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;color:#000;font-size:18px;">3</div>
-        <div><strong style="font-size:16px;">Sistem Berjalan Otomatis</strong><p style="margin:4px 0 0;color:rgba(245,245,247,0.87);font-size:14px;">Bot Anda menjawab 24/7. Anda fokus pada tamu.</p></div>
+        <div><strong style="font-size:16px;">Sistem Berjalan Otomatis</strong><p style="margin:4px 0 0;color:rgba(245,245,247,0.6);font-size:14px;">Bot Anda menjawab 24/7. Anda fokus pada tamu.</p></div>
       </div>
     </div>
   </div>
@@ -1392,28 +1393,28 @@ berechneROI();
   </div>
   <div class="faq-list">
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-1">Berapa biaya LeoLan Digital? <span>+</span></button>
-      <div class="faq-a" id="faq-answer-1"><p>Starter €199/bulan, Pro €349/bulan, masing-masing ditambah €349 biaya setup.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)">Berapa biaya LeoLan Digital? <span>+</span></button>
+      <div class="faq-a"><p>Starter €199/bulan, Pro €349/bulan, masing-masing ditambah €349 biaya setup.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-2">Seberapa cepat saya bisa mulai? <span>+</span></button>
-      <div class="faq-a" id="faq-answer-2"><p>Setelah pembayaran, kami akan menghubungi Anda dalam 48 jam.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)">Seberapa cepat saya bisa mulai? <span>+</span></button>
+      <div class="faq-a"><p>Setelah pembayaran, kami akan menghubungi Anda dalam 48 jam.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-3">Bahasa apa saja yang didukung bot? <span>+</span></button>
-      <div class="faq-a" id="faq-answer-3"><p>Indonesia, Inggris, Jerman, dan lainnya.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)">Bahasa apa saja yang didukung bot? <span>+</span></button>
+      <div class="faq-a"><p>Indonesia, Inggris, Jerman, dan lainnya.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-4">Apakah saya perlu pengetahuan teknis? <span>+</span></button>
-      <div class="faq-a" id="faq-answer-4"><p>Tidak, kami mengatur segalanya untuk Anda.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)">Apakah saya perlu pengetahuan teknis? <span>+</span></button>
+      <div class="faq-a"><p>Tidak, kami mengatur segalanya untuk Anda.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-5">Apakah ada bulan percobaan? <span>+</span></button>
-      <div class="faq-a" id="faq-answer-5"><p>Tidak, tetapi ada demo gratis di halaman ini.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)">Apakah ada bulan percobaan? <span>+</span></button>
+      <div class="faq-a"><p>Tidak, tetapi ada demo gratis di halaman ini.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false" aria-controls="faq-answer-6">Apakah ini bisa digunakan dengan nomor WhatsApp yang ada? <span>+</span></button>
-      <div class="faq-a" id="faq-answer-6"><p>Ya, kami migrasi nomor Anda.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)">Apakah ini bisa digunakan dengan nomor WhatsApp yang ada? <span>+</span></button>
+      <div class="faq-a"><p>Ya, kami migrasi nomor Anda.</p></div>
     </div>
   </div>
 </section>
@@ -1429,19 +1430,19 @@ berechneROI();
   </div>
   <form class="contact-form reveal reveal-delay-2" action="https://formspree.io/f/xgopdnll" method="POST" id="contactForm">
     <div class="form-row">
-      <input aria-label="Nama Anda" type="text" name="name" placeholder="Nama Anda" required>
-      <input aria-label="Restaurant / Betrieb" type="text" name="restaurant" placeholder="Restaurant / Betrieb">
+      <input type="text" name="name" placeholder="Nama Anda" required>
+      <input type="text" name="restaurant" placeholder="Restaurant / Betrieb">
     </div>
-    <input aria-label="Telefon / WhatsApp" type="tel" name="phone" placeholder="Telefon / WhatsApp" required>
-    <input aria-label="E-Mail-Adresse" type="email" name="email" placeholder="E-Mail-Adresse">
-    <select aria-label="Paket" name="paket">
+    <input type="tel" name="phone" placeholder="Telefon / WhatsApp" required>
+    <input type="email" name="email" placeholder="E-Mail-Adresse">
+    <select name="paket">
       <option value="" disabled selected>Paket mana yang Anda minati?</option>
       <option value="starter">Starter — 199 €/bulan</option>
       <option value="pro">Pro — 349 €/bulan</option>
       <option value="enterprise">Enterprise — Individual</option>
       <option value="beratung">Konsultasi dahulu</option>
     </select>
-    <textarea name="message" placeholder="Ceritakan singkat: Apa yang istimewa dari restoran Anda? Apa yang ingin ditingkatkan?" aria-label="Deine Nachricht"></textarea>
+    <textarea name="message" placeholder="Ceritakan singkat: Apa yang istimewa dari restoran Anda? Apa yang ingin ditingkatkan?"></textarea>
     <button type="submit" class="form-submit">Konsultasi gratis →</button>
   </form>
   <div class="form-success" id="formSuccess">✅ Terima kasih! Kami akan menghubungi Anda dalam 24 jam.</div>
@@ -1449,7 +1450,7 @@ berechneROI();
 
 
 <!-- CHATBOT DEMO WIDGET -->
-<button class="chatbot-toggle" id="chatbotToggle" type="button" aria-label="Chat öffnen" aria-haspopup="dialog">💬 Coba bot</button>
+<button class="chatbot-toggle" id="chatbotToggle" type="button">💬 Coba bot</button>
 <div class="chatbot-modal" id="chatbotModal" aria-hidden="true">
   <div class="chatbot-window" role="dialog" aria-modal="true" aria-labelledby="chatbotTitle">
     <div class="chatbot-header">
@@ -1465,7 +1466,7 @@ berechneROI();
     <div class="chatbot-messages" id="chatbotMessages"></div>
     <div class="chatbot-input-wrap">
       <input id="chatbotDummy" style="position:absolute;opacity:0;height:0;width:0;pointer-events:none" type="text" readonly /><form class="chatbot-form" id="chatbotForm">
-        <input aria-label="Pesan …" type="text" id="chatbotInput" placeholder="Pesan …" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="text" style="font-size:16px">
+        <input type="text" id="chatbotInput" placeholder="Pesan …" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="text" style="font-size:16px">
         <button type="submit" id="chatbotSend" aria-label="Senden"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 2L11 13" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       </form>
     </div>
@@ -1479,7 +1480,7 @@ berechneROI();
     <div>
       <p style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #f5c842; margin-bottom: 10px;">Juga untuk Hotel & Resort</p>
       <h3 style="font-size: 22px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px;">Concierge KI untuk hotel Anda.</h3>
-      <p style="font-size: 15px; color: rgba(245,245,247,0.87); line-height: 1.5;">Layanan kamar digital, multibahasa, unggah foto — semua yang dibutuhkan tamu hotel.</p>
+      <p style="font-size: 15px; color: rgba(245,245,247,0.6); line-height: 1.5;">Layanan kamar digital, multibahasa, unggah foto — semua yang dibutuhkan tamu hotel.</p>
     </div>
     <a href="https://hotel.leolan.net" style="display: inline-block; background: #f5c842; color: #000; padding: 14px 28px; border-radius: 980px; font-size: 15px; font-weight: 700; text-decoration: none; white-space: nowrap; transition: opacity 0.2s;" onmouseover="this.style.opacity=0.85" onmouseout="this.style.opacity=1">Ke Halaman Hotel →</a>
   </div>
@@ -1496,19 +1497,23 @@ berechneROI();
       <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884"/></svg>
       Mulai Chat WhatsApp
     </a>
-    <p style="font-size:13px;color:rgba(245,245,247,0.78);margin-top:16px;">+49 15678 483700 · Balasan dalam beberapa menit</p>
+    <p style="font-size:13px;color:rgba(245,245,247,0.4);margin-top:16px;">+49 15678 483700 · Balasan dalam beberapa menit</p>
   </div>
 </section>
 <footer>
-    <div class="footer-logo"><div class="footer-logo"><img src="logo.svg" alt="LeoLan Digital" width="120" height="40"></div>
+    <div class="footer-logo"><div class="footer-logo"><img src="logo.svg" alt="LeoLan Digital"></div>
   <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:16px 0 24px;">
     <a href="https://apps.apple.com/app/leolan-manager/id6762051472" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;background:#000;color:#fff;padding:10px 18px;border-radius:12px;text-decoration:none;border:1px solid rgba(255,255,255,0.2);">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
       <span><span style="font-size:10px;display:block;opacity:0.7;line-height:1;">Download on the</span><span style="font-size:16px;font-weight:700;line-height:1.3;">App Store</span></span>
     </a>
-    </div>
+    <a href="https://ki.leolan.net" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;background:#000;color:#fff;padding:10px 18px;border-radius:12px;text-decoration:none;border:1px solid rgba(255,255,255,0.2);">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 20.5v-17c0-.83 1-.83 1.5-.5l14 8.5-14 8.5C3.5 20.83 3 20.5 3 20.5z" fill="#EA4335"/><path d="M3 20.5l8.5-8.5 3 3-10 6C3.5 21.83 3 21.5 3 20.5z" fill="#FBBC04"/><path d="M3 3.5l8.5 8.5 3-3-10-6C3.5 2.17 3 2.5 3 3.5z" fill="#4285F4"/><path d="M14.5 12l3-3 1 .5c.5.3.5.7 0 1l-1 .5-3-3z" fill="#34A853"/><path d="M11.5 12l3 3 3.5-2-3-3-3.5 2z" fill="#34A853"/></svg>
+      <span><span style="font-size:10px;display:block;opacity:0.7;line-height:1;">GET IT ON</span><span style="font-size:16px;font-weight:700;line-height:1.3;">Google Play</span></span>
+    </a>
+  </div>
   <div class="social-links">
-    <a href="https://instagram.com/leolan_digital" target="_blank" title="Instagram" aria-label="Instagram">
+    <a href="https://instagram.com/leolan_digital" target="_blank" title="Instagram">
       <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
         <defs><radialGradient id="ig-grad" cx="30%" cy="107%" r="150%"><stop offset="0%" stop-color="#fdf497"/><stop offset="5%" stop-color="#fdf497"/><stop offset="45%" stop-color="#fd5949"/><stop offset="60%" stop-color="#d6249f"/><stop offset="90%" stop-color="#285AEB"/></radialGradient></defs>
         <rect width="48" height="48" rx="12" fill="url(#ig-grad)"/>
@@ -1517,13 +1522,13 @@ berechneROI();
         <circle cx="31.5" cy="16.5" r="1.5" fill="white"/>
       </svg>
     </a>
-    <a href="https://www.facebook.com/profile.php?id=100083189805774" target="_blank" title="Facebook" aria-label="Facebook">
+    <a href="https://www.facebook.com/profile.php?id=100083189805774" target="_blank" title="Facebook">
       <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
         <rect width="48" height="48" rx="12" fill="#1877F2"/>
         <path d="M31 24h-4v14h-6V24h-3v-5h3v-3c0-4 2-6 6-6h4v5h-2c-1.5 0-2 .5-2 2v2h4l-0.5 5z" fill="white"/>
       </svg>
     </a>
-    <a href="mailto:info@leolan.net" title="E-Mail" aria-label="E-Mail senden">
+    <a href="mailto:info@leolan.net" title="E-Mail">
       <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
         <rect width="48" height="48" rx="12" fill="#444"/>
         <path d="M10 15h28v18H10z" fill="none" stroke="white" stroke-width="2"/>
@@ -1540,7 +1545,6 @@ berechneROI();
 </footer>
 
 <script>
-
   // FAQ
   function toggleFaq(btn) {
     var a = btn.nextElementSibling;
@@ -1743,7 +1747,7 @@ berechneROI();
       chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
     });
     document.addEventListener('keydown', function(e) {
-      if (e.key === \'Escape\' && chatbotModal.classList.contains(\'open\')) closeChatbot();
+      if (e.key === 'Escape' && chatbotModal.classList.contains('open')) closeChatbot();
     });
   }
 </script>
@@ -1757,9 +1761,9 @@ berechneROI();
     <h3 style="font-size:22px;font-weight:700;color:#fff;margin-bottom:10px;">Tunggu sebentar — sebelum Anda pergi</h3>
     <p style="font-size:15px;color:rgba(245,245,247,0.7);margin-bottom:8px;">Setiap hari tanpa sistem menghabiskan rata-rata</p>
     <p style="font-size:32px;font-weight:800;color:var(--accent-light);margin-bottom:20px;">€130 pendapatan</p>
-    <p style="font-size:14px;color:rgba(245,245,247,0.85);margin-bottom:24px;">Demo gratis dalam 15 menit — tanpa kontrak, tanpa biaya.</p>
+    <p style="font-size:14px;color:rgba(245,245,247,0.55);margin-bottom:24px;">Demo gratis dalam 15 menit — tanpa kontrak, tanpa biaya.</p>
     <a href="#kontakt" onclick="document.getElementById('exitPopup').style.display='none'" style="display:block;background:var(--accent);color:#fff;padding:14px 28px;border-radius:980px;font-size:15px;font-weight:600;text-decoration:none;margin-bottom:12px;">Dapatkan demo →</a>
-    <button onclick="document.getElementById('exitPopup').style.display='none'" style="background:none;border:none;color:rgba(245,245,247,0.78);font-size:13px;cursor:pointer;">Tidak, terima kasih, saya lebih suka kehilangan tamu</button>
+    <button onclick="document.getElementById('exitPopup').style.display='none'" style="background:none;border:none;color:rgba(245,245,247,0.4);font-size:13px;cursor:pointer;">Tidak, terima kasih, saya lebih suka kehilangan tamu</button>
   </div>
 </div>
 
@@ -1774,6 +1778,5 @@ berechneROI();
   });
 </script>
 
-</main>
 </body>
 </html>
