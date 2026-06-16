@@ -110,6 +110,7 @@
 
   <!-- Blog -->
   <url>
+    <loc>https://ki.leolan.net/blog/chatbot-restaurant/</loc>
     <loc>https://ki.leolan.net/blog/ki-fuer-gastronomie/</loc>
     <lastmod>2026-04-29</lastmod>
     <priority>0.8</priority>
