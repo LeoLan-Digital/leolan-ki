@@ -111,56 +111,64 @@
   <!-- Blog -->
   <url>
     <loc>https://ki.leolan.net/blog/chatbot-restaurant/</loc>
+    <lastmod>2026-06-24</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://ki.leolan.net/blog/ki-fuer-gastronomie/</loc>
-    <lastmod>2026-04-29</lastmod>
+    <lastmod>2026-06-24</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://ki.leolan.net/blog/whatsapp-bot-restaurant/</loc>
-    <lastmod>2026-04-29</lastmod>
+    <lastmod>2026-06-24</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://ki.leolan.net/blog/bewertungsmanagement-restaurant/</loc>
-    <lastmod>2026-04-29</lastmod>
+    <lastmod>2026-06-24</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://ki.leolan.net/blog/stammgaeste-binden/</loc>
-    <lastmod>2026-04-30</lastmod>
+    <lastmod>2026-06-24</lastmod>
     <priority>0.8</priority>
   </url>
-
   <url>
     <loc>https://ki.leolan.net/blog/online-reservierung-restaurant/</loc>
-    <lastmod>2026-05-04</lastmod>
+    <lastmod>2026-06-24</lastmod>
     <priority>0.8</priority>
   </url>
-
-
   <url>
     <loc>https://ki.leolan.net/whatsapp-bot-restaurant-dresden</loc>
     <lastmod>2026-05-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
-
   <url>
     <loc>https://ki.leolan.net/blog/restaurant-dresden-ki-umsatz</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-06-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://ki.leolan.net/blog/speisekarte-digital-restaurant/</loc>
-    <lastmod>2026-05-11</lastmod>
+    <lastmod>2026-06-24</lastmod>
     <priority>0.8</priority>
   </url>
-
   <url>
     <loc>https://ki.leolan.net/blog/ki-trends-gastronomie-2026/</loc>
+    <lastmod>2026-06-24</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://ki.leolan.net/blog/kundenbindung-gastronomie/</loc>
-    <lastmod>2026-06-01</lastmod>
+    <lastmod>2026-06-24</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ki.leolan.net/blog/restaurant-marketing-automatisierung/</loc>
+    <lastmod>2026-06-24</lastmod>
     <priority>0.8</priority>
   </url>
 </urlset>
