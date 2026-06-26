@@ -203,6 +203,25 @@ body{background:#0d1117;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFo
     <button class="btn btn-primary" onclick="go1()">Weiter: Daten prüfen →</button>
   </div>
 
+  <!-- STEP OTP -->
+  <div id="sotp" style="display:none">
+    <div class="card">
+      <h3>📧 E-Mail bestätigen</h3>
+      <p style="color:#8b949e;font-size:.85rem;margin-bottom:8px">Wir haben einen 6-stelligen Code an <strong id="otp-email-display" style="color:#f5a623"></strong> gesendet.</p>
+      <p style="color:#8b949e;font-size:.78rem;margin-bottom:18px">Bitte prüfe auch deinen Spam-Ordner. Der Code ist 10 Minuten gültig.</p>
+      <div class="field" id="fe-otp">
+        <label>Bestätigungscode *</label>
+        <input type="text" id="otp-input" placeholder="123456" maxlength="6" inputmode="numeric" autocomplete="one-time-code" style="text-align:center;font-size:1.8rem;letter-spacing:10px;font-weight:700">
+        <div class="err" id="otp-err-msg">Falscher Code oder abgelaufen.</div>
+      </div>
+      <button class="btn btn-primary" id="otp-btn" onclick="verifyOtp()">✓ Code bestätigen</button>
+      <div style="text-align:center;margin-top:14px">
+        <button onclick="resendOtp()" id="resend-btn" style="background:none;border:none;color:#f5a623;cursor:pointer;font-size:.85rem;text-decoration:underline">Code erneut senden</button>
+      </div>
+      <button class="btn btn-back" onclick="show(1)" style="margin-top:10px">← Zurück</button>
+    </div>
+  </div>
+
   <!-- STEP 2: Summary -->
   <div id="s2" style="display:none">
     <div class="card">
@@ -352,7 +371,66 @@ function go1(){
     '<div class="sum-total-row big"><span>Gesamt '+(isAnnual?'pro Jahr':'heute')+'</span><span>'+grossTotal.toFixed(2)+'€</span></div>'+
     '<div style="font-size:11px;color:#8b949e;padding-top:6px;">Gemäß §19 UStG wird keine Umsatzsteuer berechnet.</div>'+
     '</div>';
-  show(2);
+  sendOtp();
+}
+async function sendOtp(){
+  var btn=document.querySelector('#s1 .btn-primary');if(btn){btn.disabled=true;btn.textContent='Code wird gesendet...';}
+  document.getElementById('otp-email-display').textContent=fdata.email;
+  document.getElementById('otp-input').value='';
+  document.getElementById('otp-err-msg').style.display='none';
+  try{
+    var res=await fetch('https://n8n.leolan.net/webhook/email-otp-send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:fdata.email,name:fdata.name})});
+    var data=await res.json();
+    if(data.success){
+      document.getElementById('s1').style.display='none';
+      document.getElementById('sotp').style.display='block';
+      document.getElementById('s2').style.display='none';
+      document.getElementById('s3').style.display='none';
+      window.scrollTo({top:0,behavior:'smooth'});
+    } else {
+      alert('Fehler beim Senden: '+(data.error||'Unbekannt'));
+    }
+  }catch(e){alert('Fehler: '+e.message);}
+  finally{if(btn){btn.disabled=false;btn.textContent='Weiter: Daten prüfen →';}}
+}
+async function verifyOtp(){
+  var btn=document.getElementById('otp-btn');
+  var otpVal=document.getElementById('otp-input').value.replace(/\s/g,'');
+  var errEl=document.getElementById('otp-err-msg');
+  errEl.style.display='none';
+  if(otpVal.length!==6||!/^[0-9]+$/.test(otpVal)){
+    errEl.textContent='Bitte 6-stelligen Code eingeben.';
+    errEl.style.display='block';
+    return;
+  }
+  btn.disabled=true;btn.textContent='Wird geprüft...';
+  try{
+    var res=await fetch('https://n8n.leolan.net/webhook/email-otp-verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:fdata.email,otp:otpVal})});
+    var data=await res.json();
+    if(data.success){
+      document.getElementById('sotp').style.display='none';
+      show(2);
+    } else {
+      errEl.textContent=data.error||'Falscher Code.';
+      errEl.style.display='block';
+      btn.disabled=false;btn.textContent='✓ Code bestätigen';
+    }
+  }catch(e){
+    errEl.textContent='Verbindungsfehler. Bitte erneut versuchen.';
+    errEl.style.display='block';
+    btn.disabled=false;btn.textContent='✓ Code bestätigen';
+  }
+}
+async function resendOtp(){
+  var rbtn=document.getElementById('resend-btn');
+  rbtn.disabled=true;rbtn.textContent='Wird gesendet...';
+  try{
+    var res=await fetch('https://n8n.leolan.net/webhook/email-otp-send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:fdata.email,name:fdata.name})});
+    var data=await res.json();
+    rbtn.textContent=data.success?'✓ Code gesendet!':'Fehler beim Senden';
+    document.getElementById('otp-input').value='';
+    setTimeout(function(){rbtn.disabled=false;rbtn.textContent='Code erneut senden';},3000);
+  }catch(e){rbtn.disabled=false;rbtn.textContent='Code erneut senden';}
 }
 function show(n){
   document.getElementById('s1').style.display=n===1?'block':'none';
