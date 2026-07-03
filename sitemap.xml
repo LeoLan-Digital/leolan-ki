@@ -5,7 +5,7 @@
   <!-- Main DE pages -->
   <url>
     <loc>https://ki.leolan.net/</loc>
-    <lastmod>2026-05-04</lastmod>
+    <lastmod>2026-07-03</lastmod>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki.leolan.net/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki.leolan.net/en/"/>
@@ -17,7 +17,7 @@
   </url>
   <url>
     <loc>https://ki.leolan.net/ueber-uns/</loc>
-    <lastmod>2026-05-04</lastmod>
+    <lastmod>2026-07-03</lastmod>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki.leolan.net/ueber-uns/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki.leolan.net/en/ueber-uns/"/>
@@ -29,7 +29,7 @@
   </url>
   <url>
     <loc>https://ki.leolan.net/onboarding/</loc>
-    <lastmod>2026-05-04</lastmod>
+    <lastmod>2026-07-03</lastmod>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki.leolan.net/onboarding/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki.leolan.net/en/onboarding/"/>
@@ -41,7 +41,7 @@
   </url>
   <url>
     <loc>https://ki.leolan.net/enterprise/</loc>
-    <lastmod>2026-05-04</lastmod>
+    <lastmod>2026-07-03</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki.leolan.net/enterprise/"/>
     <xhtml:link rel="alternate" hreflang="tr" href="https://ki.leolan.net/tr/enterprise/"/>
@@ -49,12 +49,12 @@
   </url>
   <url>
     <loc>https://ki.leolan.net/alternatives/</loc>
-    <lastmod>2026-05-04</lastmod>
+    <lastmod>2026-07-03</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://ki.leolan.net/agb/</loc>
-    <lastmod>2026-05-04</lastmod>
+    <lastmod>2026-07-03</lastmod>
     <priority>0.4</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki.leolan.net/agb/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki.leolan.net/en/agb/"/>
@@ -66,7 +66,7 @@
   </url>
   <url>
     <loc>https://ki.leolan.net/datenschutz/</loc>
-    <lastmod>2026-05-04</lastmod>
+    <lastmod>2026-07-03</lastmod>
     <priority>0.4</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://ki.leolan.net/datenschutz/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ki.leolan.net/en/datenschutz/"/>
@@ -78,35 +78,35 @@
   </url>
   <url>
     <loc>https://ki.leolan.net/impressum/</loc>
-    <lastmod>2026-05-04</lastmod>
+    <lastmod>2026-07-03</lastmod>
     <priority>0.3</priority>
   </url>
 
   <!-- Language variants: EN -->
-  <url><loc>https://ki.leolan.net/en/</loc><lastmod>2026-05-04</lastmod><priority>0.9</priority></url>
-  <url><loc>https://ki.leolan.net/en/ueber-uns/</loc><lastmod>2026-05-04</lastmod><priority>0.6</priority></url>
-  <url><loc>https://ki.leolan.net/en/onboarding/</loc><lastmod>2026-05-04</lastmod><priority>0.8</priority></url>
+  <url><loc>https://ki.leolan.net/en/</loc><lastmod>2026-07-03</lastmod><priority>0.9</priority></url>
+  <url><loc>https://ki.leolan.net/en/ueber-uns/</loc><lastmod>2026-07-03</lastmod><priority>0.6</priority></url>
+  <url><loc>https://ki.leolan.net/en/onboarding/</loc><lastmod>2026-07-03</lastmod><priority>0.8</priority></url>
 
   <!-- Language variants: TR -->
-  <url><loc>https://ki.leolan.net/tr/</loc><lastmod>2026-05-04</lastmod><priority>0.9</priority></url>
-  <url><loc>https://ki.leolan.net/tr/ueber-uns/</loc><lastmod>2026-05-04</lastmod><priority>0.6</priority></url>
-  <url><loc>https://ki.leolan.net/tr/onboarding/</loc><lastmod>2026-05-04</lastmod><priority>0.8</priority></url>
-  <url><loc>https://ki.leolan.net/tr/enterprise/</loc><lastmod>2026-05-04</lastmod><priority>0.7</priority></url>
+  <url><loc>https://ki.leolan.net/tr/</loc><lastmod>2026-07-03</lastmod><priority>0.9</priority></url>
+  <url><loc>https://ki.leolan.net/tr/ueber-uns/</loc><lastmod>2026-07-03</lastmod><priority>0.6</priority></url>
+  <url><loc>https://ki.leolan.net/tr/onboarding/</loc><lastmod>2026-07-03</lastmod><priority>0.8</priority></url>
+  <url><loc>https://ki.leolan.net/tr/enterprise/</loc><lastmod>2026-07-03</lastmod><priority>0.7</priority></url>
 
   <!-- Language variants: RU -->
-  <url><loc>https://ki.leolan.net/ru/</loc><lastmod>2026-05-04</lastmod><priority>0.9</priority></url>
-  <url><loc>https://ki.leolan.net/ru/ueber-uns/</loc><lastmod>2026-05-04</lastmod><priority>0.6</priority></url>
-  <url><loc>https://ki.leolan.net/ru/onboarding/</loc><lastmod>2026-05-04</lastmod><priority>0.8</priority></url>
+  <url><loc>https://ki.leolan.net/ru/</loc><lastmod>2026-07-03</lastmod><priority>0.9</priority></url>
+  <url><loc>https://ki.leolan.net/ru/ueber-uns/</loc><lastmod>2026-07-03</lastmod><priority>0.6</priority></url>
+  <url><loc>https://ki.leolan.net/ru/onboarding/</loc><lastmod>2026-07-03</lastmod><priority>0.8</priority></url>
 
   <!-- Language variants: ID -->
-  <url><loc>https://ki.leolan.net/id/</loc><lastmod>2026-05-04</lastmod><priority>0.9</priority></url>
-  <url><loc>https://ki.leolan.net/id/ueber-uns/</loc><lastmod>2026-05-04</lastmod><priority>0.6</priority></url>
-  <url><loc>https://ki.leolan.net/id/onboarding/</loc><lastmod>2026-05-04</lastmod><priority>0.8</priority></url>
+  <url><loc>https://ki.leolan.net/id/</loc><lastmod>2026-07-03</lastmod><priority>0.9</priority></url>
+  <url><loc>https://ki.leolan.net/id/ueber-uns/</loc><lastmod>2026-07-03</lastmod><priority>0.6</priority></url>
+  <url><loc>https://ki.leolan.net/id/onboarding/</loc><lastmod>2026-07-03</lastmod><priority>0.8</priority></url>
 
   <!-- Language variants: TH -->
-  <url><loc>https://ki.leolan.net/th/</loc><lastmod>2026-05-04</lastmod><priority>0.9</priority></url>
-  <url><loc>https://ki.leolan.net/th/ueber-uns/</loc><lastmod>2026-05-04</lastmod><priority>0.6</priority></url>
-  <url><loc>https://ki.leolan.net/th/onboarding/</loc><lastmod>2026-05-04</lastmod><priority>0.8</priority></url>
+  <url><loc>https://ki.leolan.net/th/</loc><lastmod>2026-07-03</lastmod><priority>0.9</priority></url>
+  <url><loc>https://ki.leolan.net/th/ueber-uns/</loc><lastmod>2026-07-03</lastmod><priority>0.6</priority></url>
+  <url><loc>https://ki.leolan.net/th/onboarding/</loc><lastmod>2026-07-03</lastmod><priority>0.8</priority></url>
 
   <!-- Blog -->
   <url>
