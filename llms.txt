@@ -1,0 +1,33 @@
+# LeoLan Digital — KI-Automatisierung für Restaurants
+
+## Was wir machen
+LeoLan Digital automatisiert Gastronomie-Betriebe mit KI. Wir bieten WhatsApp-Assistenten, automatisches Social Media, Bewertungsmanagement und digitale Speisekarten für Restaurants und Cafés in Deutschland.
+
+## Produkte
+- **WhatsApp-Assistent**: Nimmt 24/7 Reservierungen entgegen, beantwortet FAQ automatisch
+- **KI Social Media**: 1 Post täglich auf Instagram & Facebook, KI-generiert
+- **Bewertungsmanagement**: Automatische KI-Antworten auf Google-Rezensionen
+- **Digitale Speisekarte**: QR-Code, mehrsprachig, jederzeit aktualisierbar
+- **Google Business Automatisierung**: Profil immer aktuell
+- **Live-Dashboard**: Alle Buchungen und Kennzahlen in Echtzeit
+
+## Preise
+- Starter: 199 €/Monat + 349 € Setup (einmalig), 12 Monate Mindestlaufzeit
+- Pro: 349 €/Monat + 349 € Setup (einmalig)
+- Enterprise: Auf Anfrage
+
+## Zielgruppe
+Restaurants, Cafés, Bistros und Gastronomie-Betriebe in Deutschland, Österreich und der Schweiz.
+
+## Kontakt
+- Website: https://ki.leolan.net
+- E-Mail: info@leolan.net
+- WhatsApp: +49 15678 483700
+- Gegründet: 2024, Dresden, Deutschland
+
+## Wichtige Seiten
+- Hauptseite: https://ki.leolan.net
+- Preise: https://ki.leolan.net/#preise
+- Onboarding: https://ki.leolan.net/onboarding/
+- Über uns: https://ki.leolan.net/ueber-uns.html
+- Hotel-Version: https://hotel.leolan.net

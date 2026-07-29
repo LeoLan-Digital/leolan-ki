@@ -1,0 +1,119 @@
+{
+  "name": "B2B Customer Chat",
+  "nodes": [
+    {
+      "id": "b2b-post",
+      "name": "B2B Chat POST",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        280
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "b2b-chat",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "webhookId": "b2b-chat-post"
+    },
+    {
+      "id": "b2b-history",
+      "name": "B2B Chat History",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        480
+      ],
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "b2b-chat/history",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "webhookId": "b2b-chat-history"
+    },
+    {
+      "id": "b2b-code",
+      "name": "Handle B2B Chat",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        520,
+        380
+      ],
+      "parameters": {
+        "jsCode": "const input = $input.first().json || {};\nconst body = input.body || {};\nconst query = input.query || {};\nconst payload = { ...query, ...body };\nconst action = String(payload.action || (Object.keys(query).length ? 'history' : '')).trim();\nconst adminKey = String(payload.adminKey || query.adminKey || body.adminKey || '');\nconst customerCode = String(payload.customerCode || payload.code || '').trim().toUpperCase();\nconst message = String(payload.message || '').trim();\nconst now = new Date().toISOString();\nconst ADMIN_KEY = 'SET_ADMIN_KEY_IN_N8N';\nconst BREVO_KEY = 'SET_BREVO_KEY_IN_N8N';\nconst ADMIN_EMAIL = 'business@leolan.net';\n\nconst staticData = $getWorkflowStaticData('global');\nif (!staticData.b2b_chats) staticData.b2b_chats = {};\nif (!staticData.b2b_customers) staticData.b2b_customers = {};\n\nfunction ensureCustomer(code) {\n  if (!code) throw new Error('customerCode fehlt.');\n  if (!staticData.b2b_chats[code]) staticData.b2b_chats[code] = [];\n  if (!staticData.b2b_customers[code]) staticData.b2b_customers[code] = { customerCode: code, customerEmail: '', customerName: '', restaurantName: '', slug: '', updatedAt: now };\n  return staticData.b2b_customers[code];\n}\n\nfunction normalizeMessages(messages) {\n  return (messages || []).map(item => ({\n    from: item.from === 'admin' ? 'admin' : 'customer',\n    message: String(item.message || ''),\n    timestamp: item.timestamp || now,\n    read: Boolean(item.read),\n  })).sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));\n}\n\nasync function sendBrevoEmail({ toEmail, toName, subject, htmlContent, textContent }) {\n  if (!toEmail) return null;\n  return await this.helpers.httpRequest({\n    method: 'POST',\n    url: 'https://api.brevo.com/v3/smtp/email',\n    headers: {\n      'api-key': BREVO_KEY,\n      'Content-Type': 'application/json',\n      'accept': 'application/json',\n    },\n    body: {\n      sender: { email: ADMIN_EMAIL, name: 'LeoLan Digital' },\n      to: [{ email: toEmail, name: toName || toEmail }],\n      subject,\n      htmlContent,\n      textContent,\n    },\n    json: true,\n  });\n}\n\nif (action === 'send') {\n  if (!customerCode) throw new Error('customerCode fehlt.');\n  if (!message) throw new Error('message fehlt.');\n  const customer = ensureCustomer(customerCode);\n  customer.customerEmail = String(payload.customerEmail || customer.customerEmail || '').trim();\n  customer.customerName = String(payload.customerName || customer.customerName || '').trim();\n  customer.restaurantName = String(payload.restaurantName || customer.restaurantName || customer.customerName || '').trim();\n  customer.slug = String(payload.slug || customer.slug || '').trim();\n  customer.updatedAt = now;\n\n  staticData.b2b_chats[customerCode].push({ from: 'customer', message, timestamp: now, read: false });\n\n  const subject = `Neue B2B-Kundennachricht · ${customer.restaurantName || customer.customerName || customerCode}`;\n  const preview = String(message).replace(/</g, '&lt;').replace(/>/g, '&gt;');\n  await sendBrevoEmail({\n    toEmail: ADMIN_EMAIL,\n    toName: 'LeoLan Digital',\n    subject,\n    textContent: `Neue Nachricht von ${customer.restaurantName || customer.customerName || customerCode} (${customerCode})\\n${customer.customerEmail ? 'E-Mail: ' + customer.customerEmail + '\\n' : ''}\\n${message}`,\n    htmlContent: `<p><strong>Neue Nachricht von ${customer.restaurantName || customer.customerName || customerCode}</strong></p><p>Kunden-Code: ${customerCode}</p>${customer.customerEmail ? `<p>E-Mail: ${customer.customerEmail}</p>` : ''}<p style=\"white-space:pre-wrap\">${preview}</p>`,\n  });\n\n  return [{ json: { success: true, customerCode, customerEmail: customer.customerEmail || '', messages: normalizeMessages(staticData.b2b_chats[customerCode]) } }];\n}\n\nif (action === 'admin-reply') {\n  if (adminKey !== ADMIN_KEY) throw new Error('adminKey ungültig.');\n  if (!customerCode) throw new Error('customerCode fehlt.');\n  if (!message) throw new Error('message fehlt.');\n  const customer = ensureCustomer(customerCode);\n  staticData.b2b_chats[customerCode].push({ from: 'admin', message, timestamp: now, read: true });\n  customer.updatedAt = now;\n\n  if (customer.customerEmail) {\n    const htmlMessage = String(message).replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\\n/g, '<br>');\n    await sendBrevoEmail({\n      toEmail: customer.customerEmail,\n      toName: customer.customerName || customer.restaurantName || customer.customerCode,\n      subject: `Antwort von LeoLan Digital`,\n      textContent: `Hallo ${customer.customerName || customer.restaurantName || customer.customerCode},\\n\\n${message}\\n\\nViele Grüße\\nLeoLan Digital`,\n      htmlContent: `<p>Hallo ${customer.customerName || customer.restaurantName || customer.customerCode},</p><p style=\"white-space:pre-wrap\">${htmlMessage}</p><p>Viele Grüße<br>LeoLan Digital</p>`,\n    });\n  }\n\n  return [{ json: { success: true, customerCode, customerEmail: customer.customerEmail || '', messages: normalizeMessages(staticData.b2b_chats[customerCode]) } }];\n}\n\nif (action === 'history') {\n  if (adminKey) {\n    if (adminKey !== ADMIN_KEY) throw new Error('adminKey ungültig.');\n    if (customerCode) {\n      const customer = ensureCustomer(customerCode);\n      staticData.b2b_chats[customerCode] = normalizeMessages(staticData.b2b_chats[customerCode]).map(item => item.from === 'customer' ? { ...item, read: true } : item);\n      return [{ json: { success: true, customerCode, customerEmail: customer.customerEmail || '', customerName: customer.customerName || customer.restaurantName || customerCode, messages: normalizeMessages(staticData.b2b_chats[customerCode]) } }];\n    }\n\n    const customers = Object.entries(staticData.b2b_chats)\n      .map(([code, messages]) => {\n        const customer = staticData.b2b_customers[code] || { customerCode: code };\n        const normalized = normalizeMessages(messages);\n        const last = normalized[normalized.length - 1] || {};\n        return {\n          customerCode: code,\n          customerName: customer.customerName || customer.restaurantName || code,\n          customerEmail: customer.customerEmail || '',\n          restaurantName: customer.restaurantName || '',\n          lastMessage: last.message || '',\n          lastTimestamp: last.timestamp || customer.updatedAt || now,\n          unreadCount: normalized.filter(item => item.from === 'customer' && !item.read).length,\n        };\n      })\n      .sort((a, b) => new Date(b.lastTimestamp) - new Date(a.lastTimestamp));\n\n    return [{ json: { success: true, customers } }];\n  }\n\n  if (!customerCode) throw new Error('customerCode fehlt.');\n  const customer = ensureCustomer(customerCode);\n  return [{ json: { success: true, customerCode, customerEmail: customer.customerEmail || '', messages: normalizeMessages(staticData.b2b_chats[customerCode]) } }];\n}\n\nthrow new Error('Ungültige action. Erlaubt: send, admin-reply, history');"
+      }
+    },
+    {
+      "id": "b2b-response",
+      "name": "JSON Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        800,
+        380
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "responseCode": 200,
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "connections": {
+    "B2B Chat POST": {
+      "main": [
+        [
+          {
+            "node": "Handle B2B Chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "B2B Chat History": {
+      "main": [
+        [
+          {
+            "node": "Handle B2B Chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Handle B2B Chat": {
+      "main": [
+        [
+          {
+            "node": "JSON Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

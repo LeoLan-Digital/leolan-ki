@@ -1,0 +1,14 @@
+{
+  "name": "LeoLan Digital — Betreiber App",
+  "short_name": "LeoLan",
+  "description": "Gäste-Nachrichten, Reservierungen und Buchungen verwalten",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d1526",
+  "theme_color": "#1a2744",
+  "orientation": "any",
+  "icons": [
+    { "src": "https://ki.leolan.net/leolan-logo.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "https://ki.leolan.net/leolan-logo.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

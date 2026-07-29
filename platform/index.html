@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="refresh" content="1">
+<title>LeoLan Platform</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0d1117;color:#e6edf3;font-family:-apple-system,sans-serif;padding:20px}
+h1{font-size:20px;font-weight:700;color:#58a6ff;margin-bottom:4px}
+.sub{font-size:12px;color:#8b949e;margin-bottom:20px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.card{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:16px}
+.label{font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+.value{font-size:28px;font-weight:700}
+.trend{font-size:11px;margin-top:4px}
+.green{color:#3fb950}.blue{color:#58a6ff}.orange{color:#d29922}.purple{color:#bc8cff}
+.agents-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:20px}
+.agent{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:10px;display:flex;align-items:center;gap:8px}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;background:#484f58}
+.aname{font-size:11px;font-weight:600;flex:1}
+.badge{font-size:9px;padding:2px 6px;border-radius:20px;background:#21262d;color:#8b949e}
+.section{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:16px;margin-bottom:16px}
+.section h2{font-size:12px;font-weight:700;color:#8b949e;text-transform:uppercase;margin-bottom:12px}
+.row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #21262d;font-size:13px}
+.row:last-child{border-bottom:none}
+.bar-row{margin-bottom:10px}
+.bar-label{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px}
+.bar-track{background:#21262d;border-radius:4px;height:8px}
+.bar-fill{height:100%;border-radius:4px}
+.log{font-size:11px;font-family:monospace;padding:3px 0;color:#8b949e}
+.log-ok{color:#3fb950}.log-err{color:#f85149}
+.footer{font-size:11px;color:#484f58;text-align:right;margin-top:12px;border-top:1px solid #21262d;padding-top:10px}
+</style>
+</head>
+<body>
+<h1>🐝 LeoLan Intelligence Platform</h1>
+<div class="sub">Ruflo V3 · Echtzeit-Daten · Stand: <strong style="color:#3fb950">17.05.2026 11:36:00</strong> · Auto-Refresh 1s</div>
+
+<div class="grid">
+  <div class="card"><div class="label">Agenten Total</div><div class="value blue">109</div><div class="trend green">+ 50 Hive Workers</div></div>
+  <div class="card"><div class="label">Cron-Jobs</div><div class="value green">12</div><div class="trend green">✅ Auto-Posting aktiv</div></div>
+  <div class="card"><div class="label">Token-Einsparung</div><div class="value orange">83%</div><div class="trend orange">~35€/Tag statt 200€</div></div>
+  <div class="card"><div class="label">Sites Live</div><div class="value purple">2/2</div><div class="trend green">ki + hotel ✅</div></div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+<div class="section">
+<h2>🌐 Site Status — Echtzeit</h2>
+<div class="row"><span>ki.leolan.net</span><span style="color:#3fb950">✅ 200 0.21s</span></div>
+<div class="row"><span>hotel.leolan.net</span><span style="color:#3fb950">✅ 200 0.11s</span></div>
+<div class="row"><span>n8n.leolan.net</span><span style="color:#3fb950">✅ 200</span></div>
+</div>
+<div class="section">
+<h2>⚡ Model-Routing</h2>
+<div class="bar-row"><div class="bar-label"><span>gpt-4o-mini</span><span class="green">60%</span></div><div class="bar-track"><div class="bar-fill" style="width:60%;background:#3fb950"></div></div></div>
+<div class="bar-row"><div class="bar-label"><span>claude-haiku</span><span class="blue">20%</span></div><div class="bar-track"><div class="bar-fill" style="width:20%;background:#58a6ff"></div></div></div>
+<div class="bar-row"><div class="bar-label"><span>gpt-4o</span><span class="orange">15%</span></div><div class="bar-track"><div class="bar-fill" style="width:15%;background:#d29922"></div></div></div>
+<div class="bar-row"><div class="bar-label"><span>claude-sonnet</span><span class="purple">5%</span></div><div class="bar-track"><div class="bar-fill" style="width:5%;background:#bc8cff"></div></div></div>
+</div>
+</div>
+
+<div class="section"><h2>🤖 Agenten (${AGENT_TOTAL} gesamt aus Ruflo)</h2><div class="agents-grid">
+</div></div>
+
+<div class="section">
+<h2>📋 Post-Log</h2>
+
+</div>
+
+<div class="footer">Daten von OpenClaw Mac mini · Stand 17.05.2026 11:36:00 · Auto-Refresh 1s</div>
+</body></html>

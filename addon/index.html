@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <link rel="canonical" href="https://ki.leolan.net/addon/">
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LeoLan Digital – Add-on kaufen</title>
+<style>
+:root{--bg:#0d1117;--surface:#161b22;--surface-2:#11161d;--border:#30363d;--text:#e6edf3;--muted:#8b949e;--orange:#f5a623;--orange-2:#ffbe55;--danger:#f85149;--success:#3fb950}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:radial-gradient(circle at top,rgba(245,166,35,.10),transparent 28%),var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh}
+.header{background:#0d1117;border-bottom:1px solid #21262d;position:sticky;top:0;z-index:20;padding:12px 20px;text-align:center}
+.header a{display:inline-block}
+.header img{width:56px;height:56px;border-radius:16px;border:0}
+.shell{max-width:560px;margin:0 auto;padding:28px 16px 72px}
+.card{background:linear-gradient(180deg,var(--surface),var(--surface-2));border:1px solid var(--border);border-radius:22px;padding:28px 20px;box-shadow:0 24px 60px rgba(0,0,0,.28)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(245,166,35,.10);border:1px solid rgba(245,166,35,.22);border-radius:999px;padding:8px 12px;color:#ffd48a;font-size:.78rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--orange)}
+h1{font-size:clamp(1.8rem,7vw,2.4rem);line-height:1.05;margin:18px 0 10px;color:#fff}
+.sub{color:var(--muted);font-size:.98rem;line-height:1.6;margin-bottom:24px}
+.box{background:#0d1117;border:1px solid #21262d;border-radius:18px;padding:16px;margin-bottom:14px}
+.label{color:var(--muted);font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.customer{display:flex;flex-direction:column;gap:4px}
+.customer-name{font-size:1.2rem;font-weight:800;color:#f0f6fc}
+.customer-company{color:var(--muted);font-size:.95rem}
+.addon-name{font-size:1.15rem;font-weight:800;color:#fff}
+.addon-desc{color:var(--muted);font-size:.94rem;line-height:1.5;margin-top:6px}
+.row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #21262d;font-size:.94rem}
+.row:last-child{border-bottom:none;padding-bottom:0}
+.row:first-child{padding-top:0}
+.row .k{color:var(--muted)}
+.row .v{color:#fff;font-weight:700;text-align:right}
+.note{color:var(--muted);font-size:.84rem;line-height:1.5;text-align:center;margin:16px 0 18px}
+.btn{width:100%;border:0;border-radius:14px;padding:17px 18px;background:linear-gradient(135deg,var(--orange),var(--orange-2));color:#111;font-size:1.03rem;font-weight:900;cursor:pointer;box-shadow:0 16px 28px rgba(245,166,35,.22);transition:transform .18s ease,opacity .18s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.status{margin-top:14px;padding:12px 14px;border-radius:12px;font-size:.9rem;line-height:1.45;display:none}
+.status.show{display:block}.status.error{background:rgba(248,81,73,.12);color:var(--danger);border:1px solid rgba(248,81,73,.18)}.status.ok{background:rgba(63,185,80,.12);color:var(--success);border:1px solid rgba(63,185,80,.18)}
+.loader{display:inline-flex;align-items:center;gap:10px;color:var(--muted);font-size:.92rem;margin-bottom:18px}
+.spinner{width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,.16);border-top-color:var(--orange);animation:spin .8s linear infinite}
+.hidden{display:none!important}
+.footer{color:#484f58;font-size:.75rem;text-align:center;margin-top:22px}
+@keyframes spin{to{transform:rotate(360deg)}}
+  .choice-wrap { display: flex; gap: 8px; margin-bottom: 14px; }
+  .choice-card { flex: 1; background: #0d1117; border: 2px solid #30363d; border-radius: 12px; padding: 10px 6px; cursor: pointer; transition: border-color 0.2s, background 0.2s; min-width: 0; }
+  .choice-card:hover { border-color: #f5a623aa; }
+  .choice-card.active { border-color: #f5a623; background: rgba(245,166,35,0.07); }
+  .choice-card .choice-inner { display: flex; flex-direction: column; align-items: center; gap: 3px; text-align: center; }
+  .choice-card strong { color: #f0f6fc; font-size: 12px; font-weight: 800; }
+  .choice-card small { color: #8b949e; font-size: 10px; word-break: break-word; }
+  .choice-card .choice-icon { font-size: 18px; margin-bottom: 2px; }
+  .choice-badge { display: inline-block; background: rgba(63,185,80,0.15); color: #3fb950; border: 1px solid rgba(63,185,80,0.3); border-radius: 999px; padding: 1px 6px; font-size: 9px; font-weight: 800; letter-spacing: 0.03em; text-transform: uppercase; margin-top: 3px; }
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-nav" style="position:absolute;top:-40px;left:0;padding:8px;background:#0071e3;color:#fff;font-size:14px;z-index:9999;border-radius:0 0 4px 0;transition:top 0.2s;text-decoration:none;">Zum Hauptinhalt springen</a>
+
+<div class="header">
+  <a href="/" class="nav-logo" aria-label="LeoLan Digital - Homepage"><img src="/logo.svg" width="120" height="40"  alt="LeoLan Digital" style="height:120px;width:auto;display:block;"></a>
+</div>
+
+<div class="shell">
+  <div class="card">
+    <div class="eyebrow"><span class="dot"></span> LeoLan Add-on Checkout</div>
+    <h1>Bestätigen &amp; Bezahlen</h1>
+    <p class="sub">Ihr Add-on ist bereits Ihrem Kundenkonto zugeordnet. Es sind keine weiteren Eingaben nötig.</p>
+
+    <div id="loading" class="loader"><span class="spinner"></span><span>Kundendaten werden geladen…</span></div>
+
+    <div id="content" class="hidden">
+      <div class="box">
+        <div class="label">Kundenkonto</div>
+        <div class="customer">
+          <div class="customer-name" id="customerName">—</div>
+          <div class="customer-company" id="customerCompany">—</div>
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="label">Gewähltes Add-on</div>
+        <div class="addon-name" id="addonName">—</div>
+        <div class="addon-desc" id="addonDesc">—</div>
+        <div style="margin-top:14px">
+          <div class="row"><span class="k">Preis netto</span><span class="v" id="priceNet">—</span></div>
+          <div class="row"><span class="k">MwSt.</span><span class="v" id="priceVat">—</span></div>
+          <div class="row"><span class="k">Gesamt</span><span class="v" id="priceGross">—</span></div>
+        </div>
+      </div>
+
+      <div id="emailBox" class="box hidden">
+        <div class="label">E-Mail-Adresse</div>
+        <input aria-label="ihre@email.de" type="email" id="emailInput" placeholder="ihre@email.de" style="width:100%;background:#0d1117;color:#e6edf3;border:1px solid #30363d;border-radius:10px;padding:12px;font-size:15px;margin-top:6px;box-sizing:border-box;">
+        <div style="color:#8b949e;font-size:12px;margin-top:6px;">Für die Zahlungsbestätigung benötigt.</div>
+      </div>
+
+      <div class="box">
+        <div class="label">Zahlungsweise wählen</div>
+        <div class="choice-wrap">
+          <div class="choice-card active" id="choiceOnce" onclick="selectMode('once')">
+            <div class="choice-inner">
+              <div class="choice-icon">⚡</div>
+              <strong>Einmalig</strong>
+              <small id="priceOnceLabel">—</small>
+            </div>
+          </div>
+          <div class="choice-card" id="choiceMonthly" onclick="selectMode('monthly')">
+            <div class="choice-inner">
+              <div class="choice-icon">🔄</div>
+              <strong>Monatlich</strong>
+              <small id="priceMonthlyLabel">—</small>
+              <span class="choice-badge">Abo</span>
+            </div>
+          </div>
+          <div class="choice-card" id="choiceYearly" onclick="selectMode('yearly')">
+            <div class="choice-inner">
+              <div class="choice-icon">📅</div>
+              <strong>Jährlich</strong>
+              <small id="priceYearlyLabel">—</small>
+              <span class="choice-badge" style="background:rgba(245,166,35,0.15);color:#f5a623;border-color:rgba(245,166,35,0.3);">2 Monate gratis</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="note">Ihre gespeicherten Rechnungsdaten werden verwendet.</div>
+      
+<button id="buyBtn" class="btn" type="button">Jetzt kaufen</button>
+    </div>
+
+    <div id="status" class="status"></div>
+  </div>
+  <footer role="contentinfo">
+<div class="footer">© 2026 LeoLan Digital · business@leolan.net</div>
+</div>
+
+<script>
+let selectedMode='once'; // 'once', 'monthly', 'yearly'
+function selectMode(mode){
+  selectedMode=mode;
+  $('choiceOnce').classList.toggle('active', mode==='once');
+  $('choiceMonthly').classList.toggle('active', mode==='monthly');
+  $('choiceYearly').classList.toggle('active', mode==='yearly');
+  updateBuyBtn();
+}
+function updateBuyBtn(){
+  if(!window._gross) return;
+  if(selectedMode==='monthly') $('buyBtn').textContent='Monatlich abonnieren - '+fmt(window._gross)+'/Mo';
+  else if(selectedMode==='yearly') $('buyBtn').textContent='Jährlich abonnieren - '+fmt(window._yearlyGross)+'/Jahr';
+  else $('buyBtn').textContent='Einmalig kaufen - '+fmt(window._gross);
+}
+const ADDONS={
+  msg_1000:{name:'1.000 Nachrichten',price:29,desc:'+1.000 WhatsApp-Nachrichten für diesen Monat'},
+  msg_2000:{name:'2.000 Nachrichten',price:49,desc:'+2.000 WhatsApp-Nachrichten für diesen Monat'},
+  msg_20000:{name:'20.000 Nachrichten',price:299,desc:'+20.000 WhatsApp-Nachrichten — ideal für Stoßzeiten'}
+};
+const DASHBOARD_URL='https://n8n.leolan.net/webhook/kunden-dashboard';
+const CHECKOUT_URL='https://n8n.leolan.net/webhook/stripe-checkout';
+const STRIPE_PRICE_ID='price_1TL0yYLwGb6me8PhNJaI5B0d';
+
+const qs=new URLSearchParams(window.location.search);
+const customerCode=(qs.get('code')||'').trim();
+const addonId=(qs.get('addon')||'').trim();
+const addon=ADDONS[addonId];
+let customerData=null;
+
+const $=id=>document.getElementById(id);
+const fmt=(value)=>new Intl.NumberFormat('de-DE',{minimumFractionDigits:0,maximumFractionDigits:2}).format(Number(value||0))+'€';
+function showStatus(message,type){const el=$('status');el.textContent=message;el.className='status show '+(type||'error');}
+function setLoading(on){$('loading').classList.toggle('hidden',!on);$('content').classList.toggle('hidden',on);}
+function pick(obj,keys){for(const key of keys){const value=obj&&obj[key];if(value!==undefined&&value!==null&&String(value).trim()!=='')return String(value).trim();}return '';}
+function readCustomer(payload){
+  const root=(payload&&typeof payload==='object')?payload:{};
+  const source=root.account||root.customer||root.data||root.kunde||root.result||root;
+  const name=pick(source,['name','customerName','fullName','ansprechpartner','contactName'])||pick(root,['name','customerName']);
+  const company=pick(source,['companyName','company','firma','restaurantName','restaurant','businessName'])||pick(root,['companyName','company','firma']);
+  const email=pick(source,['email','customerEmail','mail'])||pick(root,['email','customerEmail'])||'';
+  const vatId=pick(source,['vatId','ustId','uid','taxId'])||pick(root,['vatId','ustId','uid','taxId']);
+  return {name:name||'LeoLan Kunde',company:company||'Unternehmen',email,vatId};
+}
+function render(){
+  // Reverse Charge nur für EU-Ausland (nicht DE)
+  const vatIdClean=(customerData.vatId||"").trim().toUpperCase();
+  const reverseCharge=!!(vatIdClean&&vatIdClean.length>3&&!vatIdClean.startsWith("DE"));
+  const vat=reverseCharge?0:Math.round(addon.price*0.19*100)/100;
+  const gross=Math.round((addon.price+vat)*100)/100;
+  $('customerName').textContent=customerData.name;
+  $('customerCompany').textContent=customerData.company;
+  $('addonName').textContent=addon.name;
+  $('addonDesc').textContent=addon.desc;
+  // Yearly = Netto × 10 Monate + MwSt. (2 Monate gratis)
+  const yearlyNet = Math.round(addon.price * 10 * 100) / 100;
+  const yearlyVat = reverseCharge ? 0 : Math.round(yearlyNet * 0.19 * 100) / 100;
+  const yearlyGross = Math.round((yearlyNet + yearlyVat) * 100) / 100;
+  window._gross = gross;
+  window._yearlyGross = yearlyGross;
+  window._reverseCharge = reverseCharge;
+  $('priceNet').textContent=fmt(addon.price);
+  $('priceVat').textContent=reverseCharge?'0€ (Reverse Charge)':fmt(vat);
+  $('priceGross').textContent=fmt(gross);
+  $('priceOnceLabel').textContent=fmt(gross)+' einmalig';
+  $('priceMonthlyLabel').textContent=fmt(gross)+'/Mo';
+  $('priceYearlyLabel').textContent=fmt(yearlyGross)+'/Jahr';
+  updateBuyBtn();
+  // Show email input if no email found
+  if(!customerData.email){
+    $('emailBox').classList.remove('hidden');
+  }
+}
+async function loadCustomer(){
+  if(!customerCode) throw new Error('Kein Kundencode übergeben.');
+  if(!addon) throw new Error('Ungültiges Add-on.');
+  let response;
+  try{
+    const ctrl=new AbortController();
+    setTimeout(()=>ctrl.abort(),20000);
+    response=await fetch(DASHBOARD_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({customerCode}),signal:ctrl.signal});
+  }catch(fetchErr){
+    console.error('Fetch error:', fetchErr);
+    showError('Verbindung fehlgeschlagen. Bitte prüfen Sie Ihre Internetverbindung.');
+    setLoading(false);
+    return;
+  }
+  if(!response.ok) throw new Error('Kundendaten konnten nicht geladen werden.');
+  const payload=await response.json();
+  customerData=readCustomer(payload);
+  // email optional
+  render();
+  setLoading(false);
+}
+async function startCheckout(){
+  const btn=$('buyBtn');
+  // Resolve email: from account or from manual input
+  const resolvedEmail = customerData.email || ($('emailInput') && $('emailInput').value.trim()) || '';
+  if(!resolvedEmail){
+    showStatus('Bitte geben Sie Ihre E-Mail-Adresse ein.','error');
+    $('emailBox').classList.remove('hidden');
+    $('emailInput').focus();
+    return;
+  }
+  const vatIdClean2=(customerData.vatId||"").trim().toUpperCase();
+  const reverseCharge=!!(vatIdClean2&&vatIdClean2.length>3&&!vatIdClean2.startsWith("DE"));
+  const grossTotal=reverseCharge?addon.price:Math.round(addon.price*1.19*100)/100;
+  btn.disabled=true;
+  btn.textContent='Checkout wird vorbereitet…';
+  showStatus('Stripe Checkout wird vorbereitet…','ok');
+  try{
+    const isMonthly = selectedMode === 'monthly';
+    const isYearly = selectedMode === 'yearly';
+    const isSubscription = isMonthly || isYearly;
+    // Yearly = 10 months net + VAT (2 months free)
+    const yearlyNet = Math.round(addon.price * 10 * 100) / 100;
+    const yearlyVatAmt = reverseCharge ? 0 : Math.round(yearlyNet * 0.19 * 100) / 100;
+    const yearlyGross = Math.round((yearlyNet + yearlyVatAmt) * 100) / 100;
+    const finalGross = isYearly ? yearlyGross : grossTotal;
+    const finalNetPrice = isYearly ? yearlyNet : addon.price;
+    const modeLabel = isYearly ? ' (jährlich, 2 Monate gratis)' : isMonthly ? ' (monatlich)' : ' (einmalig)';
+    const payload={
+      customerCode,
+      email:resolvedEmail,
+      customerEmail:resolvedEmail,
+      companyName:customerData.company,
+      name:customerData.name,
+      paket: isSubscription ? 'addon-subscription' : 'addon',
+      addon:addonId,
+      addonMode: selectedMode,
+      modules:[{name:addon.name + modeLabel, price:finalNetPrice}],
+      addonName:addon.name,
+      addonPrice:finalNetPrice,
+      billingInterval: isYearly ? 'year' : 'month',
+      sector:'restaurant',
+      grossTotal:finalGross,
+      reverseCharge:reverseCharge,
+      vatId:customerData.vatId||'',
+      priceId:STRIPE_PRICE_ID,
+      successUrl:'https://ki.leolan.net/danke/?code='+encodeURIComponent(customerCode),
+      cancelUrl:'https://ki.leolan.net/addon/?code='+encodeURIComponent(customerCode)+'&addon='+encodeURIComponent(addonId)
+    };
+    const response=await fetch(CHECKOUT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    if(!response.ok) throw new Error('Checkout konnte nicht erstellt werden.');
+    const contentType=response.headers.get('content-type')||'';
+    const result=contentType.includes('application/json')?await response.json():{url:(await response.text()).trim()};
+    const redirectUrl=result.url||result.checkoutUrl||result.data&&result.data.url||result.redirectUrl;
+    if(!redirectUrl||!/^https?:\/\//.test(redirectUrl)) throw new Error('Keine gültige Stripe-URL erhalten.');
+    window.location.href=redirectUrl;
+  }catch(error){
+    btn.disabled=false;
+    updateBuyBtn();
+    showStatus('Checkout konnte gerade nicht erstellt werden. Bitte erneut versuchen.','error');
+  }
+}
+$('buyBtn').addEventListener('click',startCheckout);
+(async function init(){
+  try{await loadCustomer();}
+  catch(error){setLoading(false);showStatus(error&&error.message?error.message:'Seite konnte nicht geladen werden.','error');$('content').classList.add('hidden');}
+})();
+</script>
+</footer>
+</body>
+</html>
