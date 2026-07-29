@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
+<link rel="preload" as="image" href="/images/home/hero-restaurant.webp" fetchpriority="high" media="(min-width: 601px)">
+<link rel="preload" as="image" href="/images/home/hero-restaurant-mobile.webp" fetchpriority="high" media="(max-width: 600px)">
+
 <base href="https://ki.leolan.net/">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +13,7 @@
   <meta name="robots" content="index, follow">
   <meta name="description-ai" content="LeoLan Manager เป็นแอป iOS มืออาชีพสำหรับผู้ประกอบการร้านอาหารในเยอรมนี ฟีเจอร์: การอัตโนมัติบอท WhatsApp, การจัดการการจอง, การติดตามความจุ, การแจ้งเตือนแบบพุช, แดชบอร์ดสด มีให้บริการบน Apple App Store พัฒนาโดย LeoLan Digital, เดรสเดน, เยอรมนี">
   <meta name="application-name" content="LeoLan Manager">
-  <meta name="apple-itunes-app" content="app-id=676205147">
+  <meta name="apple-itunes-app" content="app-id=6762051472">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="LeoLan Digital">
   <meta property="og:title" content="AI & WhatsApp Bot สำหรับร้านอาหาร | LeoLan Digital">
@@ -31,7 +34,8 @@
   <link rel="alternate" hreflang="ru" href="https://ki.leolan.net/ru/">
   <link rel="alternate" hreflang="id" href="https://ki.leolan.net/id/">
   <link rel="alternate" hreflang="th" href="https://ki.leolan.net/th/">
-  <link rel="alternate" hreflang="x-default" href="https://ki.leolan.net/">
+  <link rel="alternate" hreflang="ar" href="https://ki.leolan.net/ar/">
+<link rel="alternate" hreflang="x-default" href="https://ki.leolan.net/">
   <meta http-equiv="Cache-Control" content="max-age=86400, public">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
@@ -483,7 +487,7 @@
 
 <!-- NAV -->
 <nav>
-  <a href="/en/" class="nav-logo"><img src="/logo.svg" alt="LeoLan Digital"></a>
+  <a href="/" class="nav-logo"><img src="/logo.svg" alt="LeoLan Digital" style="height:120px;width:auto;display:block;"></a>
   <ul class="nav-links">
     <li><a href="#probleme">ปัญหา</a></li>
     <li><a href="#leistungen">บริการ</a></li>
@@ -536,7 +540,7 @@
     </p>
   </div>
   <div class="hero-img-wrap reveal reveal-delay-4">
-    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1400&q=80&auto=format&fit=crop" alt="ร้านอาหาร การจองเพิ่มเติม">
+    <img fetchpriority="high" srcset="/images/home/hero-restaurant-mobile.webp 600w, /images/home/hero-restaurant.webp 1400w" sizes="(max-width: 600px) 600px, 1400px" src="/images/home/hero-restaurant.webp" alt="ร้านอาหาร การจองเพิ่มเติม">
   </div>
 </section>
 

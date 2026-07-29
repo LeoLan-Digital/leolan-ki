@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="preload" as="image" href="/images/home/hero-restaurant.webp" fetchpriority="high" media="(min-width: 601px)">
+<link rel="preload" as="image" href="/images/home/hero-restaurant-mobile.webp" fetchpriority="high" media="(max-width: 600px)">
+
 <base href="https://ki.leolan.net/">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +13,7 @@
   <meta name="robots" content="index, follow">
   <meta name="description-ai" content="LeoLan Manager is a professional iOS app for restaurant operators in Germany. Features: WhatsApp bot automation, reservation management, capacity tracking, push notifications, live dashboard. Available on Apple App Store. Developed by LeoLan Digital, Dresden, Germany.">
   <meta name="application-name" content="LeoLan Manager">
-  <meta name="apple-itunes-app" content="app-id=676205147">
+  <meta name="apple-itunes-app" content="app-id=6762051472">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="LeoLan Digital">
   <meta property="og:title" content="AI & WhatsApp Bot for Restaurants | LeoLan Digital">
@@ -31,6 +34,7 @@
   <link rel="alternate" hreflang="ru" href="https://ki.leolan.net/ru/">
   <link rel="alternate" hreflang="id" href="https://ki.leolan.net/id/">
   <link rel="alternate" hreflang="th" href="https://ki.leolan.net/th/">
+  <link rel="alternate" hreflang="ar" href="https://ki.leolan.net/ar/">
   <link rel="alternate" hreflang="x-default" href="https://ki.leolan.net/">
   <meta http-equiv="Cache-Control" content="max-age=86400, public">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
@@ -400,10 +404,10 @@
     },
     {
       "@type": "Question",
-      "name": "Is there a trial month?",
+      "name": "Is there a free trial?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No, but a free demo on this page."
+        "text": "Yes! The first month is free. You can test the bot directly on this page — or message us on WhatsApp: +49 15678 483700"
       }
     },
     {
@@ -447,6 +451,23 @@
     });
   })();
 </script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Kamaleddin Nazari",
+  "jobTitle": "Founder & CEO",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "LeoLan Digital"
+  },
+  "url": "https://ki.leolan.net/en/ueber-uns.html",
+  "sameAs": [
+    "https://www.instagram.com/leolan_digital"
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -483,7 +504,7 @@
 
 <!-- NAV -->
 <nav>
-  <a href="/en/" class="nav-logo"><img src="/logo.svg" alt="LeoLan Digital"></a>
+  <a href="/" class="nav-logo"><img src="/logo.svg" alt="LeoLan Digital" style="height:120px;width:auto;display:block;"></a>
   <ul class="nav-links">
     <li><a href="#probleme">Problems</a></li>
     <li><a href="#leistungen">Services</a></li>
@@ -514,6 +535,15 @@
 <section class="hero">
   <p class="hero-eyebrow reveal">For restaurants & cafés with more than 20 inquiries per day · No technical knowledge required</p>
   <h1 class="reveal reveal-delay-1"><span class="gradient">You lose guests every day —<br>because nobody responds fast enough.</span></h1>
+<div style="background:rgba(0,113,227,0.1);border-left:4px solid #0071e3;border-radius:8px;padding:16px 20px;margin:24px 0;max-width:680px;">
+  <p style="font-size:13px;font-weight:600;color:#0071e3;margin:0 0 8px 0;text-transform:uppercase;letter-spacing:.05em;">Key Facts</p>
+  <ul style="margin:0;padding:0 0 0 18px;color:rgba(245,245,247,0.85);font-size:15px;line-height:1.6;">
+    <li>AI-powered WhatsApp bot answers guest requests in under 3 seconds — 24/7</li>
+    <li>Multilingual: German, English, Turkish, Arabic and more</li>
+    <li>Setup in 2–3 days, no technical knowledge required</li>
+    <li>From €149/month with annual billing — setup free</li>
+  </ul>
+</div>
   <p class="hero-sub reveal reveal-delay-2">Missed calls, unanswered messages and lost reservations cost you revenue every single day.</p>
   <div class="hero-pain-pills reveal reveal-delay-3">
     <span>📵 Calls missed</span>
@@ -525,7 +555,7 @@
     <a href="#kontakt" class="btn-primary">Get Demo Now →</a>
     <a href="#leistungen" class="btn-secondary">Secure More Reservations ›</a>
   </div>
-  <p class="hero-trust reveal reveal-delay-3" style="text-align:center;">✓ No contract &nbsp;·&nbsp; ✓ Results in 5 business days &nbsp;·&nbsp; ✓ Cancel monthly</p>
+  <p class="hero-trust reveal reveal-delay-3" style="text-align:center;">✓ First month free &nbsp;·&nbsp; ✓ No contract &nbsp;·&nbsp; ✓ Results in 5 business days &nbsp;·&nbsp; ✓ Cancel monthly</p>
   <p style="font-size:13px;color:rgba(245,245,247,0.45);margin-top:8px;text-align:center;" class="reveal reveal-delay-3">Especially suitable for restaurants with high call volume, tourists, delivery inquiries or small teams.</p>
   <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:20px 24px;margin-bottom:28px;text-align:left;max-width:480px;margin-left:auto;margin-right:auto;" class="reveal reveal-delay-3">
     <p style="font-size:14px;color:rgba(245,245,247,0.65);line-height:1.8;margin:0;">
@@ -536,7 +566,7 @@
     </p>
   </div>
   <div class="hero-img-wrap reveal reveal-delay-4">
-    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1400&q=80&auto=format&fit=crop" alt="Restaurant more reservations">
+    <img fetchpriority="high" srcset="/images/home/hero-restaurant-mobile.webp 600w, /images/home/hero-restaurant.webp 1400w" sizes="(max-width: 600px) 600px, 1400px" src="/images/home/hero-restaurant.webp" alt="Restaurant more reservations">
   </div>
 </section>
 
@@ -784,7 +814,7 @@
       </div>
     </div>
     <div class="feature-img reveal reveal-delay-1">
-      <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=900&q=80&auto=format&fit=crop" alt="Digital menu">
+      <img src="/images/home/feature-speisekarte.webp" alt="Digital menu">
     </div>
   </div>
 </section>
@@ -808,7 +838,7 @@
       </div>
     </div>
     <div class="feature-img reveal reveal-delay-1">
-      <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&q=80&auto=format&fit=crop" alt="WhatsApp restaurant assistant">
+      <img src="/images/home/feature-whatsapp.webp" alt="WhatsApp restaurant assistant">
     </div>
   </div>
 </section>
@@ -832,7 +862,7 @@
       </div>
     </div>
     <div class="feature-img reveal reveal-delay-1">
-      <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=900&q=80&auto=format&fit=crop" alt="Restaurant social media">
+      <img src="/images/home/feature-restaurant.webp" alt="Restaurant social media">
     </div>
   </div>
 </section>
@@ -856,7 +886,7 @@
       </div>
     </div>
     <div class="feature-img reveal reveal-delay-1">
-      <img src="https://images.unsplash.com/photo-1551218808-94e220e084d2?w=900&q=80&auto=format&fit=crop" alt="Restaurant reviews">
+      <img src="/images/home/feature-bewertungen.webp" alt="Restaurant reviews">
     </div>
   </div>
 </section>
@@ -1050,6 +1080,11 @@ berechneROI();
     <h2 class="section-title reveal reveal-delay-1">Simple. Transparent. Ready to start.</h2>
     <p class="section-sub reveal reveal-delay-2">If your restaurant gains just <strong>2 additional reservations per week</strong>, the system already pays for itself. Most customers see results from day one.</p>
   </div>
+  <div style="background:linear-gradient(135deg,rgba(52,199,89,0.15),rgba(0,113,227,0.15));border:1px solid rgba(52,199,89,0.4);border-radius:12px;padding:14px 20px;margin-bottom:24px;text-align:center;max-width:700px;margin-left:auto;margin-right:auto;">
+    <span style="font-size:22px;margin-right:8px;">🎁</span>
+    <strong style="color:#34c759;font-size:16px;">First Month Free</strong>
+    <span style="color:rgba(245,245,247,0.7);font-size:14px;margin-left:8px;">— for all new customers. No risk, credit card required · first month free.</span>
+  </div>
   <div class="pricing-grid">
     <div class="price-card reveal">
       <div class="price-tier">Starter</div>
@@ -1124,7 +1159,7 @@ berechneROI();
       </div>
     </div>
     <div class="feature-img reveal reveal-delay-1">
-      <img src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=900&q=80&auto=format&fit=crop" alt="AI food recommendation restaurant">
+      <img src="/images/home/feature-speise2.webp" alt="AI food recommendation restaurant">
     </div>
   </div>
 </section>
@@ -1248,8 +1283,8 @@ berechneROI();
       <div class="faq-a"><p>No, we set everything up for you.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)">Is there a trial month? <span>+</span></button>
-      <div class="faq-a"><p>No, but a free demo on this page.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)">Is there a free trial? <span>+</span></button>
+      <div class="faq-a"><p>Yes! The first month is free. You can test the bot directly on this page — or message us on WhatsApp: <a href="https://wa.me/4915678483700" target="_blank" style="color:#2997ff;">+49 15678 483700</a></p></div>
     </div>
     <div class="faq-item reveal">
       <button class="faq-q" onclick="toggleFaq(this)">Does it work with my existing WhatsApp number? <span>+</span></button>

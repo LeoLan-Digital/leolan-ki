@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<base href="https://ki.leolan.net/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>بوت واتساب بالذكاء الاصطناعي للمطاعم | LeoLan Digital</title>
+<meta name="description" content="LeoLan Manager: بوت واتساب بالذكاء الاصطناعي للمطاعم. أتمتة الحجوزات، قائمة طعام رقمية، إدارة التقييمات ووسائل التواصل الاجتماعي. جرّب مجاناً. ki.leolan.net">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LeoLan Digital">
+<meta property="og:title" content="بوت واتساب بالذكاء الاصطناعي للمطاعم | LeoLan Digital">
+<meta property="og:description" content="المزيد من الحجوزات، أقل من الإدارة: بوت واتساب بالذكاء الاصطناعي، أتمتة الحجوزات، قائمة طعام رقمية وإدارة التقييمات للمطاعم في كل مكان.">
+<meta property="og:url" content="https://ki.leolan.net/ar/">
+<meta property="og:image" content="https://ki.leolan.net/og-preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ar_SA">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="بوت واتساب بالذكاء الاصطناعي للمطاعم | LeoLan Digital">
+<meta name="twitter:description" content="أتمتة المطاعم بالذكاء الاصطناعي: بوت واتساب، نظام حجوزات، قائمة رقمية وإدارة التقييمات.">
+<meta name="twitter:image" content="https://ki.leolan.net/og-preview.png">
+<link rel="canonical" href="https://ki.leolan.net/ar/">
+<link rel="alternate" hreflang="de" href="https://ki.leolan.net/">
+<link rel="alternate" hreflang="en" href="https://ki.leolan.net/en/">
+<link rel="alternate" hreflang="tr" href="https://ki.leolan.net/tr/">
+<link rel="alternate" hreflang="ru" href="https://ki.leolan.net/ru/">
+<link rel="alternate" hreflang="id" href="https://ki.leolan.net/id/">
+<link rel="alternate" hreflang="th" href="https://ki.leolan.net/th/">
+<link rel="alternate" hreflang="ar" href="https://ki.leolan.net/ar/">
+<link rel="alternate" hreflang="x-default" href="https://ki.leolan.net/">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-new.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-new.png">
+<link rel="shortcut icon" href="/favicon-new.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-new.png">
+<style>
+  :root {
+    --black: #000000;
+    --gray-1: rgba(255,255,255,0.04);
+    --gray-2: rgba(255,255,255,0.06);
+    --gray-3: #3a3a3c;
+    --text-primary: #f5f5f7;
+    --text-secondary: rgba(245,245,247,0.6);
+    --text-tertiary: rgba(245,245,247,0.35);
+    --accent: #0071e3;
+    --accent-light: #2997ff;
+    --font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Tahoma, Arial, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font); background: var(--black); color: var(--text-primary); overflow-x: hidden; -webkit-font-smoothing: antialiased; direction: rtl; text-align: right; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: 52px; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; background: rgba(0,0,0,0.75); backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .nav-logo img { width: 120px; height: auto; display: block; }
+  .nav-logo { text-decoration: none; }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a { font-size: 13px; color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text-primary); }
+  .nav-cta { font-size: 13px; color: var(--accent-light); text-decoration: none; font-weight: 500; }
+  @media (max-width: 768px) { .nav-links { display: none; } }
+
+  .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 100px 24px 60px; background: radial-gradient(ellipse 100% 60% at 50% 0%, rgba(0,113,227,0.15), transparent 70%); }
+  .hero-eyebrow { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 20px; }
+  .hero h1 { font-size: clamp(38px, 7vw, 86px); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; max-width: 900px; margin-bottom: 24px; }
+  .hero h1 .gradient { background: linear-gradient(180deg, #f5f5f7 50%, rgba(245,245,247,0.25)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero-sub { font-size: clamp(17px, 2.3vw, 21px); color: var(--text-secondary); max-width: 580px; line-height: 1.6; margin-bottom: 48px; }
+  .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+  .btn-primary { display: inline-block; background: var(--accent); color: #fff; padding: 15px 32px; border-radius: 980px; font-size: 17px; font-weight: 500; text-decoration: none; transition: background 0.2s, transform 0.15s; }
+  .btn-primary:hover { background: #0077ed; transform: scale(1.02); }
+  .btn-secondary { display: inline-block; color: var(--accent-light); padding: 15px 32px; border-radius: 980px; font-size: 17px; font-weight: 500; text-decoration: none; }
+
+  .divider { height: 1px; background: rgba(255,255,255,0.07); }
+
+  .pain { padding: 100px 24px; text-align: center; }
+  .pain-inner { max-width: 960px; margin: 0 auto; }
+  .section-tag { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 16px; }
+  .section-title { font-size: clamp(28px, 4vw, 50px); font-weight: 700; line-height: 1.1; margin-bottom: 16px; }
+  .section-sub { font-size: 18px; color: var(--text-secondary); line-height: 1.6; max-width: 600px; margin: 0 auto 56px; }
+  .pain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 2px; }
+  @media (max-width: 700px) { .pain-grid { grid-template-columns: 1fr; } }
+  .pain-item { background: var(--gray-1); padding: 36px 28px; text-align: right; border: 1px solid rgba(0,113,227,0.25); border-radius: 20px; }
+  .pain-icon { font-size: 28px; margin-bottom: 16px; }
+  .pain-item h3 { font-size: 17px; font-weight: 600; margin-bottom: 10px; color: var(--text-primary); }
+  .pain-item p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+
+  .stats { padding: 80px 24px; background: var(--gray-1); }
+  .stats-inner { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: center; }
+  @media (max-width: 700px) { .stats-inner { grid-template-columns: repeat(2, 1fr); } }
+  .stat-num { font-size: clamp(36px, 5vw, 58px); font-weight: 700; }
+  .stat-num span { color: var(--accent-light); }
+  .stat-label { font-size: 13px; color: var(--text-secondary); margin-top: 8px; line-height: 1.4; }
+
+  .cards-section { padding: 100px 24px; background: var(--gray-1); }
+  .cards-header { text-align: center; max-width: 700px; margin: 0 auto 56px; }
+  .card-grid { max-width: 1060px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  @media (max-width: 860px) { .card-grid { grid-template-columns: 1fr; } }
+  .card { background: var(--gray-1); padding: 40px 32px; transition: background 0.2s; border: 1px solid rgba(0,113,227,0.22); border-radius: 24px; }
+  .card:hover { background: #0d0d0d; }
+  .card-icon { font-size: 32px; margin-bottom: 16px; }
+  .card h3 { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+  .card p { font-size: 14px; color: var(--text-secondary); line-height: 1.65; }
+  .card-fact { font-size: 12px; color: var(--accent-light); margin-top: 14px; font-weight: 500; }
+
+  .feature { padding: 100px 24px; border-top: 1px solid rgba(255,255,255,0.07); }
+  .feature-inner { max-width: 1060px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  @media (max-width: 860px) { .feature-inner { grid-template-columns: 1fr; gap: 44px; } }
+  .feature-tag { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 16px; }
+  .feature h2 { font-size: clamp(26px, 3.5vw, 42px); font-weight: 700; line-height: 1.1; margin-bottom: 16px; }
+  .feature p { font-size: 17px; line-height: 1.65; color: var(--text-secondary); margin-bottom: 28px; }
+  .feature-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .feature-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: var(--text-secondary); line-height: 1.5; flex-direction: row-reverse; }
+  .feature-list li::after { content: '✓'; color: var(--accent-light); font-weight: 700; font-size: 13px; margin-top: 2px; flex-shrink: 0; }
+  .feature-img { border-radius: 18px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.7); }
+  .feature-img img { width: 100%; height: 380px; object-fit: cover; display: block; filter: brightness(0.8); transition: transform 0.6s, filter 0.4s; }
+  .feature-img:hover img { transform: scale(1.03); filter: brightness(0.9); }
+  .feature-stat { margin-top: 32px; display: inline-flex; align-items: center; gap: 16px; background: var(--gray-1); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 16px 20px; }
+  .feature-stat-num { font-size: 32px; font-weight: 700; color: var(--accent-light); }
+  .feature-stat-label { font-size: 13px; color: var(--text-secondary); line-height: 1.4; }
+
+  .pricing { padding: 100px 24px; border-top: 1px solid rgba(255,255,255,0.07); background: linear-gradient(180deg, #0d1117 0%, #111827 100%); }
+  .pricing-grid { max-width: 940px; margin: 56px auto 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 720px) { .pricing-grid { grid-template-columns: 1fr; } }
+  .price-card { background: linear-gradient(180deg, rgba(26,39,68,0.96) 0%, rgba(13,17,23,0.98) 100%); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 44px 32px; display: flex; flex-direction: column; box-shadow: 0 24px 70px rgba(0,0,0,0.35); }
+  .price-card.featured { background: linear-gradient(180deg, rgba(0,113,227,0.18) 0%, rgba(10,20,40,0.98) 38%, rgba(5,5,15,1) 100%); border-color: rgba(0,113,227,0.5); }
+  .price-tier { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(245,245,247,0.72); margin-bottom: 8px; }
+  .price-card.featured .price-tier { color: rgba(245,245,247,0.88); }
+  .price-amount { font-size: 44px; font-weight: 700; letter-spacing: -0.03em; margin: 4px 0; color: #fff; }
+  .price-period { font-size: 13px; color: rgba(245,245,247,0.68); margin-bottom: 28px; }
+  .price-features { list-style: none; flex: 1; display: flex; flex-direction: column; gap: 10px; padding: 0; }
+  .price-features li { font-size: 14px; color: rgba(245,245,247,0.82); display: flex; gap: 10px; align-items: flex-start; line-height: 1.4; flex-direction: row-reverse; }
+  .price-features li::after { content: '✓'; color: var(--accent-light); flex-shrink: 0; font-size: 13px; font-weight: 700; }
+  .price-btn { display: block; text-align: center; margin-top: 28px; padding: 13px 24px; border-radius: 980px; font-size: 15px; font-weight: 600; text-decoration: none; transition: opacity 0.2s, transform 0.2s; }
+  .price-btn:hover { transform: translateY(-1px); }
+  .price-btn-outline { border: 1px solid rgba(255,255,255,0.18); color: #fff; background: rgba(255,255,255,0.03); }
+  .price-btn-white { background: var(--accent); color: #fff; }
+
+  .faq { padding: 100px 24px; background: var(--gray-1); border-top: 1px solid rgba(255,255,255,0.07); }
+  .faq-list { max-width: 760px; margin: 56px auto 0; display: flex; flex-direction: column; gap: 2px; }
+  .faq-item { background: var(--gray-1); border-radius: 16px; overflow: hidden; border: 1px solid rgba(0,113,227,0.25); margin-bottom: 8px; }
+  .faq-q { width: 100%; background: none; border: none; padding: 22px 24px; text-align: right; font-size: 16px; font-weight: 600; color: var(--text-primary); cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; font-family: var(--font); direction: rtl; }
+  .faq-q span { font-size: 20px; color: var(--accent-light); flex-shrink: 0; transition: transform 0.3s; }
+  .faq-q.open span { transform: rotate(45deg); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s; }
+  .faq-a.open { max-height: 300px; }
+  .faq-a p { padding: 0 24px 22px; font-size: 15px; color: var(--text-secondary); line-height: 1.65; }
+
+  .cta-section { padding: 140px 24px; text-align: center; background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0,113,227,0.12), transparent 70%); border-top: 1px solid rgba(255,255,255,0.07); }
+  .cta-section h2 { font-size: clamp(32px, 5vw, 60px); font-weight: 700; line-height: 1.1; max-width: 700px; margin: 0 auto 20px; }
+  .cta-section p { font-size: 18px; color: var(--text-secondary); max-width: 480px; margin: 0 auto 40px; line-height: 1.55; }
+  .contact-info-strip { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; margin-bottom: 48px; }
+  .contact-info-strip a { color: var(--text-secondary); text-decoration: none; font-size: 15px; }
+  .contact-info-strip a:hover { color: var(--text-primary); }
+  .contact-form { max-width: 560px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; text-align: right; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 560px) { .form-row { grid-template-columns: 1fr; } }
+  .contact-form input, .contact-form textarea, .contact-form select { width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 14px 18px; font-size: 15px; color: var(--text-primary); font-family: var(--font); outline: none; direction: rtl; }
+  .contact-form input:focus, .contact-form textarea:focus, .contact-form select:focus { border-color: var(--accent-light); background: rgba(255,255,255,0.1); }
+  .contact-form textarea { resize: vertical; min-height: 110px; }
+  .contact-form select option { background: #1c1c1e; color: #f5f5f7; }
+  .form-submit { width: 100%; background: var(--accent); color: #fff; border: none; border-radius: 980px; padding: 17px 32px; font-size: 17px; font-weight: 500; font-family: var(--font); cursor: pointer; transition: background 0.2s; }
+  .form-submit:hover { background: #0077ed; }
+  footer { padding: 28px 24px 20px; border-top: 1px solid rgba(255,255,255,0.08); text-align: center; }
+  .footer-logo { margin-bottom: 24px; }
+  .footer-logo img { width: 300px; max-width: 80vw; height: auto; }
+  .social-links { display: flex; justify-content: center; gap: 16px; margin-bottom: 24px; }
+  .social-links a { display: flex; align-items: center; justify-content: center; width: 64px; height: 64px; border-radius: 18px; text-decoration: none; transition: transform 0.2s; overflow: hidden; }
+  .social-links a:hover { transform: scale(1.1); }
+  .social-links a svg { width: 64px; height: 64px; display: block; }
+  footer p { font-size: 12px; color: var(--text-tertiary); line-height: 1.9; }
+  footer a { color: var(--text-tertiary); text-decoration: none; }
+  footer a:hover { color: var(--text-secondary); }
+
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 10px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; }
+  .hamburger span { display: block; width: 20px; height: 2px; background: #f5f5f7; border-radius: 2px; }
+  @media (max-width: 768px) {
+    .hamburger { display: flex; }
+    .mobile-menu { display: none; position: fixed; top: 52px; left: 0; right: 0; background: rgba(0,0,0,0.97); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 16px 0; z-index: 999; flex-direction: column; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { padding: 14px 24px; font-size: 16px; color: rgba(245,245,247,0.8); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  }
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.75s ease, transform 0.75s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  @media (max-width: 768px) {
+    .hero { min-height: unset !important; padding-top: 80px !important; }
+    .pain-grid, .card-grid { grid-template-columns: 1fr !important; }
+    .feature-inner { grid-template-columns: 1fr !important; }
+    .stats-inner { grid-template-columns: 1fr 1fr !important; }
+    .pricing-grid { grid-template-columns: 1fr !important; }
+    .form-row { grid-template-columns: 1fr !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COOKIE BANNER -->
+<div id="cookieBanner" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:9999; background:#1c1c1e; border-top:1px solid rgba(255,255,255,0.1); padding:20px 24px; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px;">
+  <p style="font-size:13px; color:rgba(245,245,247,0.7); max-width:680px; line-height:1.5; margin:0;">نستخدم ملفات تعريف الارتباط (Google Analytics) لتحسين موقعنا. <a href="/ar/datenschutz.html" style="color:#2997ff;">اعرف المزيد</a></p>
+  <div style="display:flex; gap:10px; flex-shrink:0;">
+    <button onclick="rejectCookies()" style="padding:10px 20px; border-radius:980px; border:1px solid rgba(255,255,255,0.2); background:transparent; color:rgba(245,245,247,0.7); font-size:13px; cursor:pointer; font-family:inherit;">رفض</button>
+    <button onclick="acceptCookies()" style="padding:10px 20px; border-radius:980px; border:none; background:#0071e3; color:#fff; font-size:13px; font-weight:500; cursor:pointer; font-family:inherit;">قبول</button>
+  </div>
+</div>
+<script>
+  function setCookie(n,v,d){var e=new Date();e.setTime(e.getTime()+d*864e5);document.cookie=n+'='+v+';expires='+e.toUTCString()+';path=/';}
+  function getCookie(n){var v=document.cookie.match('(^|;) ?'+n+'=([^;]*)(;|$)');return v?v[2]:null;}
+  function loadTracking(){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-25WZQPJ5F3';document.head.appendChild(s);window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config','G-25WZQPJ5F3');}
+  function acceptCookies(){setCookie('cookie_consent','accepted',365);document.getElementById('cookieBanner').style.display='none';loadTracking();}
+  function rejectCookies(){setCookie('cookie_consent','rejected',365);document.getElementById('cookieBanner').style.display='none';}
+  window.addEventListener('DOMContentLoaded',function(){var c=getCookie('cookie_consent');if(!c){document.getElementById('cookieBanner').style.display='flex';}else if(c==='accepted'){loadTracking();}});
+  function toggleMenu(){var m=document.getElementById('mobileMenu');m.classList.toggle('open');}
+  function closeMenu(){document.getElementById('mobileMenu').classList.remove('open');}
+</script>
+
+<!-- NAV -->
+<nav>
+  <a href="/ar/" class="nav-logo"><img src="/logo.svg" alt="LeoLan Digital" style="height:120px;width:auto;display:block;"></a>
+  <ul class="nav-links">
+    <li><a href="#probleme">المشكلات</a></li>
+    <li><a href="#leistungen">الخدمات</a></li>
+    <li><a href="#preise">الأسعار</a></li>
+    <li><a href="#faq">الأسئلة الشائعة</a></li>
+    <li><a href="/ar/ueber-uns.html">عن الشركة</a></li>
+  </ul>
+  <a href="#kontakt" class="nav-cta">استشارة مجانية ›</a>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="القائمة"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#probleme" onclick="closeMenu()">المشكلات</a>
+  <a href="#leistungen" onclick="closeMenu()">الخدمات</a>
+  <a href="#preise" onclick="closeMenu()">الأسعار</a>
+  <a href="#faq" onclick="closeMenu()">الأسئلة الشائعة</a>
+  <a href="#kontakt" onclick="closeMenu()" style="color:#2997ff;font-weight:600;">استشارة مجانية ›</a>
+</div>
+
+<!-- URGENCY BAR -->
+<div style="background: linear-gradient(90deg, rgba(0,113,227,0.12), rgba(0,113,227,0.04)); border-bottom: 1px solid rgba(0,113,227,0.25); padding: 8px 16px; text-align: center; font-size: 13px; font-weight: 600; color: rgba(245,245,247,0.9);">
+  ⚡ كل يوم بلا نظام = حجوزات ضائعة &nbsp;·&nbsp; <a href="#kontakt" style="color: #2997ff; text-decoration: underline;">ابدأ مجاناً الآن ←</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow reveal">للمطاعم والمقاهي التي تستقبل أكثر من 20 استفساراً يومياً · لا تحتاج معرفة تقنية</p>
+  <h1 class="reveal reveal-delay-1"><span class="gradient">تخسر زواراً كل يوم —<br>لأن أحداً لا يرد بسرعة كافية.</span></h1>
+  <div style="background:rgba(0,113,227,0.1);border-right:4px solid #0071e3;border-radius:8px;padding:16px 20px;margin:24px 0;max-width:680px;">
+    <p style="font-size:13px;font-weight:600;color:#0071e3;margin:0 0 8px 0;text-transform:uppercase;letter-spacing:.05em;">أبرز المميزات</p>
+    <ul style="margin:0;padding:0 18px 0 0;color:rgba(245,245,247,0.85);font-size:15px;line-height:1.6;">
+      <li>بوت واتساب بالذكاء الاصطناعي يرد على استفسارات الضيوف خلال 3 ثوانٍ — على مدار الساعة</li>
+      <li>متعدد اللغات: الألمانية، الإنجليزية، التركية، العربية والمزيد</li>
+      <li>إعداد في 2–3 أيام، لا تحتاج معرفة تقنية</li>
+      <li>من 149€ / شهر عند الدفع السنوي — الإعداد مجاني</li>
+    </ul>
+  </div>
+  <p class="hero-sub reveal reveal-delay-2">المكالمات الفائتة والرسائل غير المُجاب عليها والحجوزات المفقودة تكلفك إيرادات كل يوم.</p>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:24px;" class="reveal reveal-delay-3">
+    <span style="background:rgba(0,113,227,0.1);border:1px solid rgba(0,113,227,0.3);color:rgba(245,245,247,0.85);padding:8px 16px;border-radius:999px;font-size:14px;font-weight:500;">📵 مكالمات فائتة</span>
+    <span style="background:rgba(0,113,227,0.1);border:1px solid rgba(0,113,227,0.3);color:rgba(245,245,247,0.85);padding:8px 16px;border-radius:999px;font-size:14px;font-weight:500;">💬 رسائل بلا رد</span>
+    <span style="background:rgba(0,113,227,0.1);border:1px solid rgba(0,113,227,0.3);color:rgba(245,245,247,0.85);padding:8px 16px;border-radius:999px;font-size:14px;font-weight:500;">🚶 زوار يرحلون</span>
+  </div>
+  <div class="hero-btns reveal reveal-delay-3">
+    <a href="#kontakt" class="btn-primary">احصل على عرض توضيحي ←</a>
+    <a href="#leistungen" class="btn-secondary">استحوذ على المزيد من الحجوزات ›</a>
+  </div>
+  <p style="font-size:14px;color:rgba(245,245,247,0.7);margin-bottom:32px;background:rgba(255,214,0,0.08);border:1px solid rgba(255,214,0,0.2);padding:12px 20px;border-radius:12px;display:inline-block;" class="reveal reveal-delay-3">💰 فقط <strong>3 استفسارات يومية فائتة</strong> قد تكلفك أكثر من <strong>4,000€ إيرادات شهرياً</strong>.</p>
+  <p class="reveal reveal-delay-3" style="font-size:14px;color:rgba(245,245,247,0.65);text-align:center;">✓ الشهر الأول مجاني &nbsp;·&nbsp; ✓ بلا عقد ملزم &nbsp;·&nbsp; ✓ نتائج في 5 أيام عمل &nbsp;·&nbsp; ✓ إلغاء شهري</p>
+</section>
+
+<!-- SOCIAL PROOF TICKER -->
+<div style="background:rgba(0,113,227,0.08);border-top:1px solid rgba(0,113,227,0.15);border-bottom:1px solid rgba(0,113,227,0.15);padding:14px 24px;text-align:center;">
+  <div style="display:flex;gap:32px;justify-content:center;flex-wrap:wrap;align-items:center;">
+    <span style="font-size:13px;color:rgba(245,245,247,0.75);">
+      <strong style="font-size:18px;color:var(--accent-light);">23</strong> مطعماً يثق بـ LeoLan
+    </span>
+    <span style="color:rgba(255,255,255,0.2);">|</span>
+    <span style="font-size:13px;color:rgba(245,245,247,0.75);">
+      <strong style="font-size:18px;color:#34c759;">4,800+</strong> حجز تم بشكل تلقائي
+    </span>
+    <span style="color:rgba(255,255,255,0.2);">|</span>
+    <span style="font-size:13px;color:rgba(245,245,247,0.75);">
+      ⭐ <strong style="font-size:18px;color:#ffd60a;">4.9/5</strong> تقييم العملاء
+    </span>
+  </div>
+</div>
+
+<!-- PAIN SECTION -->
+<section class="pain" id="probleme">
+  <div class="pain-inner">
+    <p class="section-tag reveal">الواقع اليومي</p>
+    <h2 class="section-title reveal reveal-delay-1">كل مكالمة فائتة<br>تذهب إلى المنافس.</h2>
+    <p class="section-sub reveal reveal-delay-2">مكالمات فائتة. تقييمات بلا رد. لا وجود على وسائل التواصل الاجتماعي. أنت صاحب مطعم — لست متخصصاً في تقنية المعلومات ولا مدير تسويق. هذا ما يحدث خطأً كل يوم:</p>
+    <div class="pain-grid">
+      <div class="pain-item reveal">
+        <div class="pain-icon">📵</div>
+        <h3>كل مكالمة فائتة = زائر مفقود</h3>
+        <p>68% من الضيوف يتصلون مرة واحدة — ثم يغلقون الخط ويذهبون إلى المنافس. لا معاودة اتصال. لا طاولة. لا إيراد.</p>
+      </div>
+      <div class="pain-item reveal reveal-delay-1">
+        <div class="pain-icon">📱</div>
+        <h3>لا محتوى = غير مرئي = خسارة في الإيرادات</h3>
+        <p>المطاعم التي تنشر يومياً تحصل على وصول أكثر بـ 3 أضعاف. من ينشر عندما تعمل 12 ساعة في المطعم؟</p>
+      </div>
+      <div class="pain-item reveal reveal-delay-2">
+        <div class="pain-icon">⭐</div>
+        <h3>كل تقييم بلا رد يكلفك زواراً</h3>
+        <p>94% من الضيوف يقرؤون الردود على التقييمات قبل زيارة المطعم. لا رد = لا ثقة = لا زيارة.</p>
+      </div>
+      <div class="pain-item reveal">
+        <div class="pain-icon">📋</div>
+        <h3>قائمة طعام قديمة</h3>
+        <p>قائمة الطعام المطبوعة من العام الماضي. الأسعار خاطئة. العناصر الموسمية مفقودة. كل تحديث يكلف مالاً.</p>
+      </div>
+      <div class="pain-item reveal reveal-delay-1">
+        <div class="pain-icon">🔍</div>
+        <h3>غير مرئي على Google</h3>
+        <p>ملفك الشخصي على Google قديم. ساعات العمل غير صحيحة. لا صور. الضيوف الجدد لا يجدونك.</p>
+      </div>
+      <div class="pain-item reveal reveal-delay-2">
+        <div class="pain-icon">⏰</div>
+        <h3>وقتك للضيوف — لا للحاسوب</h3>
+        <p>أنت صاحب مطعم. لست مدير تسويق. لست متخصص تقنية. وقتك ثمين جداً للأمور التي يمكن أتمتتها.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stats-inner">
+    <div class="reveal">
+      <div class="stat-num"><span>+40%</span></div>
+      <div class="stat-label">المزيد من الحجوزات من خلال الردود التلقائية</div>
+    </div>
+    <div class="reveal reveal-delay-1">
+      <div class="stat-num"><span>24/7</span></div>
+      <div class="stat-label">متاح دائماً — حتى الساعة 3 صباحاً</div>
+    </div>
+    <div class="reveal reveal-delay-2">
+      <div class="stat-num"><span>&lt;3s</span></div>
+      <div class="stat-label">وقت الاستجابة لبوت الذكاء الاصطناعي</div>
+    </div>
+    <div class="reveal reveal-delay-3">
+      <div class="stat-num"><span>5</span></div>
+      <div class="stat-label">أيام عمل حتى التشغيل المباشر</div>
+    </div>
+  </div>
+</section>
+
+<!-- CARDS / SERVICES -->
+<section class="cards-section" id="leistungen">
+  <div class="cards-header">
+    <p class="section-tag reveal">الخدمات</p>
+    <h2 class="section-title reveal reveal-delay-1">كل ما تحتاجه لمطعم ناجح.</h2>
+    <p class="section-sub reveal reveal-delay-2">نتولى نحن التقنية — أنت تركز على ضيوفك.</p>
+  </div>
+  <div class="card-grid">
+    <div class="card reveal">
+      <div class="card-icon">💬</div>
+      <h3>مساعد واتساب</h3>
+      <p>يرد البوت على الاستفسارات والحجوزات والأسئلة تلقائياً — على مدار الساعة طوال أيام الأسبوع، بلغات متعددة.</p>
+      <div class="card-fact">✓ يعمل بينما أنت نائم</div>
+    </div>
+    <div class="card reveal reveal-delay-1">
+      <div class="card-icon">📋</div>
+      <h3>قائمة طعام رقمية</h3>
+      <p>قائمة طعام رقمية جميلة مع رمز QR. سهلة التحديث، تعمل على كل الأجهزة، لا مزيد من تكاليف الطباعة.</p>
+      <div class="card-fact">✓ تحديثات في أي وقت بضغطة زر</div>
+    </div>
+    <div class="card reveal reveal-delay-2">
+      <div class="card-icon">⭐</div>
+      <h3>إدارة التقييمات</h3>
+      <p>ردود تلقائية على تقييمات Google بذكاء اصطناعي. لا مزيد من التقييمات بلا رد. المزيد من الثقة، المزيد من الضيوف.</p>
+      <div class="card-fact">✓ 94% من الضيوف يقرؤون الردود</div>
+    </div>
+    <div class="card reveal">
+      <div class="card-icon">📱</div>
+      <h3>وسائل التواصل الاجتماعي بالذكاء الاصطناعي</h3>
+      <p>نشر تلقائي على Instagram و Facebook. محتوى احترافي كل يوم — بدون جهد من جانبك.</p>
+      <div class="card-fact">✓ نشر يومي = وصول أكثر بـ 3 أضعاف</div>
+    </div>
+    <div class="card reveal reveal-delay-1">
+      <div class="card-icon">📅</div>
+      <h3>نظام الحجز</h3>
+      <p>حجوزات تلقائية عبر واتساب مباشرةً في تقويمك. لا مزيد من المكالمات الهاتفية. لا مزيد من الفوضى.</p>
+      <div class="card-fact">✓ متاح 24/7، حتى في عطلات نهاية الأسبوع</div>
+    </div>
+    <div class="card reveal reveal-delay-2">
+      <div class="card-icon">🗺️</div>
+      <h3>Google Business</h3>
+      <p>ملف Google Business محدث دائماً: ساعات عمل، صور، منشورات — كل شيء تلقائي.</p>
+      <div class="card-fact">✓ المزيد من الضيوف من خلال البحث المحلي</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURE -->
+<section class="feature" id="whatsapp">
+  <div class="feature-inner">
+    <div class="reveal">
+      <div class="feature-tag">واتساب بيزنس</div>
+      <h2>رد في 3 ثوانٍ.<br>على مدار الساعة.<br>بلغات متعددة.</h2>
+      <p>مساعدك الذكي يرد على استفسارات ضيوفك فوراً — بالعربية والألمانية والإنجليزية والتركية والمزيد.</p>
+      <ul class="feature-list">
+        <li>حجوزات تلقائية مع تأكيد فوري</li>
+        <li>إجابات على أسئلة قائمة الطعام وساعات العمل والأسعار</li>
+        <li>إشعارات قبيل الحجز</li>
+        <li>التعامل مع أسئلة الحساسيات والطلبات الخاصة</li>
+        <li>متاح عند الإغلاق وفي أوقات الذروة</li>
+      </ul>
+      <div class="feature-stat">
+        <div class="feature-stat-num">+40%</div>
+        <div class="feature-stat-label">المزيد من الحجوزات<br>بفضل الردود الفورية</div>
+      </div>
+    </div>
+    <div class="feature-img reveal reveal-delay-1">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80&auto=format&fit=crop" alt="مطعم مساعد واتساب">
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="preise">
+  <div style="text-align:center; max-width:700px; margin:0 auto;">
+    <p class="section-tag reveal">الأسعار</p>
+    <h2 class="section-title reveal reveal-delay-1">تبدأ من 149€ شهرياً.</h2>
+    <p class="section-sub reveal reveal-delay-2">الشهر الأول مجاني — بدون مخاطرة.</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="price-card reveal">
+      <div class="price-tier">Starter</div>
+      <div class="price-amount">199€</div>
+      <div class="price-period">/ شهر · (149€ عند الدفع السنوي)</div>
+      <ul class="price-features">
+        <li>مساعد واتساب بالذكاء الاصطناعي</li>
+        <li>حجوزات تلقائية</li>
+        <li>قائمة طعام رقمية</li>
+        <li>نظام إشعارات</li>
+        <li>الإعداد والتهيئة</li>
+        <li>دعم عبر واتساب</li>
+      </ul>
+      <a href="https://ki.leolan.net/onboarding/?paket=starter&lang=ar" class="price-btn price-btn-white">احجز الآن ←</a>
+    </div>
+    <div class="price-card featured reveal reveal-delay-1">
+      <div style="display:inline-block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,0.1);border-radius:999px;padding:6px 12px;margin-bottom:16px;color:rgba(255,255,255,0.92);">الأكثر شعبية</div>
+      <div class="price-tier">Pro</div>
+      <div class="price-amount">349€</div>
+      <div class="price-period">/ شهر · (249€ عند الدفع السنوي)</div>
+      <ul class="price-features">
+        <li>كل ما في Starter</li>
+        <li>وسائل تواصل اجتماعي بالذكاء الاصطناعي (يومياً)</li>
+        <li>Instagram و Facebook تلقائياً</li>
+        <li>أتمتة Google Business</li>
+        <li>إدارة التقييمات بردود ذكاء اصطناعي</li>
+        <li>دعم هاتفي</li>
+      </ul>
+      <a href="https://ki.leolan.net/onboarding/?paket=pro&lang=ar" class="price-btn price-btn-white">احجز الآن ←</a>
+    </div>
+    <div class="price-card reveal reveal-delay-2">
+      <div class="price-tier">Enterprise</div>
+      <div class="price-amount">حسب الطلب</div>
+      <div class="price-period">عرض مخصص</div>
+      <ul class="price-features">
+        <li>كل ما في Pro</li>
+        <li>أتمتة مخصصة</li>
+        <li>مواقع متعددة</li>
+        <li>تكامل مع نظام نقاط البيع</li>
+        <li>مدير حساب مخصص</li>
+        <li>SLA ودعم ذو أولوية</li>
+      </ul>
+      <a href="https://ki.leolan.net/enterprise/" class="price-btn price-btn-outline">اطلب بشكل فردي ←</a>
+    </div>
+  </div>
+  <p style="text-align:center;font-size:14px;color:rgba(245,245,247,0.45);margin-top:24px;">جميع الأسعار بدون ضريبة مبيعات · الشهر الأول مجاني · إلغاء شهري ممكن</p>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div style="text-align:center">
+    <p class="section-tag reveal">الأسئلة الشائعة</p>
+    <h2 class="section-title reveal reveal-delay-1">كل ما تحتاج معرفته.</h2>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item reveal">
+      <button class="faq-q" onclick="toggleFaq(this)">كم يكلف LeoLan Digital؟ <span>+</span></button>
+      <div class="faq-a"><p>Starter من 149€/شهر (سنوي) أو 199€/شهر (شهري). Pro من 249€/شهر (سنوي) أو 349€/شهر (شهري). رسوم الإعداد 199€ مرة واحدة — مجانية عند الدفع السنوي.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q" onclick="toggleFaq(this)">كم من الوقت يستغرق البدء؟ <span>+</span></button>
+      <div class="faq-a"><p>بعد الدفع نتواصل معك خلال 48 ساعة. الإعداد الكامل يستغرق 2–3 أيام.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q" onclick="toggleFaq(this)">ما اللغات التي يدعمها البوت؟ <span>+</span></button>
+      <div class="faq-a"><p>الألمانية، الإنجليزية، التركية، العربية والمزيد — يتكيف تلقائياً مع لغة الضيف.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q" onclick="toggleFaq(this)">هل أحتاج معرفة تقنية؟ <span>+</span></button>
+      <div class="faq-a"><p>لا، نحن نعد كل شيء من أجلك. لا تحتاج تثبيت أو إعداد أي شيء.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q" onclick="toggleFaq(this)">هل يوجد شهر تجربة مجاني؟ <span>+</span></button>
+      <div class="faq-a"><p>نعم! الشهر الأول مجاني بعد تفعيل رقم واتساب. يمكنك اختبار البوت مباشرةً أو راسلنا على واتساب: <a href="https://wa.me/4915678483700" target="_blank" style="color:#2997ff;">+49 15678 483700</a></p></div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q" onclick="toggleFaq(this)">هل يعمل مع رقم واتساب الحالي لدي؟ <span>+</span></button>
+      <div class="faq-a"><p>نعم، نقوم بترحيل رقمك. أو نوفر لك رقماً جديداً مخصصاً.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q" onclick="toggleFaq(this)">كيف يمكنني الإلغاء؟ <span>+</span></button>
+      <div class="faq-a"><p>الإلغاء ممكن في أي وقت عبر البريد الإلكتروني <a href="mailto:business@leolan.net" style="color:#2997ff;">business@leolan.net</a>. إذا ألغيت خلال شهر التجربة المجاني، تُرد رسوم الإعداد بالكامل.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / CONTACT -->
+<section class="cta-section" id="kontakt">
+  <h2 class="reveal">كل يوم بلا نظام يكلفك إيرادات حقيقية وسمعة.</h2>
+  <p class="reveal reveal-delay-1">استشارة أولية مجانية — 30 دقيقة، بدون ضغط مبيعات. نتطلع معاً إلى ما يناسبك.</p>
+  <div class="contact-info-strip reveal reveal-delay-2">
+    <a href="tel:+493521788680">📞 +49 351 21788680</a>
+    <a href="https://wa.me/4915678483700" target="_blank">💬 +49 15678 483700</a>
+    <a href="mailto:info@leolan.net">✉️ info@leolan.net</a>
+  </div>
+  <form class="contact-form reveal reveal-delay-2" action="https://formspree.io/f/xgopdnll" method="POST" id="contactForm">
+    <input type="hidden" name="_lang" value="ar">
+    <div class="form-row">
+      <input type="text" name="name" placeholder="اسمك" required>
+      <input type="text" name="restaurant" placeholder="المطعم / النشاط التجاري">
+    </div>
+    <input type="tel" name="phone" placeholder="الهاتف / واتساب" required>
+    <input type="email" name="email" placeholder="البريد الإلكتروني">
+    <select name="paket">
+      <option value="" disabled selected>أي باقة تهمك؟</option>
+      <option value="starter">Starter — 199€/شهر</option>
+      <option value="pro">Pro — 349€/شهر</option>
+      <option value="enterprise">Enterprise — حسب الطلب</option>
+    </select>
+    <textarea name="message" placeholder="سؤالك أو ملاحظاتك (اختياري)"></textarea>
+    <button type="submit" class="form-submit">إرسال الطلب المجاني ←</button>
+  </form>
+  <div id="formSuccess" style="display:none;text-align:center;padding:32px;font-size:18px;color:var(--accent-light);">
+    ✓ شكراً! سنتواصل معك قريباً.
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="/logo.svg" alt="LeoLan Digital">
+  </div>
+  <div class="social-links">
+    <a href="https://www.instagram.com/leolan_digital" target="_blank" rel="noopener" title="Instagram">
+      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" rx="14" fill="url(#iggrad)"/><rect x="18" y="18" width="28" height="28" rx="7" stroke="white" stroke-width="2.5"/><circle cx="32" cy="32" r="7" stroke="white" stroke-width="2.5"/><circle cx="41.5" cy="22.5" r="2" fill="white"/><defs><linearGradient id="iggrad" x1="0" y1="64" x2="64" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#f09433"/><stop offset="0.25" stop-color="#e6683c"/><stop offset="0.5" stop-color="#dc2743"/><stop offset="0.75" stop-color="#cc2366"/><stop offset="1" stop-color="#bc1888"/></linearGradient></defs></svg>
+    </a>
+    <a href="https://www.facebook.com/profile.php?id=100083189805774" target="_blank" rel="noopener" title="Facebook">
+      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" rx="14" fill="#1877F2"/><path d="M36 20h-4a6 6 0 0 0-6 6v4h-4v6h4v12h6V36h4l2-6h-6v-4a2 2 0 0 1 2-2h4v-4z" fill="white"/></svg>
+    </a>
+    <a href="mailto:info@leolan.net" title="البريد الإلكتروني">
+      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" rx="14" fill="#1c1c1e"/><rect x="12" y="20" width="40" height="28" rx="4" stroke="white" stroke-width="2.5"/><polyline points="12,20 32,36 52,20" stroke="white" stroke-width="2.5"/></svg>
+    </a>
+    <a href="https://wa.me/4915678483700" target="_blank" rel="noopener" title="واتساب">
+      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" rx="14" fill="#25D366"/><path d="M32 14C22.06 14 14 22.06 14 32c0 3.17.84 6.14 2.32 8.72L14 50l9.62-2.46A17.94 17.94 0 0 0 32 50c9.94 0 18-8.06 18-18S41.94 14 32 14zm9.5 24.5c-.4 1.1-2 2.05-3.22 2.3-1.38.28-2.5.1-5.18-1.1-4.64-2.1-7.5-7-7.7-7.3-.2-.3-1.6-2.14-1.6-4.08 0-1.94 1.02-2.9 1.38-3.28.36-.38.8-.48 1.06-.48.27 0 .54 0 .77.01.25.01.59-.1.92.7.36.86 1.2 2.92 1.3 3.13.1.2.16.44.03.7-.14.26-.2.42-.4.65-.2.22-.42.5-.6.67-.2.2-.4.41-.17.8.24.4 1.06 1.74 2.27 2.82 1.56 1.38 2.87 1.8 3.27 2 .4.2.63.17.87-.1.24-.26.98-1.15 1.24-1.54.26-.4.5-.32.86-.2.36.12 2.28 1.08 2.67 1.27.4.2.67.3.77.46.1.16.1.9-.3 2z" fill="white"/></svg>
+    </a>
+  </div>
+  <p>
+    &copy; 2026 LeoLan Digital. جميع الحقوق محفوظة. · كمال الدين نظري · Reickerstr. 132, 01237 Dresden<br>
+    <a href="mailto:info@leolan.net">info@leolan.net</a> ·
+    <a href="/ar/impressum.html">بيانات الناشر</a> ·
+    <a href="/ar/datenschutz.html">سياسة الخصوصية</a> ·
+    <a href="/ar/agb.html">الشروط والأحكام</a> ·
+    <a href="/ar/konditionen/">الشروط والإجراءات</a>
+  </p>
+</footer>
+
+<script>
+  function toggleFaq(btn) {
+    var a = btn.nextElementSibling;
+    var open = a.classList.contains('open');
+    document.querySelectorAll('.faq-a.open').forEach(function(x){x.classList.remove('open');});
+    document.querySelectorAll('.faq-q.open').forEach(function(x){x.classList.remove('open');});
+    if (!open) { a.classList.add('open'); btn.classList.add('open'); }
+  }
+  var io = new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');}});},{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    var f = this;
+    fetch(f.action, {method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}})
+      .then(function(r){if(r.ok){f.style.display='none';document.getElementById('formSuccess').style.display='block';}})
+      .catch(function(){});
+    e.preventDefault();
+  });
+</script>
+</body>
+</html>

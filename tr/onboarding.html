@@ -187,6 +187,15 @@ body{background:#0d1117;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFo
   </div>
 </div>
 <script>
+// Auto-fill from WhatsApp Bot URL params (runs after all scripts)
+window.addEventListener("load", function(){
+  var p=new URLSearchParams(window.location.search);
+  function fill(id,val){var el=document.getElementById(id);if(el&&val)el.value=val;}
+  fill("company",p.get("name"));
+  fill("city",p.get("city"));
+  fill("whatsapp",p.get("wa"));
+  fill("email",p.get("email"));
+});
 var urlPkg=new URLSearchParams(window.location.search).get('paket'); var pkg=urlPkg==='pro'?'pro':'starter';
 var fdata={};
 function tpw(id,btn){var i=document.getElementById(id);if(i.type==='password'){i.type='text';btn.textContent='Gizle';}else{i.type='password';btn.textContent='Göster';}}
@@ -312,7 +321,7 @@ var chkRes=await fetch('https://n8n.leolan.net/webhook/stripe-checkout',{method:
 spkg(pkg);</script>
 
 <footer style="padding:40px 24px; border-top:1px solid rgba(255,255,255,0.08); text-align:center; background:#000; margin-top:60px;">
-  <img src="/logo.svg" alt="LeoLan Digital" style="width:200px; height:auto; margin-bottom:16px;">
+  <img src="/logo.svg" alt="LeoLan Digital" style="width:200px; height:auto; margin-bottom:16px;" width="120" height="40">
   <div style="display:flex; justify-content:center; gap:16px; margin:16px 0;">
     <a href="https://www.instagram.com/leolan_digital" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);text-decoration:none;" title="Instagram"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="white" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="white"/></svg></a>
     <a href="https://www.facebook.com/profile.php?id=100083189805774" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);text-decoration:none;" title="Facebook"><svg width="22" height="22" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+<link rel="preload" as="image" href="/images/home/hero-restaurant.webp" fetchpriority="high" media="(min-width: 601px)">
+<link rel="preload" as="image" href="/images/home/hero-restaurant-mobile.webp" fetchpriority="high" media="(max-width: 600px)">
+
 <base href="https://ki.leolan.net/">
 <script>
 (function() {
@@ -36,7 +39,7 @@
   <meta name="robots" content="index, follow">
   <meta name="description-ai" content="LeoLan Manager is a professional iOS app for restaurant operators in Germany. Features: WhatsApp bot automation, reservation management, capacity tracking, push notifications, live dashboard. Available on Apple App Store. Developed by LeoLan Digital, Dresden, Germany.">
   <meta name="application-name" content="LeoLan Manager">
-  <meta name="apple-itunes-app" content="app-id=676205147">
+  <meta name="apple-itunes-app" content="app-id=6762051472">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="LeoLan Digital">
   <meta property="og:title" content="WhatsApp-бот и ИИ для ресторана | LeoLan Digital">
@@ -57,7 +60,8 @@
   <link rel="alternate" hreflang="ru" href="https://ki.leolan.net/ru/">
   <link rel="alternate" hreflang="id" href="https://ki.leolan.net/id/">
   <link rel="alternate" hreflang="th" href="https://ki.leolan.net/th/">
-  <link rel="alternate" hreflang="x-default" href="https://ki.leolan.net/">
+  <link rel="alternate" hreflang="ar" href="https://ki.leolan.net/ar/">
+<link rel="alternate" hreflang="x-default" href="https://ki.leolan.net/">
 
   <meta http-equiv="Cache-Control" content="max-age=86400, public">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
@@ -452,10 +456,10 @@
     },
     {
       "@type": "Question",
-      "name": "Есть ли пробный месяц?",
+      "name": "Есть ли пробный период?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Нет, но на этой странице есть бесплатное демо."
+        "text": "Да! Первый месяц бесплатно. Вы можете протестировать бота прямо на этой странице — или напишите нам в WhatsApp: +49 15678 483700"
       }
     },
     {
@@ -507,7 +511,7 @@
   "@type": "SoftwareCompany",
   "name": "LeoLan Digital",
   "url": "https://ki.leolan.net",
-  "logo": "https://ki.leolan.net/leolan-logo.png",
+  "logo": "/leolan-logo-new.png",
   "description": "Больше бронирований для ресторанов: WhatsApp-бот, управление отзывами, соцсети и цифровое меню.",
   "address": {
     "@type": "PostalAddress",
@@ -543,7 +547,7 @@
       "name": "LeoLan Digital",
       "url": "https://ki.leolan.net"
     },
-    "url": "https://apps.apple.com/app/id676205147",
+    "url": "https://apps.apple.com/app/id6762051472",
     "screenshot": "https://ki.leolan.net/manager-app.jpg"
   }
   </script>
@@ -591,6 +595,23 @@
       });
     });
   })();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Kamaleddin Nazari",
+  "jobTitle": "Основатель и генеральный директор",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "LeoLan Digital"
+  },
+  "url": "https://ki.leolan.net/ru/ueber-uns.html",
+  "sameAs": [
+    "https://www.instagram.com/leolan_digital"
+  ]
+}
 </script>
 </head>
 <body>
@@ -661,6 +682,15 @@
 <section class="hero">
   <p class="hero-eyebrow reveal">Для ресторанов и кафе с более чем 20 запросами в день · Без технических знаний</p>
   <h1 class="reveal reveal-delay-1"><span class="gradient">Вы теряете гостей каждый день —<br>потому что никто не отвечает достаточно быстро.</span></h1>
+<div style="background:rgba(0,113,227,0.1);border-left:4px solid #0071e3;border-radius:8px;padding:16px 20px;margin:24px 0;max-width:680px;">
+  <p style="font-size:13px;font-weight:600;color:#0071e3;margin:0 0 8px 0;text-transform:uppercase;letter-spacing:.05em;">Кратко о главном</p>
+  <ul style="margin:0;padding:0 0 0 18px;color:rgba(245,245,247,0.85);font-size:15px;line-height:1.6;">
+    <li>ИИ-бот WhatsApp отвечает на запросы гостей за 3 секунды — 24/7</li>
+    <li>Многоязычный: немецкий, английский, турецкий, арабский и другие</li>
+    <li>Установка за 2–3 дня, без технических знаний</li>
+    <li>От 149 €/месяц при годовой оплате — установка бесплатна</li>
+  </ul>
+</div>
   <p class="hero-sub reveal reveal-delay-2">Пропущенные звонки, неотвеченные сообщения и упущенные бронирования стоят вам выручки каждый день.</p>
   <div class="hero-pain-pills reveal reveal-delay-3">
     <span>📵 Пропущенные звонки</span>
@@ -672,7 +702,7 @@
     <a href="#kontakt" class="btn-primary">Получить демо →</a>
     <a href="#leistungen" class="btn-secondary">Больше бронирований ›</a>
   </div>
-  <p class="hero-trust reveal reveal-delay-3" style="text-align:center;">✓ Без договора &nbsp;·&nbsp; ✓ Результат за 5 рабочих дней &nbsp;·&nbsp; ✓ Ежемесячная отмена</p>
+  <p class="hero-trust reveal reveal-delay-3" style="text-align:center;">✓ Первый месяц бесплатно &nbsp;·&nbsp; ✓ Без договора &nbsp;·&nbsp; ✓ Результат за 5 рабочих дней &nbsp;·&nbsp; ✓ Ежемесячная отмена</p>
   <p style="font-size:13px;color:rgba(245,245,247,0.45);margin-top:8px;text-align:center;" class="reveal reveal-delay-3">Особенно подходит для ресторанов с большим потоком звонков, туристами, заявками на доставку или небольшими командами.</p>
   
     
@@ -685,7 +715,7 @@
     </p>
   </div>
   <div class="hero-img-wrap reveal reveal-delay-4">
-    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1400&q=80&auto=format&fit=crop" alt="Ресторан больше бронирований">
+    <img fetchpriority="high" srcset="/images/home/hero-restaurant-mobile.webp 600w, /images/home/hero-restaurant.webp 1400w" sizes="(max-width: 600px) 600px, 1400px" src="/images/home/hero-restaurant.webp" alt="Ресторан больше бронирований">
   </div>
 </section>
 
@@ -935,7 +965,7 @@
       </div>
     </div>
     <div class="feature-img reveal reveal-delay-1">
-      <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=900&q=80&auto=format&fit=crop" alt="Цифровое меню">
+      <img src="/images/home/feature-speisekarte.webp" alt="Цифровое меню">
     </div>
   </div>
 </section>
@@ -959,7 +989,7 @@
       </div>
     </div>
     <div class="feature-img reveal reveal-delay-1">
-      <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&q=80&auto=format&fit=crop" alt="WhatsApp Ресторанный ассистент">
+      <img src="/images/home/feature-whatsapp.webp" alt="WhatsApp Ресторанный ассистент">
     </div>
   </div>
 </section>
@@ -983,7 +1013,7 @@
       </div>
     </div>
     <div class="feature-img reveal reveal-delay-1">
-      <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=900&q=80&auto=format&fit=crop" alt="Restaurant Social Media">
+      <img src="/images/home/feature-restaurant.webp" alt="Restaurant Social Media">
     </div>
   </div>
 </section>
@@ -1007,7 +1037,7 @@
       </div>
     </div>
     <div class="feature-img reveal reveal-delay-1">
-      <img src="https://images.unsplash.com/photo-1551218808-94e220e084d2?w=900&q=80&auto=format&fit=crop" alt="Отзывы о ресторане">
+      <img src="/images/home/feature-bewertungen.webp" alt="Отзывы о ресторане">
     </div>
   </div>
 </section>
@@ -1205,6 +1235,11 @@ berechneROI();
     <h2 class="section-title reveal reveal-delay-1">Просто. Прозрачно. Готово к запуску.</h2>
     <p class="section-sub reveal reveal-delay-2">Если ваш ресторан получит всего <strong>2 дополнительных бронирования в неделю</strong>, система уже окупится. Большинство клиентов видят результаты с первого дня.</p>
   </div>
+  <div style="background:linear-gradient(135deg,rgba(52,199,89,0.15),rgba(0,113,227,0.15));border:1px solid rgba(52,199,89,0.4);border-radius:12px;padding:14px 20px;margin-bottom:24px;text-align:center;max-width:700px;margin-left:auto;margin-right:auto;">
+    <span style="font-size:22px;margin-right:8px;">🎁</span>
+    <strong style="color:#34c759;font-size:16px;">Первый месяц бесплатно</strong>
+    <span style="color:rgba(245,245,247,0.7);font-size:14px;margin-left:8px;">— для всех новых клиентов.</span>
+  </div>
   <div class="pricing-grid">
     <div class="price-card reveal">
       <div class="price-tier">Starter</div>
@@ -1279,7 +1314,7 @@ berechneROI();
       </div>
     </div>
     <div class="feature-img reveal reveal-delay-1">
-      <img src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=900&q=80&auto=format&fit=crop" alt="KI Speiseempfehlung Restaurant">
+      <img src="/images/home/feature-speise2.webp" alt="KI Speiseempfehlung Restaurant">
     </div>
   </div>
 </section>
@@ -1405,8 +1440,8 @@ berechneROI();
       <div class="faq-a"><p>Нет, мы всё настроим для вас.</p></div>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-q" onclick="toggleFaq(this)">Есть ли пробный месяц? <span>+</span></button>
-      <div class="faq-a"><p>Нет, но на этой странице есть бесплатное демо.</p></div>
+      <button class="faq-q" onclick="toggleFaq(this)">Есть ли пробный период? <span>+</span></button>
+      <div class="faq-a"><p>Да! Первый месяц бесплатно. Вы можете протестировать бота прямо на этой странице — или напишите нам в WhatsApp: <a href="https://wa.me/4915678483700" target="_blank" style="color:#2997ff;">+49 15678 483700</a></p></div>
     </div>
     <div class="faq-item reveal">
       <button class="faq-q" onclick="toggleFaq(this)">Работает ли это с моим существующим номером WhatsApp? <span>+</span></button>
@@ -1451,7 +1486,7 @@ berechneROI();
   <div class="chatbot-window" role="dialog" aria-modal="true" aria-labelledby="chatbotTitle">
     <div class="chatbot-header">
       <div class="chatbot-title">
-        <div class="chatbot-avatar" style="padding:0;overflow:hidden"><img src="https://ki.leolan.net/leolan-logo.png" width="42" height="42" style="display:block;border-radius:50%;object-fit:cover" alt="LeoLan"></div>
+        <div class="chatbot-avatar" style="padding:0;overflow:hidden"><img src="/leolan-logo-new.png" width="42" height="42" style="display:block;border-radius:50%;object-fit:cover" alt="LeoLan"></div>
         <div>
           <strong id="chatbotTitle">LeoLan цифровой ассистент</strong>
           <span>Живое демо · отвечает мгновенно</span>
@@ -1499,11 +1534,11 @@ berechneROI();
 <footer>
     <div class="footer-logo"><div class="footer-logo"><img src="logo.svg" alt="LeoLan Digital"></div>
   <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:16px 0 24px;">
-    <a href="https://apps.apple.com/app/leolan-manager/id676205147" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;background:#000;color:#fff;padding:10px 18px;border-radius:12px;text-decoration:none;border:1px solid rgba(255,255,255,0.2);">
+    <a href="https://apps.apple.com/app/leolan-manager/id6762051472" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;background:#000;color:#fff;padding:10px 18px;border-radius:12px;text-decoration:none;border:1px solid rgba(255,255,255,0.2);">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
       <span><span style="font-size:10px;display:block;opacity:0.7;line-height:1;">Download on the</span><span style="font-size:16px;font-weight:700;line-height:1.3;">App Store</span></span>
     </a>
-    <a href="https://play.google.com/store" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;background:#000;color:#fff;padding:10px 18px;border-radius:12px;text-decoration:none;border:1px solid rgba(255,255,255,0.2);">
+    <a href="https://ki.leolan.net" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;background:#000;color:#fff;padding:10px 18px;border-radius:12px;text-decoration:none;border:1px solid rgba(255,255,255,0.2);">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 20.5v-17c0-.83 1-.83 1.5-.5l14 8.5-14 8.5C3.5 20.83 3 20.5 3 20.5z" fill="#EA4335"/><path d="M3 20.5l8.5-8.5 3 3-10 6C3.5 21.83 3 21.5 3 20.5z" fill="#FBBC04"/><path d="M3 3.5l8.5 8.5 3-3-10-6C3.5 2.17 3 2.5 3 3.5z" fill="#4285F4"/><path d="M14.5 12l3-3 1 .5c.5.3.5.7 0 1l-1 .5-3-3z" fill="#34A853"/><path d="M11.5 12l3 3 3.5-2-3-3-3.5 2z" fill="#34A853"/></svg>
       <span><span style="font-size:10px;display:block;opacity:0.7;line-height:1;">GET IT ON</span><span style="font-size:16px;font-weight:700;line-height:1.3;">Google Play</span></span>
     </a>
@@ -1673,6 +1708,18 @@ berechneROI();
 
   var chatHistory = [];
 
+  
+  // Detect page language from URL
+  const pageLang = (function() {
+    const path = window.location.pathname;
+    if (path.startsWith('/tr')) return 'tr';
+    if (path.startsWith('/en')) return 'en';
+    if (path.startsWith('/ru')) return 'ru';
+    if (path.startsWith('/id')) return 'id';
+    if (path.startsWith('/th')) return 'th';
+    if (path.startsWith('/ar')) return 'ar';
+    return 'de';
+  })();
   async function getBotReplyAsync(message) {
     try {
       var controller = new AbortController();
@@ -1680,7 +1727,7 @@ berechneROI();
       var resp = await fetch('https://n8n.leolan.net/webhook/restaurant-chat', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({message: message, moduleKey: 'website-demo', history: chatHistory}),
+        body: JSON.stringify({message: message, moduleKey: 'website-demo', history: chatHistory, lang: pageLang}),
         signal: controller.signal
       });
       clearTimeout(tid);

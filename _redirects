@@ -1,3 +1,9 @@
 # Force HTTPS for any HTTP requests
 http://ki.leolan.net/* https://ki.leolan.net/:splat 301!
 http://www.leolan.net/* https://ki.leolan.net/:splat 301!
+
+# SEO: Duplicate URL fix (301 → canonical folder URLs)
+/agb.html /agb/ 301!
+/datenschutz.html /datenschutz/ 301!
+/impressum.html /impressum/ 301!
+/ueber-uns.html /ueber-uns/ 301!
