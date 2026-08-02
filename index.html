@@ -1170,7 +1170,7 @@ berechneROI();
         <li>Alles auf einen Blick</li>
         <li>E-Mail-Support</li>
       </ul>
-      <button onclick="startCheckout('starter','annual')" class="price-btn price-btn-outline">Jetzt kaufen →</button>
+      <a href="/onboarding/?paket=starter" class="price-btn price-btn-outline">Jetzt kaufen →</a>
     </div>
     <div class="price-card featured reveal reveal-delay-1">
       <div class="price-badge">Empfohlen</div>
@@ -1187,7 +1187,7 @@ berechneROI();
         <li>Bewertungsmanagement mit KI-Antworten</li>
         <li>Telefonischer Support</li>
       </ul>
-      <button onclick="startCheckout('pro','annual')" class="price-btn price-btn-white">Jetzt kaufen →</button>
+      <a href="/onboarding/?paket=pro" class="price-btn price-btn-white">Jetzt kaufen →</a>
     </div>
     </div>
 </section>
@@ -1723,9 +1723,5 @@ berechneROI();
 </script>
 
 
-  <script>
-    const PRICE_IDS={starter:{annual:"price_1TSz9fLwGb6me8PhFb5pjzpM",monthly:"price_1TSz9eLwGb6me8PhDBComJY9"},pro:{annual:"price_1TSz9gLwGb6me8Ph5vzuiFmj",monthly:"price_1TSz9gLwGb6me8Ph5nMKev4w"}};
-    async function startCheckout(plan,period){const btn=event.currentTarget,orig=btn.textContent;btn.textContent="Wird geladen...";btn.disabled=true;try{const r=await fetch("https://n8n.leolan.net/webhook/stripe-checkout",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({priceIds:[PRICE_IDS[plan][period]],setupFeeAmount:period==="annual"?0:199,sector:"restaurant"})});const d=await r.json();if(d.url){window.location.href=d.url;}else{alert("Fehler. Bitte erneut versuchen.");btn.textContent=orig;btn.disabled=false;}}catch(e){alert("Verbindungsfehler.");btn.textContent=orig;btn.disabled=false;}}
-  </script>
 </body>
 </html>
